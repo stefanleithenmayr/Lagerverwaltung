@@ -27,6 +27,8 @@ Inhaltsverzeichnis
 >    - Glossar
 >    - Diagramm des Problembereiches
 > - Funktionale Anforderungen
+>    - Use Case Diagramm
+>    - GUI
 > - Nicht funktionale Anforderungen
 > - Mengengerüst
 > - Risikoakzeptanz
@@ -100,6 +102,10 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 3.Funktionale Anforderungen
 ========
+
+3.1 Use Case Diagramm
+----
+![UC Diagram](USE_Case_Diagram.jpg)
 
 > - Ein bzw. Auslagern von Produkte
 > - Lagerstand darstellen
