@@ -97,7 +97,7 @@ Lager | Jeder Mandant kann mehrere Lager haben
 2.1.3 Diagramm des Problembereiches
 ---
 
-![alt text]( http://yuml.me/5b9fb3b5.png "Diagramm")
+![CLD Diagram](Klassendiagramm_Lagerverwaltung.jpg)
 
 
 3.Funktionale Anforderungen
