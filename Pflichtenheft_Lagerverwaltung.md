@@ -64,23 +64,21 @@ Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithe
 2.1.2 Beschreibung des Problembereiches
 ---------------------------------------
 Das Hauptproblem eines Lagers ist,
-dass man Produkte möglichst zeiteffizient finden muss, 
+dass Lagergüter möglichst zeiteffizient gefunden werden müssen, 
 da wenn man Ewigkeiten nach dem Produkt suchen muss, 
 kostet das enorm viel Zeit. 
 Ein weiteres Problem ist, wenn der Lagerbestand eines Produktes gleich null ist.
 Wird dieses Produkt in der Produktion benötigt, 
 es aber nicht mehr lagernd ist, 
 kann es zu Lieferverzögerungen kommen und in Folge dessen
-zu Pönalzahlungen seitens des Unternehmens kommen.
+zu Pönalzahlungen seitens unserer Mandanten kommen.
 
-Außerdem muss man die Produkte,
-die relativ selten benötigt werden,
-möglichst weit weg einlagern
-und die Produkte die eine relativ hohe Umschlagshäufigkeit haben,
+Außerdem muss man die Güter,
+die eine relativ hohe Umschlagshäufigkeit haben,
 möglichst leicht zugänglich machen.
 
 2.1.3 Glossar
-----
+--------
 
 Fachbegriff | Beschreibung|
 ------------------ | ---------------|
@@ -94,7 +92,7 @@ Lieferant | Personen die den Mandanten beliefern
 Produkt | Sind die Produkte die unsere Mandanten einlagern
 Lager | Jeder Mandant kann mehrere Lager haben
 
-2.1.3 Diagramm des Problembereiches
+2.1.4 Diagramm des Problembereiches
 ---
 
 ![CLD Diagram](Klassendiagramm_Lagerverwaltung.jpg)
@@ -105,16 +103,18 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 > - Ein bzw. Auslagern von Produkte
 > - Lagerstand darstellen
-> - Email an Lieferanten senden, wenn Meldemenge unterschritten
+> - Beim Lieferanten bestellen
 > - Journal eines Zeitraumes sehen
 > - Lieferanten verwalten
 
 4.Nicht funktionale Anforderungen
 ==============
 
-- Das System muss den unautorisierten Zugriff auf die Kundenstammdaten
+> - Das System muss den unautorisierten Zugriff auf die Kundenstammdaten
   verhindern, soweit dies technisch möglich ist
 > - SQL - Server
+> - Möglichst geringer Ressourcenverbrauch
+> - Schnelle Datenabfragen, ansonsten entstehen Wartezeiten
 
 
 5.Mengengerüst
@@ -123,7 +123,7 @@ Lager | Jeder Mandant kann mehrere Lager haben
 Prinzipiell werden ziemlich viele Daten anfallen.
 Um sich dies genau anschauen, betrachten Sie bitte das Diagramm des Kapitels 2.1.3. Dort findet man alle relevanten Daten.
 
-Daraus resultierend verwenden wir einen SQL - Server.
+Daraus resultierend verwenden wir einen SQL - Server erstellen.
 
 6.Risikoakzeptanz
 ========
@@ -139,16 +139,9 @@ Im Lieferumfang befindet sich
 > - Fertige Software
 > - Bedienungsanleitung für die Software
 
-Kunde muss nur noch die Software auf seinem PC installieren und kann sofort mit unserer Lagerverwaltungssoftware arbeiten.
-
-Im Lieferumfang befinden sich außerdem die vollständigen Dokumente.
-
 8.Abnahmekriterien
 ========
-
 Abnahmekriterien sind
-
-Risiken im laufenden Betrieb sind
 
 > - Läuft die Datenbank ordnungsgemäß?
 > - Funktioniert das Programm entsprechend den Anforderungen?
@@ -156,4 +149,4 @@ Risiken im laufenden Betrieb sind
 > - Lieferung muss
 >     - vollständig
 >     - pünktlich beim Kunden ankommen
-> - Software muss auf dem PC vom Kunden funktionieren und darf keine Probleme aufweisen
+> - Software muss auf dem PC vom Kunden funktionieren und darf keine Bugs aufweisen
