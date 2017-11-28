@@ -92,7 +92,7 @@ Lieferant | Personen die den Mandanten beliefern
 Produkt | Sind die Produkte die unsere Mandanten einlagern
 Lager | Jeder Mandant kann mehrere Lager haben
 
-2.1.4 Diagramm des Problembereiches
+2.1.4 Modell des Problembereiches
 ---
 
 ![CLD Diagram](Klassendiagramm_Lagerverwaltung.jpg)
