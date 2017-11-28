@@ -31,7 +31,6 @@ Inhaltsverzeichnis
 >    - GUI
 > - Nicht funktionale Anforderungen
 > - Mengengerüst
-> - Risikoakzeptanz
 > - Lieferumfang
 > - Abnahmekriterien
 
@@ -60,7 +59,8 @@ Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithe
 2.1.1 Ist - Zustand
 -------------------
 
-
+Unser Projekt setzt auf kein bereits, 
+bestehendes Projekt auf.
 
 
 2.1.2 Beschreibung des Problembereiches
@@ -126,26 +126,17 @@ Lager | Jeder Mandant kann mehrere Lager haben
 5.Mengengerüst
 ============
 
-Prinzipiell werden ziemlich viele Daten anfallen.
-Um sich dies genau anschauen, betrachten Sie bitte das Diagramm des Kapitels 2.1.3. Dort findet man alle relevanten Daten.
+Es fallen die Daten an, die Sie im Kaptiel 2.1.4 (Modell des Problembereiches) in dem Klassendiagramm finden.
 
-Daraus resultierend verwenden wir einen SQL - Server erstellen.
 
-6.Risikoakzeptanz
-========
-Risiken im laufenden Betrieb sind
-
->- Internetausfall ... kein Zugriff auf das Lager
->- Daten können verloren gehen, Abhilfe durch Backups
-
-7.Lieferumfang
+6.Lieferumfang
 ===
 Im Lieferumfang befindet sich
 
 > - Fertige Software
 > - Bedienungsanleitung für die Software
 
-8.Abnahmekriterien
+7.Abnahmekriterien
 ========
 Abnahmekriterien sind
 
