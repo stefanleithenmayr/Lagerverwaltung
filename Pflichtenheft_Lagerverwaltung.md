@@ -6,7 +6,7 @@ Projektbezeichnung |<span style="font-weight:100">Lagerverwaltung</span>
 **Projektleiter**  | Stefan Leithenmayr
 **Erstellt am**    | 16. November 2017
 **Stakeholder**    | Rene Deicker, Maximilian Hofer
-**Zuletzt geändert** | 18. November 2017
+**Zuletzt geändert** | 1. Dezember 2017
 
 Änderungsverzeichnis
 
