@@ -113,16 +113,16 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 Name des Geschäftsprozesses | Auslösendes Ereignis | Ergebnis | Mitwirkende
 ------------------ | ---------------|----------|-----------------
-Ein bzw. Auslagern von Gütern| Produkt kommt hinzu oder soll entfernt werden  | Produkt, dass entnommen wurde, wird auch im Programm entfernt, oder Produkt das eingelagert wurde, wird auch im Programm entfernt | Lagerist
-Zeige Lagerstand | Lagerist möchte wissen, was sich noch im Lager befindet | Sieht den Lagerstand | Lagerist
-Bestelle beim Lieferanten  | Lagerist benötigt Produkte | Bestellung | Lagerist
+Ein bzw. Auslagern von Gütern| Produkt soll zum Lager hinzugefügt oder entfernt werden  | Produkt das entnommen wurde wird auch im Programm entfernt oder Produkt das eingelagert wurde wird auch im Programm entfernt | Lagerist
+Zeige Lagerstand | Lagerist möchte wissen, was sich noch im Lager befindet | Lagerstand wird gezeigt | Lagerist
+Bestelle beim Lieferanten  | Lagerist benötigt Güter | Bestellung | Lagerist
 Zeige Journal eines Zeitraumes  | Ein -/ Auslagerungen der letzten Zeit werden benötigt | Liste der Ein -/ Auslagerungen | Lagerist
 Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferantendaten | Lagerist
 
 2.2 Zielbestimmung
 -----------------
 Wir erstellen unsere Software um kleine Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
-Unser Ziel ist es, Produkte möglichst zeiteffizient ein-/auslagern zu können, Journal ansehen, Lagerstand darstellen, beim Lieferanten bestellen und die Lieferanten zu verwalten.
+Unser Ziel ist es, dass unsere Software Produkte möglichst zeiteffizient ein-/auslagern kann, man das Journal sehen kann, der Lagerstand dargestellt werden kann, dass beim Lieferanten bestellt werden kann und Lieferanten verwaltet werden können.
 
 Die Zielgruppe sind Lageristen und vor allem kleine Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
 Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers auskennt.
