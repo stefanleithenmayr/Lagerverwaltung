@@ -64,8 +64,7 @@ Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithe
 2.1.1 Ist - Zustand
 -------------------
 
-Kleine Firmen können sich keine teure und qualitativ hochwertige Software leisten, daher haben sie keine bzw. eine schlecht funktionierende.
-
+Kleine Firmen können sich keine teure und qualitativ hochwertige Lagerveraltungssoftware leisten, daher haben sie entweder keine oder sind unzufrieden mit ihrer derzeitigen Lösung.
 
 2.1.2 Beschreibung des Problembereiches
 ---------------------------------------
@@ -121,10 +120,10 @@ Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferante
 
 2.2 Zielbestimmung
 -----------------
-Wir erstellen unsere Software um Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
+Wir erstellen unsere Software um kleine Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
 Unser Ziel ist es, Produkte möglichst zeiteffizient ein-/auslagern zu können, Journal ansehen, Lagerstand darstellen, beim Lieferanten bestellen und die Lieferanten zu verwalten.
 
-Die Zielgruppe sind Lageristen und vor allem Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
+Die Zielgruppe sind Lageristen und vor allem kleine Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
 Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers auskennt.
 
 3.Funktionale Anforderungen
