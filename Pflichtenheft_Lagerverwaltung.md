@@ -143,6 +143,10 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 > - Zeige Journal eines Zeitraumes 
 > - Verwalte Lieferanten 
 
+3.2 GUI
+--------
+![GUI](GUI.jpeg)
+
 4.Nicht funktionale Anforderungen
 ==============
 
