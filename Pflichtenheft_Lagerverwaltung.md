@@ -114,7 +114,7 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 Name des Geschäftsprozesses | Auslösendes Ereignis | Ergebnis | Mitwirkende
 ------------------ | ---------------|----------|-----------------
-Ein bzw. Auslagern von Gütern| Produkt kommt hinzu oder soll entfernt werden  | Produkt, dass entnohmen wurde, wird auch im Programm entfernt, oder Produkt das eingelagert wurde, wird auch im Programm entfernt | Lagerist
+Ein bzw. Auslagern von Gütern| Produkt kommt hinzu oder soll entfernt werden  | Produkt, dass entnommen wurde, wird auch im Programm entfernt, oder Produkt das eingelagert wurde, wird auch im Programm entfernt | Lagerist
 Zeige Lagerstand | Lagerist möchte wissen, was sich noch im Lager befindet | Sieht den Lagerstand | Lagerist
 Bestelle beim Lieferanten  | Lagerist benötigt Produkte | Bestellung | Lagerist
 Zeige Journal eines Zeitraumes  | Ein -/ Auslagerungen der letzten Zeit werden benötigt | Liste der Ein -/ Auslagerungen | Lagerist
@@ -125,7 +125,7 @@ Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferante
 Wir erstellen unsere Software um Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
 Unser Ziel ist es, Produkte möglichst zeiteffizient ein-/auslagern zu können, Journal ansehen, Lagerstand darstellen, beim Lieferanten bestellen und die Lieferanten zu verwalten.
 
-Die Zielgruppe sind Lageristen und vorallem Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
+Die Zielgruppe sind Lageristen und vor allem Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
 Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers auskennt.
 
 3.Funktionale Anforderungen
@@ -161,7 +161,7 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 5.Mengengerüst
 ============
 
-Es fallen die Daten an, die Sie im Kaptiel 2.1.4 (Modell des Problembereiches) in dem Klassendiagramm finden.
+Es fallen die Daten an, die Sie im Kapitel 2.1.4 (Modell des Problembereiches) in dem Klassendiagramm finden.
 
 6.Lieferumfang
 ===
