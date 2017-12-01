@@ -24,11 +24,11 @@ Inhaltsverzeichnis
 > - Ausgangssituation und Zielsetzung
 >    - Ausgangssituation
 >    - Ist - Zustand 
->    - Zielbestimmung
 >    - Glossar
 >    - Diagramm des Problembereiches
 >    - Beschreibung des Geschäftsfeldes
 >    - Beschreibung der Geschäftsprozesse
+>    - Zielbestimmung
 > - Funktionale Anforderungen
 >    - Use Case Diagramm
 >    - GUI
