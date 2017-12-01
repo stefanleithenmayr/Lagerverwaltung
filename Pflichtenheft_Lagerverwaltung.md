@@ -9,6 +9,7 @@ Projektbezeichnung |<span style="font-weight:100">Lagerverwaltung</span>
 **Zuletzt geändert** | 1. Dezember 2017
 
 Änderungsverzeichnis
+-----
 
 Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 ------------------ | ---------------|---|---|---|--
