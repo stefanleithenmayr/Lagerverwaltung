@@ -64,8 +64,7 @@ Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithe
 2.1.1 Ist - Zustand
 -------------------
 
-Unser Projekt setzt auf kein bereits, 
-bestehendes Projekt auf.
+Kleine Firmen können sich keine teure und qualitativ hochwertige Software leisten, daher haben sie keine bzw. eine schlecht funktionierende.
 
 
 2.1.2 Beschreibung des Problembereiches
