@@ -53,7 +53,7 @@ bezüglich der Durchführung eines Projektes.
 ---------------------
 
 Wir haben uns für dieses Projekt entschieden, da eine Lagerverwaltung ohne der passenden 
-Software sehr aufwendig und mühsam für Unternehmen ist. Außerdem können Ungenauigkeiten entstehen. (Quelle siehe Literaturverzeichnis)
+Software sehr aufwendig und mühsam für kleine Unternehmen ist. Außerdem können Ungenauigkeiten entstehen. (Quelle siehe Literaturverzeichnis)
 
 Vorteile gegenüber der nicht softwareunterstützten Lagerverwaltung ist, dass
 man den Lagerstand auf einen Blick sehen kann, Produkte schnell ein-/auslagern kann,
