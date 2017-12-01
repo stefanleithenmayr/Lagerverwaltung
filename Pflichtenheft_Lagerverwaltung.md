@@ -13,8 +13,9 @@ Projektbezeichnung |<span style="font-weight:100">Lagerverwaltung</span>
 Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 ------------------ | ---------------|---|---|---|--
 1 | 18. November 2017 | 0.1 | Alle | Erstellung | Stefan Leithenmayr
-2 | 25. November 2017 | 0.2 | Alle | Esrweiterung| Stefan Leithenmayr
+2 | 25. November 2017 | 0.2 | Alle | Erweiterung| Stefan Leithenmayr
 3 | 26. November 2017 | 0.3 | Abnahmekriterien, Lieferumfang | Erweiterung| Maximilian Hofer
+4 | 1. Dezember 2017  | 0.4 | Alle + Diagramme | Erweiterung | Rene Deicker, Stefan Leithenmayr
 
 Inhaltsverzeichnis
 ========
@@ -26,6 +27,8 @@ Inhaltsverzeichnis
 >    - Zielbestimmung
 >    - Glossar
 >    - Diagramm des Problembereiches
+>    - Beschreibung des Geschäftsfeldes
+>    - Beschreibung der Geschäftsprozesse
 > - Funktionale Anforderungen
 >    - Use Case Diagramm
 >    - GUI
@@ -33,12 +36,13 @@ Inhaltsverzeichnis
 > - Mengengerüst
 > - Lieferumfang
 > - Abnahmekriterien
+> - Literaturverzeichnis
 
 1.Motivation
 ================
 
 Unser Projekt wird im Rahmen des Unterrichtfaches Projektentwicklung durchgeführt.
-Unsere Motivation ist, dass wir unsere Java - Kenntnisse erweitern möchten.
+Unsere Motivation ist, dass wir unsere Java - Kenntnisse vertiefen möchten.
 Weiteres ist unsere Hauptmotivation möglichst viel zu lernen, 
 bezüglich der Durchführung eines Projektes.
 
@@ -47,12 +51,12 @@ bezüglich der Durchführung eines Projektes.
 2.1 Ausgangssituation
 ---------------------
 
-Wir haben uns für dieses Projekt entschieden,da eine Lagerverwaltung ohne der passenden 
-Software sehr schwierig ist. 
+Wir haben uns für dieses Projekt entschieden, da eine Lagerverwaltung ohne der passenden 
+Software sehr aufwendig und mühsam für Unternehmen ist. Außerdem können Ungenauigkeiten entstehen. (Quelle siehe Literaturverzeichnis)
 
 Vorteile gegenüber der nicht softwareunterstützten Lagerverwaltung ist, dass
-man den Lagerstand auf einen Blick sehen kann, Produkte schnell ein-/auslagern kann und
-Lagerbewegungen der letzten Zeit auf einen Blick sehen kann.
+man den Lagerstand auf einen Blick sehen kann, Produkte schnell ein-/auslagern kann,
+Lagerbewegungen der letzten Zeit auf einen Blick sehen kann und Produktstellplätze schnell ausfindig machen kann.
 
 Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithenmayr.
 
@@ -65,10 +69,10 @@ bestehendes Projekt auf.
 
 2.1.2 Beschreibung des Problembereiches
 ---------------------------------------
+Unsere fertige Software soll, im Bereich der Lagerverwaltung eingesetzt werden.
+
 Das Hauptproblem eines Lagers ist,
-dass Lagergüter möglichst zeiteffizient gefunden werden müssen, 
-da wenn man Ewigkeiten nach dem Produkt suchen muss, 
-kostet das enorm viel Zeit. 
+dass Lagergüter möglichst zeiteffizient gefunden werden müssen.
 Ein weiteres Problem ist, wenn der Lagerbestand eines Produktes gleich null ist.
 Wird dieses Produkt in der Produktion benötigt, 
 es aber nicht mehr lagernd ist, 
@@ -99,19 +103,45 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 ![CLD Diagram](Klassendiagramm_Lagerverwaltung.jpg)
 
+2.1.5 Beschreibung des Geschäftsfeldes
+---
+
+![UC Diagram](USE_Case_Diagram.jpg)
+
+2.1.6 Beschreibung der Geschäftsprozesse
+---------------------------------------
+
+Name des Geschäftsprozesses | Auslösendes Ereignis | Ergebnis | Mitwirkende
+------------------ | ---------------|----------|-----------------
+Ein bzw. Auslagern von Gütern| Produkt kommt hinzu oder soll entfernt werden  | Produkt, dass entnohmen wurde, wird auch im Programm entfernt, oder Produkt das eingelagert wurde, wird auch im Programm entfernt | Lagerist
+Zeige Lagerstand | Lagerist möchte wissen, was sich noch im Lager befindet | Sieht den Lagerstand | Lagerist
+Bestelle beim Lieferanten  | Lagerist benötigt Produkte | Bestellung | Lagerist
+Zeige Journal eines Zeitraumes  | Ein -/ Auslagerungen der letzten Zeit werden benötigt | Liste der Ein -/ Auslagerungen | Lagerist
+Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferantendaten | Lagerist
+
+2.2 Zielbestimmung
+-----------------
+Wir erstellen unsere Software um Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
+Unser Ziel ist es, Produkte möglichst zeiteffizient ein-/auslagern zu können, Journal ansehen, Lagerstand darstellen, beim Lieferanten bestellen und die Lieferanten zu verwalten.
+
+Die Zielgruppe sind Lageristen und vorallem Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
+Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers auskennt.
 
 3.Funktionale Anforderungen
 ========
 
 3.1 Use Case Diagramm
-----
+--------------------
+
 ![UC Diagram](USE_Case_Diagram.jpg)
 
-> - Ein bzw. Auslagern von Produkte
-> - Lagerstand darstellen
-> - Beim Lieferanten bestellen
-> - Journal eines Zeitraumes sehen
-> - Lieferanten verwalten
+**Geschäftsprozesse**
+
+> - Ein bzw. Auslagern von Gütern
+> - Zeige Lagerstand 
+> - Bestelle beim Lieferanten 
+> - Zeige Journal eines Zeitraumes 
+> - Verwalte Lieferanten 
 
 4.Nicht funktionale Anforderungen
 ==============
@@ -127,7 +157,6 @@ Lager | Jeder Mandant kann mehrere Lager haben
 ============
 
 Es fallen die Daten an, die Sie im Kaptiel 2.1.4 (Modell des Problembereiches) in dem Klassendiagramm finden.
-
 
 6.Lieferumfang
 ===
@@ -147,3 +176,9 @@ Abnahmekriterien sind
 >     - vollständig
 >     - pünktlich beim Kunden ankommen
 > - Software muss auf dem PC vom Kunden funktionieren und darf keine Bugs aufweisen
+
+8.Literaturverzeichnis
+=====================
+
+Tobias Ambrosch: Die Lagerverwaltung
+https://blog.selectline.de/die-lagerverwaltung/ (1.12.2017)
