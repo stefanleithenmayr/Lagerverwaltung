@@ -24,8 +24,9 @@ Inhaltsverzeichnis
 > - Ausgangssituation und Zielsetzung
 >    - Ausgangssituation
 >    - Ist - Zustand 
+>    - Beschreibung des Problembereiches
 >    - Glossar
->    - Diagramm des Problembereiches
+>    - Modell des Problembereiches
 >    - Beschreibung des Geschäftsfeldes
 >    - Beschreibung der Geschäftsprozesse
 >    - Zielbestimmung
