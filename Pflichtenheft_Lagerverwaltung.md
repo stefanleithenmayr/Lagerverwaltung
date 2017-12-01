@@ -107,7 +107,7 @@ Lager | Jeder Mandant kann mehrere Lager haben
 2.1.5 Beschreibung des Geschäftsfeldes
 ---
 
-![UC Diagram](USE_Case_Diagram.jpg)
+![UC Diagram](USE_Case_Diagram.jpeg)
 
 2.1.6 Beschreibung der Geschäftsprozesse
 ---------------------------------------
@@ -134,7 +134,7 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 3.1 Use Case Diagramm
 --------------------
 
-![UC Diagram](USE_Case_Diagram.jpg)
+![UC Diagram](USE_Case_Diagram.jpeg)
 
 **Geschäftsprozesse**
 
