@@ -73,10 +73,10 @@ Das Hauptproblem eines Lagers ist,
 dass Lagergüter möglichst zeiteffizient gefunden werden müssen.
 Ein weiteres Problem ist, wenn der Lagerbestand eines Produktes gleich null ist.
 Wird dieses Produkt benötigt, 
-aber nicht mehr lagernd ist, 
+aber nicht lagernd ist, 
 kann es zu Lieferverzögerungen kommen und in Folge dessen
 zu Pönalzahlungen seitens unserer Mandanten kommen.
-Weiteres es ist ein Problem, dass Güter die eine relativ hohe Umschlagshäufigkeit haben, nicht immer leicht zugänglich sind.
+Weiteres es ist ein Problem, dass Güter die eine relativ hohe Umschlagshäufigkeit haben, nicht leicht zugänglich sind.
 
 2.1.3 Glossar
 --------
