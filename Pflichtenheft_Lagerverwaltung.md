@@ -69,19 +69,14 @@ Kleine Firmen können sich keine teure und qualitativ hochwertige Lagerveraltung
 
 2.1.2 Beschreibung des Problembereiches
 ---------------------------------------
-Unsere fertige Software soll, im Bereich der Lagerverwaltung eingesetzt werden.
-
 Das Hauptproblem eines Lagers ist,
 dass Lagergüter möglichst zeiteffizient gefunden werden müssen.
 Ein weiteres Problem ist, wenn der Lagerbestand eines Produktes gleich null ist.
-Wird dieses Produkt in der Produktion benötigt, 
-es aber nicht mehr lagernd ist, 
+Wird dieses Produkt benötigt, 
+aber nicht mehr lagernd ist, 
 kann es zu Lieferverzögerungen kommen und in Folge dessen
 zu Pönalzahlungen seitens unserer Mandanten kommen.
-
-Außerdem muss man die Güter,
-die eine relativ hohe Umschlagshäufigkeit haben,
-möglichst leicht zugänglich machen.
+Weiteres es ist ein Problem, dass Güter die eine relativ hohe Umschlagshäufigkeit haben, nicht immer leicht zugänglich sind.
 
 2.1.3 Glossar
 --------
