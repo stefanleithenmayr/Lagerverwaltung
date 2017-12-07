@@ -117,7 +117,12 @@ Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferante
 2.2 Zielbestimmung
 -----------------
 Wir erstellen unsere Software um kleine Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
-Unser Ziel ist es, dass unsere Software Produkte möglichst zeiteffizient ein-/auslagern kann, man das Journal sehen kann, der Lagerstand dargestellt werden kann, dass beim Lieferanten bestellt werden kann und Lieferanten verwaltet werden können.
+Unsere Ziele sind
+>- Güter können zeiteffizient ein-/ausgelagert werden
+>- Journal eines gewissen Zeitraumes kann auf einen Blick betrachtet werden
+>- Aktueller Lagerstand kann dargestellt werden
+>- Beim Lieferanten kann bestellt werden kann 
+>- Lieferanten können verwaltet werden 
 
 Die Zielgruppe sind Lageristen und vor allem kleine Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
 Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers auskennt.
@@ -156,6 +161,7 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 ============
 
 Es fallen die Daten an, die Sie im Kapitel 2.1.4 (Modell des Problembereiches) in dem Klassendiagramm finden.
+Die anfallenden Datenmengen kann man in diesem Fall nicht pauschal beurteilen.
 
 6.Lieferumfang
 ===
