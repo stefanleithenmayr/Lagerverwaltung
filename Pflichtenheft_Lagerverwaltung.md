@@ -161,7 +161,7 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 ============
 
 Es fallen die Daten an, die Sie im Kapitel 2.1.4 (Modell des Problembereiches) in dem Klassendiagramm finden.
-Die anfallenden Datenmengen kann man in diesem Fall nicht pauschal beurteilen.
+Die anfallenden Datenmengen kann man in diesem Fall nicht pauschal beurteilen, da wir z.B. die Anzahl der User nicht wisssen.
 
 6.Lieferumfang
 ===
