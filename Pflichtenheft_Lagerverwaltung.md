@@ -52,14 +52,7 @@ bezüglich der Durchführung eines Projektes.
 ============
 2.1 Ausgangssituation
 ---------------------
-
-Wir haben uns für dieses Projekt entschieden, da eine Lagerverwaltung ohne der passenden 
-Software sehr aufwendig und mühsam für kleine Unternehmen ist. Außerdem können Ungenauigkeiten entstehen. (Quelle siehe Literaturverzeichnis)
-
-Vorteile gegenüber der nicht softwareunterstützten Lagerverwaltung ist, dass
-man den Lagerstand auf einen Blick sehen kann, Produkte schnell ein-/auslagern kann,
-Lagerbewegungen der letzten Zeit auf einen Blick sehen kann und Produktstellplätze schnell ausfindig machen kann.
-
+Wir erstellen unser Projekt für kleine Unternehmen Unternehmen.
 Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithenmayr.
 
 2.1.1 Ist - Zustand
