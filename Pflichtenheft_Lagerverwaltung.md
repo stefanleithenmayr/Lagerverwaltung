@@ -16,7 +16,8 @@ Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 1 | 18. November 2017 | 0.1 | Alle | Erstellung | Stefan Leithenmayr
 2 | 25. November 2017 | 0.2 | Alle | Erweiterung| Stefan Leithenmayr
 3 | 26. November 2017 | 0.3 | Abnahmekriterien, Lieferumfang | Erweiterung| Maximilian Hofer
-4 | 1. Dezember 2017  | 0.4 | Alle + Diagramme | Erweiterung | Rene Deicker, Stefan Leithenmayr
+4 | 1. Dezember 2017  | 0.4 | Alle + Diagramme | Erweiterung | René Deicker, Stefan Leithenmayr
+5 | 5. Februar 2018  | 0.5 | Alle | Überarbeitet | René Deicker
 
 Inhaltsverzeichnis
 ========
@@ -50,28 +51,18 @@ bezüglich der Durchführung eines Projektes.
 
 2.Ausgangssituation und Zielsetzung
 ============
+
 2.1 Ausgangssituation
 ---------------------
-Wir erstellen unser Projekt für kleine Unternehmen Unternehmen.
-Die relevanten Stakeholder sind Rene Deicker, Maximilian Hofer und Stefan Leithenmayr.
+Aufgrund dessen, dass es derzeit gibt es kein ordentliches Verwatlungssystem, welches die Gegenstände im RoboLab verwaltet, erstellen wir dieses System.
 
-2.1.1 Ist - Zustand
--------------------
 
-Kleine Firmen können sich keine teure und qualitativ hochwertige Lagerveraltungssoftware leisten, daher haben sie entweder keine oder sind unzufrieden mit ihrer derzeitigen Lösung.
-
-2.1.2 Beschreibung des Problembereiches
+2.1.1 Beschreibung des Problembereiches
 ---------------------------------------
-Das Hauptproblem eines Lagers ist,
-dass Lagergüter möglichst zeiteffizient gefunden werden müssen.
-Ein weiteres Problem ist, wenn der Lagerbestand eines Produktes gleich null ist.
-Wird dieses Produkt benötigt, 
-aber nicht lagernd ist, 
-kann es zu Lieferverzögerungen kommen und in Folge dessen
-zu Pönalzahlungen seitens unserer Mandanten kommen.
-Weiteres es ist ein Problem, dass Güter die eine relativ hohe Umschlagshäufigkeit haben, nicht leicht zugänglich sind.
+Das Hauptproblem des RoboLab ist, dass Lagergüter möglichst zeiteffizient gefunden werden sollen.
+Ein weiteres Problem des RoboLab ist, dass einige Gegenstände schwer zu finden sind bzw. verloren gehen können.
 
-2.1.3 Glossar
+2.1.2 Glossar
 --------
 
 Fachbegriff | Beschreibung|
@@ -86,17 +77,17 @@ Lieferant | Personen die den Mandanten beliefern
 Produkt | Sind die Produkte die unsere Mandanten einlagern
 Lager | Jeder Mandant kann mehrere Lager haben
 
-2.1.4 Modell des Problembereiches
+2.1.3 Modell des Problembereiches
 ---
 
 ![CLD Diagram](./images/Klassendiagramm_Lagerverwaltung.jpg)
 
-2.1.5 Beschreibung des Geschäftsfeldes
+2.1.4 Beschreibung des Geschäftsfeldes
 ---
 
 ![UC Diagram](./images/USE_Case_Diagram.jpeg)
 
-2.1.6 Beschreibung der Geschäftsprozesse
+2.1.5 Beschreibung der Geschäftsprozesse
 ---------------------------------------
 
 Name des Geschäftsprozesses | Auslösendes Ereignis | Ergebnis | Mitwirkende
@@ -109,16 +100,13 @@ Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferante
 
 2.2 Zielbestimmung
 -----------------
-Wir erstellen unsere Software um kleine Unternehmen im Bereich der Lagerverwaltung unter die Arme zu greifen. 
-Unsere Ziele sind
+Wir erstellen unsere Software um die Verwaltung der Produkte im RoboLab zu vereinfachen.
+
 >- Güter können zeiteffizient ein-/ausgelagert werden
 >- Journal eines gewissen Zeitraumes kann auf einen Blick betrachtet werden
 >- Aktueller Lagerstand kann dargestellt werden
 >- Beim Lieferanten kann bestellt werden kann 
 >- Lieferanten können verwaltet werden 
-
-Die Zielgruppe sind Lageristen und vor allem kleine Unternehmen, die eine Lagerverwaltungssoftware für ihr Lager benötigen.
-Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers auskennt.
 
 3.Funktionale Anforderungen
 ========
@@ -131,10 +119,10 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 **Geschäftsprozesse**
 
 > - Ein bzw. Auslagern von Gütern
-> - Zeige Lagerstand 
-> - Bestelle beim Lieferanten 
-> - Zeige Journal eines Zeitraumes 
-> - Verwalte Lieferanten 
+> - Lagerstand zeigen
+> - beim Lieferanten bestellen 
+> - Journal eines Zeitraumes zeigen
+> - Lieferanten verwalten
 
 3.2 GUI
 --------
@@ -143,7 +131,7 @@ Es ist davon auszugehen, dass sich ein Lagerist mit den Abläufen eines Lagers a
 4.Nicht funktionale Anforderungen
 ==============
 
-> - Das System muss den unautorisierten Zugriff auf die Kundenstammdaten
+> - Das System muss den unautorisierten Zugriff auf die Stammdaten
   verhindern, soweit dies technisch möglich ist
 > - SQL - Server
 > - Möglichst geringer Ressourcenverbrauch
@@ -170,10 +158,10 @@ Abnahmekriterien sind
 > - Läuft die Datenbank ordnungsgemäß?
 > - Funktioniert das Programm entsprechend den Anforderungen?
 > - Funktioniert das Ein- Auslagern?
-> - Lieferung muss
+> - Auslieferung muss
 >     - vollständig
->     - pünktlich beim Kunden ankommen
-> - Software muss auf dem PC vom Kunden funktionieren und darf keine Bugs aufweisen
+>     - pünktlich ankommen
+> - Software muss auf den Pc´s des RoboLab laufen und darf keine Bugs aufweisen
 
 8.Literaturverzeichnis
 =====================
