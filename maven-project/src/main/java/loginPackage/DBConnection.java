@@ -1,14 +1,17 @@
 package loginPackage;
 
+import java.io.*;
 import java.sql.*;
+import java.util.Scanner;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
 
-    public static final String DRIVER_STRING = "org.apache.derby.jdbc.ClientDriver";
-    static final String CONNECTION_STRING = "jdbc:derby://localhost:1527/db";
-    public static String userName;
-    public static String password;
+    private final String DRIVER_STRING = "org.apache.derby.jdbc.ClientDriver";
+    private final String CONNECTION_STRING = "jdbc:derby://localhost:1527/db;create=true";
+    private String userName;
+    private String password;
+
     private Connection conn;
 
     private DBConnection() { }
@@ -23,16 +26,26 @@ public class DBConnection {
         try {
             Class.forName(DRIVER_STRING);
             conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
-            boolean existUser = existUser(userName, password);
             this.userName = userName;
             this.password = password;
+
+            try{    //test if table exist, if not than an exception occurs and the program read the sql statments from the file
+                Statement stmt = conn.createStatement();
+                stmt.executeQuery("SELECT * FROM USERS");
+            }catch (SQLException ex) {
+                File file = new File("src/main/resources/db/startScript.sql");
+                this.importSQL(new FileInputStream(file));
+            }
+            boolean existUser = existUser(userName, password);
             if (existUser) {
                 return true;
             }
-            return false;
-        } catch (SQLException ex) {
-            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     private ResultSet GetUsers() throws SQLException {
@@ -48,5 +61,31 @@ public class DBConnection {
             }
         }
         return false;
+    }
+
+    public void importSQL(InputStream in) throws SQLException
+    {
+        Scanner s = new Scanner(in);
+        s.useDelimiter("(;(\r)?\n)|(--\n)");
+        Statement st = null;
+        try
+        {
+            st = conn.createStatement();
+            while (s.hasNext())
+            {
+                String line = s.next();
+                if (line.startsWith("/*!") && line.endsWith("*/"))
+                {
+                    int i = line.indexOf(' ');
+                    line = line.substring(i + 1, line.length() - " */".length());
+                }
+
+                if (line.trim().length() > 0)
+                {
+                    st.execute(line);
+                }
+            }
+        }
+        finally {if (st != null) st.close();}
     }
 }

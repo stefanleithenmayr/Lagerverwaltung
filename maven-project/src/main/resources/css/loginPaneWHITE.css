@@ -1,3 +1,21 @@
 #loginPane{
 	-fx-background-color:white;
+	-fx-background-radius: 10;
+}
+
+#loginBT{
+	-fx-background-color:white;
+	-fx-text-fill: #3D4956;
+}
+
+#userNameField{
+	-fx-prompt-text-fill: #3D4956;
+	-fx-unfocus-color: #3D4956;
+	-fx-focus-color: #3D4956;
+}
+
+#passwordField{
+	-fx-prompt-text-fill: #3D4956;
+	-fx-unfocus-color: #3D4956;
+	-fx-focus-color: #3D4956;
 }
