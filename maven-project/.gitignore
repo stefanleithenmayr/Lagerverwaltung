@@ -10,6 +10,9 @@
 .idea/**/tasks.xml
 .idea/dictionaries
 .db
+.db/db
+**/Lagerverwaltung/db/
+**/Lagerverwaltung/db/db
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
