@@ -26,6 +26,7 @@ public class DBConnection {
         try {
             Class.forName(DRIVER_STRING);
             conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
+            conn.setAutoCommit(true);
             this.userName = userName;
             this.password = password;
 

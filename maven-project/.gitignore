@@ -10,6 +10,9 @@
 .idea/**/tasks.xml
 .idea/dictionaries
 .db
+.db/db
+**/maven-project/db
+**/maven-project/db/db
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

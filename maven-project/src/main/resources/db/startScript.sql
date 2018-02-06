@@ -3,4 +3,3 @@ CREATE TABLE users(
 	password varchar(255));
 
 insert into users values('stefanleithenmayr', '12345');
-commit;
