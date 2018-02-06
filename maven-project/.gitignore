@@ -11,8 +11,8 @@
 .idea/dictionaries
 .db
 .db/db
-**/Lagerverwaltung/db/
-**/Lagerverwaltung/db/db
+**maven-project/db
+**maven-project/db/db
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
