@@ -157,9 +157,9 @@ Abnahmekriterien sind
 
 > - Läuft die Datenbank ordnungsgemäß?
 > - Funktioniert das Programm entsprechend den Anforderungen?
-> - Funktioniert das Ein- Auslagern?
+> - Funktioniert das Ein- bzw. Auslagern?
 > - Auslieferung muss
->     - vollständig
+>     - vollständig und
 >     - pünktlich ankommen
 > - Software muss auf den Pc´s des RoboLab laufen und darf keine Bugs aufweisen
 
