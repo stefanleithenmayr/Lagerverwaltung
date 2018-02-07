@@ -17,7 +17,8 @@ Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 2 | 25. November 2017 | 0.2 | Alle | Erweiterung| Stefan Leithenmayr
 3 | 26. November 2017 | 0.3 | Abnahmekriterien, Lieferumfang | Erweiterung| Maximilian Hofer
 4 | 1. Dezember 2017  | 0.4 | Alle + Diagramme | Erweiterung | René Deicker, Stefan Leithenmayr
-5 | 5. Februar 2018  | 0.5 | Alle | Überarbeitet | René Deicker
+5 | 5. Februar 2018  | 0.5 | Alle | Überarbeitung | René Deicker
+6 | 6. Februar 2018  | 0.6 | Alle | Überarbeitung | Maximilian Hofer
 
 Inhaltsverzeichnis
 ========
