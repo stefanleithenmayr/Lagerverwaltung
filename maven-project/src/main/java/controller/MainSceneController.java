@@ -4,11 +4,14 @@ import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -17,13 +20,15 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane;
+    private AnchorPane mainPane, subPane;
     @FXML
     private Button cancelBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
     private ImageView imageVCancelBT, imageAddElement;
+    @FXML
+    private Line designLine;
 
     private double xOffset;
     private double yOffset;
@@ -69,6 +74,8 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        designLine.setEndX(bounds.getWidth() - 100);
     }
 }
