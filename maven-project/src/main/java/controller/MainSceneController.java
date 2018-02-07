@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -11,15 +12,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane;
+    private AnchorPane mainPane, addItemPane, subPane;
     @FXML
-    private Button cancelBT;
+    private Button cancelBT, addItemBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
@@ -62,13 +64,21 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void addElement(ActionEvent actionEvent) {
-
-
+    private void switchPane(ActionEvent event) {
+        /*Button button = (Button) event.getSource();
+        String buttonName = button.getId();
+        mainPane.getChildren().clear();
+        if (buttonName.equals("")){
+            .getChildren().add(addItemPane);
+        }*/
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
