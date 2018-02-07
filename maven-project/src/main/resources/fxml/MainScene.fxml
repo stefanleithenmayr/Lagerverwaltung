@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
    <children>
       <ImageView fx:id="imageVCancelBT" fitHeight="32.0" fitWidth="32.0" layoutX="1227.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0">
          <image>
@@ -16,12 +16,12 @@
       </ImageView>
       <Button fx:id="cancelBT" layoutX="1227.0" layoutY="21.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="20.0" />
       <JFXToggleButton fx:id="changeThemeBT" layoutX="1158.0" layoutY="9.0" onAction="#changeFont" AnchorPane.rightAnchor="65.0" />
-      <Button layoutX="30.0" layoutY="21.0" mnemonicParsing="false" onAction="#addElement" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="30.0" />
       <ImageView fx:id="imageAddElement" fitHeight="32.0" fitWidth="32.0" layoutX="30.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/add.png" />
          </image>
       </ImageView>
+      <Button fx:id="addItemBT" layoutX="30.0" layoutY="21.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="30.0" />
       <Line fx:id="designLine" endX="1180.0" layoutX="100.0" layoutY="73.0" startX="-100.0" stroke="WHITE" styleClass="lineDesign" />
       <AnchorPane fx:id="subPane" layoutX="21.0" layoutY="95.0" prefHeight="600.0" prefWidth="1240.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="19.0" />
    </children>
