@@ -5,11 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +29,8 @@ public class MainSceneController implements Initializable {
     private JFXToggleButton changeThemeBT;
     @FXML
     private ImageView imageVCancelBT, imageAddElement;
+    @FXML
+    private Line designLine;
 
     private double xOffset;
     private double yOffset;
@@ -80,5 +85,8 @@ public class MainSceneController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        designLine.setEndX(bounds.getWidth() - 100);
     }
 }
