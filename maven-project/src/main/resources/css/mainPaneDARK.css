@@ -1,3 +1,7 @@
 #mainPane{
     -fx-background-color: #3D4956;
 }
+
+.lineDesign{
+    -fx-stroke: white;
+}
