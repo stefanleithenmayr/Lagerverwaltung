@@ -18,12 +18,21 @@ public class ShowItemsController implements Initializable {
     @FXML
     private JFXListView listV;
     @FXML
-    private Text nameID, desc, amount;
+    private Text tnameID, tdesc, tquantity;
 
     @FXML
-    private void showItem(MouseEvent event){
+    private void showItem(MouseEvent event) throws SQLException {
         String selectedItem = (String)listV.getSelectionModel().getSelectedItem();
-        nameID.setText(selectedItem);
+        tnameID.setText(selectedItem);
+        int id = DBConnection.getInstance().getItemIDByName(selectedItem);
+        int quantity = DBConnection.getInstance().getQuantityByID(id);
+        if (quantity != -1){
+            tquantity.setText(Integer.toString(quantity));
+        }
+        String description = DBConnection.getInstance().getIemDescriptionByID(id);
+        if (!description.equals("")){
+            tdesc.setText(description);
+        }
     }
 
     @Override

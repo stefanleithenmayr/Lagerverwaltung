@@ -136,4 +136,37 @@ public class DBConnection {
         }
         st.close();
     }
+
+    public int getItemIDByName(String selectedItem) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+        while (rs.next()){
+            if (rs.getString("PRODUCTNAME").equals(selectedItem)){
+                return rs.getInt("PRODUCTID");
+            }
+        }
+        return -1;
+    }
+
+    public String getIemDescriptionByID(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+        while (rs.next()){
+            if (rs.getInt("PRODUCTID") == id){
+                return  rs.getString("DESCRIPTION");
+            }
+        }
+        return "";
+    }
+
+    public int getQuantityByID(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+        while (rs.next()){
+            if (rs.getInt("PRODUCTID")==id){
+                return rs.getInt("QUANTITY");
+            }
+        }
+        return -1;
+    }
 }
