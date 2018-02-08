@@ -77,6 +77,8 @@ public class MainSceneController implements Initializable {
 
 
     }
+    
+    @FXML
     private void switchPane(ActionEvent event) {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
