@@ -70,12 +70,13 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void switchPane(ActionEvent event) {
-        /*Button button = (Button) event.getSource();
+        Button button = (Button) event.getSource();
         String buttonName = button.getId();
-        mainPane.getChildren().clear();
-        if (buttonName.equals("")){
-            .getChildren().add(addItemPane);
-        }*/
+        System.out.println(buttonName);
+        subPane.getChildren().clear();
+        if (buttonName.equals("addItemBT")) {
+            subPane.getChildren().add(addItemPane);
+        }
     }
 
     @Override
