@@ -64,5 +64,6 @@ public class AddItemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         quantity = 0;
+        //DBConnection.getInstance().createSequence();
     }
 }
