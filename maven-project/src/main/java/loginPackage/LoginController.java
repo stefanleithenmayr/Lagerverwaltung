@@ -57,6 +57,7 @@ public class LoginController implements Initializable {
     private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
         boolean loginSuccessful;
         loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
+        //loginSuccessful = DBConnection.getInstance().login("stefanleithenmayr", "12345");
         if (!loginSuccessful){
             falseInputField.setVisible(true);
             return;

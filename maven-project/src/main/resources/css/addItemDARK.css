@@ -1,3 +1,17 @@
 #addItemPane{
-    -fx-background-color: white;
+    -fx-background-color: #3D4956;
+}
+#tfItemName{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+#tfQuantity{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
 }
