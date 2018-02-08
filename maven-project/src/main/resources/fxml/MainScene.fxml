@@ -23,6 +23,6 @@
          </image>
       </ImageView>
       <Line fx:id="designLine" endX="1180.0" layoutX="100.0" layoutY="73.0" startX="-100.0" stroke="WHITE" styleClass="lineDesign" />
-      <AnchorPane fx:id="subPane" layoutX="21.0" layoutY="95.0" prefHeight="600.0" prefWidth="1240.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="19.0" />
+      <AnchorPane fx:id="subPane" layoutX="21.0" layoutY="95.0" prefHeight="600.0" prefWidth="1240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
    </children>
 </AnchorPane>

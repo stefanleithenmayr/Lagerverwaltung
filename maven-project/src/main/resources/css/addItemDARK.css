@@ -1,0 +1,43 @@
+#addItemPane{
+    -fx-background-color: #3D4956;
+}
+#tfItemName{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+#tfQuantity{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+
+#qText{
+    -fx-fill: white;
+}
+
+#tfDescription{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+
+#btnInsert{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+
+.jfx-text-field{
+    -fx-pref-height:3;
+    -jfx-unfocus-color: white;
+    -jfx-focus-color: red;
+}
