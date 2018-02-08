@@ -5,8 +5,8 @@ Projektbezeichnung |<span style="font-weight:100">Lagerverwaltung</span>
 ------------------ | ---------------
 **Projektleiter**  | Stefan Leithenmayr
 **Erstellt am**    | 16. November 2017
-**Stakeholder**    | Rene Deicker, Maximilian Hofer
-**Zuletzt geändert** | 1. Dezember 2017
+**Mitwirkende**    | Rene Deicker, Maximilian Hofer
+**Zuletzt geändert** | 6. Februar 2018
 
 Änderungsverzeichnis
 -----
@@ -17,7 +17,8 @@ Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 2 | 25. November 2017 | 0.2 | Alle | Erweiterung| Stefan Leithenmayr
 3 | 26. November 2017 | 0.3 | Abnahmekriterien, Lieferumfang | Erweiterung| Maximilian Hofer
 4 | 1. Dezember 2017  | 0.4 | Alle + Diagramme | Erweiterung | René Deicker, Stefan Leithenmayr
-5 | 5. Februar 2018  | 0.5 | Alle | Überarbeitet | René Deicker
+5 | 5. Februar 2018  | 0.5 | Alle | Überarbeitung | René Deicker
+6 | 6. Februar 2018  | 0.6 | Alle | Überarbeitung | Maximilian Hofer
 
 Inhaltsverzeichnis
 ========
@@ -54,13 +55,13 @@ bezüglich der Durchführung eines Projektes.
 
 2.1 Ausgangssituation
 ---------------------
-Aufgrund dessen, dass es derzeit gibt es kein ordentliches Verwatlungssystem, welches die Gegenstände im RoboLab verwaltet, erstellen wir dieses System.
+Aufgrund dessen, dass es derzeit kein ordentliches Verwatlungssystem gibt, welches die Gegenstände im RoboLab verwaltet, erstellen wir dieses System.
 
 
 2.1.1 Beschreibung des Problembereiches
 ---------------------------------------
 Das Hauptproblem des RoboLab ist, dass Lagergüter möglichst zeiteffizient gefunden werden sollen.
-Ein weiteres Problem des RoboLab ist, dass einige Gegenstände schwer zu finden sind bzw. verloren gehen können.
+Ein weiteres Problem ist, dass einige Gegenstände schwer zu finden sind bzw. nicht dort hingelegt werden wo sie genommen worden. Aber auch Verluste sind leicht möglich.
 
 2.1.2 Glossar
 --------
@@ -157,9 +158,9 @@ Abnahmekriterien sind
 
 > - Läuft die Datenbank ordnungsgemäß?
 > - Funktioniert das Programm entsprechend den Anforderungen?
-> - Funktioniert das Ein- Auslagern?
+> - Funktioniert das Ein- bzw. Auslagern?
 > - Auslieferung muss
->     - vollständig
+>     - vollständig und
 >     - pünktlich ankommen
 > - Software muss auf den Pc´s des RoboLab laufen und darf keine Bugs aufweisen
 

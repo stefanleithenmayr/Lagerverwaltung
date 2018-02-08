@@ -26,7 +26,6 @@ public class AddItemController implements Initializable {
     private JFXButton btnInsert;
     @FXML
     private Text qText;
-
     @FXML
     public void substractQuantity(ActionEvent event) {
         if (quantity > 1) {

@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -14,15 +15,16 @@ import javafx.scene.shape.Line;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, subPane;
+    private AnchorPane mainPane, addItemPane, subPane;
     @FXML
-    private Button cancelBT;
+    private Button cancelBT, addItemBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
@@ -71,11 +73,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-<<<<<<< Updated upstream
     public void addElement(ActionEvent actionEvent) {
 
 
-=======
+    }
     private void switchPane(ActionEvent event) {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
@@ -83,11 +84,15 @@ public class MainSceneController implements Initializable {
         if (buttonName.equals("addItemBT")) {
             subPane.getChildren().add(addItemPane);
         }
->>>>>>> Stashed changes
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         designLine.setEndX(bounds.getWidth() - 100);
