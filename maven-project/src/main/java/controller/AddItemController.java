@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 
 import java.net.URL;
@@ -18,13 +19,13 @@ import java.util.ResourceBundle;
 public class AddItemController implements Initializable {
     private Integer quantity;
     @FXML
-    JFXTextField tfItemName, tfQuantity, tfDescription;
+    private JFXTextField tfItemName, tfQuantity, tfDescription;
     @FXML
-    JFXSlider slQuantity;
+    private JFXSlider slQuantity;
     @FXML
-    JFXButton btnInsert;
-
-
+    private JFXButton btnInsert;
+    @FXML
+    private Text qText;
     @FXML
     public void substractQuantity(ActionEvent event) {
         if (quantity > 1) {
