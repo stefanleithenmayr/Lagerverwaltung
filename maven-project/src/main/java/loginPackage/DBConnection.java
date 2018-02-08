@@ -11,10 +11,12 @@ public class DBConnection {
     private final String CONNECTION_STRING = "jdbc:derby://localhost:1527/db;create=true";
     private String userName;
     private String password;
+    private Integer itemId;
 
     private Connection conn;
 
     private DBConnection() {
+        itemId = 1;
     }
 
     public static DBConnection getInstance() {
@@ -67,10 +69,36 @@ public class DBConnection {
     }
 
     public void addProduct(String name, String description, Integer quantity) throws SQLException {
-        Statement stmt = conn.createStatement();
-        String a = "INSERT INTO items VALUES (itemID.nextval,'" + name + "','" + description + "')";
+        /*Statement stmt = conn.createStatement();
+
+        //String a = "INSERT INTO items VALUES (itemID.nextval,'A', 'Kabel')";
+        String a = "INSERT INTO items VALUES (1,'" + name + "','" + description + "')";
 
         stmt.executeUpdate(a);
+*//*
+        int nextID_from_seq;
+//   String query = "SELECT nextval('nodes_nodeid_seq')";
+        String sql = "select itemID.nextval from DUAL";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next())
+             nextID_from_seq = rs.getInt(1);
+        String SQLCommand = "INSERT INTO ITEMS " +
+                "VALUES (5,'" + name + "','" + description + "')";
+        ps = conn.prepareStatement(SQLCommand);
+        //ps.setString(1, name);
+        //ps.setString(2, description);
+        ps.executeUpdate();
+
+        */
+        if(!name.equals("")){
+            String SQLCommand = "INSERT INTO ITEMS " +
+                    "VALUES ("+itemId+",'" + name + "','" + description + "',"+quantity+")";
+
+            PreparedStatement ps = conn.prepareStatement(SQLCommand);
+            ps.executeUpdate();
+            itemId++;
+        }
     }
 
     public void importSQL(InputStream in) throws SQLException {
