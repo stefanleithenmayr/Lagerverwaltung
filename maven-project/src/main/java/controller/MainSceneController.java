@@ -22,13 +22,13 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane;
     @FXML
     private Button cancelBT, addItemBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
-    private ImageView imageVCancelBT, imageAddElement;
+    private ImageView imageVCancelBT, imageAddElement, showItemsIV;
     @FXML
     private Line designLine;
 
@@ -62,11 +62,13 @@ public class MainSceneController implements Initializable {
         if(changeThemeBT.isSelected()){
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             imageAddElement.setImage(new Image("icons/add1.png"));
+            showItemsIV.setImage(new Image("icons/database1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
             addItemPane.getStylesheets().add("css/addItemWHITE.css");
         } else{
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             imageAddElement.setImage(new Image("icons/add.png"));
+            showItemsIV.setImage(new Image("icons/database.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
             addItemPane.getStylesheets().add("css/addItemDARK.css");
         }
@@ -77,7 +79,7 @@ public class MainSceneController implements Initializable {
 
 
     }
-    
+
     @FXML
     private void switchPane(ActionEvent event) {
         Button button = (Button) event.getSource();
@@ -92,6 +94,7 @@ public class MainSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
+            showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,5 +105,7 @@ public class MainSceneController implements Initializable {
         subPane.setPrefHeight(bounds.getHeight() - 120);
         addItemPane.setPrefWidth(bounds.getWidth() - 40);
         addItemPane.setPrefHeight(bounds.getHeight() - 120);
+        showItemPane.setPrefWidth(bounds.getWidth() - 40);
+        showItemPane.setPrefHeight(bounds.getHeight() - 120);
     }
 }
