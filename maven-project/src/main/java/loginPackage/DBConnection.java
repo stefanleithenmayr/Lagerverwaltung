@@ -2,6 +2,8 @@ package loginPackage;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DBConnection {
@@ -99,6 +101,18 @@ public class DBConnection {
             ps.executeUpdate();
             itemId++;
         }
+    }
+
+    public List getItems() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+
+        List<String> items = new ArrayList<>();
+
+        while(rs.next()){
+            items.add(rs.getString("PRODUCTNAME"));
+        }
+        return items;
     }
 
     public void importSQL(InputStream in) throws SQLException {

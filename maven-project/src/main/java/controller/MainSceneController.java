@@ -35,6 +35,8 @@ public class MainSceneController implements Initializable {
     private double xOffset;
     private double yOffset;
 
+    boolean theme; //false = dark, true = white
+
     @FXML
     private void closeWindow(ActionEvent event){
         Stage stage = (Stage) cancelBT.getScene().getWindow();
@@ -58,6 +60,7 @@ public class MainSceneController implements Initializable {
     private void changeFont(ActionEvent event){
         mainPane.getStylesheets().clear();
         addItemPane.getStylesheets().clear();
+        showItemPane.getStylesheets().clear();
 
         if(changeThemeBT.isSelected()){
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -65,33 +68,45 @@ public class MainSceneController implements Initializable {
             showItemsIV.setImage(new Image("icons/database1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
             addItemPane.getStylesheets().add("css/addItemWHITE.css");
+            showItemPane.getStylesheets().add("css/showItemsWHITE.css");
+            theme = true;
         } else{
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             imageAddElement.setImage(new Image("icons/add.png"));
             showItemsIV.setImage(new Image("icons/database.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
             addItemPane.getStylesheets().add("css/addItemDARK.css");
+            showItemPane.getStylesheets().add("css/showItemsDARK.css");
+            theme = false;
         }
     }
 
     @FXML
-    public void addElement(ActionEvent actionEvent) {
-
-
-    }
-
-    @FXML
-    private void switchPane(ActionEvent event) {
+    private void switchPane(ActionEvent event) throws IOException {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
         subPane.getChildren().clear();
         if (buttonName.equals("addItemBT")) {
             subPane.getChildren().add(addItemPane);
+        }else if(buttonName.equals("showItemsBT")){
+            showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
+            subPane.getChildren().add(showItemPane);
+            showItemPane.getStylesheets().clear();
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            showItemPane.setPrefWidth(bounds.getWidth() - 40);
+            showItemPane.setPrefHeight(bounds.getHeight() - 120);
+            if (theme){
+                showItemPane.getStylesheets().add("css/showItemsWHITE.css");
+            }else{
+                showItemPane.getStylesheets().add("css/showItemsDARK.css");
+            }
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        theme = false;
         try {
             addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
             showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));

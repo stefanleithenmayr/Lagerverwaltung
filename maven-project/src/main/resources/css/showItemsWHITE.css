@@ -1,3 +1,15 @@
 #showItemPane{
-    -fx-background-color: #3D4956;
+    -fx-background-color: white;
+}
+
+#nameID{
+    -fx-fill: #3D4956;
+}
+
+#desc {
+    -fx-fill: #3D4956;
+}
+
+#amount {
+    -fx-fill: #3D4956;
 }
