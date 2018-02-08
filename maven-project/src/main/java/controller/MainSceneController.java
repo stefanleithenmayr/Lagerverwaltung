@@ -57,22 +57,31 @@ public class MainSceneController implements Initializable {
     @FXML
     private void changeFont(ActionEvent event){
         mainPane.getStylesheets().clear();
+        addItemPane.getStylesheets().clear();
+
         if(changeThemeBT.isSelected()){
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             imageAddElement.setImage(new Image("icons/add1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
-        }else{
+            addItemPane.getStylesheets().add("css/addItemWHITE.css");
+        } else{
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             imageAddElement.setImage(new Image("icons/add.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
+            addItemPane.getStylesheets().add("css/addItemDARK.css");
         }
     }
 
     @FXML
+    public void addElement(ActionEvent actionEvent) {
+
+
+    }
+    
+    @FXML
     private void switchPane(ActionEvent event) {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
-        System.out.println(buttonName);
         subPane.getChildren().clear();
         if (buttonName.equals("addItemBT")) {
             subPane.getChildren().add(addItemPane);
@@ -89,5 +98,9 @@ public class MainSceneController implements Initializable {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         designLine.setEndX(bounds.getWidth() - 100);
+        subPane.setPrefWidth(bounds.getWidth() - 40);
+        subPane.setPrefHeight(bounds.getHeight() - 120);
+        addItemPane.setPrefWidth(bounds.getWidth() - 40);
+        addItemPane.setPrefHeight(bounds.getHeight() - 120);
     }
 }
