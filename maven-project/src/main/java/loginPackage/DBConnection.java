@@ -17,11 +17,22 @@ public class DBConnection {
 
     private Connection conn;
 
-    private DBConnection() {
-        itemId = 1;
+    private DBConnection() throws SQLException {
     }
 
-    public static DBConnection getInstance() {
+    private Integer getLastItemID() throws SQLException {
+            Integer biggestID = 1;
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+            while (rs.next()){
+                if (rs.getInt("PRODUCTID") > biggestID){
+                    biggestID = rs.getInt("PRODUCTID");
+                }
+            }
+            return biggestID;
+    }
+
+    public static DBConnection getInstance() throws SQLException {
         if (INSTANCE == null) {
             INSTANCE = new DBConnection();
         }
@@ -35,6 +46,7 @@ public class DBConnection {
             this.userName = userName;
             this.password = password;
 
+            itemId = this.getLastItemID();
             try {    //test if table exist, if not than an exception occurs and the program read the sql statments from the file
                 Statement stmt = conn.createStatement();
                 stmt.executeQuery("SELECT * FROM USERS");

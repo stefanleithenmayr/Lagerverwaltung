@@ -11,6 +11,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:1.10.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.derby:derbyclient:10.11.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.derby:derbyclient:10.14.1.0" level="project" />
   </component>
 </module>
