@@ -55,13 +55,12 @@ bezüglich der Durchführung eines Projektes.
 
 2.1 Ausgangssituation
 ---------------------
-Aufgrund dessen, dass es derzeit kein ordentliches Verwatlungssystem gibt, welches die Gegenstände im RoboLab verwaltet, erstellen wir dieses System.
+Unser Projekt wird im Umfeld der HTL-Leonding für das RoboLab erstellt. 
 
 
 2.1.1 Beschreibung des Problembereiches
 ---------------------------------------
-Das Hauptproblem des RoboLab ist, dass Lagergüter möglichst zeiteffizient gefunden werden sollen.
-Ein weiteres Problem ist, dass einige Gegenstände schwer zu finden sind bzw. nicht dort hingelegt werden wo sie genommen worden. Aber auch Verluste sind leicht möglich.
+Das Problem ist, dass man schwer herausfinden kann, welche Gegenstände bei welchen Personen sind. Gegenstände können daher schnell verloren gehen.
 
 2.1.2 Glossar
 --------
