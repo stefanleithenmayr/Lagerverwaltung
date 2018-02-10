@@ -1,9 +1,6 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +16,9 @@ import java.util.ResourceBundle;
 public class AddItemController implements Initializable {
     private Integer quantity;
     @FXML
-    private JFXTextField tfItemName, tfQuantity, tfDescription;
+    private JFXTextField tfQuantity, tfDescription;
+    @FXML
+    private JFXComboBox tfItemName;
     @FXML
     private JFXSlider slQuantity;
     @FXML
@@ -53,7 +52,7 @@ public class AddItemController implements Initializable {
     }
     @FXML
     public void insertItem(ActionEvent event) throws SQLException {
-        DBConnection.getInstance().addProduct(tfItemName.getText(), tfDescription.getText(), quantity);
+        DBConnection.getInstance().addProduct((String)tfItemName.getSelectionModel().getSelectedItem(), tfDescription.getText(), quantity);
     }
 
     @FXML

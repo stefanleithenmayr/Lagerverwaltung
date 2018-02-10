@@ -17,7 +17,12 @@ public class DBConnection {
 
     private Connection conn;
 
-    private DBConnection() throws SQLException {
+    private DBConnection() {}
+    public static DBConnection getInstance() throws SQLException {
+        if (INSTANCE == null) {
+            INSTANCE = new DBConnection();
+        }
+        return INSTANCE;
     }
 
     private Integer getLastItemID() throws SQLException {
@@ -30,13 +35,6 @@ public class DBConnection {
                 }
             }
             return biggestID;
-    }
-
-    public static DBConnection getInstance() throws SQLException {
-        if (INSTANCE == null) {
-            INSTANCE = new DBConnection();
-        }
-        return INSTANCE;
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException {
