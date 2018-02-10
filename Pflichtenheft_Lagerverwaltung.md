@@ -85,7 +85,7 @@ Lager | Jeder Mandant kann mehrere Lager haben
 2.1.4 Beschreibung des Geschäftsfeldes
 ---
 
-![UC Diagram](./images/USE_Case_Diagram.jpeg)
+![UC Diagram](./images/USE_Case_Diagram.jpg)
 
 2.1.5 Beschreibung der Geschäftsprozesse
 ---------------------------------------
