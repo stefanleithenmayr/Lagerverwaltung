@@ -8,6 +8,7 @@ import java.net.URL;
 import java.time.Year;
 import java.util.ResourceBundle;
 
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,9 +21,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import javax.xml.soap.Text;
 import java.sql.Connection;
@@ -54,9 +57,10 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+    private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException, InterruptedException {
         boolean loginSuccessful;
         loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
+
         //loginSuccessful = DBConnection.getInstance().login("renedeicker", "12345");
         if (!loginSuccessful){
             falseInputField.setVisible(true);
@@ -99,7 +103,5 @@ public class LoginController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
+    public void initialize(URL url, ResourceBundle rb) { }
 }

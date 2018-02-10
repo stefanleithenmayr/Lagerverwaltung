@@ -38,3 +38,20 @@
     -jfx-unfocus-color: #3D4956;
     -jfx-focus-color: red;
 }
+
+.jfx-combo-box {
+    -fx-pref-height:3;
+    -jfx-unfocus-color: #3D4956;
+    -jfx-focus-color: red;
+    -fx-font-size: 19;
+    -fx-text-fill: #3D4956;
+    -fx-prompt-text-fill: #3D4956;
+    -fx-faint-focus-color: #3D4956;
+}
+
+.text-field{
+    -fx-font-size: 19;
+    -fx-text-fill: #3D4956;
+    -fx-prompt-text-fill: #3D4956;
+    -fx-faint-focus-color: #3D4956;
+}
