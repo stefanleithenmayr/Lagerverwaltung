@@ -26,7 +26,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private AnchorPane mainPane, addItemPane, subPane, showItemPane;
     @FXML
-    private Button cancelBT, addItemBT;
+    private Button cancelBT, addItemBT, showItemsBT, rentBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
@@ -81,15 +81,26 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    /**
+     * Wechselt zwischen den verschiedenen Panes hin und her
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void switchPane(ActionEvent event) throws IOException {
         Button button = (Button) event.getSource();
+        addItemBT.setStyle("-fx-background-color:transparent");
+        showItemsBT.setStyle("-fx-background-color:transparent");
+        rentBT.setStyle("-fx-background-color:transparent");
         String buttonName = button.getId();
         subPane.getChildren().clear();
+
         if (buttonName.equals("addItemBT")) {
+            addItemBT.setStyle("-fx-background-color:#3D4956");
             subPane.getChildren().add(addItemPane);
         } else if (buttonName.equals("showItemsBT")) {
             showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
+            showItemsBT.setStyle("-fx-background-color:#3D4956");
             subPane.getChildren().add(showItemPane);
             showItemPane.getStylesheets().clear();
             Screen screen = Screen.getPrimary();
@@ -101,6 +112,8 @@ public class MainSceneController implements Initializable {
             } else {
                 showItemPane.getStylesheets().add("css/showItemsDARK.css");
             }
+        } else if(buttonName.equals("rentBT")){
+            rentBT.setStyle("-fx-background-color:#3D4956");
         }
     }
 

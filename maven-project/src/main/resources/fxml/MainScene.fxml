@@ -9,28 +9,42 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
    <children>
       <Rectangle fx:id="recLayout" arcHeight="5.0" arcWidth="5.0" fill="#2d3139" height="650.0" layoutY="71.0" stroke="BLACK" strokeType="INSIDE" width="248.0" />
       <Rectangle fx:id="dashBoard" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="71.0" layoutY="1.0" stroke="#585d6e" strokeType="INSIDE" styleClass="recStyle" width="248.0" AnchorPane.bottomAnchor="644.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1032.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="rentBT" layoutY="154.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="My Rents">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </graphic></Button>
+      <Button fx:id="showItemsBT" layoutY="83.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
+         <graphic>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Manager">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </graphic></Button>
+      <Button fx:id="addItemBT" layoutY="632.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0">
+         <graphic>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Product">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </graphic></Button>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/rent-sign.png" />
+         </image>
+      </ImageView>
       <Text layoutX="42.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dashBoardStyle" text="DASHBOARD">
          <font>
             <Font size="28.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="62.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Manager">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="62.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Product" AnchorPane.bottomAnchor="52.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="62.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Rents">
-         <font>
-            <Font size="20.0" />
          </font>
       </Text>
       <ImageView fx:id="imageVCancelBT" fitHeight="32.0" fitWidth="32.0" layoutX="1227.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0">
@@ -45,19 +59,11 @@
             <Image url="@../icons/add.png" />
          </image>
       </ImageView>
-      <Button fx:id="addItemBT" layoutX="14.0" layoutY="638.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" />
       <AnchorPane fx:id="subPane" layoutX="260.0" layoutY="95.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
       <ImageView fx:id="showItemsIV" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
          <image>
             <Image url="@../icons/database.png" />
          </image>
       </ImageView>
-      <Button fx:id="showItemsBT" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="15.0" />
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../icons/rent-sign.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="rentBT" layoutX="15.0" layoutY="170.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: transparent;" />
    </children>
 </AnchorPane>
