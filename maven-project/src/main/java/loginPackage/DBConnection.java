@@ -17,7 +17,9 @@ public class DBConnection {
 
     private Connection conn;
 
-    private DBConnection() {}
+    private DBConnection() {
+    }
+
     public static DBConnection getInstance() throws SQLException {
         if (INSTANCE == null) {
             INSTANCE = new DBConnection();
@@ -26,41 +28,34 @@ public class DBConnection {
     }
 
     private Integer getLastItemID() throws SQLException {
-            Integer biggestID = 1;
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-            while (rs.next()){
-                if (rs.getInt("PRODUCTID") > biggestID){
-                    biggestID = rs.getInt("PRODUCTID");
-                }
+        Integer biggestID = 1;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+        while (rs.next()) {
+            if (rs.getInt("ITEMID") > biggestID) {
+                biggestID = rs.getInt("ITEMID");
             }
-            return biggestID;
+        }
+        return biggestID;
     }
 
-    public boolean login(String userName, String password) throws ClassNotFoundException {
-        try {
-            Class.forName(DRIVER_STRING);
-            conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
-            this.userName = userName;
-            this.password = password;
+    public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
+        Class.forName(DRIVER_STRING);
+        conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
+        this.userName = userName;
+        this.password = password;
 
-            itemId = this.getLastItemID();
-            try {    //test if table exist, if not than an exception occurs and the program read the sql statments from the file
-                Statement stmt = conn.createStatement();
-                stmt.executeQuery("SELECT * FROM USERS");
-            } catch (SQLException ex) {
-                File file = new File("src/main/resources/db/startScript.sql");
-                this.importSQL(new FileInputStream(file));
-            }
-            boolean existUser = existUser(userName, password);
-            if (existUser) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        try {    //test if table exist, if not than an exception occurs and the program read the sql statments from the file
+            Statement stmt = conn.createStatement();
+            stmt.executeQuery("SELECT * FROM USERS");
+        } catch (SQLException ex) {
+            File file = new File("src/main/resources/db/startScript.sql");
+            this.importSQL(new FileInputStream(file));
+        }
+        itemId = this.getLastItemID();
+        boolean existUser = existUser(userName, password);
+        if (existUser) {
+            return true;
         }
         return false;
     }
@@ -103,13 +98,13 @@ public class DBConnection {
         ps.executeUpdate();
 
         */
-        if(!name.equals("")){
+        itemId++;
+        if (!name.equals("")) {
             String SQLCommand = "INSERT INTO ITEMS " +
-                    "VALUES ("+itemId+",'" + name + "','" + description + "',"+quantity+")";
+                    "VALUES (" + itemId + ",'" + description + "','" + name + "'" + ")";
 
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
-            itemId++;
         }
     }
 
@@ -119,8 +114,8 @@ public class DBConnection {
 
         List<String> items = new ArrayList<>();
 
-        while(rs.next()){
-            items.add(rs.getString("PRODUCTNAME"));
+        while (rs.next()) {
+            items.add(rs.getString("ITEMNAME"));
         }
         return items;
     }
@@ -150,9 +145,9 @@ public class DBConnection {
     public int getItemIDByName(String selectedItem) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()){
-            if (rs.getString("PRODUCTNAME").equals(selectedItem)){
-                return rs.getInt("PRODUCTID");
+        while (rs.next()) {
+            if (rs.getString("ITEMNAME").equals(selectedItem)) {
+                return rs.getInt("ITEMID");
             }
         }
         return -1;
@@ -161,9 +156,9 @@ public class DBConnection {
     public String getIemDescriptionByID(int id) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()){
-            if (rs.getInt("PRODUCTID") == id){
-                return  rs.getString("DESCRIPTION");
+        while (rs.next()) {
+            if (rs.getInt("ITEMID") == id) {
+                return rs.getString("DESCRIPTION");
             }
         }
         return "";
@@ -172,8 +167,8 @@ public class DBConnection {
     public int getQuantityByID(int id) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()){
-            if (rs.getInt("PRODUCTID")==id){
+        while (rs.next()) {
+            if (rs.getInt("ITEMID") == id) {
                 return rs.getInt("QUANTITY");
             }
         }

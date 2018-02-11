@@ -1,7 +1,21 @@
 #mainPane{
-    -fx-background-color: #3D4956;
+    -fx-background-color: #33363F;
 }
 
 .lineDesign{
     -fx-stroke: white;
+}
+
+.dashBoardStyle{
+    -fx-fill: white;
+}
+
+.recStyle{
+    -fx-fill: #B22222;
+    -fx-stroke: #B22222;
+}
+
+#recLayout{
+    -fx-background-color: #2a2d35;
+    -fx-stroke: #2a2d35;
 }

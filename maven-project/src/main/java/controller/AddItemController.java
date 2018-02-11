@@ -16,9 +16,7 @@ import java.util.ResourceBundle;
 public class AddItemController implements Initializable {
     private Integer quantity;
     @FXML
-    private JFXTextField tfQuantity, tfDescription;
-    @FXML
-    private JFXComboBox tfItemName;
+    private JFXTextField tfQuantity, tfDescription, tfItemName;
     @FXML
     private JFXSlider slQuantity;
     @FXML
@@ -52,7 +50,7 @@ public class AddItemController implements Initializable {
     }
     @FXML
     public void insertItem(ActionEvent event) throws SQLException {
-        DBConnection.getInstance().addProduct((String)tfItemName.getSelectionModel().getSelectedItem(), tfDescription.getText(), quantity);
+        DBConnection.getInstance().addProduct(tfItemName.getText(), tfDescription.getText(), quantity);
     }
 
     @FXML

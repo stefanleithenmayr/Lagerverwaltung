@@ -5,3 +5,12 @@
 .lineDesign{
     -fx-stroke: #3D4956;
 }
+
+.recStyle{
+    -fx-fill: #B22222;
+    -fx-stroke: #B22222;
+}
+
+.dashBoardStyle{
+    -fx-fill: white;
+}
