@@ -94,10 +94,10 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 Name des Geschäftsprozesses | Auslösendes Ereignis | Ergebnis | Mitwirkende
 ------------------ | ---------------|----------|-----------------
-Produkte ausleihen| Produkt wird vom Schüler ausgeliehen  | Produkt das entnommen wurde wird auch im Programm entfernt | Schüler
+Produkte ausleihen| Produkt wird vom Schüler ausgeliehen  | Produkt wird im Lagerbestand entfernt | Schüler
 Lagerbestand zeigen | Admin/Schüler möchte wissen, was sich noch im Lager befindet und was ausgeliehen wurde | Lagerstand wird gezeigt | Admin und Schüler
 Produkte zurückgeben | Schüler gibt ein ausgeliehenes Produkt zurück | Produkt wird wieder im Lagerbestand angezeigt | Schüler
-Ausgeliehenes anzeigen | Schüler leiht Produkt aus und wird gespeichert | Ausgeliehene Produkte, sowie dazugehörige Personen werden angezeigt | Schüler
+Ausgeliehenes anzeigen | Produkt wird vom Schüler ausgeliehen | Ausgeliehene Produkte, sowie dazugehörige Personen werden angezeigt | Admin und Schüler
 Produkte hinzufügen | Neues Produkt gekauft/hinzugekommen | Produkt wird in Datenbank hinzugefügt | Admin
 
 2.2 Zielbestimmung
