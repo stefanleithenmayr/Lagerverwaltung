@@ -93,11 +93,11 @@ Lager | Jeder Mandant kann mehrere Lager haben
 
 Name des Geschäftsprozesses | Auslösendes Ereignis | Ergebnis | Mitwirkende
 ------------------ | ---------------|----------|-----------------
-Ein bzw. Auslagern von Gütern| Produkt soll zum Lager hinzugefügt oder entfernt werden  | Produkt das entnommen wurde wird auch im Programm entfernt oder Produkt das eingelagert wurde wird auch im Programm entfernt | Lagerist
-Zeige Lagerstand | Lagerist möchte wissen, was sich noch im Lager befindet | Lagerstand wird gezeigt | Lagerist
-Bestelle beim Lieferanten  | Lagerist benötigt Güter | Bestellung | Lagerist
-Zeige Journal eines Zeitraumes  | Ein -/ Auslagerungen der letzten Zeit werden benötigt | Liste der Ein -/ Auslagerungen | Lagerist
-Verwalte Lieferanten | Lieferantendaten wurden geändert | Geänderte Lieferantendaten | Lagerist
+Produkte ausleihen| Produkt wird vom Schüler ausgeliehen  | Produkt das entnommen wurde wird auch im Programm entfernt | Schüler
+Lagerbestand zeigen | Admin/Schüler möchte wissen, was sich noch im Lager befindet und was ausgeliehen wurde | Lagerstand wird gezeigt | Admin und Schüler
+Produkte zurückgeben | Schüler gibt ein ausgeliehenes Produkt zurück | Produkt wird wieder im Lagerbestand angezeigt | Schüler
+Ausgeliehenes anzeigen | Schüler leiht Produkt aus und wird gespeichert | Ausgeliehene Produkte, sowie dazugehörige Personen werden angezeigt | Schüler
+Produkte hinzufügen | Neues Produkt gekauft/hinzugekommen | Produkt wird in Datenbank hinzugefügt | Admin
 
 2.2 Zielbestimmung
 -----------------
