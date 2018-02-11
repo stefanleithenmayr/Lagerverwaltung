@@ -21,6 +21,7 @@ Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 6 | 6. Februar 2018  | 0.6 | Alle | Überarbeitung | Maximilian Hofer
 7 | 10. Februar 2018 | 0.7 | Klassendiagramm + Use-Case-Diagram | Überarbeitung | Maximilian Hofer
 8 | 11. Februar 2018 | 0.8 | Beschreibung der Geschäftsprozesse | Überarbeitung | Maximilian Hofer
+9 | 11. Feburar 2018 | 0.9 | Glossar | Überarbeitung | Maximilian Hofer
 
 Inhaltsverzeichnis
 ========
@@ -69,15 +70,10 @@ Das Problem ist, dass man schwer herausfinden kann, welche Gegenstände bei welc
 
 Fachbegriff | Beschreibung|
 ------------------ | ---------------|
-Meldemenge | Menge ab der bestellt werden muss
-Sicherheitsmenge | Menge die immer vorhanden muss, dass es zu keinen Verzögerungen kommt
-Umschlagshäufigkeit | Häufigkeit wie oft ein Produkt raus bzw. ins Lager geht
-Pönale | Strafzahlung
-Journal | Dort sieht man die Lagerbewegungen (Ein -/ Auslagerungen)
-Mandant | Kunde der unser Programm verwendet
-Lieferant | Personen die den Mandanten beliefern
-Produkt | Sind die Produkte die unsere Mandanten einlagern
-Lager | Jeder Mandant kann mehrere Lager haben
+Leihe | Schüler dürfen Produkte aus dem RoboLab ausleihen
+Exemplar | Ausprägung von Produkt
+Benutzer | Kunde der unser Programm verwendet
+Produkt | Sind die Produkte die der Admin einlagern und die die Schüler ausleihen können
 
 2.1.3 Modell des Problembereiches
 ---
