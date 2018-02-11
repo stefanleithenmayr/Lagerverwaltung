@@ -19,7 +19,8 @@ Nr. | Datum | Version | Geänderte Kapitel | Beschreibung der Änderung | Autor
 4 | 1. Dezember 2017  | 0.4 | Alle + Diagramme | Erweiterung | René Deicker, Stefan Leithenmayr
 5 | 5. Februar 2018  | 0.5 | Alle | Überarbeitung | René Deicker
 6 | 6. Februar 2018  | 0.6 | Alle | Überarbeitung | Maximilian Hofer
-7 | 10.Februar 2018 | 0.7 | Klassendiagramm + Use-Case-Diagram | Überarbeitung | Maximilian Hofer
+7 | 10. Februar 2018 | 0.7 | Klassendiagramm + Use-Case-Diagram | Überarbeitung | Maximilian Hofer
+8 | 11. Februar 2018 | 0.8 | Beschreibung der Geschäftsprozesse | Überarbeitung | Maximilian Hofer
 
 Inhaltsverzeichnis
 ========
