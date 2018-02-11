@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -30,7 +32,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private ImageView imageVCancelBT, imageAddElement, showItemsIV;
     @FXML
-    private Line designLine;
+    private Rectangle recLayout;
 
     private double xOffset;
     private double yOffset;
@@ -38,7 +40,7 @@ public class MainSceneController implements Initializable {
     boolean theme; //false = dark, true = white
 
     @FXML
-    private void closeWindow(ActionEvent event){
+    private void closeWindow(ActionEvent event) {
         Stage stage = (Stage) cancelBT.getScene().getWindow();
         stage.close();
     }
@@ -57,20 +59,18 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    private void changeFont(ActionEvent event){
+    private void changeFont(ActionEvent event) {
         mainPane.getStylesheets().clear();
         addItemPane.getStylesheets().clear();
         showItemPane.getStylesheets().clear();
 
-        if(changeThemeBT.isSelected()){
+        if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
-            imageAddElement.setImage(new Image("icons/add1.png"));
-            showItemsIV.setImage(new Image("icons/database1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
             addItemPane.getStylesheets().add("css/addItemWHITE.css");
             showItemPane.getStylesheets().add("css/showItemsWHITE.css");
             theme = true;
-        } else{
+        } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             imageAddElement.setImage(new Image("icons/add.png"));
             showItemsIV.setImage(new Image("icons/database.png"));
@@ -88,17 +88,17 @@ public class MainSceneController implements Initializable {
         subPane.getChildren().clear();
         if (buttonName.equals("addItemBT")) {
             subPane.getChildren().add(addItemPane);
-        }else if(buttonName.equals("showItemsBT")){
+        } else if (buttonName.equals("showItemsBT")) {
             showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
             subPane.getChildren().add(showItemPane);
             showItemPane.getStylesheets().clear();
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-            showItemPane.setPrefWidth(bounds.getWidth() - 40);
+            showItemPane.setPrefWidth(bounds.getWidth() - 280);
             showItemPane.setPrefHeight(bounds.getHeight() - 120);
-            if (theme){
+            if (theme) {
                 showItemPane.getStylesheets().add("css/showItemsWHITE.css");
-            }else{
+            } else {
                 showItemPane.getStylesheets().add("css/showItemsDARK.css");
             }
         }
@@ -115,12 +115,12 @@ public class MainSceneController implements Initializable {
         }
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        designLine.setEndX(bounds.getWidth() - 100);
-        subPane.setPrefWidth(bounds.getWidth() - 40);
+        subPane.setPrefWidth(bounds.getWidth() - 280);
         subPane.setPrefHeight(bounds.getHeight() - 120);
-        addItemPane.setPrefWidth(bounds.getWidth() - 40);
+        addItemPane.setPrefWidth(bounds.getWidth() - 280);
         addItemPane.setPrefHeight(bounds.getHeight() - 120);
-        showItemPane.setPrefWidth(bounds.getWidth() - 40);
+        showItemPane.setPrefWidth(bounds.getWidth() - 280);
         showItemPane.setPrefHeight(bounds.getHeight() - 120);
+        recLayout.setHeight(bounds.getHeight() - 71);
     }
 }

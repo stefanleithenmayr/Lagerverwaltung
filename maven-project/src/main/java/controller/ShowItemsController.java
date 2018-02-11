@@ -25,7 +25,7 @@ public class ShowItemsController implements Initializable {
         String selectedItem = (String)listV.getSelectionModel().getSelectedItem();
         tnameID.setText(selectedItem);
         int id = DBConnection.getInstance().getItemIDByName(selectedItem);
-        int quantity = DBConnection.getInstance().getQuantityByID(id);
+        int quantity = 1;
         if (quantity != -1){
             tquantity.setText(Integer.toString(quantity));
         }
