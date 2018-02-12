@@ -31,12 +31,15 @@ public class DBConnection {
         Integer biggestID = 1;
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()) {
-            if (rs.getInt("ITEMID") > biggestID) {
+        if (rs == null){
+            return 1000000;
+        }
+        while (rs.next()){
+            if (rs.getInt("ITEMID") > biggestID){
                 biggestID = rs.getInt("ITEMID");
             }
         }
-        return biggestID;
+        return biggestID+1;
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {

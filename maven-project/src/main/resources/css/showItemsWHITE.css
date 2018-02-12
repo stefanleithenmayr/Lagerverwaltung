@@ -2,14 +2,14 @@
     -fx-background-color: white;
 }
 
-#nameID{
+#tnameID{
     -fx-fill: #3D4956;
 }
 
-#desc {
+#tdesc {
     -fx-fill: #3D4956;
 }
 
-#amount {
+#tquantity {
     -fx-fill: #3D4956;
 }
