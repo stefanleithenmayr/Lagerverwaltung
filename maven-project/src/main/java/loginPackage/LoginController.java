@@ -74,6 +74,7 @@ public class LoginController implements Initializable {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
+        newStage.getIcons().add(new Image("https://raw.githubusercontent.com/stefanleithenmayr/Lagerverwaltung/master/maven-project/src/main/resources/icons/atom.png"));
         newStage.setX(bounds.getMinX());
         newStage.setY(bounds.getMinY());
         newStage.setWidth(bounds.getWidth());
