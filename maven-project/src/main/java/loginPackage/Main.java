@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
@@ -26,7 +27,7 @@ public class Main extends Application {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-
+        stage.getIcons().add(new Image("https://raw.githubusercontent.com/stefanleithenmayr/Lagerverwaltung/master/maven-project/src/main/resources/icons/add.png"));
         stage.setScene(scene);
         stage.setResizable(false);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);

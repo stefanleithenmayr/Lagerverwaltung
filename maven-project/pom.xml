@@ -26,7 +26,6 @@
                             <mainClass>loginPackage.Main</mainClass>
                         </manifest>
                     </archive>
-
                 </configuration>
                 <executions>
                     <execution>
