@@ -1,5 +1,7 @@
 package loginPackage;
 
+import model.Item;
+
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ public class DBConnection {
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
+        userName = "renedeicker";
+        password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
         this.userName = userName;
@@ -78,29 +82,8 @@ public class DBConnection {
         return false;
     }
 
+
     public void addProduct(String name, String description, Integer quantity) throws SQLException {
-        /*Statement stmt = conn.createStatement();
-
-        //String a = "INSERT INTO items VALUES (itemID.nextval,'A', 'Kabel')";
-        String a = "INSERT INTO items VALUES (1,'" + name + "','" + description + "')";
-
-        stmt.executeUpdate(a);
-*//*
-        int nextID_from_seq;
-//   String query = "SELECT nextval('nodes_nodeid_seq')";
-        String sql = "select itemID.nextval from DUAL";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        if(rs.next())
-             nextID_from_seq = rs.getInt(1);
-        String SQLCommand = "INSERT INTO ITEMS " +
-                "VALUES (5,'" + name + "','" + description + "')";
-        ps = conn.prepareStatement(SQLCommand);
-        //ps.setString(1, name);
-        //ps.setString(2, description);
-        ps.executeUpdate();
-
-        */
         itemId++;
         if (!name.equals("")) {
             String SQLCommand = "INSERT INTO ITEMS " +
@@ -111,14 +94,13 @@ public class DBConnection {
         }
     }
 
-    public List getItems() throws SQLException {
+    public List getItemsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
 
-        List<String> items = new ArrayList<>();
-
+        List<Item> items = new ArrayList<Item>();
         while (rs.next()) {
-            items.add(rs.getString("ITEMNAME"));
+            items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), rs.getInt("ITEMID")));
         }
         return items;
     }
@@ -143,38 +125,5 @@ public class DBConnection {
             }
         }
         st.close();
-    }
-
-    public int getItemIDByName(String selectedItem) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()) {
-            if (rs.getString("ITEMNAME").equals(selectedItem)) {
-                return rs.getInt("ITEMID");
-            }
-        }
-        return -1;
-    }
-
-    public String getIemDescriptionByID(int id) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()) {
-            if (rs.getInt("ITEMID") == id) {
-                return rs.getString("DESCRIPTION");
-            }
-        }
-        return "";
-    }
-
-    public int getQuantityByID(int id) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        while (rs.next()) {
-            if (rs.getInt("ITEMID") == id) {
-                return rs.getInt("QUANTITY");
-            }
-        }
-        return -1;
     }
 }
