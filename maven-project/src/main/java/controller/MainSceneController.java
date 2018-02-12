@@ -11,9 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -24,7 +22,7 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, movementsPane;
     @FXML
     private Button cancelBT, addItemBT, showItemsBT, rentBT;
     @FXML
@@ -113,7 +111,14 @@ public class MainSceneController implements Initializable {
                 showItemPane.getStylesheets().add("css/showItemsDARK.css");
             }
         } else if(buttonName.equals("rentBT")){
+            movementsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
             rentBT.setStyle("-fx-background-color:#3D4956");
+            subPane.getChildren().add(movementsPane);
+            movementsPane.getStylesheets().clear();
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            movementsPane.setPrefWidth(bounds.getWidth() - 280);
+            movementsPane.setPrefHeight(bounds.getHeight() - 120);
         }
     }
 

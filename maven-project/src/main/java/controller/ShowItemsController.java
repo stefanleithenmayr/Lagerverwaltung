@@ -1,9 +1,13 @@
 package controller;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import loginPackage.DBConnection;
@@ -12,34 +16,33 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import model.Item;
+
+import javax.swing.text.html.ListView;
 
 public class ShowItemsController implements Initializable {
 
     @FXML
-    private JFXListView listV;
+    private JFXListView<Item> listV;
     @FXML
-    private Text tnameID, tdesc, tquantity;
+    private TextArea taName, taDesc;
 
     @FXML
     private void showItem(MouseEvent event) throws SQLException {
-        String selectedItem = (String)listV.getSelectionModel().getSelectedItem();
-        tnameID.setText(selectedItem);
-        int id = DBConnection.getInstance().getItemIDByName(selectedItem);
-        int quantity = 1;
-        if (quantity != -1){
-            tquantity.setText(Integer.toString(quantity));
-        }
-        String description = DBConnection.getInstance().getIemDescriptionByID(id);
+        Item selectedItem = listV.getSelectionModel().getSelectedItem();
+        taName.setText(selectedItem.toString());
+        int id = selectedItem.getId();
+        String description = selectedItem.getDescription();
         if (!description.equals("")){
-            tdesc.setText(description);
+            taDesc.setText(description);
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<String> items = null;
+        List<Item> items = null;
         try {
-            items = (List<String>) DBConnection.getInstance().getItems();
+            items =  DBConnection.getInstance().getItemsList();
         } catch (SQLException e) {
             e.printStackTrace();
         }

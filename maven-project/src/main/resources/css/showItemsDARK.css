@@ -2,14 +2,10 @@
     -fx-background-color: #33363F;
 }
 
-#tnameID {
+#taName {
     -fx-fill: white;
 }
 
-#tdesc {
-    -fx-fill: white;
-}
-
-#tquantity {
+#taDesc {
     -fx-fill: white;
 }
