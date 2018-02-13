@@ -50,7 +50,13 @@ public class AddItemController implements Initializable {
     }
     @FXML
     public void insertItem(ActionEvent event) throws SQLException {
-        DBConnection.getInstance().addProduct(tfItemName.getText(), tfDescription.getText(), quantity);
+        int counter  = 0;
+        DBConnection.getInstance().addItem(tfItemName.getText(), tfDescription.getText(), quantity);
+        int itemId = DBConnection.getInstance().getLastItemID();
+        while(counter != quantity){
+            DBConnection.getInstance().addItemExemplar(itemId);
+            counter++;
+        }
     }
 
     @FXML
