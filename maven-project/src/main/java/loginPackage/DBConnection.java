@@ -125,20 +125,9 @@ public class DBConnection {
     public List getItemsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        boolean alreadyInserted;
         List<Item> items = new ArrayList<Item>();
         while (rs.next()) {
-            alreadyInserted = false;
-            for (int i = 0; i < items.size(); i++){
-                if (items.get(i).getName().equals(rs.getString("ITEMNAME")) &&
-                    items.get(i).getDescription().equals(rs.getString("DESCRIPTION"))){
-                    alreadyInserted = true;
-                }
-            }
-            if (!alreadyInserted){
-                items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), rs.getInt("ITEMID" +
-                        "")));
-            }
+            items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), rs.getInt("ITEMID" +"")));
         }
         return items;
     }
