@@ -15,7 +15,8 @@ public class DBConnection {
     private final String CONNECTION_STRING = "jdbc:derby://localhost:1527/db;create=true";
     private String userName;
     private String password;
-    private Integer itemId;
+    private Integer itemExemplarId;
+    private Integer itemID;
 
     private Connection conn;
 
@@ -29,19 +30,37 @@ public class DBConnection {
         return INSTANCE;
     }
 
-    private Integer getLastItemID() throws SQLException {
-        Integer biggestID = 1;
+    public Integer getLastItemExemplarID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        if (rs == null){
+        ResultSet rs = stmt.executeQuery("SELECT * FROM EXEMPLAR");
+        if (!rs.next()){
             return 1000000;
         }
+
+        Integer biggestID = rs.getInt("EXEMPLARID");
         while (rs.next()){
-            if (rs.getInt("ITEMID") > biggestID){
-                biggestID = rs.getInt("ITEMID");
+            Integer cache = rs.getInt("EXEMPLARID");
+            if (cache > biggestID){
+                biggestID = cache;
             }
         }
-        return biggestID+1;
+        return biggestID;
+    }
+    public Integer getLastItemID() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+        if (!rs.next()){
+            return 1000;
+        }
+
+        Integer biggestID = rs.getInt("ITEMID");
+        while (rs.next()){
+            int cache = rs.getInt("ITEMID");
+            if (cache > biggestID){
+                biggestID = cache;
+            }
+        }
+        return biggestID;
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
@@ -59,7 +78,8 @@ public class DBConnection {
             File file = new File("src/main/resources/db/startScript.sql");
             this.importSQL(new FileInputStream(file));
         }
-        itemId = this.getLastItemID();
+        itemExemplarId = this.getLastItemExemplarID()+1;
+        itemID = this.getLastItemID()+1;
         boolean existUser = existUser(userName, password);
         if (existUser) {
             return true;
@@ -82,25 +102,43 @@ public class DBConnection {
         return false;
     }
 
-
-    public void addProduct(String name, String description, Integer quantity) throws SQLException {
-        itemId++;
+    public void addItem(String name, String description, Integer quantity) throws SQLException {
         if (!name.equals("")) {
             String SQLCommand = "INSERT INTO ITEMS " +
-                    "VALUES (" + itemId + ",'" + description + "','" + name + "'" + ")";
+                    "VALUES (" + itemID + ",'" + description + "','" + name + "'" + ")";
 
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
         }
+        itemID++;
+    }
+
+    public void addItemExemplar(Integer itemID) throws SQLException {
+        String SQLCommand = "INSERT INTO EXEMPLAR " +
+                    "VALUES ("+ itemExemplarId + ","+ itemID + ")";
+
+        PreparedStatement ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        itemExemplarId++;
     }
 
     public List getItemsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-
+        boolean alreadyInserted;
         List<Item> items = new ArrayList<Item>();
         while (rs.next()) {
-            items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), rs.getInt("ITEMID")));
+            alreadyInserted = false;
+            for (int i = 0; i < items.size(); i++){
+                if (items.get(i).getName().equals(rs.getString("ITEMNAME")) &&
+                    items.get(i).getDescription().equals(rs.getString("DESCRIPTION"))){
+                    alreadyInserted = true;
+                }
+            }
+            if (!alreadyInserted){
+                items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), rs.getInt("ITEMID" +
+                        "")));
+            }
         }
         return items;
     }

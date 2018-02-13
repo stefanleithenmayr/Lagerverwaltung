@@ -5,11 +5,8 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 
 import java.net.URL;
@@ -18,7 +15,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import model.Item;
 
-import javax.swing.text.html.ListView;
 
 public class ShowItemsController implements Initializable {
 
@@ -30,11 +26,13 @@ public class ShowItemsController implements Initializable {
     @FXML
     private void showItem(MouseEvent event) throws SQLException {
         Item selectedItem = listV.getSelectionModel().getSelectedItem();
-        taName.setText(selectedItem.toString());
-        int id = selectedItem.getId();
-        String description = selectedItem.getDescription();
-        if (!description.equals("")){
-            taDesc.setText(description);
+        if (selectedItem != null){
+            taName.setText(selectedItem.toString());
+            int id = selectedItem.getId();
+            String description = selectedItem.getDescription();
+            if (!description.equals("")){
+                taDesc.setText(description);
+            }
         }
     }
 
