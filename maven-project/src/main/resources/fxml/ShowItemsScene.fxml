@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXListView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="showItemPane" prefHeight="600.0" prefWidth="1240.0" stylesheets="@../css/showItemsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShowItemsController">
+<AnchorPane fx:id="showItemPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/showItemsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShowItemsController">
    <children>
-      <JFXListView fx:id="listV" layoutX="20.0" layoutY="26.0" onMouseClicked="#showItem" prefWidth="350.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-      <TextArea fx:id="taName" editable="false" layoutX="404.0" layoutY="20.0" prefHeight="44.0" prefWidth="249.0" />
-      <TextArea fx:id="taDesc" editable="false" layoutX="404.0" layoutY="93.0" prefHeight="44.0" prefWidth="249.0" />
+      <TableView fx:id="itemsTV" layoutX="40.0" layoutY="72.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
+         <columns>
+            <TableColumn fx:id="prodNameCol" prefWidth="94.0" text="Productname" />
+            <TableColumn fx:id="descCol" prefWidth="94.0" text="Description" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>
