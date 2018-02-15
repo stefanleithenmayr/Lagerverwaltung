@@ -1,12 +1,11 @@
 package controller;
 
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import loginPackage.DBConnection;
 
 import java.net.URL;
@@ -15,26 +14,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 import model.Item;
 
-
 public class ShowItemsController implements Initializable {
 
     @FXML
-    private JFXListView<Item> listV;
-    @FXML
-    private TextArea taName, taDesc;
+    private TableView<Item> itemsTV;
 
     @FXML
-    private void showItem(MouseEvent event) throws SQLException {
-        Item selectedItem = listV.getSelectionModel().getSelectedItem();
-        if (selectedItem != null){
-            taName.setText(selectedItem.toString());
-            int id = selectedItem.getId();
-            String description = selectedItem.getDescription();
-            if (!description.equals("")){
-                taDesc.setText(description);
-            }
-        }
-    }
+    private TableColumn<?,?> prodNameCol, descCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,8 +30,17 @@ public class ShowItemsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        prodNameCol.setCellValueFactory(
+                new PropertyValueFactory<>("name"));
+
+        descCol.setCellValueFactory(
+                new PropertyValueFactory<>("description"));
+
+        prodNameCol.setMinWidth(200);
+        descCol.setMinWidth(300);
+
         if(items != null){
-            listV.setItems(FXCollections.observableArrayList(items));
+            itemsTV.setItems(FXCollections.observableArrayList(items));
         }
     }
 }

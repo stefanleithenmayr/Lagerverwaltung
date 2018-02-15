@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentsController">
+<AnchorPane fx:id="rentsPane" prefHeight="600.0" prefWidth="1000.0" styleClass="root" stylesheets="@../css/rentsDARK.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentsController">
    <children>
-      <Button fx:id="movementsPane" layoutX="934.0" layoutY="561.0" mnemonicParsing="false" text="Button" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <JFXButton fx:id="exportBT" layoutX="766.0" layoutY="51.0" prefHeight="10.0" prefWidth="82.0" ripplerFill="WHITE" styleClass="btStyle" text="Export" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="returnBT" layoutX="25.0" layoutY="45.0" prefHeight="42.0" prefWidth="93.0" ripplerFill="WHITE" styleClass="btStyle" text="Return" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="tableViewRents" layoutX="25.0" layoutY="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
+         <columns>
+            <TableColumn fx:id="productName" prefWidth="75.0" text="Productname" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

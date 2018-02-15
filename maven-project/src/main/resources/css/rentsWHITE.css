@@ -1,4 +1,4 @@
-#showItemPane{
+#rentsPane{
     -fx-background-color: white;
     -fx-font-size: 15px;
     -fx-text-fill: #33363F;
@@ -130,4 +130,10 @@
 
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
+}
+
+.btStyle{
+    -fx-border-color: #33363F;
+    -fx-text-fill: #33363F;
+    -fx-border-width: 0.5;
 }
