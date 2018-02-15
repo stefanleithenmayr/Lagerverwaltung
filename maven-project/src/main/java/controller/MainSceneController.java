@@ -179,6 +179,7 @@ public class MainSceneController implements Initializable {
         try {
             addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
             showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
+            rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,6 +191,8 @@ public class MainSceneController implements Initializable {
         addItemPane.setPrefHeight(bounds.getHeight() - 120);
         showItemPane.setPrefWidth(bounds.getWidth() - 280);
         showItemPane.setPrefHeight(bounds.getHeight() - 120);
+        rentsPane.setPrefWidth(bounds.getWidth() - 280);
+        rentsPane.setPrefHeight(bounds.getHeight() - 120);
         recLayout.setHeight(bounds.getHeight() - 71);
         acutalPane = "";
     }
