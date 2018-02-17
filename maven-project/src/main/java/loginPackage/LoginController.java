@@ -2,33 +2,27 @@ package loginPackage;
 
 import com.jfoenix.controls.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Year;
 import java.util.ResourceBundle;
-
-import javafx.animation.RotateTransition;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.CacheHint;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.transform.Rotate;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
-
-import javax.xml.soap.Text;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class LoginController implements Initializable {
@@ -64,6 +58,7 @@ public class LoginController implements Initializable {
             falseInputField.setVisible(true);
             return;
         }
+
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
 
