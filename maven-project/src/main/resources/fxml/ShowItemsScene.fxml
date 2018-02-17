@@ -10,6 +10,7 @@
          <columns>
             <TableColumn fx:id="prodNameCol" prefWidth="94.0" text="Productname" />
             <TableColumn fx:id="descCol" prefWidth="94.0" text="Description" />
+            <TableColumn fx:id="totalProdCol" prefWidth="75.0" text="Total Products" />
          </columns>
       </TableView>
    </children>

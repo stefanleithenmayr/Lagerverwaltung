@@ -20,7 +20,7 @@ public class ShowItemsController implements Initializable {
     private TableView<Item> itemsTV;
 
     @FXML
-    private TableColumn<?,?> prodNameCol, descCol;
+    private TableColumn<?,?> prodNameCol, descCol, totalProdCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,8 +36,13 @@ public class ShowItemsController implements Initializable {
         descCol.setCellValueFactory(
                 new PropertyValueFactory<>("description"));
 
+        totalProdCol.setCellValueFactory(
+                new PropertyValueFactory<>("totalExemplars"));
+
+
         prodNameCol.setMinWidth(200);
         descCol.setMinWidth(300);
+        totalProdCol.setMinWidth(300);
 
         if(items != null){
             itemsTV.setItems(FXCollections.observableArrayList(items));
