@@ -131,3 +131,7 @@
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
+
+#itemsTV .table-column {
+    -fx-alignment: CENTER;
+}

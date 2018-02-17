@@ -137,3 +137,7 @@
     -fx-text-fill: #33363F;
     -fx-border-width: 0.5;
 }
+
+#tableViewRents .table-column {
+    -fx-alignment: CENTER;
+}
