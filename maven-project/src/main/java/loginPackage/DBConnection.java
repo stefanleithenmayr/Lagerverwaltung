@@ -153,4 +153,13 @@ public class DBConnection {
         }
         st.close();
     }
+
+    public int countExemplars(Integer id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(EXEMPLARID) FROM EXEMPLAR WHERE ITEMID = " + id + " GROUP BY ITEMID");
+        if (rs.next()){
+            return rs.getInt(1);
+        }
+        return 1;
+    }
 }
