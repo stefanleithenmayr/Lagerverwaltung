@@ -22,13 +22,13 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane;
     @FXML
-    private Button cancelBT, addItemBT, showItemsBT, rentBT;
+    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportBT, statisticsBT, userManagerBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
-    private ImageView imageVCancelBT, imageAddElement, showItemsIV;
+    private ImageView imageVCancelBT;
     @FXML
     private Rectangle recLayout;
 
@@ -74,6 +74,12 @@ public class MainSceneController implements Initializable {
             showItemsBT.setStyle("-fx-background-color:#3D4956");
         }else if(buttonName.equals("rentBT")){
             rentBT.setStyle("-fx-background-color:#3D4956");
+        }else if(buttonName.equals("exportBT")){
+            exportBT.setStyle("-fx-background-color:#3D4956");
+        }else if(buttonName.equals("statisticsBT")){
+            statisticsBT.setStyle("-fx-background-color:#3D4956");
+        }else if(buttonName.equals("userManagerBT")){
+            userManagerBT.setStyle("-fx-background-color:#3D4956");
         }
     }
 
@@ -88,6 +94,12 @@ public class MainSceneController implements Initializable {
             showItemsBT.setStyle("-fx-background-color:transparent");
         }else if(buttonName.equals("rentBT") && !acutalPane.equals("rentsPane")){
             rentBT.setStyle("-fx-background-color:transparent");
+        }else if(buttonName.equals("exportBT") && !acutalPane.equals("exportPane")){
+            exportBT.setStyle("-fx-background-color:transparent");
+        }else if(buttonName.equals("statisticsBT") && !acutalPane.equals("statisticsPane")){
+            statisticsBT.setStyle("-fx-background-color:transparent");
+        }else if(buttonName.equals("userManagerBT") && !acutalPane.equals("userManagerPane")){
+            userManagerBT.setStyle("-fx-background-color:transparent");
         }
     }
 
@@ -102,6 +114,7 @@ public class MainSceneController implements Initializable {
         addItemPane.getStylesheets().clear();
         showItemPane.getStylesheets().clear();
         rentsPane.getStylesheets().clear();
+        statisticsPane.getStylesheets().clear();
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -109,15 +122,15 @@ public class MainSceneController implements Initializable {
             addItemPane.getStylesheets().add("css/addItemWHITE.css");
             showItemPane.getStylesheets().add("css/showItemsWHITE.css");
             rentsPane.getStylesheets().add("css/rentsWHITE.css");
+            statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
-            imageAddElement.setImage(new Image("icons/add.png"));
-            showItemsIV.setImage(new Image("icons/database.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
             addItemPane.getStylesheets().add("css/addItemDARK.css");
             showItemPane.getStylesheets().add("css/showItemsDARK.css");
             rentsPane.getStylesheets().add("css/rentsDARK.css");
+            statisticsPane.getStylesheets().add("css/statisticsDARK.css");
             theme = false;
         }
     }
@@ -170,6 +183,20 @@ public class MainSceneController implements Initializable {
                 rentsPane.getStylesheets().add("css/rentsDark.css");
             }
             acutalPane = "rentsPane";
+        }else if(buttonName.equals("statisticsBT")){
+            statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
+            statisticsBT.setStyle("-fx-background-color:#3D4956");
+            subPane.getChildren().add(statisticsPane);
+            statisticsPane.setPrefWidth(bounds.getWidth() - 280);
+            statisticsPane.setPrefHeight(bounds.getHeight() - 120);
+            statisticsPane.getStylesheets().clear();
+
+            if (theme) {
+                statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
+            } else {
+                statisticsPane.getStylesheets().add("css/statisticsDARK.css");
+            }
+            acutalPane = "statisticsPane";
         }
     }
 
@@ -180,19 +207,28 @@ public class MainSceneController implements Initializable {
             addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
             showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
             rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
+            statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
+
         subPane.setPrefWidth(bounds.getWidth() - 280);
         subPane.setPrefHeight(bounds.getHeight() - 120);
+
         addItemPane.setPrefWidth(bounds.getWidth() - 280);
         addItemPane.setPrefHeight(bounds.getHeight() - 120);
+
         showItemPane.setPrefWidth(bounds.getWidth() - 280);
         showItemPane.setPrefHeight(bounds.getHeight() - 120);
+
         rentsPane.setPrefWidth(bounds.getWidth() - 280);
         rentsPane.setPrefHeight(bounds.getHeight() - 120);
+
+        statisticsPane.setPrefWidth(bounds.getWidth() - 280);
+        statisticsPane.setPrefHeight(bounds.getHeight() - 120);
+
         recLayout.setHeight(bounds.getHeight() - 71);
         acutalPane = "";
     }
