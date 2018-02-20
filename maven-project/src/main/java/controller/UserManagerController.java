@@ -3,7 +3,6 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -45,11 +44,12 @@ public class UserManagerController implements Initializable{
     }
 
     @FXML
-    private void activateEditing() throws InterruptedException {
+    private void activateEditing() {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null) {
-            user.handleFields(false);
+            user.setB(false);
             this.handleButton(true);
+            userTV.refresh();
         }
     }
 
@@ -57,9 +57,7 @@ public class UserManagerController implements Initializable{
     private void cancelEditing(){
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null) {
-            user.getUsername().setDisable(true);
-            user.getName().setDisable(true);
-            user.getPassword().setDisable(true);
+            user.setB(true);
         }
 
         if (user.getUserNameField().getText().equals("Replace with Username")){
@@ -109,8 +107,7 @@ public class UserManagerController implements Initializable{
         }
     }
 
-
-    private void handleButton(boolean b) { //activieren oder deaktivieren
+    private void handleButton(boolean b) { //aktivieren oder deaktivieren
         cancelBT.setVisible(b);
         saveBT.setVisible(b);
         editBT.setDisable(b);
