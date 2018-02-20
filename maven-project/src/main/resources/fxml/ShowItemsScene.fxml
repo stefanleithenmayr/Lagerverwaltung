@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="showItemPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/showItemsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShowItemsController">
    <children>
-      <TableView fx:id="itemsTV" layoutX="40.0" layoutY="72.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
+      <TreeTableView fx:id="itemsTV" layoutX="98.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
          <columns>
-            <TableColumn fx:id="prodNameCol" prefWidth="94.0" text="Productname" />
-            <TableColumn fx:id="descCol" prefWidth="94.0" text="Description" />
-            <TableColumn fx:id="totalProdCol" prefWidth="75.0" text="Total Products" />
+            <TreeTableColumn fx:id="prodNameCol" prefWidth="77.0" text="Productname" />
+            <TreeTableColumn fx:id="descCol" prefWidth="337.0" text="Description" />
+            <TreeTableColumn fx:id="totalProdCol" prefWidth="267.0" text="Total Products" />
          </columns>
-      </TableView>
+      </TreeTableView>
    </children>
 </AnchorPane>
