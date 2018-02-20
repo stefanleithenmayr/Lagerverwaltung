@@ -180,17 +180,16 @@ public class DBConnection {
 
     public void upDateUser(User user, String name, String userName, String password) throws SQLException {
         Statement stmt = conn.createStatement();
-        if (!(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
-                &&user.getPassword().getText().equals("Replace with Password")) && name != null && !name.equals("") && password != null && !password.equals("") &&
+        if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
             stmt.executeUpdate("UPDATE users set NAME = '" + name +"'where username = '"+ user.getUsername().getText()+"'");
             stmt.executeUpdate("UPDATE users set PASSWORD = '" + password +"'where username = '"+ user.getUsername().getText()+"'");
             stmt.executeUpdate("UPDATE users set USERNAME = '" + userName +"'where username = '"+ user.getUsername().getText()+"'");
         }
-        else if(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
-                &&user.getPassword().getText().equals("Replace with Password") && name != null && !name.equals("") && password != null && !password.equals("") &&
+    }
+    public void saveNewUser(String name, String userName, String password) throws SQLException {
+        if( name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
-
             String SQLCommand = "INSERT INTO USERS " +
                     "VALUES ('"+ userName + "','"+ password+ "','"+ name+"')";
             PreparedStatement ps = conn.prepareStatement(SQLCommand);

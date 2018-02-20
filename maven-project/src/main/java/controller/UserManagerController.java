@@ -80,10 +80,23 @@ public class UserManagerController implements Initializable{
         String name = user.getNameField().getText();
         String userName = user.getUserNameField().getText();
         String password = user.getPasswordField().getText();
-
-        DBConnection.getInstance().upDateUser(user, name, userName, password);
+        if (!(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
+                &&user.getPassword().getText().equals("Replace with Password"))){
+            DBConnection.getInstance().upDateUser(user, name, userName, password);
+        }
+        else if(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
+                &&user.getPassword().getText().equals("Replace with Password")){
+            DBConnection.getInstance().saveNewUser(name, userName, password);
+            obList.add(new User(userName, password,name));
+            for (int i = 0; i < obList.size(); i++){
+                if (obList.get(i).getUsername().getText().equals("Replace with Username")){
+                    obList.remove(i);
+                }
+            }
+        }
         handleButton(false);
-        user.setB(false);
+        user.setB(true);
+        userTV.refresh();
     }
 
     @Override
