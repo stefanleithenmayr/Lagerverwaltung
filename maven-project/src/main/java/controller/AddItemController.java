@@ -9,7 +9,6 @@ import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 
 import java.net.URL;
-import java.rmi.activation.ActivationID;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
