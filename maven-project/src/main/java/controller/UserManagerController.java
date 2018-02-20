@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,8 @@ public class UserManagerController implements Initializable{
     private TableView<User> userTV;
     @FXML
     private TableColumn<?,?> nameCol, userNameCol, passwordCol;
+    @FXML
+    private JFXButton cancelBT, saveBT, editBT, removeBT, newUserBT;
 
     private ObservableList<User> obList;
 
@@ -29,9 +32,30 @@ public class UserManagerController implements Initializable{
     private void removeUser(ActionEvent event) throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null){
-            DBConnection.getInstance().removeUser(user.getUsername());
+            DBConnection.getInstance().removeUser(user.getUsername().getText());
             obList.remove(user);
         }
+    }
+
+    @FXML
+    private void activateEditing(ActionEvent event){
+        User user = userTV.getSelectionModel().getSelectedItem();
+        if (user != null){
+            cancelBT.setVisible(true);
+            saveBT.setVisible(true);
+            editBT.setDisable(true);
+            removeBT.setDisable(true);
+            newUserBT.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void cancelEditing(){
+        cancelBT.setVisible(false);
+        saveBT.setVisible(false);
+        editBT.setDisable(false);
+        removeBT.setDisable(false);
+        newUserBT.setDisable(false);
     }
 
     @Override
