@@ -65,8 +65,8 @@ public class DBConnection {
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
-        userName = "renedeicker";
-        password = "12345";
+        //userName = "renedeicker";
+        //password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
         this.userName = userName;
@@ -176,5 +176,18 @@ public class DBConnection {
     public void removeUser(String username) throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.execute("DELETE FROM USERS WHERE USERNAME = '" + username + "'" );
+    }
+
+    public void upDateUser(User user, String name, String userName, String password) throws SQLException {
+        Statement stmt = conn.createStatement();
+        if (name != null && name != ""){
+            stmt.executeUpdate("UPDATE users set NAME = '" + name +"'where username = '"+ user.getUsername().getText()+"'");
+        }
+        if (name != null && name != ""){
+            stmt.executeUpdate("UPDATE users set PASSWORD = '" + password +"'where username = '"+ user.getUsername().getText()+"'");
+        }
+        if (name != null && name != ""){
+            stmt.executeUpdate("UPDATE users set USERNAME = '" + userName +"'where username = '"+ user.getUsername().getText()+"'");
+        }
     }
 }
