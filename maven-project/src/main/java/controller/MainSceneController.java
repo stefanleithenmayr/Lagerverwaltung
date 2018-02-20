@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane;
     @FXML
     private Button cancelBT, addItemBT, showItemsBT, rentBT, exportBT, statisticsBT, userManagerBT;
     @FXML
@@ -115,6 +115,7 @@ public class MainSceneController implements Initializable {
         showItemPane.getStylesheets().clear();
         rentsPane.getStylesheets().clear();
         statisticsPane.getStylesheets().clear();
+        userManagerPane.getStylesheets().clear();
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -123,6 +124,7 @@ public class MainSceneController implements Initializable {
             showItemPane.getStylesheets().add("css/showItemsWHITE.css");
             rentsPane.getStylesheets().add("css/rentsWHITE.css");
             statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
+            userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
@@ -131,6 +133,8 @@ public class MainSceneController implements Initializable {
             showItemPane.getStylesheets().add("css/showItemsDARK.css");
             rentsPane.getStylesheets().add("css/rentsDARK.css");
             statisticsPane.getStylesheets().add("css/statisticsDARK.css");
+            showItemPane.getStylesheets().add("css/showItemsDARK.css");
+            userManagerPane.getStylesheets().add("css/userManagerDARK.css");
             theme = false;
         }
     }
@@ -146,6 +150,8 @@ public class MainSceneController implements Initializable {
         addItemBT.setStyle("-fx-background-color:transparent");
         showItemsBT.setStyle("-fx-background-color:transparent");
         rentBT.setStyle("-fx-background-color:transparent");
+        userManagerBT.setStyle("-fx-background-color:transparent");
+        statisticsBT.setStyle("-fx-background-color:transparent");
         String buttonName = button.getId();
         subPane.getChildren().clear();
 
@@ -197,6 +203,20 @@ public class MainSceneController implements Initializable {
                 statisticsPane.getStylesheets().add("css/statisticsDARK.css");
             }
             acutalPane = "statisticsPane";
+        }else if(buttonName.equals("userManagerBT")){
+            userManagerPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml"));
+            userManagerBT.setStyle("-fx-background-color:#3D4956");
+            subPane.getChildren().add(userManagerPane);
+            userManagerPane.setPrefWidth(bounds.getWidth() - 280);
+            userManagerPane.setPrefHeight(bounds.getHeight() - 120);
+            userManagerPane.getStylesheets().clear();
+
+            if (theme) {
+                userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
+            } else {
+                userManagerPane.getStylesheets().add("css/userManagerDARK.css");
+            }
+            acutalPane = "userManagerPane";
         }
     }
 
@@ -208,6 +228,7 @@ public class MainSceneController implements Initializable {
             showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
             rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
             statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
+            userManagerPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -228,6 +249,9 @@ public class MainSceneController implements Initializable {
 
         statisticsPane.setPrefWidth(bounds.getWidth() - 280);
         statisticsPane.setPrefHeight(bounds.getHeight() - 120);
+
+        userManagerPane.setPrefWidth(bounds.getWidth() - 280);
+        userManagerPane.setPrefHeight(bounds.getHeight() - 120);
 
         recLayout.setHeight(bounds.getHeight() - 71);
         acutalPane = "";

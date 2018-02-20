@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="userManagerPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/userManagerDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserManagerController">
+   <children>
+      <TableView fx:id="userTV" layoutX="33.0" layoutY="83.0" prefHeight="495.0" prefWidth="970.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="80.0">
+         <columns>
+            <TableColumn fx:id="nameCol" prefWidth="263.0" text="Name" />
+            <TableColumn fx:id="userNameCol" prefWidth="342.0" text="Username" />
+            <TableColumn fx:id="passwordCol" prefWidth="364.0" text="Password" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="remove" layoutX="15.0" layoutY="29.0" onAction="#removeUser" text="Remove User" AnchorPane.leftAnchor="15.0" />
+      <JFXButton layoutX="129.0" layoutY="29.0" text="New User" AnchorPane.leftAnchor="145.0" />
+      <JFXButton layoutX="229.0" layoutY="29.0" text="Edit User" AnchorPane.leftAnchor="251.0" />
+   </children>
+</AnchorPane>

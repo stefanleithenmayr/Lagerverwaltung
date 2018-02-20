@@ -1,6 +1,7 @@
 package loginPackage;
 
 import model.Item;
+import model.User;
 
 import java.io.*;
 import java.sql.*;
@@ -161,5 +162,19 @@ public class DBConnection {
             return rs.getInt(1);
         }
         return 1;
+    }
+
+    public List<User> getUsers() throws SQLException {
+        ResultSet users = DBConnection.getInstance().GetUsers();
+        List<User> userList = new ArrayList<>();
+        while (users.next()) {
+            userList.add(new User(users.getString("username"), users.getString("password"), users.getString("name")));
+        }
+        return userList;
+    }
+
+    public void removeUser(String username) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM USERS WHERE USERNAME = '" + username + "'" );
     }
 }
