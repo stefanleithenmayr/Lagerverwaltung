@@ -27,6 +27,7 @@ public class UserManagerController implements Initializable{
     private JFXButton cancelBT, saveBT, editBT, removeBT, newUserBT;
 
     private ObservableList<User> obList;
+    private User acutalEdit;
 
     @FXML
     private void removeUser(ActionEvent event) throws SQLException {
@@ -41,6 +42,11 @@ public class UserManagerController implements Initializable{
     private void activateEditing(ActionEvent event){
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null){
+            acutalEdit = user;
+            user.getUsername().setDisable(false);
+            user.getName().setDisable(false);
+            user.getPassword().setDisable(false);
+
             cancelBT.setVisible(true);
             saveBT.setVisible(true);
             editBT.setDisable(true);
@@ -56,6 +62,12 @@ public class UserManagerController implements Initializable{
         editBT.setDisable(false);
         removeBT.setDisable(false);
         newUserBT.setDisable(false);
+        userTV.refresh();
+    }
+
+    @FXML
+    private void saveUser() {
+        
     }
 
     @Override
