@@ -28,7 +28,7 @@ public class UserManagerController implements Initializable{
     private ObservableList<User> obList;
 
     @FXML
-    private void addNewUser() throws InterruptedException {
+    private void addNewUser(){
         obList.add(0, new User("Replace with Username",  "Replace with Password", "Replace with Name"));
         userTV.getSelectionModel().select(0);
         this.activateEditing();
@@ -76,13 +76,22 @@ public class UserManagerController implements Initializable{
             this.handleButton(false);
             return;
         }
-        //get Text aus Feld user.getPasswordField().getText()
         String name = user.getNameField().getText();
         String userName = user.getUserNameField().getText();
         String password = user.getPasswordField().getText();
-
-        DBConnection.getInstance().upDateUser(user, name, userName, password);
+        if (!(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
+                &&user.getPassword().getText().equals("Replace with Password"))){
+            DBConnection.getInstance().upDateUser(user, name, userName, password);
+        }
+        else if(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
+                &&user.getPassword().getText().equals("Replace with Password")){
+            DBConnection.getInstance().saveNewUser(name, userName, password);
+        }
+        obList.add(new User(userName, password,name));
+        obList.remove(user);
         handleButton(false);
+        user.setB(true);
+        userTV.refresh();
     }
 
     @Override
