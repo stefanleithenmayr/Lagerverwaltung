@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import loginPackage.DBConnection;
 import model.User;
@@ -69,7 +70,7 @@ public class UserManagerController implements Initializable{
     }
 
     @FXML
-    private void saveUser() {
+    private void saveUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user.getUserNameField().getText().equals("Replace with Username")){
             obList.remove(user);
@@ -77,6 +78,12 @@ public class UserManagerController implements Initializable{
             return;
         }
         //get Text aus Feld user.getPasswordField().getText()
+        String name = user.getNameField().getText();
+        String userName = user.getUserNameField().getText();
+        String password = user.getPasswordField().getText();
+
+        DBConnection.getInstance().upDateUser(user, name, userName, password);
+        handleButton(false);
     }
 
     @Override
