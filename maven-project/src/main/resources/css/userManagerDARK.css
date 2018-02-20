@@ -140,3 +140,13 @@
 #userTV .table-column {
     -fx-alignment: CENTER;
 }
+
+.text-field{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.text-input:disabled {
+    -fx-opacity: 1.0;
+}
