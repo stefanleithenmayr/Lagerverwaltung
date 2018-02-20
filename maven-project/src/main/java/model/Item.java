@@ -8,9 +8,9 @@ public class Item {
 
             private String name;
             private String description;
-            private Integer id;
+            private String id;
 
-            public Item(String name, String description, Integer id){
+            public Item(String name, String description, String id){
                 this.name = name;
                 this.description = description;
                 this.id = id;
@@ -24,12 +24,15 @@ public class Item {
                 return description;
             }
 
-            public Integer getId() {
+            public String getId() {
                 return id;
             }
 
-            public Integer getTotalExemplars() throws SQLException {
-                return DBConnection.getInstance().countExemplars(this.getId());
+            public String getTotalExemplars() throws SQLException {
+                if (!this.getId().isEmpty()){
+                    return DBConnection.getInstance().countExemplars(Integer.parseInt(this.getId()));
+                }
+                return "";
             }
     @Override
     public String toString() {

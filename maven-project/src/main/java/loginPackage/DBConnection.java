@@ -65,8 +65,8 @@ public class DBConnection {
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
-        //userName = "renedeicker";
-        //password = "12345";
+        userName = "renedeicker";
+        password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
         this.userName = userName;
@@ -126,9 +126,9 @@ public class DBConnection {
     public List getItemsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         while (rs.next()) {
-            items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), rs.getInt("ITEMID" +"")));
+            items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), Integer.toString(rs.getInt("ITEMID" +""))));
         }
         return items;
     }
@@ -155,13 +155,13 @@ public class DBConnection {
         st.close();
     }
 
-    public int countExemplars(Integer id) throws SQLException {
+    public String countExemplars(Integer id) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT COUNT(EXEMPLARID) FROM EXEMPLAR WHERE ITEMID = " + id + " GROUP BY ITEMID");
         if (rs.next()){
-            return rs.getInt(1);
+            return Integer.toString(rs.getInt(1));
         }
-        return 1;
+        return "";
     }
 
     public List<User> getUsers() throws SQLException {
@@ -189,5 +189,16 @@ public class DBConnection {
         if (name != null && name != ""){
             stmt.executeUpdate("UPDATE users set USERNAME = '" + userName +"'where username = '"+ user.getUsername().getText()+"'");
         }
+    }
+
+    public List<Integer> getExemplars(Integer id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
+
+        List<Integer> ids = new ArrayList<>();
+        while (rs.next()){
+            ids.add(rs.getInt("EXEMPLARID"));
+        }
+        return ids;
     }
 }
