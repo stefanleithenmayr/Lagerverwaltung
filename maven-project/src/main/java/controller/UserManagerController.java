@@ -27,10 +27,16 @@ public class UserManagerController implements Initializable{
     private JFXButton cancelBT, saveBT, editBT, removeBT, newUserBT;
 
     private ObservableList<User> obList;
-    private User acutalEdit;
 
     @FXML
-    private void removeUser(ActionEvent event) throws SQLException {
+    private void addNewUser() throws InterruptedException {
+        obList.add(0, new User("Replace with Username",  "Replace with Password", "Replace with Name"));
+        userTV.getSelectionModel().select(0);
+        this.activateEditing();
+    }
+
+    @FXML
+    private void removeUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null){
             DBConnection.getInstance().removeUser(user.getUsername().getText());
@@ -39,40 +45,44 @@ public class UserManagerController implements Initializable{
     }
 
     @FXML
-    private void activateEditing(ActionEvent event){
+    private void activateEditing() throws InterruptedException {
         User user = userTV.getSelectionModel().getSelectedItem();
-        if (user != null){
-            acutalEdit = user;
-            user.getUsername().setDisable(false);
-            user.getName().setDisable(false);
-            user.getPassword().setDisable(false);
-
-            cancelBT.setVisible(true);
-            saveBT.setVisible(true);
-            editBT.setDisable(true);
-            removeBT.setDisable(true);
-            newUserBT.setDisable(true);
+        if (user != null) {
+            user.handleFields(false);
+            this.handleButton(true);
         }
     }
 
     @FXML
     private void cancelEditing(){
-        cancelBT.setVisible(false);
-        saveBT.setVisible(false);
-        editBT.setDisable(false);
-        removeBT.setDisable(false);
-        newUserBT.setDisable(false);
+        User user = userTV.getSelectionModel().getSelectedItem();
+        if (user != null) {
+            user.getUsername().setDisable(true);
+            user.getName().setDisable(true);
+            user.getPassword().setDisable(true);
+        }
+
+        if (user.getUserNameField().getText().equals("Replace with Username")){
+            obList.remove(user);
+        }
+
+        this.handleButton(false);
         userTV.refresh();
     }
 
     @FXML
     private void saveUser() {
-        
+        User user = userTV.getSelectionModel().getSelectedItem();
+        if (user.getUserNameField().getText().equals("Replace with Username")){
+            obList.remove(user);
+            this.handleButton(false);
+            return;
+        }
+        //get Text aus Feld user.getPasswordField().getText()
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         List<User> users = null;
         try {
             users = DBConnection.getInstance().getUsers();
@@ -88,7 +98,7 @@ public class UserManagerController implements Initializable{
         passwordCol.setCellValueFactory(
                 new PropertyValueFactory<>("password"));
 
-        nameCol.setMinWidth(200);
+        nameCol.setMinWidth(300);
         userNameCol.setMinWidth(300);
         passwordCol.setMinWidth(300);
 
@@ -97,5 +107,14 @@ public class UserManagerController implements Initializable{
         if(users != null){
             userTV.setItems(obList);
         }
+    }
+
+
+    private void handleButton(boolean b) { //activieren oder deaktivieren
+        cancelBT.setVisible(b);
+        saveBT.setVisible(b);
+        editBT.setDisable(b);
+        removeBT.setDisable(b);
+        newUserBT.setDisable(b);
     }
 }

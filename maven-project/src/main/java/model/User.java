@@ -25,6 +25,18 @@ public class User {
         return this.nameField;
     }
 
+    public TextField getNameField() {
+        return nameField;
+    }
+
+    public TextField getUserNameField() {
+        return userNameField;
+    }
+
+    public TextField getPasswordField() {
+        return passwordField;
+    }
+
     public User(String username, String password, String name) {
         this.nameField = new TextField();
         this.userNameField = new TextField();
@@ -32,5 +44,11 @@ public class User {
         this.username = username;
         this.password = password;
         this.name = name;
+    }
+
+    public void handleFields(boolean b){
+        nameField.setDisable(b);
+        userNameField.setDisable(b);
+        passwordField.setDisable(b);
     }
 }
