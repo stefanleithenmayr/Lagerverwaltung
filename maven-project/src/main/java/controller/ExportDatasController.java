@@ -2,34 +2,19 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
 import loginPackage.DBConnection;
 import model.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -42,9 +27,12 @@ public class ExportDatasController implements Initializable {
     JFXComboBox<String> cbDatas, cbFormat;
     @FXML
     JFXButton btnExport;
+    @FXML
+    JFXTextField tfFileName,tfError;
 
     @FXML
     private void exportDatas(ActionEvent event) throws SQLException, IOException {
+        tfError.setVisible(false);
         if (cbFormat.getSelectionModel().getSelectedItem().equals("PDF")){
             if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")){
                 List<User> users = DBConnection.getInstance().getUsers();
@@ -70,35 +58,31 @@ public class ExportDatasController implements Initializable {
                     content[i+1][2] = users.get(i).getPassword().getText();
                 }
 
+                if (tfFileName.getText() == null || tfFileName.getText().equals("")){
+                    tfError.setText("enter a filename!");
+                    tfError.setVisible(true);
+                    return;
+                }
+
+                File selectedDirectory = fileChooser();
                 writeToPdf(contentStream, content);
                 contentStream.close();
 
-                Stage primaryStage = new Stage();
-
-                DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedDirectory =
-                        directoryChooser.showDialog(primaryStage);
-
                 if (selectedDirectory != null){
-                    boolean saved;
-                    Integer counter = 0;
-                    String counterString="";
-                    do {
-                        saved = true;
-                        try{
-                            document.save(selectedDirectory+"\\Users"+counterString+".pdf");
-                        }catch (Exception e){
-                            saved = false;
-                            counter++;
-                            counterString = Integer.toString(counter);
-                        }
-                    }while(!saved);
-                }
+                    document.save(selectedDirectory+"\\"+tfFileName.getText()+".pdf");
+                };
             }
         }
         else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")){
 
         }
+    }
+
+    private File fileChooser() {
+        Stage primaryStage = new Stage();
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        return directoryChooser.showDialog(primaryStage);
     }
 
     public static void writeToPdf(PDPageContentStream contentStream, String[][] data) throws IOException {
