@@ -3,8 +3,14 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import loginPackage.DBConnection;
 import model.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -12,6 +18,19 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -76,7 +95,15 @@ public class ExportDatasController implements Initializable {
 
                 writeToPdf(contentStream, content);
                 contentStream.close();
-                document.save("C:\\Users\\rened\\Google Drive\\3.Klasse\\Syp\\Lagerverwaltung\\Users.pdf");
+
+                Stage primaryStage = new Stage();
+
+                DirectoryChooser directoryChooser = new DirectoryChooser();
+                File selectedDirectory =
+                        directoryChooser.showDialog(primaryStage);
+
+
+                document.save(selectedDirectory+"\\Users.pdf");
             }
         }
         else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")){
