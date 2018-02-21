@@ -11,8 +11,8 @@
          <columns>
             <TreeTableColumn fx:id="prodNameCol" prefWidth="77.0" text="Productname" />
             <TreeTableColumn fx:id="descCol" prefWidth="337.0" text="Description" />
-            <TreeTableColumn fx:id="totalProdCol" prefWidth="267.0" text="Total Products" />
-            <TreeTableColumn fx:id="availableProdCol" prefWidth="156.0" text="Available Products" />
+            <TreeTableColumn fx:id="totalProdCol" prefWidth="227.0" text="Total Products" />
+            <TreeTableColumn fx:id="availableProdCol" prefWidth="196.0" text="Available Products" />
          </columns>
       </TreeTableView>
       <JFXButton layoutX="41.0" layoutY="42.0" onAction="#rentProduct" text="Rent" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="42.0" />

@@ -65,7 +65,6 @@ public class ShowItemsController implements Initializable {
             TreeItem<Item> cache = new TreeItem<>(item);
             try {
                 List<Integer> ids = DBConnection.getInstance().getAvailableExemplars(Integer.parseInt(item.getId()));
-                //error wenn keine exemplare!
                 for (int index = 0; index < ids.size(); index++){
                     TreeItem<Item> secondCache = new TreeItem<>(new Item(Integer.toString(ids.get(index)),"", ""));
                     cache.getChildren().add(secondCache);
