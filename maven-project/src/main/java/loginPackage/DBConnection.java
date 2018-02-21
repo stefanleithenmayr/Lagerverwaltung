@@ -31,6 +31,23 @@ public class DBConnection {
         return INSTANCE;
     }
 
+    public Integer getLastLeihID() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE");
+        if (!rs.next()){
+            return 10000;
+        }
+
+        Integer biggestID = rs.getInt("LEIHID");
+        while (rs.next()){
+            Integer cache = rs.getInt("LEIHID");
+            if (cache > biggestID){
+                biggestID = cache;
+            }
+        }
+        return biggestID;
+    }
+
     public Integer getLastItemExemplarID() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM EXEMPLAR");
@@ -123,7 +140,7 @@ public class DBConnection {
         itemExemplarId++;
     }
 
-    public List getItemsList() throws SQLException {
+    public List<Item> getItemsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
         List<Item> items = new ArrayList<>();
@@ -199,12 +216,36 @@ public class DBConnection {
         return ids;
     }
     public void saveNewUser(String name, String userName, String password) throws SQLException {
-        if( name != null && !name.equals("") && password != null && !password.equals("") &&
+        if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
             String SQLCommand = "INSERT INTO USERS " +
                     "VALUES ('"+ userName + "','"+ password+ "','"+ name+"')";
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
         }
+    }
+
+    public void rentItem(String name) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("INSERT INTO LEIHE VALUES (" + DBConnection.getInstance().getLastLeihID()+1 + ", '"+ userName +"'," + name +")");
+        conn.commit();
+    }
+
+    public List<Integer> getAvailableExemplars(int id) throws SQLException {
+
+        Statement stmt = conn.createStatement();
+        Statement secStmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
+
+        List<Integer> ids = new ArrayList<>();
+        while (rs.next()){
+
+            conn.setAutoCommit(false);
+            ResultSet s = secStmt.executeQuery("SELECT EXEMPLARID FROM LEIHE WHERE EXEMPLARID = " + rs.getInt("EXEMPLARID"));
+            if (!s.next()){
+                ids.add(rs.getInt("EXEMPLARID"));
+            }
+        }
+        return ids;
     }
 }

@@ -58,17 +58,19 @@
     -fx-background-color: -design;
     -fx-fill: #2a2d35;
     -fx-text-fill: #2a2d35;
-
+    -fx-text-alignment: center;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
+    -fx-text-alignment: center;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: #2a2d35;
     -fx-font-weight: bold;
+    -fx-text-alignment: center;
 }
 
 .corner {

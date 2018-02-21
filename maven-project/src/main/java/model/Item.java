@@ -34,6 +34,13 @@ public class Item {
                 }
                 return "";
             }
+
+            public String getAvailableExemplars() throws SQLException {
+                if (!this.getId().isEmpty()){
+                    return Integer.toString(DBConnection.getInstance().getAvailableExemplars(Integer.parseInt(this.getId())).size());
+                }
+                return "";
+            }
     @Override
     public String toString() {
         return this.getName();
