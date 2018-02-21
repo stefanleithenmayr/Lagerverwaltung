@@ -156,6 +156,7 @@ public class MainSceneController implements Initializable {
         rentBT.setStyle("-fx-background-color:transparent");
         userManagerBT.setStyle("-fx-background-color:transparent");
         statisticsBT.setStyle("-fx-background-color:transparent");
+        exportDatasBT.setStyle("-fx-background-color:transparent");
         String buttonName = button.getId();
         subPane.getChildren().clear();
 
