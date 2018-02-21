@@ -68,9 +68,16 @@ public class ExportDatasController implements Initializable {
                 writeToPdf(contentStream, content);
                 contentStream.close();
 
+                File f = new File(selectedDirectory+"\\"+tfFileName.getText()+".pdf");
+                if(f.exists()) {
+                    tfError.setVisible(true);
+                    tfError.setText("File already exists");
+                    return;
+                }
+
                 if (selectedDirectory != null){
                     document.save(selectedDirectory+"\\"+tfFileName.getText()+".pdf");
-                };
+                }
             }
         }
         else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")){
