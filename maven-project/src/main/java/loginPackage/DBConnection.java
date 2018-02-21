@@ -1,6 +1,7 @@
 package loginPackage;
 
 import model.Item;
+import model.Rent;
 import model.User;
 
 import java.io.*;
@@ -52,7 +53,7 @@ public class DBConnection {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM EXEMPLAR");
         if (!rs.next()){
-            return 1000000;
+            return 100000;
         }
 
         Integer biggestID = rs.getInt("EXEMPLARID");
@@ -227,25 +228,55 @@ public class DBConnection {
 
     public void rentItem(String name) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("INSERT INTO LEIHE VALUES (" + DBConnection.getInstance().getLastLeihID()+1 + ", '"+ userName +"'," + name +")");
+        stmt.execute("INSERT INTO LEIHE VALUES (" + (DBConnection.getInstance().getLastLeihID() + 1) + ", '"+ userName +"'," + name +")");
         conn.commit();
     }
 
     public List<Integer> getAvailableExemplars(int id) throws SQLException {
-
         Statement stmt = conn.createStatement();
         Statement secStmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
 
         List<Integer> ids = new ArrayList<>();
         while (rs.next()){
-
-            conn.setAutoCommit(false);
             ResultSet s = secStmt.executeQuery("SELECT EXEMPLARID FROM LEIHE WHERE EXEMPLARID = " + rs.getInt("EXEMPLARID"));
             if (!s.next()){
                 ids.add(rs.getInt("EXEMPLARID"));
             }
         }
         return ids;
+    }
+
+    public String getAvailableExemplarsCount(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select count(l.exemplarid)\n" +
+                "from exemplar e\n" +
+                "    join leihe l on l.EXEMPLARID = e.EXEMPLARID\n" +
+                "where itemid =" + id);
+        if (rs.next()){
+             return Integer.toString(rs.getInt(1));
+        }
+        return "";
+    }
+
+    public List<Rent> getUserRents() throws SQLException {
+        Statement stmt = conn.createStatement();
+        Statement secStmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID " +
+                "FROM LEIHE " +
+                "WHERE USERNAME = '" + userName + "'");
+
+        List<Rent> rents = new ArrayList<>();
+        while (rs.next()){
+            ResultSet secRS = secStmt.executeQuery("SELECT i.itemname\n" +
+                    "FROM leihe l\n" +
+                    "    JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                    "    JOIN items i ON i.ITEMID = e.ITEMID " +
+                    "WHERE e.EXEMPLARID = " + rs.getString("EXEMPLARID"));
+            if (secRS.next()){
+                rents.add(new Rent(secRS.getString("ITEMNAME"),rs.getString("EXEMPLARID")));
+            }
+        }
+        return rents;
     }
 }
