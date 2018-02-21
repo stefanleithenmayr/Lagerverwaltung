@@ -22,9 +22,9 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane;
     @FXML
-    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportBT, statisticsBT, userManagerBT;
+    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, statisticsBT, userManagerBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
@@ -75,7 +75,7 @@ public class MainSceneController implements Initializable {
         }else if(buttonName.equals("rentBT")){
             rentBT.setStyle("-fx-background-color:#3D4956");
         }else if(buttonName.equals("exportBT")){
-            exportBT.setStyle("-fx-background-color:#3D4956");
+            exportDatasBT.setStyle("-fx-background-color:#3D4956");
         }else if(buttonName.equals("statisticsBT")){
             statisticsBT.setStyle("-fx-background-color:#3D4956");
         }else if(buttonName.equals("userManagerBT")){
@@ -95,10 +95,12 @@ public class MainSceneController implements Initializable {
         }else if(buttonName.equals("rentBT") && !acutalPane.equals("rentsPane")){
             rentBT.setStyle("-fx-background-color:transparent");
         }else if(buttonName.equals("exportBT") && !acutalPane.equals("exportPane")){
-            exportBT.setStyle("-fx-background-color:transparent");
+            exportDatasBT.setStyle("-fx-background-color:transparent");
         }else if(buttonName.equals("statisticsBT") && !acutalPane.equals("statisticsPane")){
             statisticsBT.setStyle("-fx-background-color:transparent");
         }else if(buttonName.equals("userManagerBT") && !acutalPane.equals("userManagerPane")){
+            userManagerBT.setStyle("-fx-background-color:transparent");
+        }else if(buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")){
             userManagerBT.setStyle("-fx-background-color:transparent");
         }
     }
@@ -217,6 +219,21 @@ public class MainSceneController implements Initializable {
                 userManagerPane.getStylesheets().add("css/userManagerDARK.css");
             }
             acutalPane = "userManagerPane";
+        }
+        else if(buttonName.equals("exportDatasBT")){
+            exportDatasPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml"));
+            exportDatasBT.setStyle("-fx-background-color:#3D4956");
+            subPane.getChildren().add(exportDatasPane);
+            exportDatasPane.setPrefWidth(bounds.getWidth() - 280);
+            exportDatasPane.setPrefHeight(bounds.getHeight() - 120);
+            exportDatasPane.getStylesheets().clear();
+
+            if (theme) {
+                //userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
+            } else {
+                //userManagerPane.getStylesheets().add("css/userManagerDARK.css");
+            }
+            acutalPane = "exportDatasPane";
         }
     }
 
