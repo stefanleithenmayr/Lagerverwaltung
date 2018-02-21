@@ -47,29 +47,6 @@ public class ExportDatasController implements Initializable {
     private void exportDatas(ActionEvent event) throws SQLException, IOException {
         if (cbFormat.getSelectionModel().getSelectedItem().equals("PDF")){
             if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")){
-                /*try {
-                    PDDocument doc = new PDDocument();
-                    PDPage page = new PDPage();
-                    doc.addPage(page);
-
-                    PDPageContentStream content = new PDPageContentStream(doc, page);
-
-                    content.beginText();
-                    //content.setFont(PDType1Font.HELVETICA ,26);
-                    content.moveTextPositionByAmount(250,750);
-                    content.drawString("Hallo Welt");
-                    content.endText();
-
-                    content.close();
-                    doc.save("Users.pdf");
-                    doc.close();
-
-                    System.out.println("your File createt in: "+ System.getProperty("user.dir"));
-
-
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }*/
                 List<User> users = DBConnection.getInstance().getUsers();
                 PDDocument document = new PDDocument();
                 PDPage page = new PDPage();
@@ -102,8 +79,21 @@ public class ExportDatasController implements Initializable {
                 File selectedDirectory =
                         directoryChooser.showDialog(primaryStage);
 
-
-                document.save(selectedDirectory+"\\Users.pdf");
+                if (selectedDirectory != null){
+                    boolean saved;
+                    Integer counter = 0;
+                    String counterString="";
+                    do {
+                        saved = true;
+                        try{
+                            document.save(selectedDirectory+"\\Users"+counterString+".pdf");
+                        }catch (Exception e){
+                            saved = false;
+                            counter++;
+                            counterString = Integer.toString(counter);
+                        }
+                    }while(!saved);
+                }
             }
         }
         else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")){
