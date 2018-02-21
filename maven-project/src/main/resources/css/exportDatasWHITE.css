@@ -1,0 +1,10 @@
+#exportDatasPane{
+    -fx-background-color: white;
+    -fx-font-size: 15px;
+    -fx-text-fill: #33363F;
+}
+.btStyle{
+    -fx-border-color: #33363F;
+    -fx-text-fill: #33363F;
+    -fx-border-width: 0.5;
+}

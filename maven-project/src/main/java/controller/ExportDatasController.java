@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,6 +35,10 @@ public class ExportDatasController implements Initializable {
     @FXML
     private void exportDatas(ActionEvent event) throws SQLException, IOException {
         tfError.setVisible(false);
+        GregorianCalendar now = new GregorianCalendar();
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
+
+
         if (cbFormat.getSelectionModel().getSelectedItem().equals("PDF")){
             if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")){
                 List<User> users = DBConnection.getInstance().getUsers();
@@ -42,9 +48,9 @@ public class ExportDatasController implements Initializable {
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
                 contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA ,26);
-                contentStream.moveTextPositionByAmount(250,750);
-                contentStream.drawString("USERS");
+                contentStream.setFont(PDType1Font.HELVETICA ,20);
+                contentStream.moveTextPositionByAmount(150,750);
+                contentStream.drawString("USERS, am"+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
                 contentStream.endText();
 
                 String[][] content = new String[users.size()+1][3];
@@ -102,8 +108,8 @@ public class ExportDatasController implements Initializable {
         final float tableHeight = rowHeight * rows;
         final float colWidth = tableWidth / (float) cols;
         final float cellMargin = 5f;
-        float margin = 20;
-        float y = 750;
+        float margin = 30;
+        float y = 730;
         float anoy = y;
 
         for (int i = 0; i <= rows; i++) {
