@@ -80,6 +80,8 @@ public class MainSceneController implements Initializable {
             statisticsBT.setStyle("-fx-background-color:#3D4956");
         }else if(buttonName.equals("userManagerBT")){
             userManagerBT.setStyle("-fx-background-color:#3D4956");
+        }else if(buttonName.equals("exportDatasBT")){
+            exportDatasBT.setStyle("-fx-background-color:#3D4956");
         }
     }
 
@@ -101,7 +103,7 @@ public class MainSceneController implements Initializable {
         }else if(buttonName.equals("userManagerBT") && !acutalPane.equals("userManagerPane")){
             userManagerBT.setStyle("-fx-background-color:transparent");
         }else if(buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")){
-            userManagerBT.setStyle("-fx-background-color:transparent");
+            exportDatasBT.setStyle("-fx-background-color:transparent");
         }
     }
 
