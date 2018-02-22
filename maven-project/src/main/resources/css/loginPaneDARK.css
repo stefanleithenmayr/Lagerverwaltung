@@ -35,3 +35,9 @@
 	-jfx-unfocus-color: white;
 	-jfx-focus-color: red;
 }
+
+#falseInputField{
+	-fx-text-fill: white;
+	-fx-fill: white;
+	-fx-font-size: 14;
+}

@@ -24,6 +24,7 @@
     -fx-cell-size: 40px;
     -fx-content-display: CENTER;
     -fx-position-shape: true;
+    -fx-text-alignment: CENTER;
 }
 
 .tree-table-row-cell:hover .label,

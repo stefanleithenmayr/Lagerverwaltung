@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="loginPane" prefHeight="383.0" prefWidth="314.0" stylesheets="@../css/loginPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loginPackage.LoginController">
     <children>
@@ -33,12 +34,8 @@
          </font>
       </JFXPasswordField>
       <Button fx:id="closeButton" layoutX="259.0" layoutY="29.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;" />
-      <JFXTextField fx:id="falseInputField" alignment="TOP_LEFT" editable="false" focusColor="#3d4956" layoutX="115.0" layoutY="318.0" maxWidth="86.0" minWidth="71.0" prefHeight="36.0" prefWidth="86.0" style="-fx-text-fill: red;" text="false input" unFocusColor="#3d4956" visible="false">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXTextField>
       <JFXToggleButton fx:id="toggleButton" layoutX="14.0" layoutY="10.0" onAction="#changeFont" />
       <JFXButton fx:id="loginBT" defaultButton="true" layoutX="247.0" layoutY="330.0" onAction="#loginAction" text="Login" />
+      <Text fx:id="falseInputField" layoutX="126.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="false input" visible="false" />
     </children>
 </AnchorPane>

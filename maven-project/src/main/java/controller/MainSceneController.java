@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +29,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
-    private ImageView imageVCancelBT;
+    private ImageView imageVCancelBT, statIV, expIV, userIV;
     @FXML
     private Rectangle recLayout;
 
@@ -47,6 +48,7 @@ public class MainSceneController implements Initializable {
     /**
      * Die zwei Methoden (mouseIsPressedEvent und mouseIsDraggedEvent)
      * sind dafür da, dass das MainPane verschiebar bleibt!
+     *
      * @param event
      */
 
@@ -64,7 +66,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    private void mouseHovered(MouseEvent event){
+    private void mouseHovered(MouseEvent event) {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
 
@@ -94,23 +96,23 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    private void mouseNotHovered(MouseEvent event){
+    private void mouseNotHovered(MouseEvent event) {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
 
-        if (buttonName.equals("addItemBT") && !acutalPane.equals("addItemPane")){
+        if (buttonName.equals("addItemBT") && !acutalPane.equals("addItemPane")) {
             addItemBT.setStyle("-fx-background-color:transparent");
-        }else if(buttonName.equals("showItemsBT") && !acutalPane.equals("showItemPane")){
+        } else if (buttonName.equals("showItemsBT") && !acutalPane.equals("showItemPane")) {
             showItemsBT.setStyle("-fx-background-color:transparent");
-        }else if(buttonName.equals("rentBT") && !acutalPane.equals("rentsPane")){
+        } else if (buttonName.equals("rentBT") && !acutalPane.equals("rentsPane")) {
             rentBT.setStyle("-fx-background-color:transparent");
-        }else if(buttonName.equals("exportBT") && !acutalPane.equals("exportPane")){
+        } else if (buttonName.equals("exportBT") && !acutalPane.equals("exportPane")) {
             exportDatasBT.setStyle("-fx-background-color:transparent");
-        }else if(buttonName.equals("statisticsBT") && !acutalPane.equals("statisticsPane")){
+        } else if (buttonName.equals("statisticsBT") && !acutalPane.equals("statisticsPane")) {
             statisticsBT.setStyle("-fx-background-color:transparent");
-        }else if(buttonName.equals("userManagerBT") && !acutalPane.equals("userManagerPane")){
+        } else if (buttonName.equals("userManagerBT") && !acutalPane.equals("userManagerPane")) {
             userManagerBT.setStyle("-fx-background-color:transparent");
-        }else if(buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")){
+        } else if (buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")) {
             exportDatasBT.setStyle("-fx-background-color:transparent");
         }
     }
@@ -147,7 +149,7 @@ public class MainSceneController implements Initializable {
             theme = false;
         }
 
-        if (this.acutalPane.equals("showItemPane")){
+        if (this.acutalPane.equals("showItemPane")) {
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
             subPane.getChildren().clear();
@@ -166,6 +168,7 @@ public class MainSceneController implements Initializable {
 
     /**
      * Wechselt zwischen den verschiedenen Panes hin und her
+     *
      * @param event
      * @throws IOException
      */
@@ -201,7 +204,7 @@ public class MainSceneController implements Initializable {
                 showItemPane.getStylesheets().add("css/showItemsDARK.css");
             }
             acutalPane = "showItemPane";
-        } else if(buttonName.equals("rentBT")){
+        } else if (buttonName.equals("rentBT")) {
             rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
             rentBT.setStyle("-fx-background-color:#3D4956");
             subPane.getChildren().add(rentsPane);
@@ -215,7 +218,7 @@ public class MainSceneController implements Initializable {
                 rentsPane.getStylesheets().add("css/rentsDark.css");
             }
             acutalPane = "rentsPane";
-        }else if(buttonName.equals("statisticsBT")){
+        } else if (buttonName.equals("statisticsBT")) {
             statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
             statisticsBT.setStyle("-fx-background-color:#3D4956");
             subPane.getChildren().add(statisticsPane);
@@ -229,7 +232,7 @@ public class MainSceneController implements Initializable {
                 statisticsPane.getStylesheets().add("css/statisticsDARK.css");
             }
             acutalPane = "statisticsPane";
-        }else if(buttonName.equals("userManagerBT")){
+        } else if (buttonName.equals("userManagerBT")) {
             userManagerPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml"));
             userManagerBT.setStyle("-fx-background-color:#3D4956");
             subPane.getChildren().add(userManagerPane);
@@ -243,8 +246,7 @@ public class MainSceneController implements Initializable {
                 userManagerPane.getStylesheets().add("css/userManagerDARK.css");
             }
             acutalPane = "userManagerPane";
-        }
-        else if(buttonName.equals("exportDatasBT")){
+        } else if (buttonName.equals("exportDatasBT")) {
             exportDatasPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml"));
             exportDatasBT.setStyle("-fx-background-color:#3D4956");
             subPane.getChildren().add(exportDatasPane);
@@ -299,6 +301,15 @@ public class MainSceneController implements Initializable {
         exportDatasPane.setPrefHeight(bounds.getHeight() - 120);
 
         recLayout.setHeight(bounds.getHeight() - 71);
+
+        if (!DBConnection.getInstance().getActualUser().equals("stuetz")) {
+            exportDatasBT.setVisible(false);
+            statisticsBT.setVisible(false);
+            userManagerBT.setVisible(false);
+            statIV.setVisible(false);
+            expIV.setVisible(false);
+            userIV.setVisible(false);
+        }
         acutalPane = "";
     }
 }

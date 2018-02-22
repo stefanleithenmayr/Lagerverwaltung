@@ -23,3 +23,4 @@ create table leihe(
 insert into users values('stefanleithenmayr', '12345', 'Stefan Leithenmayr');
 insert into users values('renedeicker', '12345', 'Rene Deicker');
 insert into users values('maxhofer', '12345', 'Maximillian Hofer');
+insert into users values('stuetz', '12345', 'Stuetz');
