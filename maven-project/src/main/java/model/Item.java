@@ -37,7 +37,6 @@ public class Item {
 
             public String getAvailableExemplars() throws SQLException {
                 String total = getTotalExemplars();
-
                 if (!this.getId().isEmpty() && !total.isEmpty()) {
                     return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableExemplarsCount(Integer.parseInt(this.getId()))));
                 }

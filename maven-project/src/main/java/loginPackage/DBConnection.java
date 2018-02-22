@@ -234,15 +234,16 @@ public class DBConnection {
 
     public List<Integer> getAvailableExemplars(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        Statement secStmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
+        ResultSet rs = stmt.executeQuery("SELECT e.EXEMPLARID \n" +
+                "FROM EXEMPLAR e \n" +
+                "WHERE ITEMID = "+ id +" AND \n" +
+                "    e.EXEMPLARID NOT IN \n" +
+                "        (SELECT EXEMPLARID \n" +
+                "        FROM LEIHE)");
 
         List<Integer> ids = new ArrayList<>();
         while (rs.next()){
-            ResultSet s = secStmt.executeQuery("SELECT EXEMPLARID FROM LEIHE WHERE EXEMPLARID = " + rs.getInt("EXEMPLARID"));
-            if (!s.next()){
                 ids.add(rs.getInt("EXEMPLARID"));
-            }
         }
         return ids;
     }
@@ -261,22 +262,21 @@ public class DBConnection {
 
     public List<Rent> getUserRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        Statement secStmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID " +
-                "FROM LEIHE " +
-                "WHERE USERNAME = '" + userName + "'");
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid\n" +
+                "            FROM leihe l\n" +
+                "                 JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                 JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "WHERE username = '" + userName + "'");
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-            ResultSet secRS = secStmt.executeQuery("SELECT i.itemname\n" +
-                    "FROM leihe l\n" +
-                    "    JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                    "    JOIN items i ON i.ITEMID = e.ITEMID " +
-                    "WHERE e.EXEMPLARID = " + rs.getString("EXEMPLARID"));
-            if (secRS.next()){
-                rents.add(new Rent(secRS.getString("ITEMNAME"),rs.getString("EXEMPLARID")));
-            }
+               rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID")));
         }
         return rents;
+    }
+
+    public void removeRent(String exemplarID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM LEIHE WHERE EXEMPLARID = " + exemplarID);
     }
 }
