@@ -25,14 +25,14 @@ public class DBConnection {
     private DBConnection() {
     }
 
-    public static DBConnection getInstance() throws SQLException {
+    public static DBConnection getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new DBConnection();
         }
         return INSTANCE;
     }
 
-    public Integer getLastLeihID() throws SQLException {
+    private Integer getLastLeihID() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE");
         if (!rs.next()){
@@ -49,7 +49,7 @@ public class DBConnection {
         return biggestID;
     }
 
-    public Integer getLastItemExemplarID() throws SQLException {
+    private Integer getLastItemExemplarID() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM EXEMPLAR");
         if (!rs.next()){
@@ -99,11 +99,7 @@ public class DBConnection {
         }
         itemExemplarId = this.getLastItemExemplarID()+1;
         itemID = this.getLastItemID()+1;
-        boolean existUser = existUser(userName, password);
-        if (existUser) {
-            return true;
-        }
-        return false;
+        return existUser(userName, password);
     }
 
     private ResultSet GetUsers() throws SQLException {
@@ -121,7 +117,7 @@ public class DBConnection {
         return false;
     }
 
-    public void addItem(String name, String description, Integer quantity) throws SQLException {
+    public void addItem(String name, String description) throws SQLException {
         if (!name.equals("")) {
             String SQLCommand = "INSERT INTO ITEMS " +
                     "VALUES (" + itemID + ",'" + description + "','" + name + "'" + ")";
@@ -151,7 +147,7 @@ public class DBConnection {
         return items;
     }
 
-    public void importSQL(InputStream in) throws SQLException {
+    private void importSQL(InputStream in) throws SQLException {
         Scanner s = new Scanner(in);
         s.useDelimiter("(;(\r)?\n)|(--\n)");
         Statement st = conn.createStatement();

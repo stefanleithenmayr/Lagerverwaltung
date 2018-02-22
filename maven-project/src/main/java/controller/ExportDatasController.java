@@ -2,9 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.DirectoryChooser;
@@ -15,6 +13,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -30,17 +29,17 @@ public class ExportDatasController implements Initializable {
     @FXML
     JFXButton btnExport;
     @FXML
-    JFXTextField tfFileName,tfError;
+    JFXTextField tfFileName, tfError;
 
     @FXML
-    private void exportDatas(ActionEvent event) throws SQLException, IOException {
+    private void exportDatas() throws SQLException, IOException {
         tfError.setVisible(false);
         GregorianCalendar now = new GregorianCalendar();
         DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 
 
-        if (cbFormat.getSelectionModel().getSelectedItem().equals("PDF")){
-            if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")){
+        if (cbFormat.getSelectionModel().getSelectedItem().equals("PDF")) {
+            if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")) {
                 List<User> users = DBConnection.getInstance().getUsers();
                 PDDocument document = new PDDocument();
                 PDPage page = new PDPage();
@@ -48,23 +47,23 @@ public class ExportDatasController implements Initializable {
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
                 contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA ,20);
-                contentStream.moveTextPositionByAmount(150,750);
-                contentStream.drawString("USERS, am"+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
+                contentStream.setFont(PDType1Font.HELVETICA, 20);
+                contentStream.moveTextPositionByAmount(150, 750);
+                contentStream.drawString("USERS, am" + DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
                 contentStream.endText();
 
-                String[][] content = new String[users.size()+1][3];
+                String[][] content = new String[users.size() + 1][3];
                 content[0][0] = "Username";
                 content[0][1] = "RealName";
                 content[0][2] = "Password";
 
-                for (int i = 0;i < users.size();i++){
-                    content[i+1][0] = users.get(i).getUsername().getText();
-                    content[i+1][1] = users.get(i).getName().getText();
-                    content[i+1][2] = users.get(i).getPassword().getText();
+                for (int i = 0; i < users.size(); i++) {
+                    content[i + 1][0] = users.get(i).getUsername().getText();
+                    content[i + 1][1] = users.get(i).getName().getText();
+                    content[i + 1][2] = users.get(i).getPassword().getText();
                 }
 
-                if (tfFileName.getText() == null || tfFileName.getText().equals("")){
+                if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
                     tfError.setText("enter a filename!");
                     tfError.setVisible(true);
                     return;
@@ -74,19 +73,18 @@ public class ExportDatasController implements Initializable {
                 writeToPdf(contentStream, content);
                 contentStream.close();
 
-                File f = new File(selectedDirectory+"\\"+tfFileName.getText()+".pdf");
-                if(f.exists()) {
+                File f = new File(selectedDirectory + "\\" + tfFileName.getText() + ".pdf");
+                if (f.exists()) {
                     tfError.setVisible(true);
                     tfError.setText("File already exists");
                     return;
                 }
 
-                if (selectedDirectory != null){
-                    document.save(selectedDirectory+"\\"+tfFileName.getText()+".pdf");
+                if (selectedDirectory != null) {
+                    document.save(selectedDirectory + "\\" + tfFileName.getText() + ".pdf");
                 }
             }
-        }
-        else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")){
+        } else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")) {
 
         }
     }
@@ -98,7 +96,7 @@ public class ExportDatasController implements Initializable {
         return directoryChooser.showDialog(primaryStage);
     }
 
-    public static void writeToPdf(PDPageContentStream contentStream, String[][] data) throws IOException {
+    private static void writeToPdf(PDPageContentStream contentStream, String[][] data) throws IOException {
         final int rows = data.length;
         final int cols = data[0].length;
 
@@ -127,10 +125,10 @@ public class ExportDatasController implements Initializable {
 
         float textx = margin + cellMargin;
         float texty = y - 15;
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
-                if (data[i][j] != null) {
-                    String text = data[i][j];
+        for (String[] aData : data) {
+            for (String anAData : aData) {
+                if (anAData != null) {
+                    String text = anAData;
 
                     contentStream.beginText();
                     contentStream.moveTextPositionByAmount(textx, texty);
