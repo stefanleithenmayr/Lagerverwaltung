@@ -69,16 +69,18 @@ public class ExportDatasController implements Initializable {
                 }
                 String fileName = "";
                 if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
-                    do {
-                        fileName = enterFileNameWindow();
-                    }while (fileName.equals(""));
+                    enterFileNameWindow();
+                    return;
                 }
                 else fileName = tfFileName.getText();
                 File selectedDirectory = fileChooser();
+                if (selectedDirectory == null || selectedDirectory.equals("")){
+                    return;
+                }
                 writeToPdf(contentStream, content);
                 contentStream.close();
                 File f = new File(selectedDirectory + "\\" + fileName + ".pdf");
-                do {
+                while(f.exists()) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Dialog");
                     alert.setHeaderText("Look, a Confirmation Dialog");
@@ -94,12 +96,12 @@ public class ExportDatasController implements Initializable {
                     if (result.get() == buttonTypeOverwrite){
                         f.delete();
                     } else if (result.get() == buttonTypeChangeFileName) {
-                        fileName = enterFileNameWindow();
+                        return;
                     } else {
                         return;
                     }
                     f = new File(selectedDirectory + "\\" + fileName + ".pdf");
-                }while (f.exists());
+                }
                 if (selectedDirectory != null && !fileName.equals("")) {
                     document.save(selectedDirectory + "\\" + fileName + ".pdf");
                 }
@@ -110,17 +112,13 @@ public class ExportDatasController implements Initializable {
         }
     }
 
-    private String enterFileNameWindow() {
+    private void enterFileNameWindow() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Text Input Dialog");
-        dialog.setHeaderText("Look, a Text Input Dialog");
-        dialog.setContentText("Please enter a filename:");
-        Optional<String> result = dialog.showAndWait();
-        if (!result.isPresent()){
-            return "";
-        }
-        return result.get();
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("I have a great message for you!");
+
+        alert.showAndWait();
     }
 
     private File fileChooser() {
