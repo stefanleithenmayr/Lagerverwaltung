@@ -189,7 +189,14 @@ public class DBConnection {
 
     public void removeUser(String username) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("DELETE FROM USERS WHERE USERNAME = '" + username + "'" );
+        stmt.execute("DELETE " +
+                "FROM USERS " +
+                "WHERE USERNAME = '" + username + "'" );
+
+        Statement secStmt = conn.createStatement();
+        secStmt.execute("DELETE " +
+                "FROM LEIHE " +
+                "WHERE USERNAME = '" + username + "'");
     }
 
     public void upDateUser(User user, String name, String userName, String password) throws SQLException {
