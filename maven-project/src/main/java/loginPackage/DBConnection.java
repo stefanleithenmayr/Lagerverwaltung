@@ -4,6 +4,7 @@ import model.Item;
 import model.Rent;
 import model.User;
 
+import java.awt.font.ShapeGraphicAttribute;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -83,8 +84,8 @@ public class DBConnection {
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
-        userName = "renedeicker";
-        password = "12345";
+        //userName = "renedeicker";
+        //password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
         this.userName = userName;
@@ -281,5 +282,9 @@ public class DBConnection {
     public void removeRent(String exemplarID) throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.execute("DELETE FROM LEIHE WHERE EXEMPLARID = " + exemplarID);
+    }
+
+    public String getActualUser() {
+        return this.userName;
     }
 }

@@ -92,17 +92,17 @@
             <Image url="@../icons/database.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="149.0" AnchorPane.leftAnchor="15.0">
+      <ImageView fx:id="statIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="149.0" AnchorPane.leftAnchor="15.0">
          <image>
             <Image url="@../icons/bar-chart.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="599.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="15.0">
+      <ImageView fx:id="expIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="599.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="15.0">
          <image>
             <Image url="@../icons/export-file.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="659.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="15.0">
+      <ImageView fx:id="userIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="659.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="15.0">
          <image>
             <Image url="@../icons/user.png" />
          </image>
