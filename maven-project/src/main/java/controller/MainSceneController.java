@@ -302,7 +302,8 @@ public class MainSceneController implements Initializable {
 
         recLayout.setHeight(bounds.getHeight() - 71);
 
-        if (!DBConnection.getInstance().getActualUser().equals("stuetz")) {
+        if (!DBConnection.getInstance().getActualUser().equals("stuetz") && !DBConnection.getInstance().getActualUser().equals("renedeicker")
+                &&!DBConnection.getInstance().getActualUser().equals("stefanleithenmayr") && !DBConnection.getInstance().getActualUser().equals("maxhofer")) {
             exportDatasBT.setVisible(false);
             statisticsBT.setVisible(false);
             userManagerBT.setVisible(false);

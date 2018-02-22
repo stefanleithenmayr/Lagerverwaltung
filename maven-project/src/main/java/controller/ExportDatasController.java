@@ -69,13 +69,15 @@ public class ExportDatasController implements Initializable {
                 }
                 String fileName = "";
                 if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
-                    fileName = enterFileNameWindow();
+                    do {
+                        fileName = enterFileNameWindow();
+                    }while (fileName.equals(""));
                 }
                 else fileName = tfFileName.getText();
                 File selectedDirectory = fileChooser();
                 writeToPdf(contentStream, content);
                 contentStream.close();
-                File f;
+                File f = new File(selectedDirectory + "\\" + fileName + ".pdf");
                 do {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Dialog");
@@ -90,7 +92,7 @@ public class ExportDatasController implements Initializable {
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == buttonTypeOverwrite){
-
+                        f.delete();
                     } else if (result.get() == buttonTypeChangeFileName) {
                         fileName = enterFileNameWindow();
                     } else {
