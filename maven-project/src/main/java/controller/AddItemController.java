@@ -1,10 +1,8 @@
 package controller;
 
 import com.jfoenix.controls.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 
@@ -23,7 +21,7 @@ public class AddItemController implements Initializable {
     @FXML
     private Text qText;
     @FXML
-    public void substractQuantity(ActionEvent event) {
+    public void substractQuantity() {
         if (quantity > 1) {
             quantity--;
         }
@@ -32,7 +30,7 @@ public class AddItemController implements Initializable {
     }
 
     @FXML
-    public void addQuantity(ActionEvent event) {
+    public void addQuantity() {
         if (quantity < 100) {
             quantity++;
         }
@@ -41,16 +39,16 @@ public class AddItemController implements Initializable {
     }
 
     @FXML
-    public void upDateQuantity(MouseEvent event) {
+    public void upDateQuantity() {
         if (!tfQuantity.getText().equals("")){
             quantity = Integer.parseInt(tfQuantity.getText());
             slQuantity.setValue(quantity);
         }
     }
     @FXML
-    public void insertItem(ActionEvent event) throws SQLException {
+    public void insertItem() throws SQLException {
         int counter  = 0;
-        DBConnection.getInstance().addItem(tfItemName.getText(), tfDescription.getText(), quantity);
+        DBConnection.getInstance().addItem(tfItemName.getText(), tfDescription.getText());
         int itemId = DBConnection.getInstance().getLastItemID();
         while(counter != quantity){
             DBConnection.getInstance().addItemExemplar(itemId);
@@ -59,9 +57,9 @@ public class AddItemController implements Initializable {
     }
 
     @FXML
-    public void upDateQuantitySlider(MouseEvent event) {
-        Double d = slQuantity.getValue();
-        quantity = Integer.valueOf(d.intValue());
+    public void upDateQuantitySlider() {
+        Double value = slQuantity.getValue();
+        quantity = value.intValue();
         tfQuantity.setText(quantity.toString());
     }
     @Override

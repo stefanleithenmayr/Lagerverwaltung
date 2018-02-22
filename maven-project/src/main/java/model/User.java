@@ -4,8 +4,8 @@ import javafx.scene.control.TextField;
 
 public class User {
 
-    private String username, password, name;
-    private TextField nameField, userNameField, passwordField;
+    private final String username, password, name;
+    private final TextField nameField, userNameField, passwordField;
 
     private boolean isActivated;
 

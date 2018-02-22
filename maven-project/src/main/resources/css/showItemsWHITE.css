@@ -146,6 +146,6 @@
 }
 
 .jfx-button{
-    -fx-text-fill:white;
-    -fx-border-color: white;
+    -fx-text-fill:#33363F;
+    -fx-border-color: #33363F;
 }

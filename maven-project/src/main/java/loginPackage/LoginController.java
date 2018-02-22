@@ -44,7 +44,7 @@ public class LoginController implements Initializable {
     @FXML
     private JFXButton loginBT;
 
-    boolean loginSuccessful;
+    private boolean loginSuccessful;
 
     @FXML
     private void closeWindow(ActionEvent event) {
@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException, InterruptedException {
+    private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
 
         if (!loginSuccessful){
             loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
