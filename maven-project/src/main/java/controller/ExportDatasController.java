@@ -14,6 +14,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -29,11 +30,10 @@ public class ExportDatasController implements Initializable {
     @FXML
     JFXButton btnExport;
     @FXML
-    JFXTextField tfFileName, tfError;
+    JFXTextField tfFileName;
 
     @FXML
     private void exportDatas() throws SQLException, IOException {
-        tfError.setVisible(false);
         GregorianCalendar now = new GregorianCalendar();
         DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 
@@ -65,8 +65,7 @@ public class ExportDatasController implements Initializable {
                 }
 
                 if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
-                    tfError.setText("enter a filename!");
-                    tfError.setVisible(true);
+                    JOptionPane.showMessageDialog(new JFrame(), "Enter a filename!");
                     return;
                 }
 
@@ -76,8 +75,7 @@ public class ExportDatasController implements Initializable {
 
                 File f = new File(selectedDirectory + "\\" + tfFileName.getText() + ".pdf");
                 if (f.exists()) {
-                    tfError.setVisible(true);
-                    tfError.setText("File already exists");
+                    JOptionPane.showMessageDialog(new JFrame(), "File already exists!");
                     return;
                 }
 
