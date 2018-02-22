@@ -1,7 +1,5 @@
 package controller;
 
-
-import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,8 +21,16 @@ public class RentsController implements Initializable{
     @FXML
     private TableColumn<?,?> productNameCol, exemplarIDCol;
 
+    private ObservableList<Rent> rentList;
+
     @FXML
-    private JFXButton returnBT, exportBT;
+    private void returnExemplar() throws SQLException {
+        Rent selectedRent = tableViewRents.getSelectionModel().getSelectedItem();
+        if (selectedRent != null){
+            DBConnection.getInstance().removeRent(selectedRent.getID());
+            rentList.remove(selectedRent);
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,7 +43,7 @@ public class RentsController implements Initializable{
         productNameCol.setMinWidth(200);
         exemplarIDCol.setMinWidth(200);
 
-        ObservableList<Rent> rentList = null;
+        rentList = null;
         try {
             rentList = FXCollections.observableArrayList(DBConnection.getInstance().getUserRents());
         } catch (SQLException e) {

@@ -47,7 +47,7 @@ public class UserManagerController implements Initializable{
     private void activateEditing() {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null) {
-            user.setB(false);
+            user.setIsActivated(false);
             this.handleButton(true);
             userTV.refresh();
         }
@@ -57,7 +57,7 @@ public class UserManagerController implements Initializable{
     private void cancelEditing(){
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null) {
-            user.setB(true);
+            user.setIsActivated(true);
         }
 
         if (user.getUserNameField().getText().equals("Replace with Username")){
@@ -90,7 +90,7 @@ public class UserManagerController implements Initializable{
         obList.add(new User(userName, password,name));
         obList.remove(user);
         handleButton(false);
-        user.setB(true);
+        user.setIsActivated(true);
         userTV.refresh();
     }
 
@@ -122,11 +122,11 @@ public class UserManagerController implements Initializable{
         }
     }
 
-    private void handleButton(boolean b) { //aktivieren oder deaktivieren
-        cancelBT.setVisible(b);
-        saveBT.setVisible(b);
-        editBT.setDisable(b);
-        removeBT.setDisable(b);
-        newUserBT.setDisable(b);
+    private void handleButton(boolean isActivated) {
+        cancelBT.setVisible(isActivated);
+        saveBT.setVisible(isActivated);
+        editBT.setDisable(isActivated);
+        removeBT.setDisable(isActivated);
+        newUserBT.setDisable(isActivated);
     }
 }
