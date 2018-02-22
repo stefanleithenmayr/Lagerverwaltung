@@ -235,9 +235,9 @@ public class MainSceneController implements Initializable {
             exportDatasPane.getStylesheets().clear();
 
             if (theme) {
-                userManagerPane.getStylesheets().add("css/exportDatasWHITE.css");
+                exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
             } else {
-                userManagerPane.getStylesheets().add("css/exportDatasDARK.css");
+                exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
             }
             acutalPane = "exportDatasPane";
         }

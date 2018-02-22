@@ -150,6 +150,8 @@ public class ExportDatasController implements Initializable {
         cbFormat.getItems().add("CSV");
         cbDatas.getItems().add("Users");
         cbDatas.getItems().add("Store Journal");
-        cbDatas.getItems().add("Users");
+        cbDatas.getItems().add("Users Rents");
+        cbDatas.getSelectionModel().selectFirst();
+        cbFormat.getSelectionModel().selectFirst();
     }
 }
