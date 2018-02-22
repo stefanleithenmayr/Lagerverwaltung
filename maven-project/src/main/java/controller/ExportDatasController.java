@@ -5,6 +5,10 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import loginPackage.DBConnection;
 import model.User;
@@ -14,7 +18,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +25,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ExportDatasController implements Initializable {
@@ -63,29 +67,58 @@ public class ExportDatasController implements Initializable {
                     content[i + 1][1] = users.get(i).getName().getText();
                     content[i + 1][2] = users.get(i).getPassword().getText();
                 }
-
+                String fileName = "";
                 if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Enter a filename!");
-                    return;
+                    fileName = enterFileNameWindow();
                 }
-
+                else fileName = tfFileName.getText();
                 File selectedDirectory = fileChooser();
                 writeToPdf(contentStream, content);
                 contentStream.close();
+                File f;
+                do {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText("Look, a Confirmation Dialog");
+                    alert.setContentText("Choose your option.");
 
-                File f = new File(selectedDirectory + "\\" + tfFileName.getText() + ".pdf");
-                if (f.exists()) {
-                    JOptionPane.showMessageDialog(new JFrame(), "File already exists!");
-                    return;
-                }
+                    ButtonType buttonTypeOverwrite = new ButtonType("overwrite");
+                    ButtonType buttonTypeChangeFileName = new ButtonType("change filename");
+                    ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-                if (selectedDirectory != null) {
-                    document.save(selectedDirectory + "\\" + tfFileName.getText() + ".pdf");
+                    alert.getButtonTypes().setAll(buttonTypeOverwrite, buttonTypeChangeFileName, buttonTypeCancel);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == buttonTypeOverwrite){
+
+                    } else if (result.get() == buttonTypeChangeFileName) {
+                        fileName = enterFileNameWindow();
+                    } else {
+                        return;
+                    }
+                    f = new File(selectedDirectory + "\\" + fileName + ".pdf");
+                }while (f.exists());
+                if (selectedDirectory != null && !fileName.equals("")) {
+                    document.save(selectedDirectory + "\\" + fileName + ".pdf");
                 }
+                fileName = "";
             }
         } else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")) {
 
         }
+    }
+
+    private String enterFileNameWindow() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Text Input Dialog");
+        dialog.setHeaderText("Look, a Text Input Dialog");
+        dialog.setContentText("Please enter a filename:");
+        Optional<String> result = dialog.showAndWait();
+        if (!result.isPresent()){
+            return "";
+        }
+        return result.get();
     }
 
     private File fileChooser() {
