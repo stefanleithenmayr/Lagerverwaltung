@@ -5,8 +5,8 @@
 }
 
 .jfx-button{
-    -fx-text-fill:black;
-    -fx-border-color: black;
+    -fx-text-fill:#33363F;
+    -fx-border-color: #33363F;
 }
 
 .table-view{

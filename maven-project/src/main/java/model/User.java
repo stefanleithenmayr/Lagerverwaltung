@@ -4,25 +4,25 @@ import javafx.scene.control.TextField;
 
 public class User {
 
-    private String username, password, name;
-    private TextField nameField, userNameField, passwordField;
+    private final String username, password, name;
+    private final TextField nameField, userNameField, passwordField;
 
-    private boolean b;
+    private boolean isActivated;
 
     public TextField getUsername() {
         this.userNameField.setText(this.username);
-        this.userNameField.setDisable(b);
+        this.userNameField.setDisable(this.isActivated);
         return this.userNameField;
     }
 
     public TextField getPassword() {
-        this.passwordField.setDisable(b);
+        this.passwordField.setDisable(this.isActivated);
         this.passwordField.setText(this.password);
         return this.passwordField;
     }
 
     public TextField getName() {
-        this.nameField.setDisable(b);
+        this.nameField.setDisable(this.isActivated);
         this.nameField.setText(this.name);
         return this.nameField;
     }
@@ -31,8 +31,8 @@ public class User {
         return nameField;
     }
 
-    public void setB(boolean b) {
-        this.b = b;
+    public void setIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
     }
 
     public TextField getUserNameField() {
@@ -50,6 +50,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.name = name;
-        b = true;
+        this.isActivated = true;
     }
 }

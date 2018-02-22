@@ -35,8 +35,8 @@ public class MainSceneController implements Initializable {
     private double xOffset;
     private double yOffset;
 
-    boolean theme; //false = dark, true = white
-    String acutalPane;
+    private boolean theme; //false = dark, true = white
+    private String acutalPane;
 
     @FXML
     private void closeWindow(ActionEvent event) {
@@ -68,20 +68,28 @@ public class MainSceneController implements Initializable {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
 
-        if (buttonName.equals("addItemBT")){
-            addItemBT.setStyle("-fx-background-color:#3D4956");
-        }else if(buttonName.equals("showItemsBT")){
-            showItemsBT.setStyle("-fx-background-color:#3D4956");
-        }else if(buttonName.equals("rentBT")){
-            rentBT.setStyle("-fx-background-color:#3D4956");
-        }else if(buttonName.equals("exportBT")){
-            exportDatasBT.setStyle("-fx-background-color:#3D4956");
-        }else if(buttonName.equals("statisticsBT")){
-            statisticsBT.setStyle("-fx-background-color:#3D4956");
-        }else if(buttonName.equals("userManagerBT")){
-            userManagerBT.setStyle("-fx-background-color:#3D4956");
-        }else if(buttonName.equals("exportDatasBT")){
-            exportDatasBT.setStyle("-fx-background-color:#3D4956");
+        switch (buttonName) {
+            case "addItemBT":
+                addItemBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "showItemsBT":
+                showItemsBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "rentBT":
+                rentBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "exportBT":
+                exportDatasBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "statisticsBT":
+                statisticsBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "userManagerBT":
+                userManagerBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "exportDatasBT":
+                exportDatasBT.setStyle("-fx-background-color:#3D4956");
+                break;
         }
     }
 
@@ -252,6 +260,7 @@ public class MainSceneController implements Initializable {
             rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
             statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
             userManagerPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml"));
+            exportDatasPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -275,6 +284,9 @@ public class MainSceneController implements Initializable {
 
         userManagerPane.setPrefWidth(bounds.getWidth() - 280);
         userManagerPane.setPrefHeight(bounds.getHeight() - 120);
+
+        exportDatasPane.setPrefWidth(bounds.getWidth() - 280);
+        exportDatasPane.setPrefHeight(bounds.getHeight() - 120);
 
         recLayout.setHeight(bounds.getHeight() - 71);
         acutalPane = "";

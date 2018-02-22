@@ -57,7 +57,6 @@ public class ShowItemsController implements Initializable {
 
     private void refresh() throws SQLException {
         itemsTV.setRoot(null);
-
         List<Item> items = DBConnection.getInstance().getItemsList();
 
         TreeItem<Item> root = new TreeItem<>(new Item("", "", ""));
@@ -65,8 +64,8 @@ public class ShowItemsController implements Initializable {
             TreeItem<Item> cache = new TreeItem<>(item);
             try {
                 List<Integer> ids = DBConnection.getInstance().getAvailableExemplars(Integer.parseInt(item.getId()));
-                for (int index = 0; index < ids.size(); index++){
-                    TreeItem<Item> secondCache = new TreeItem<>(new Item(Integer.toString(ids.get(index)),"", ""));
+                for (Integer id : ids) {
+                    TreeItem<Item> secondCache = new TreeItem<>(new Item(Integer.toString(id), "", ""));
                     cache.getChildren().add(secondCache);
                 }
             } catch (SQLException e) {

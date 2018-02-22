@@ -2,8 +2,8 @@ package model;
 
 public class Rent {
 
-    private String id;
-    private String itemName;
+    private final String id;
+    private final String itemName;
 
     public Rent(String itemName, String id) {
         this.itemName = itemName;

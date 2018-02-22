@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Item {
 
-            private String name;
-            private String description;
-            private String id;
+            private final String name;
+            private final String description;
+            private final String id;
 
             public Item(String name, String description, String id){
                 this.name = name;
@@ -28,7 +28,7 @@ public class Item {
                 return id;
             }
 
-            public String getTotalExemplars() throws SQLException {
+            private String getTotalExemplars() throws SQLException {
                 if (!this.getId().isEmpty()){
                     return DBConnection.getInstance().countExemplars(Integer.parseInt(this.getId()));
                 }
@@ -37,7 +37,6 @@ public class Item {
 
             public String getAvailableExemplars() throws SQLException {
                 String total = getTotalExemplars();
-
                 if (!this.getId().isEmpty() && !total.isEmpty()) {
                     return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableExemplarsCount(Integer.parseInt(this.getId()))));
                 }
