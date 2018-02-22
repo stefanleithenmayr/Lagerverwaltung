@@ -120,6 +120,7 @@ public class MainSceneController implements Initializable {
         rentsPane.getStylesheets().clear();
         statisticsPane.getStylesheets().clear();
         userManagerPane.getStylesheets().clear();
+        exportDatasPane.getStylesheets().clear();
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -129,6 +130,7 @@ public class MainSceneController implements Initializable {
             rentsPane.getStylesheets().add("css/rentsWHITE.css");
             statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
             userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
+            exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
@@ -139,6 +141,7 @@ public class MainSceneController implements Initializable {
             statisticsPane.getStylesheets().add("css/statisticsDARK.css");
             showItemPane.getStylesheets().add("css/showItemsDARK.css");
             userManagerPane.getStylesheets().add("css/userManagerDARK.css");
+            exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
             theme = false;
         }
     }
@@ -232,9 +235,9 @@ public class MainSceneController implements Initializable {
             exportDatasPane.getStylesheets().clear();
 
             if (theme) {
-                //userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
+                userManagerPane.getStylesheets().add("css/exportDatasWHITE.css");
             } else {
-                //userManagerPane.getStylesheets().add("css/userManagerDARK.css");
+                userManagerPane.getStylesheets().add("css/exportDatasDARK.css");
             }
             acutalPane = "exportDatasPane";
         }
