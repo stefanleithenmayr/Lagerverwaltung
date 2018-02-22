@@ -39,7 +39,7 @@ public class MainSceneController implements Initializable {
     private String acutalPane;
 
     @FXML
-    private void closeWindow(ActionEvent event) {
+    private void closeWindow() {
         Stage stage = (Stage) cancelBT.getScene().getWindow();
         stage.close();
     }
@@ -117,15 +117,12 @@ public class MainSceneController implements Initializable {
 
     /**
      * switcht das Theme
-     * @param event
      */
 
     @FXML
-    private void changeFont(ActionEvent event) {
+    private void changeFont() throws IOException {
         mainPane.getStylesheets().clear();
         addItemPane.getStylesheets().clear();
-        showItemPane.getStylesheets().clear();
-        rentsPane.getStylesheets().clear();
         statisticsPane.getStylesheets().clear();
         userManagerPane.getStylesheets().clear();
         exportDatasPane.getStylesheets().clear();
@@ -134,7 +131,6 @@ public class MainSceneController implements Initializable {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
             addItemPane.getStylesheets().add("css/addItemWHITE.css");
-            showItemPane.getStylesheets().add("css/showItemsWHITE.css");
             rentsPane.getStylesheets().add("css/rentsWHITE.css");
             statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
             userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
@@ -144,13 +140,27 @@ public class MainSceneController implements Initializable {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
             addItemPane.getStylesheets().add("css/addItemDARK.css");
-            showItemPane.getStylesheets().add("css/showItemsDARK.css");
             rentsPane.getStylesheets().add("css/rentsDARK.css");
             statisticsPane.getStylesheets().add("css/statisticsDARK.css");
-            showItemPane.getStylesheets().add("css/showItemsDARK.css");
             userManagerPane.getStylesheets().add("css/userManagerDARK.css");
             exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
             theme = false;
+        }
+
+        if (this.acutalPane.equals("showItemPane")){
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            subPane.getChildren().clear();
+            showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
+            subPane.getChildren().add(showItemPane);
+            showItemPane.getStylesheets().clear();
+            showItemPane.setPrefWidth(bounds.getWidth() - 280);
+            showItemPane.setPrefHeight(bounds.getHeight() - 120);
+            if (theme) {
+                showItemPane.getStylesheets().add("css/showItemsWHITE.css");
+            } else {
+                showItemPane.getStylesheets().add("css/showItemsDARK.css");
+            }
         }
     }
 

@@ -28,7 +28,7 @@ public class Item {
                 return id;
             }
 
-            private String getTotalExemplars() throws SQLException {
+            public String getTotalExemplars() throws SQLException {
                 if (!this.getId().isEmpty()){
                     return DBConnection.getInstance().countExemplars(Integer.parseInt(this.getId()));
                 }
