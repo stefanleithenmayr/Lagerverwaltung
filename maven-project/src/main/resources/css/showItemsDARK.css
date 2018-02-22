@@ -145,3 +145,8 @@
 .tree-table-row-cell:expanded .tree-disclosure-node .arrow {
     -fx-rotate: 90;
 }
+
+.jfx-button{
+    -fx-text-fill:white;
+    -fx-border-color: white;
+}

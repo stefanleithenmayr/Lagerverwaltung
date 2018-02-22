@@ -2,13 +2,19 @@ package model;
 
 public class Rent {
 
-    private String name;
+    private String id;
+    private String itemName;
 
-    public Rent(String name) {
-        this.name = name;
+    public Rent(String itemName, String id) {
+        this.itemName = itemName;
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getID() {
+        return id;
+    }
+
+    public String getItemName() {
+        return itemName;
     }
 }

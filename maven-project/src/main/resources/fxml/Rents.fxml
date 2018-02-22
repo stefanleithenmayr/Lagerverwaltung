@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rentsPane" prefHeight="600.0" prefWidth="1000.0" styleClass="root" stylesheets="@../css/rentsDARK.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentsController">
+<AnchorPane fx:id="rentsPane" prefHeight="600.0" prefWidth="1000.0" styleClass="root" stylesheets="@../css/rentsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentsController">
    <children>
       <JFXButton fx:id="exportBT" layoutX="766.0" layoutY="51.0" prefHeight="10.0" prefWidth="82.0" ripplerFill="WHITE" styleClass="btStyle" text="Export" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="45.0">
          <font>
@@ -20,7 +20,8 @@
       </JFXButton>
       <TableView fx:id="tableViewRents" layoutX="25.0" layoutY="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
          <columns>
-            <TableColumn fx:id="productName" prefWidth="75.0" text="Productname" />
+            <TableColumn fx:id="productNameCol" prefWidth="110.0" text="Productname" />
+            <TableColumn fx:id="exemplarIDCol" prefWidth="134.0" text="ExemplarID" />
          </columns>
       </TableView>
    </children>

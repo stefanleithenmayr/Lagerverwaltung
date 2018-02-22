@@ -1,6 +1,7 @@
 package loginPackage;
 
 import model.Item;
+import model.Rent;
 import model.User;
 
 import java.io.*;
@@ -31,11 +32,28 @@ public class DBConnection {
         return INSTANCE;
     }
 
+    public Integer getLastLeihID() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE");
+        if (!rs.next()){
+            return 10000;
+        }
+
+        Integer biggestID = rs.getInt("LEIHID");
+        while (rs.next()){
+            Integer cache = rs.getInt("LEIHID");
+            if (cache > biggestID){
+                biggestID = cache;
+            }
+        }
+        return biggestID;
+    }
+
     public Integer getLastItemExemplarID() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM EXEMPLAR");
         if (!rs.next()){
-            return 1000000;
+            return 100000;
         }
 
         Integer biggestID = rs.getInt("EXEMPLARID");
@@ -123,7 +141,7 @@ public class DBConnection {
         itemExemplarId++;
     }
 
-    public List getItemsList() throws SQLException {
+    public List<Item> getItemsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
         List<Item> items = new ArrayList<>();
@@ -199,12 +217,66 @@ public class DBConnection {
         return ids;
     }
     public void saveNewUser(String name, String userName, String password) throws SQLException {
-        if( name != null && !name.equals("") && password != null && !password.equals("") &&
+        if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
             String SQLCommand = "INSERT INTO USERS " +
                     "VALUES ('"+ userName + "','"+ password+ "','"+ name+"')";
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
         }
+    }
+
+    public void rentItem(String name) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("INSERT INTO LEIHE VALUES (" + (DBConnection.getInstance().getLastLeihID() + 1) + ", '"+ userName +"'," + name +")");
+        conn.commit();
+    }
+
+    public List<Integer> getAvailableExemplars(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        Statement secStmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
+
+        List<Integer> ids = new ArrayList<>();
+        while (rs.next()){
+            ResultSet s = secStmt.executeQuery("SELECT EXEMPLARID FROM LEIHE WHERE EXEMPLARID = " + rs.getInt("EXEMPLARID"));
+            if (!s.next()){
+                ids.add(rs.getInt("EXEMPLARID"));
+            }
+        }
+        return ids;
+    }
+
+    public String getAvailableExemplarsCount(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select count(l.exemplarid)\n" +
+                "from exemplar e\n" +
+                "    join leihe l on l.EXEMPLARID = e.EXEMPLARID\n" +
+                "where itemid =" + id);
+        if (rs.next()){
+             return Integer.toString(rs.getInt(1));
+        }
+        return "";
+    }
+
+    public List<Rent> getUserRents() throws SQLException {
+        Statement stmt = conn.createStatement();
+        Statement secStmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID " +
+                "FROM LEIHE " +
+                "WHERE USERNAME = '" + userName + "'");
+
+        List<Rent> rents = new ArrayList<>();
+        while (rs.next()){
+            ResultSet secRS = secStmt.executeQuery("SELECT i.itemname\n" +
+                    "FROM leihe l\n" +
+                    "    JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                    "    JOIN items i ON i.ITEMID = e.ITEMID " +
+                    "WHERE e.EXEMPLARID = " + rs.getString("EXEMPLARID"));
+            if (secRS.next()){
+                rents.add(new Rent(secRS.getString("ITEMNAME"),rs.getString("EXEMPLARID")));
+            }
+        }
+        return rents;
     }
 }
