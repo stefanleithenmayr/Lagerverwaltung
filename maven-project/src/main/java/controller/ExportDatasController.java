@@ -47,9 +47,10 @@ public class ExportDatasController implements Initializable {
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
                 contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA, 20);
-                contentStream.moveTextPositionByAmount(150, 750);
-                contentStream.drawString("USERS, am" + DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
+                contentStream.setFont(PDType1Font.HELVETICA ,20);
+                contentStream.newLineAtOffset(150,750);
+                contentStream.showText("USERS, am "+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
+
                 contentStream.endText();
 
                 String[][] content = new String[users.size() + 1][3];
@@ -111,13 +112,17 @@ public class ExportDatasController implements Initializable {
         float anoy = y;
 
         for (int i = 0; i <= rows; i++) {
-            contentStream.drawLine(margin, anoy, margin + tableWidth, anoy);
+            contentStream.moveTo(margin, anoy);
+            contentStream.lineTo(margin+tableWidth, anoy);
+            contentStream.stroke();
             anoy -= rowHeight;
         }
 
         float anox = margin;
         for (int i = 0; i <= cols; i++) {
-            contentStream.drawLine(anox, y, anox, y - tableHeight);
+            contentStream.moveTo(anox, y);
+            contentStream.lineTo(anox, y-tableHeight);
+            contentStream.stroke();
             anox += colWidth;
         }
 
@@ -131,8 +136,8 @@ public class ExportDatasController implements Initializable {
                     String text = anAData;
 
                     contentStream.beginText();
-                    contentStream.moveTextPositionByAmount(textx, texty);
-                    contentStream.drawString(text);
+                    contentStream.newLineAtOffset(textx,texty);
+                    contentStream.showText(text);
                     contentStream.endText();
                     textx += colWidth;
                 }
@@ -148,6 +153,8 @@ public class ExportDatasController implements Initializable {
         cbFormat.getItems().add("CSV");
         cbDatas.getItems().add("Users");
         cbDatas.getItems().add("Store Journal");
-        cbDatas.getItems().add("Users");
+        cbDatas.getItems().add("Users Rents");
+        cbDatas.getSelectionModel().selectFirst();
+        cbFormat.getSelectionModel().selectFirst();
     }
 }

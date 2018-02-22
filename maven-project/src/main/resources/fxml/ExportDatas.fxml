@@ -10,7 +10,7 @@
       <JFXComboBox fx:id="cbDatas" layoutX="32.0" layoutY="25.0" prefHeight="25.0" prefWidth="193.0" visibleRowCount="5" />
       <JFXComboBox fx:id="cbFormat" layoutX="245.0" layoutY="25.0" prefHeight="25.0" prefWidth="193.0" />
       <JFXButton fx:id="btnExport" layoutX="934.0" layoutY="561.0" onAction="#exportDatas" styleClass="btStyle" text="Export" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="16.0" />
-      <JFXTextField fx:id="tfFileName" layoutX="32.0" layoutY="204.0" maxWidth="193.0" minWidth="193.0" prefHeight="25.0" prefWidth="193.0" promptText="Filename" />
+      <JFXTextField fx:id="tfFileName" layoutX="32.0" layoutY="204.0" maxWidth="193.0" minWidth="193.0" prefHeight="25.0" prefWidth="193.0" promptText="Filename" styleClass="textFieldStyle" />
       <JFXTextField fx:id="tfError" editable="false" layoutX="714.0" layoutY="558.0" maxWidth="193.0" minWidth="193.0" prefHeight="25.0" prefWidth="193.0" visible="false" />
    </children>
 </AnchorPane>

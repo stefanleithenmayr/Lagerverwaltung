@@ -8,3 +8,30 @@
     -fx-border-width: 0.5;
     -fx-text-fill: white;
 }
+
+.textFieldStyle{
+    -fx-prompt-text-fill: white;
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+.jfx-text-field{
+    -fx-pref-height:3;
+    -jfx-unfocus-color: white;
+    -jfx-focus-color: red;
+    -fx-text-fill: white;
+}
+
+
+
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}.combo-box .cell:selected {
+     -fx-background-color: #F06060;
+ }
+.combo-box .cell:hover{
+    -fx-background-color: #F06060;
+}
