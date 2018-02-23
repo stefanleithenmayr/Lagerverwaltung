@@ -10,13 +10,13 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import loginPackage.DBConnection;
 import model.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,17 +30,16 @@ import java.util.ResourceBundle;
 
 public class ExportDatasController implements Initializable {
     @FXML
-    JFXComboBox<String> cbDatas, cbFormat;
+    private JFXComboBox<String> cbDatas, cbFormat;
     @FXML
-    JFXButton btnExport;
+    private JFXButton btnExport;
     @FXML
-    JFXTextField tfFileName;
+    private JFXTextField tfFileName;
 
     @FXML
     private void exportDatas() throws SQLException, IOException {
         GregorianCalendar now = new GregorianCalendar();
         DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-
 
         if (cbFormat.getSelectionModel().getSelectedItem().equals("PDF")) {
             if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")) {
@@ -53,8 +52,7 @@ public class ExportDatasController implements Initializable {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA ,20);
                 contentStream.newLineAtOffset(150,750);
-                contentStream.showText("USERS, am "+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
-
+                contentStream.showText("USERS, am " + DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
                 contentStream.endText();
 
                 String[][] content = new String[users.size() + 1][3];
@@ -67,15 +65,18 @@ public class ExportDatasController implements Initializable {
                     content[i + 1][1] = users.get(i).getName().getText();
                     content[i + 1][2] = users.get(i).getPassword().getText();
                 }
-                String fileName = "";
+                String fileName;
                 if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
                     fileName = enterFileNameWindow();
                 }
-                else fileName = tfFileName.getText();
+                else {
+                    fileName = tfFileName.getText();
+                }
+                
                 File selectedDirectory = fileChooser();
                 writeToPdf(contentStream, content);
                 contentStream.close();
-                File f;
+                File file;
                 do {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Dialog");
@@ -96,15 +97,15 @@ public class ExportDatasController implements Initializable {
                     } else {
                         return;
                     }
-                    f = new File(selectedDirectory + "\\" + fileName + ".pdf");
-                }while (f.exists());
+                    file = new File(selectedDirectory + "\\" + fileName + ".pdf");
+                }while (file.exists());
+
                 if (selectedDirectory != null && !fileName.equals("")) {
                     document.save(selectedDirectory + "\\" + fileName + ".pdf");
                 }
-                fileName = "";
             }
         } else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")) {
-
+            //Code wird noch implementiert
         }
     }
 
@@ -115,10 +116,7 @@ public class ExportDatasController implements Initializable {
         dialog.setHeaderText("Look, a Text Input Dialog");
         dialog.setContentText("Please enter a filename:");
         Optional<String> result = dialog.showAndWait();
-        if (!result.isPresent()){
-            return "";
-        }
-        return result.get();
+        return result.orElse("");
     }
 
     private File fileChooser() {
@@ -156,25 +154,22 @@ public class ExportDatasController implements Initializable {
             contentStream.stroke();
             anox += colWidth;
         }
-
         contentStream.setFont(PDType1Font.COURIER_BOLD, 10);
 
-        float textx = margin + cellMargin;
-        float texty = y - 15;
+        float textX = margin + cellMargin;
+        float textY = y - 15;
         for (String[] aData : data) {
             for (String anAData : aData) {
                 if (anAData != null) {
-                    String text = anAData;
-
                     contentStream.beginText();
-                    contentStream.newLineAtOffset(textx,texty);
-                    contentStream.showText(text);
+                    contentStream.newLineAtOffset(textX,textY);
+                    contentStream.showText(anAData);
                     contentStream.endText();
-                    textx += colWidth;
+                    textX += colWidth;
                 }
             }
-            texty -= rowHeight;
-            textx = margin + cellMargin;
+            textY -= rowHeight;
+            textX = margin + cellMargin;
         }
     }
 

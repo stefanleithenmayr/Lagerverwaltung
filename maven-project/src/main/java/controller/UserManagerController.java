@@ -37,7 +37,8 @@ public class UserManagerController implements Initializable{
     @FXML
     private void removeUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
-        if (user != null){
+
+        if (user != null && !DBConnection.getInstance().getActualUser().equals(user.getUsername().getText())){
             DBConnection.getInstance().removeUser(user.getUsername().getText());
             obList.remove(user);
         }

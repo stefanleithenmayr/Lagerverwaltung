@@ -49,7 +49,7 @@ public class MainSceneController implements Initializable {
      * Die zwei Methoden (mouseIsPressedEvent und mouseIsDraggedEvent)
      * sind dafür da, dass das MainPane verschiebar bleibt!
      *
-     * @param event
+     * @param event MouseEvent
      */
 
     @FXML
@@ -128,6 +128,7 @@ public class MainSceneController implements Initializable {
         statisticsPane.getStylesheets().clear();
         userManagerPane.getStylesheets().clear();
         exportDatasPane.getStylesheets().clear();
+        rentsPane.getStylesheets().clear();
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -169,8 +170,8 @@ public class MainSceneController implements Initializable {
     /**
      * Wechselt zwischen den verschiedenen Panes hin und her
      *
-     * @param event
-     * @throws IOException
+     * @param event Event in welchen steht, welcher Button gedrückt wurde!
+     * @throws IOException IOException
      */
     @FXML
     private void switchPane(ActionEvent event) throws IOException {
