@@ -18,9 +18,7 @@
      -fx-pref-height:3;
      -jfx-unfocus-color: #3D4956;
      -jfx-focus-color: red;
- }
-
-
+}
 
 .combo-box-base {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;

@@ -14,13 +14,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import loginPackage.DBConnection;
 import model.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class ExportDatasController implements Initializable {
     @FXML
     JFXComboBox<String> cbDatas;
     @FXML
-    JFXButton btnExport;
+    private JFXButton btnExport;
     @FXML
     JFXTextField tfFileName,tfSearchName;
     @FXML
@@ -150,7 +150,7 @@ public class ExportDatasController implements Initializable {
             fileName = "";
         }
         else if(cbDatas.getSelectionModel().getSelectedItem().equals("Users Rents")){
-
+          
         }
     }
     private void enterFileNameWindow() {
@@ -197,25 +197,22 @@ public class ExportDatasController implements Initializable {
             contentStream.stroke();
             anox += colWidth;
         }
-
         contentStream.setFont(PDType1Font.COURIER_BOLD, 10);
 
-        float textx = margin + cellMargin;
-        float texty = y - 15;
+        float textX = margin + cellMargin;
+        float textY = y - 15;
         for (String[] aData : data) {
             for (String anAData : aData) {
                 if (anAData != null) {
-                    String text = anAData;
-
                     contentStream.beginText();
-                    contentStream.newLineAtOffset(textx,texty);
-                    contentStream.showText(text);
+                    contentStream.newLineAtOffset(textX,textY);
+                    contentStream.showText(anAData);
                     contentStream.endText();
-                    textx += colWidth;
+                    textX += colWidth;
                 }
             }
-            texty -= rowHeight;
-            textx = margin + cellMargin;
+            textY -= rowHeight;
+            textX = margin + cellMargin;
         }
     }
 

@@ -19,6 +19,7 @@ public class Rent {
     public String getItemName() {
         return itemName;
     }
-
-    public String getUserName() {return userName;}
+    public String getUserName() {
+        return userName;
+    }
 }

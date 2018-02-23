@@ -304,4 +304,28 @@ public class DBConnection {
     public String getActualUser() {
         return this.userName;
     }
+
+    private String getFullName() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT NAME FROM USERS WHERE USERNAME = '" + this.userName+ "'");
+        if (rs.next()){
+            return rs.getString("Name");
+        }
+        return "";
+    }
+
+    public List<Rent> getAllRents() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
+                "        FROM leihe l \n" +
+                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "                JOIN users u ON l.USERNAME = u.username");
+
+        List<Rent> rents = new ArrayList<>();
+        while (rs.next()){
+            rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("username"), rs.getString("name")));
+        }
+        return rents;
+    }
 }
