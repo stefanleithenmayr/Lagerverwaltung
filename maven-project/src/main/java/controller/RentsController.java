@@ -2,8 +2,6 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,16 +45,14 @@ public class RentsController implements Initializable{
             userCol.setVisible(true);
             fullNameCol.setVisible(true);
 
-            chooseRents.valueProperty().addListener(new ChangeListener<String>() {
-                @Override public void changed(ObservableValue ov, String oldVal, String newVal) {
-                    if (newVal != null){
-                        if (newVal.equals("My Rents")){
-                            loadMyRents();
-                            returnBT.setDisable(false);
-                        }else if(newVal.equals("All Rents")){
-                            loadAllRents();
-                            returnBT.setDisable(true);
-                        }
+            chooseRents.valueProperty().addListener((ov, oldVal, newVal) -> {
+                if (newVal != null){
+                    if (newVal.equals("My Rents")){
+                        loadMyRents();
+                        returnBT.setDisable(false);
+                    }else if(newVal.equals("All Rents")){
+                        loadAllRents();
+                        returnBT.setDisable(true);
                     }
                 }
             });

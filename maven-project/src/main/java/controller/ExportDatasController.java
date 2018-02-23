@@ -20,6 +20,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -109,7 +110,7 @@ public class ExportDatasController implements Initializable {
                 }
             }
         } else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")) {
-            //Code wird noch implementiert
+
         }
     }
 
