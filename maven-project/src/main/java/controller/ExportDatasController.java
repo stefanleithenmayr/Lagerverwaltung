@@ -67,17 +67,22 @@ public class ExportDatasController implements Initializable {
                 }
                 String fileName;
                 if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
-                    fileName = enterFileNameWindow();
+                    enterFileNameWindow();
+                    return;
                 }
                 else {
                     fileName = tfFileName.getText();
                 }
                 
                 File selectedDirectory = fileChooser();
+                if (selectedDirectory == null || selectedDirectory.equals("")){
+                    return;
+                }
                 writeToPdf(contentStream, content);
                 contentStream.close();
-                File file;
-                do {
+
+                File f = new File(selectedDirectory + "\\" + fileName + ".pdf");
+                while(f.exists()) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Dialog");
                     alert.setHeaderText("Look, a Confirmation Dialog");
@@ -91,15 +96,14 @@ public class ExportDatasController implements Initializable {
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == buttonTypeOverwrite){
-
+                        f.delete();
                     } else if (result.get() == buttonTypeChangeFileName) {
-                        fileName = enterFileNameWindow();
+                        return;
                     } else {
                         return;
                     }
-                    file = new File(selectedDirectory + "\\" + fileName + ".pdf");
-                }while (file.exists());
-
+                    f = new File(selectedDirectory + "\\" + fileName + ".pdf");
+                }
                 if (selectedDirectory != null && !fileName.equals("")) {
                     document.save(selectedDirectory + "\\" + fileName + ".pdf");
                 }
@@ -109,14 +113,13 @@ public class ExportDatasController implements Initializable {
         }
     }
 
-    private String enterFileNameWindow() {
+    private void enterFileNameWindow() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Text Input Dialog");
-        dialog.setHeaderText("Look, a Text Input Dialog");
-        dialog.setContentText("Please enter a filename:");
-        Optional<String> result = dialog.showAndWait();
-        return result.orElse("");
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("I have a great message for you!");
+
+        alert.showAndWait();
     }
 
     private File fileChooser() {
