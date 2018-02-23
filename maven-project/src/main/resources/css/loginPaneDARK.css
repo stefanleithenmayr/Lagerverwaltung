@@ -1,0 +1,43 @@
+#loginPane{
+	-fx-background-color: #3D4956;
+	-fx-background-radius: 10;
+}
+
+#loginBT{
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
+#userNameField{
+	-fx-prompt-text-fill: white;
+	-fx-unfocus-color: white;
+	-fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+
+#passwordField{
+	-fx-prompt-text-fill: white;
+	-fx-unfocus-color: white;
+	-fx-focus-color: white;
+    -fx-text-fill: white;
+    -fx-faint-focus-color: white;
+}
+
+.jfx-text-field{
+	-fx-pref-height:3;
+	-jfx-unfocus-color: white;
+	-jfx-focus-color: red;
+}
+
+.jfx-password-field{
+	-fx-pref-height:3;
+	-jfx-unfocus-color: white;
+	-jfx-focus-color: red;
+}
+
+#falseInputField{
+	-fx-text-fill: white;
+	-fx-fill: white;
+	-fx-font-size: 14;
+}

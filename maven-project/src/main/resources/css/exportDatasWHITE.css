@@ -1,0 +1,33 @@
+#exportDatasPane{
+    -fx-background-color: white;
+    -fx-font-size: 15px;
+    -fx-text-fill: #33363F;
+}
+.btStyle{
+    -fx-border-color: #33363F;
+    -fx-text-fill: #33363F;
+    -fx-border-width: 0.5;
+}
+.textFieldStyle{
+    -fx-prompt-text-fill: #3D4956;
+    -fx-unfocus-color: #3D4956;
+    -fx-focus-color: #3D4956;
+    -fx-text-fill: #3D4956;
+}
+.jfx-text-field{
+     -fx-pref-height:3;
+     -jfx-unfocus-color: #3D4956;
+     -jfx-focus-color: red;
+}
+
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}
+.combo-box .cell:selected {
+    -fx-background-color: #F06060;
+}
+.combo-box .cell:hover{
+    -fx-background-color: #F06060;
+}

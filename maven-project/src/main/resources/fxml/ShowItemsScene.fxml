@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="showItemPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/showItemsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShowItemsController">
+   <children>
+      <TreeTableView fx:id="itemsTV" layoutX="98.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
+         <columns>
+            <TreeTableColumn fx:id="prodNameCol" prefWidth="77.0" text="Productname" />
+            <TreeTableColumn fx:id="descCol" prefWidth="337.0" text="Description" />
+            <TreeTableColumn fx:id="totalProdCol" prefWidth="227.0" text="Total Products" />
+            <TreeTableColumn fx:id="availableProdCol" prefWidth="196.0" text="Available Products" />
+         </columns>
+      </TreeTableView>
+      <JFXButton layoutX="41.0" layoutY="42.0" onAction="#rentProduct" text="Rent" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="42.0" />
+   </children>
+</AnchorPane>
