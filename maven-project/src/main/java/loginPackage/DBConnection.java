@@ -274,7 +274,7 @@ public class DBConnection {
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-               rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), this.userName, DBConnection.getInstance().getFullName()));
+               rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("USERNAME")));
         }
         return rents;
     }
@@ -283,7 +283,24 @@ public class DBConnection {
         Statement stmt = conn.createStatement();
         stmt.execute("DELETE FROM LEIHE WHERE EXEMPLARID = " + exemplarID);
     }
-
+    public List<Rent> getAllRents() throws  SQLException{
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("Select * from LEIHE");
+        List<Rent> rents = new ArrayList<>();
+        while (rs.next()){
+            rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("USERNAME")));
+        }
+        return  rents;
+    }
+    public List<String> getAllUserNames() throws  SQLException{
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("Select * from USERS");
+        List<String> userNames = new ArrayList<>();
+        while (rs.next()){
+            userNames.add(rs.getString("NAME"));
+        }
+        return userNames;
+    }
     public String getActualUser() {
         return this.userName;
     }

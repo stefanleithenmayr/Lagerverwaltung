@@ -1,14 +1,24 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 public class User {
 
     private final String username, password, name;
     private final TextField nameField, userNameField, passwordField;
-
+    private final SimpleStringProperty realName;
+    private CheckBox selected;
     private boolean isActivated;
 
+    public CheckBox getSelected() {
+        return selected;
+    }
+
+    public void setSelected(CheckBox selected) {
+        this.selected = selected;
+    }
     public TextField getUsername() {
         this.userNameField.setText(this.username);
         this.userNameField.setDisable(this.isActivated);
@@ -26,7 +36,9 @@ public class User {
         this.nameField.setText(this.name);
         return this.nameField;
     }
-
+    public String getRealName() {
+        return realName.get();
+    }
     public TextField getNameField() {
         return nameField;
     }
@@ -51,5 +63,8 @@ public class User {
         this.password = password;
         this.name = name;
         this.isActivated = true;
+        this.realName = new SimpleStringProperty(name);
+        selected = new CheckBox();
+
     }
 }
