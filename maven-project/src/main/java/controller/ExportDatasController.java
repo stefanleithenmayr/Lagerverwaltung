@@ -24,6 +24,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.security.Key;
 import java.sql.SQLException;
@@ -144,13 +145,8 @@ public class ExportDatasController implements Initializable {
                 }
                 f = new File(selectedDirectory + "\\" + fileName + ".pdf");
             }
-            if (selectedDirectory != null && !fileName.equals("")) {
-                document.save(selectedDirectory + "\\" + fileName + ".pdf");
-            }
-            fileName = "";
-        }
-        else if(cbDatas.getSelectionModel().getSelectedItem().equals("Users Rents")){
-          
+        } else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")) {
+
         }
     }
     private void enterFileNameWindow() {
