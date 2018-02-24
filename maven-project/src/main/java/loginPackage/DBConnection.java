@@ -241,17 +241,12 @@ public class DBConnection {
      * @param id
      * @throws SQLException
      */
-    public void deleteItem(int id) throws SQLException {
+    public void deleteExemplar(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        if(Integer.parseInt(countExemplars(id)) == 1) {
-            stmt.execute("DELETE FROM ITEMS WHERE ITEMID = (" + id);
-        }
-        else {
-            stmt.execute("DELETE FROM EXEMPLAR WHERE ITEMID = (" + id);
-        }
-
+        stmt.execute("DELETE FROM EXEMPLAR WHERE EXEMPLARID = " + id);
         conn.commit();
     }
+    
 
     public List<Integer> getAvailableExemplars(int id) throws SQLException {
         Statement stmt = conn.createStatement();
