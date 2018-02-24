@@ -280,12 +280,13 @@ public class DBConnection {
 
     public List<Rent> getUserRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid\n" +
+
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.username\n, u.NAME" +
                 "            FROM leihe l\n" +
                 "                 JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
                 "                 JOIN items i ON i.ITEMID = e.ITEMID\n" +
-                "WHERE username = '" + userName + "'");
-
+                "                 JOIN USERS u on l.USERNAME = u.USERNAME "+
+                "WHERE l.USERNAME = '" + userName + "'");
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
                rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), this.userName, DBConnection.getInstance().getFullName()));

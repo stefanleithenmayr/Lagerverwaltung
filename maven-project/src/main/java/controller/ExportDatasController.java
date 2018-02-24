@@ -62,6 +62,10 @@ public class ExportDatasController implements Initializable {
     }
     @FXML
     private  void searchUser(KeyEvent event){
+        List<User> cache = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++){
+            cache.add(users.get(i));
+        }
         tvUser.getItems().clear();
         try {
             users = FXCollections.observableArrayList(DBConnection.getInstance().getUsers());
@@ -75,8 +79,8 @@ public class ExportDatasController implements Initializable {
             search = search.substring(0,search.length()-1);
         }
         else search += event.getText();
-
         for (int i = 0; i < users.size(); i++){
+            users.get(i).setSelected(cache.get(i).getSelected());
             if (users.get(i).getRealName().toLowerCase().contains(search.toLowerCase())){
                 tvUser.getItems().add(users.get(i));
             }
@@ -94,9 +98,9 @@ public class ExportDatasController implements Initializable {
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA ,20);
-        contentStream.newLineAtOffset(150,750);
 
         if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")) {
+            contentStream.newLineAtOffset(150,750);
             List<User> users = DBConnection.getInstance().getUsers();
 
             contentStream.showText("USERS, am "+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
@@ -118,14 +122,37 @@ public class ExportDatasController implements Initializable {
 
         }
         else if (cbDatas.getSelectionModel().getSelectedItem().equals("Users Rents")) {
+            contentStream.newLineAtOffset(115,750);
+            contentStream.showText("Ausleihungen, am "+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
+
+            contentStream.endText();
+
             List<User> selectedUser = new ArrayList<>();
+            List<Rent> selectedUsersRents = new ArrayList<>();
             for (int i = 0; i < users.size(); i++){
                 if (users.get(i).getSelected().isSelected()){
                     selectedUser.add(users.get(i));
                     List<Rent> usersRents = DBConnection.getInstance().getRentsByUsername(users.get(i).getUsername().getText());
-
+                    for (int j = 0; j < usersRents.size(); j++){
+                        selectedUsersRents.add(usersRents.get(j));
+                    }
                 }
             }
+
+            String[][] content = new String[selectedUsersRents.size() + 1][4];
+            content[0][0] = "Produktname";
+            content[0][1] = "ExemplarID";
+            content[0][2] = "Username";
+            content[0][3] = "Name";
+
+            for (int i = 0; i < selectedUsersRents.size(); i++) {
+                content[i + 1][0] = selectedUsersRents.get(i).getItemName();
+                content[i + 1][1] = selectedUsersRents.get(i).getID();
+                content[i + 1][2] = selectedUsersRents.get(i).getUserName();
+                content[i + 1][3] = selectedUsersRents.get(i).getFullName();
+            }
+            writeToPdf(contentStream, content);
+            contentStream.close();
         }
 
         String fileName = "";
@@ -163,7 +190,10 @@ public class ExportDatasController implements Initializable {
         }
         if (selectedDirectory != null && !fileName.equals("")) {
             document.save(selectedDirectory + "\\" + fileName + ".pdf");
+            document.close();
         }
+        tfSearchName.clear();
+        tfFileName.clear();
     }
     private void enterFileNameWindow() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
