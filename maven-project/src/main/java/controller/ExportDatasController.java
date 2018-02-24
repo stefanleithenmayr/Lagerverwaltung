@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import loginPackage.DBConnection;
+import model.Rent;
 import model.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -86,16 +87,18 @@ public class ExportDatasController implements Initializable {
     private void exportDatas() throws SQLException, IOException {
         GregorianCalendar now = new GregorianCalendar();
         DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
+
+        PDDocument document = new PDDocument();
+        PDPage page = new PDPage();
+        document.addPage(page);
+        PDPageContentStream contentStream = new PDPageContentStream(document, page);
+        contentStream.beginText();
+        contentStream.setFont(PDType1Font.HELVETICA ,20);
+        contentStream.newLineAtOffset(150,750);
+
         if (cbDatas.getSelectionModel().getSelectedItem().equals("Users")) {
             List<User> users = DBConnection.getInstance().getUsers();
-            PDDocument document = new PDDocument();
-            PDPage page = new PDPage();
-            document.addPage(page);
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA ,20);
-            contentStream.newLineAtOffset(150,750);
             contentStream.showText("USERS, am "+DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(now.getTime()));
 
             contentStream.endText();
@@ -110,44 +113,56 @@ public class ExportDatasController implements Initializable {
                 content[i + 1][1] = users.get(i).getName().getText();
                 content[i + 1][2] = users.get(i).getPassword().getText();
             }
-            String fileName = "";
-            if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
-                enterFileNameWindow();
-                return;
-            }
-            else fileName = tfFileName.getText();
-            File selectedDirectory = fileChooser();
-            if (selectedDirectory == null || selectedDirectory.equals("")){
-                return;
-            }
             writeToPdf(contentStream, content);
             contentStream.close();
-            File f = new File(selectedDirectory + "\\" + fileName + ".pdf");
-            while(f.exists()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Look, a Confirmation Dialog");
-                alert.setContentText("Choose your option.");
 
-                ButtonType buttonTypeOverwrite = new ButtonType("overwrite");
-                ButtonType buttonTypeChangeFileName = new ButtonType("change filename");
-                ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        }
+        else if (cbDatas.getSelectionModel().getSelectedItem().equals("Users Rents")) {
+            List<User> selectedUser = new ArrayList<>();
+            for (int i = 0; i < users.size(); i++){
+                if (users.get(i).getSelected().isSelected()){
+                    selectedUser.add(users.get(i));
+                    List<Rent> usersRents = DBConnection.getInstance().getRentsByUsername(users.get(i).getUsername().getText());
 
-                alert.getButtonTypes().setAll(buttonTypeOverwrite, buttonTypeChangeFileName, buttonTypeCancel);
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == buttonTypeOverwrite){
-                    f.delete();
-                } else if (result.get() == buttonTypeChangeFileName) {
-                    return;
-                } else {
-                    return;
                 }
-                f = new File(selectedDirectory + "\\" + fileName + ".pdf");
             }
-            if (selectedDirectory != null && !fileName.equals("")) {
-                document.save(selectedDirectory + "\\" + fileName + ".pdf");
+        }
+
+        String fileName = "";
+        if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
+            enterFileNameWindow();
+            return;
+        }
+        else fileName = tfFileName.getText();
+        File selectedDirectory = fileChooser();
+        if (selectedDirectory == null || selectedDirectory.equals("")){
+            return;
+        }
+        File f = new File(selectedDirectory + "\\" + fileName + ".pdf");
+        while(f.exists()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Look, a Confirmation Dialog");
+            alert.setContentText("Choose your option.");
+
+            ButtonType buttonTypeOverwrite = new ButtonType("overwrite");
+            ButtonType buttonTypeChangeFileName = new ButtonType("change filename");
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonTypeOverwrite, buttonTypeChangeFileName, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeOverwrite){
+                f.delete();
+            } else if (result.get() == buttonTypeChangeFileName) {
+                return;
+            } else {
+                return;
             }
+            f = new File(selectedDirectory + "\\" + fileName + ".pdf");
+        }
+        if (selectedDirectory != null && !fileName.equals("")) {
+            document.save(selectedDirectory + "\\" + fileName + ".pdf");
         }
     }
     private void enterFileNameWindow() {
