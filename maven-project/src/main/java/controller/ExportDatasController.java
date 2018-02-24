@@ -135,7 +135,6 @@ public class ExportDatasController implements Initializable {
                     List<Rent> usersRents = DBConnection.getInstance().getRentsByUsername(users.get(i).getUsername().getText());
                     for (int j = 0; j < usersRents.size(); j++){
                         selectedUsersRents.add(usersRents.get(j));
-                        System.out.println("User: "+usersRents.get(j).getFullName()+"  Produktname: "+usersRents.get(j).getItemName()+"  Exemplarid: "+usersRents.get(j).getID());
                     }
                 }
             }
