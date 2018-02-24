@@ -43,10 +43,6 @@ public class ShowItemsController implements Initializable {
         }
     }
 
-    /**
-     * Das ausgewählte Produkt wird geliehen
-     * @throws SQLException
-     */
     @FXML
     private void rentProduct() throws SQLException {
         TreeItem<Item> item = itemsTV.getSelectionModel().getSelectedItem();
@@ -64,10 +60,8 @@ public class ShowItemsController implements Initializable {
     private void deleteProduct() throws SQLException {
         TreeItem<Item> item = itemsTV.getSelectionModel().getSelectedItem();
         if(item != null && item.getChildren().size() == 0) {
-            DBConnection.getInstance().deleteItem(Integer.parseInt(item.getValue().getId()));
-            //List<Item> items = DBConnection.getInstance().getItemsList();
-            //items.remove(item);
-            itemsTV.refresh();
+            DBConnection.getInstance().deleteExemplar(Integer.parseInt(item.getValue().getName()));
+            this.refresh();
         }
     }
 

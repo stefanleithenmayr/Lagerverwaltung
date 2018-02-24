@@ -16,5 +16,6 @@
          </columns>
       </TreeTableView>
       <JFXButton layoutX="41.0" layoutY="42.0" onAction="#rentProduct" text="Rent" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="42.0" />
+      <JFXButton layoutX="93.0" layoutY="42.0" onAction="#deleteProduct" text="Delete" />
    </children>
 </AnchorPane>
