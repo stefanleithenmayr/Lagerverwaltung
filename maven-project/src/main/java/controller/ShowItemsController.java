@@ -19,11 +19,7 @@ public class ShowItemsController implements Initializable {
     @FXML
     private TreeTableView<Item> itemsTV;
     @FXML
-    private TreeTableColumn<Item, String> prodNameCol;
-    @FXML
-    private TreeTableColumn<Item, String> descCol;
-    @FXML
-    private TreeTableColumn<Item, String> totalProdCol;
+    private TreeTableColumn<Item, String> prodNameCol, descCol, totalProdCol;
     @FXML
     private TreeTableColumn<Item, Integer> availableProdCol;
 
@@ -38,6 +34,7 @@ public class ShowItemsController implements Initializable {
         prodNameCol.setMinWidth(200);
         descCol.setMinWidth(300);
         totalProdCol.setMinWidth(300);
+        availableProdCol.setMinWidth(300);
 
         try {
             this.refresh();
@@ -76,16 +73,18 @@ public class ShowItemsController implements Initializable {
 
     private void refresh() throws SQLException {
         itemsTV.setRoot(null);
-        List<Item> items = DBConnection.getInstance().getItemsList();
 
-        TreeItem<Item> root = new TreeItem<>(new Item("", "", ""));
+        List<Item> items = DBConnection.getInstance().getItemsList();
+        TreeItem<Item> root = new TreeItem<>(new Item("", "", "")); //empty root element
+
         for (Item item : items) {
             TreeItem<Item> cache = new TreeItem<>(item);
+
             try {
-                List<Integer> ids = DBConnection.getInstance().getAvailableExemplars(Integer.parseInt(item.getId()));
-                for (Integer id : ids) {
-                    TreeItem<Item> secondCache = new TreeItem<>(new Item(Integer.toString(id), "", ""));
-                    cache.getChildren().add(secondCache);
+                List<Integer> exemplarIDS = DBConnection.getInstance().getAvailableExemplars(Integer.parseInt(item.getId()));
+                for (Integer exemplarID : exemplarIDS) {
+                    TreeItem<Item> subCacheItem = new TreeItem<>(new Item(Integer.toString(exemplarID), "", ""));
+                    cache.getChildren().add(subCacheItem);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

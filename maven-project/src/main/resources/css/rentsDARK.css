@@ -9,7 +9,18 @@
     -fx-table-cell-border-color: white;
     -fx-text-fill: white;
     -fx-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
+
+.table-column {
+    -fx-alignment: center;
+}
+
+#tableViewRents .table-column {
+    -fx-alignment: center;
+}
+
 .table-row-cell .text {
     -fx-fill: white;
 }
