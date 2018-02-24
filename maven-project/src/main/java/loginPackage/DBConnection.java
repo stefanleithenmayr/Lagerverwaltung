@@ -84,8 +84,6 @@ public class DBConnection {
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
-        userName = "stuetz";
-        password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
         this.userName = userName;
@@ -230,9 +228,25 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Das ausgewählte Item wird in die LEIHE Tabelle eingefügt und ist somit ausgeliehen
+     * @param name
+     * @throws SQLException
+     */
     public void rentItem(String name) throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.execute("INSERT INTO LEIHE VALUES (" + (DBConnection.getInstance().getLastLeihID() + 1) + ", '"+ userName +"'," + name +")");
+        conn.commit();
+    }
+
+    /**
+     * Löscht das ausgewählte Item
+     * @param id
+     * @throws SQLException
+     */
+    public void deleteItem(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM ITEMS WHERE ITEMID = (" + id);
         conn.commit();
     }
 
@@ -266,14 +280,15 @@ public class DBConnection {
 
     public List<Rent> getUserRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.username\n" +
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid\n" +
                 "            FROM leihe l\n" +
                 "                 JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
                 "                 JOIN items i ON i.ITEMID = e.ITEMID\n" +
-                "WHERE USERNAME = '" + userName + "'");
+                "WHERE username = '" + userName + "'");
+
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-               rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("USERNAME"), rs.getString("NAME")));
+               rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), this.userName, DBConnection.getInstance().getFullName()));
         }
         return rents;
     }
@@ -282,29 +297,7 @@ public class DBConnection {
         Statement stmt = conn.createStatement();
         stmt.execute("DELETE FROM LEIHE WHERE EXEMPLARID = " + exemplarID);
     }
-    public List<Rent> getAllRents() throws SQLException {
-        Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
-                "        FROM leihe l \n" +
-                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
-                "                JOIN users u ON l.USERNAME = u.username");
 
-        List<Rent> rents = new ArrayList<>();
-        while (rs.next()){
-        rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("username"), rs.getString("name")));
-        }
-        return rents;
-    }
-    public List<String> getAllUserNames() throws  SQLException{
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("Select * from USERS");
-        List<String> userNames = new ArrayList<>();
-        while (rs.next()){
-            userNames.add(rs.getString("NAME"));
-        }
-        return userNames;
-    }
     public String getActualUser() {
         return this.userName;
     }
@@ -318,38 +311,18 @@ public class DBConnection {
         return "";
     }
 
-    public List<Rent> getRentsByUsername(String username) throws SQLException {
+    public List<Rent> getAllRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE WHERE USERNAME = '" + username+ "'");
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
+                "        FROM leihe l \n" +
+                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "                JOIN users u ON l.USERNAME = u.username");
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-            String realName = this.getRealNameByUserName(rs.getString("USERNAME"));
-            String itemName = this.getItemnameByExemplarID(rs.getString("EXEMPLARID"));
-            rents.add(new Rent(itemName,rs.getString("LEIHID"),rs.getString("USERNAME"),realName));
+            rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("username"), rs.getString("name")));
         }
-        return  rents;
-    }
-
-    private String getRealNameByUserName(String username) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT NAME FROM USERS WHERE USERNAME = '" + username+ "'");
-        if (rs.next()){
-            return rs.getString("NAME");
-        }
-        return  "";
-    }
-
-    private String getItemnameByExemplarID(String exemplarid) throws SQLException {
-        String itemName = "";
-        Statement stmt = conn.createStatement();
-        ResultSet rs1 = stmt.executeQuery("SELECT ITEMID FROM EXEMPLAR WHERE EXEMPLARID = " + Integer.parseInt(exemplarid));
-        if (rs1.next()){
-            ResultSet rs2 = stmt.executeQuery("SELECT ITEMNAME FROM ITEMS WHERE ITEMID = " + rs1.getInt("ITEMID"));
-            if (rs2.next()){
-                itemName = rs2.getString("ITEMNAME");
-            }
-        }
-        return  itemName;
+        return rents;
     }
 }
