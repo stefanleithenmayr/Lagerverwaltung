@@ -267,11 +267,12 @@ public class DBConnection {
 
     public List<Rent> getUserRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.username\n" +
-                "            FROM leihe l\n" +
-                "                 JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                "                 JOIN items i ON i.ITEMID = e.ITEMID\n" +
-                "WHERE USERNAME = '" + userName + "'");
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
+                "        FROM leihe l \n" +
+                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "                JOIN users u ON l.USERNAME = u.username\n"+
+                "WHERE l.USERNAME = '" + userName + "'");
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
                rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("USERNAME"), rs.getString("NAME")));
@@ -304,7 +305,13 @@ public class DBConnection {
 
     public List<Rent> getRentsByUsername(String username) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE WHERE USERNAME = '" + username+ "'");
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
+                                "        FROM leihe l \n" +
+                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "                JOIN users u ON l.USERNAME = u.USERNAME\n" +
+                "WHERE u.USERNAME = '"+username+"'");
+
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
