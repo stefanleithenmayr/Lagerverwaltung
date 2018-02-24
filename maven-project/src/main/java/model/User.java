@@ -12,6 +12,16 @@ public class User {
     private CheckBox selected;
     private boolean isActivated;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    private boolean isSelected;
+
     public CheckBox getSelected() {
         return selected;
     }
