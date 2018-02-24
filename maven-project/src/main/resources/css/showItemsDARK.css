@@ -9,9 +9,21 @@
     -fx-table-cell-border-color: white;
     -fx-text-fill: white;
     -fx-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
+
+#itemsTV .table-column {
+    -fx-alignment: center;
+}
+
+#itemsTV .table-cell {
+    -fx-alignment: center;
+}
+
 .tree-table-row-cell .text {
     -fx-fill: white;
+    -fx-text-alignment: center;
 }
 
 .tree-table-row-cell {

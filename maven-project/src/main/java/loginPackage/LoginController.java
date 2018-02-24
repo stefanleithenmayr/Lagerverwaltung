@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.animation.*;
@@ -74,7 +75,7 @@ public class LoginController implements Initializable {
 
                 Parent mainRoot = null;
                 try {
-                    mainRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainScene.fxml"));
+                    mainRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainScene.fxml")));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
