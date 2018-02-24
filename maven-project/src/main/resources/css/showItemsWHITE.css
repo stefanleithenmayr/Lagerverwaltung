@@ -11,6 +11,14 @@
     -fx-fill: #33363F;
 }
 
+#itemsTV .table-column {
+    -fx-alignment: center;
+}
+
+#itemsTV .table-cell {
+    -fx-alignment: center;
+}
+
 .tree-table-row-cell .text {
     -fx-fill: #33363F;
 }
