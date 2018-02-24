@@ -326,4 +326,38 @@ public class DBConnection {
         }
         return rents;
     }
+
+    public List<Rent> getRentsByUsername(String username) throws SQLException {
+        Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE WHERE USERNAME = '" + username+ "'");
+
+        List<Rent> rents = new ArrayList<>();
+        while (rs.next()){
+            String realName = this.getRealNameByUserName(rs.getString("USERNAME"));
+            String itemName = this.getItemnameByExemplarID(rs.getString("EXEMPLARID"));
+            rents.add(new Rent(itemName,rs.getString("LEIHID"),rs.getString("USERNAME"),realName));
+        }
+        return  rents;
+    }
+
+    private String getRealNameByUserName(String username) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT NAME FROM USERS WHERE USERNAME = '" + username+ "'");
+        if (rs.next()){
+            return rs.getString("NAME");
+        }
+        return  "";
+    }
+    private String getItemnameByExemplarID(String exemplarid) throws SQLException {
+        String itemName = "";
+        Statement stmt = conn.createStatement();
+        ResultSet rs1 = stmt.executeQuery("SELECT ITEMID FROM EXEMPLAR WHERE EXEMPLARID = " + Integer.parseInt(exemplarid));
+        if (rs1.next()){
+            ResultSet rs2 = stmt.executeQuery("SELECT ITEMNAME FROM ITEMS WHERE ITEMID = " + rs1.getInt("ITEMID"));
+            if (rs2.next()){
+                itemName = rs2.getString("ITEMNAME");
+            }
+        }
+        return  itemName;
+    }
 }
