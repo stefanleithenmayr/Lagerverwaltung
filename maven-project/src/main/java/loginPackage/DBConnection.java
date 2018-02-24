@@ -209,17 +209,6 @@ public class DBConnection {
             stmt.executeUpdate("UPDATE users set USERNAME = '" + userName +"'where username = '"+ user.getUsername().getText()+"'");
         }
     }
-
-    public List<Integer> getExemplars(Integer id) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
-
-        List<Integer> ids = new ArrayList<>();
-        while (rs.next()){
-            ids.add(rs.getInt("EXEMPLARID"));
-        }
-        return ids;
-    }
     public void saveNewUser(String name, String userName, String password) throws SQLException {
         if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
@@ -308,27 +297,10 @@ public class DBConnection {
         }
         return rents;
     }
-    public List<String> getAllUserNames() throws  SQLException{
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("Select * from USERS");
-        List<String> userNames = new ArrayList<>();
-        while (rs.next()){
-            userNames.add(rs.getString("NAME"));
-        }
-        return userNames;
-    }
     public String getActualUser() {
         return this.userName;
     }
 
-    private String getFullName() throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT NAME FROM USERS WHERE USERNAME = '" + this.userName+ "'");
-        if (rs.next()){
-            return rs.getString("Name");
-        }
-        return "";
-    }
 
     public List<Rent> getRentsByUsername(String username) throws SQLException {
         Statement stmt = conn.createStatement();
@@ -352,40 +324,6 @@ public class DBConnection {
         return  "";
     }
 
-    private String getItemnameByExemplarID(String exemplarid) throws SQLException {
-        String itemName = "";
-        Statement stmt = conn.createStatement();
-        ResultSet rs1 = stmt.executeQuery("SELECT ITEMID FROM EXEMPLAR WHERE EXEMPLARID = " + Integer.parseInt(exemplarid));
-        if (rs1.next()){
-            ResultSet rs2 = stmt.executeQuery("SELECT ITEMNAME FROM ITEMS WHERE ITEMID = " + rs1.getInt("ITEMID"));
-            if (rs2.next()){
-                itemName = rs2.getString("ITEMNAME");
-            }
-        }
-        return  itemName;
-    }
-
-    public List<Rent> getRentsByUsername(String username) throws SQLException {
-        Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE WHERE USERNAME = '" + username+ "'");
-
-        List<Rent> rents = new ArrayList<>();
-        while (rs.next()){
-            String realName = this.getRealNameByUserName(rs.getString("USERNAME"));
-            String itemName = this.getItemnameByExemplarID(rs.getString("EXEMPLARID"));
-            rents.add(new Rent(itemName,rs.getString("LEIHID"),rs.getString("USERNAME"),realName));
-        }
-        return  rents;
-    }
-
-    private String getRealNameByUserName(String username) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT NAME FROM USERS WHERE USERNAME = '" + username+ "'");
-        if (rs.next()){
-            return rs.getString("NAME");
-        }
-        return  "";
-    }
     private String getItemnameByExemplarID(String exemplarid) throws SQLException {
         String itemName = "";
         Statement stmt = conn.createStatement();
