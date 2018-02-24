@@ -145,8 +145,9 @@ public class ExportDatasController implements Initializable {
                 }
                 f = new File(selectedDirectory + "\\" + fileName + ".pdf");
             }
-        } else if (cbFormat.getSelectionModel().getSelectedItem().equals("CSV")) {
-
+            if (selectedDirectory != null && !fileName.equals("")) {
+                document.save(selectedDirectory + "\\" + fileName + ".pdf");
+            }
         }
     }
     private void enterFileNameWindow() {
