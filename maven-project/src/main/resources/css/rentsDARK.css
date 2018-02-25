@@ -165,3 +165,9 @@
 .combo-box .cell:hover{
     -fx-background-color: #F06060;
 }
+
+.combo-box{
+    -fx-unfocus-color: #33363F;
+    -fx-focus-color: #33363F;
+    -fx-faint-focus-color: #33363F;
+}

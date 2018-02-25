@@ -159,9 +159,17 @@
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
 }
+
 .combo-box .cell:selected {
     -fx-background-color: #F06060;
 }
+
 .combo-box .cell:hover{
     -fx-background-color: #F06060;
+}
+
+.combo-box{
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-faint-focus-color: white;
 }
