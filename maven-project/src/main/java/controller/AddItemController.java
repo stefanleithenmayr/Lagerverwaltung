@@ -62,6 +62,7 @@ public class AddItemController implements Initializable {
         quantity = value.intValue();
         tfQuantity.setText(quantity.toString());
     }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         quantity = 0;
