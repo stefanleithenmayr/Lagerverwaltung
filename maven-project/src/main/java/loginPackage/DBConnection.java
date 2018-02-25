@@ -4,12 +4,13 @@ import model.Item;
 import model.Rent;
 import model.User;
 
-import java.awt.font.ShapeGraphicAttribute;
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
@@ -209,17 +210,6 @@ public class DBConnection {
             stmt.executeUpdate("UPDATE users set USERNAME = '" + userName +"'where username = '"+ user.getUsername().getText()+"'");
         }
     }
-
-    public List<Integer> getExemplars(Integer id) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT EXEMPLARID FROM EXEMPLAR WHERE ITEMID = " + id);
-
-        List<Integer> ids = new ArrayList<>();
-        while (rs.next()){
-            ids.add(rs.getInt("EXEMPLARID"));
-        }
-        return ids;
-    }
     public void saveNewUser(String name, String userName, String password) throws SQLException {
         if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
@@ -278,11 +268,12 @@ public class DBConnection {
 
     public List<Rent> getUserRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.username\n" +
-                "            FROM leihe l\n" +
-                "                 JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                "                 JOIN items i ON i.ITEMID = e.ITEMID\n" +
-                "WHERE USERNAME = '" + userName + "'");
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
+                "        FROM leihe l \n" +
+                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "                JOIN users u ON l.USERNAME = u.username\n"+
+                "WHERE l.USERNAME = '" + userName + "'");
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
                rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("USERNAME"), rs.getString("NAME")));
@@ -308,31 +299,20 @@ public class DBConnection {
         }
         return rents;
     }
-    public List<String> getAllUserNames() throws  SQLException{
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("Select * from USERS");
-        List<String> userNames = new ArrayList<>();
-        while (rs.next()){
-            userNames.add(rs.getString("NAME"));
-        }
-        return userNames;
-    }
     public String getActualUser() {
         return this.userName;
     }
 
-    private String getFullName() throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT NAME FROM USERS WHERE USERNAME = '" + this.userName+ "'");
-        if (rs.next()){
-            return rs.getString("Name");
-        }
-        return "";
-    }
 
     public List<Rent> getRentsByUsername(String username) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE WHERE USERNAME = '" + username+ "'");
+        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
+                                "        FROM leihe l \n" +
+                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
+                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+                "                JOIN users u ON l.USERNAME = u.USERNAME\n" +
+                "WHERE u.USERNAME = '"+username+"'");
+
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
@@ -363,5 +343,27 @@ public class DBConnection {
             }
         }
         return  itemName;
+    }
+
+    public void deleteItemWithExemplars(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM EXEMPLAR WHERE ITEMID = " + id);
+        Statement secStmt = conn.createStatement();
+        secStmt.execute("DELETE FROM ITEMS WHERE ITEMID = " + id);
+    }
+
+    public void insertIntoLog() throws SQLException, IOException, ClassNotFoundException {
+        if(DBConnection.getInstance().login(userName,password)) {
+            Statement stmt = conn.createStatement();
+            stmt.execute("INSERT INTO LOG VALUES ("+ userName +", '"+getTime() +"',"+ "i");
+        }
+    }
+
+    public String getTime() {
+        Date date = (Date) Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormatter =
+                new SimpleDateFormat("dd.MM.yyyy - hh.mm.ss");
+        String dateString = dateFormatter.format(date);
+        return dateString;
     }
 }
