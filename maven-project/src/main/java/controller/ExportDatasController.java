@@ -1,15 +1,14 @@
 package controller;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,9 +24,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
-import java.security.Key;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.*;
@@ -62,10 +59,7 @@ public class ExportDatasController implements Initializable {
     }
     @FXML
     private  void searchUser(KeyEvent event){
-        List<User> cache = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++){
-            cache.add(users.get(i));
-        }
+        List<User> cache = new ArrayList<>(users);
         tvUser.getItems().clear();
         try {
             users = FXCollections.observableArrayList(DBConnection.getInstance().getUsers());
@@ -129,13 +123,11 @@ public class ExportDatasController implements Initializable {
 
             List<User> selectedUser = new ArrayList<>();
             List<Rent> selectedUsersRents = new ArrayList<>();
-            for (int i = 0; i < users.size(); i++){
-                if (users.get(i).getSelected().isSelected()){
-                    selectedUser.add(users.get(i));
-                    List<Rent> usersRents = DBConnection.getInstance().getRentsByUsername(users.get(i).getUsername().getText());
-                    for (int j = 0; j < usersRents.size(); j++){
-                        selectedUsersRents.add(usersRents.get(j));
-                    }
+            for (User user : users) {
+                if (user.getSelected().isSelected()) {
+                    selectedUser.add(user);
+                    List<Rent> usersRents = DBConnection.getInstance().getRentsByUsername(user.getUsername().getText());
+                    selectedUsersRents.addAll(usersRents);
                 }
             }
 
@@ -155,14 +147,14 @@ public class ExportDatasController implements Initializable {
             contentStream.close();
         }
 
-        String fileName = "";
+        String fileName;
         if (tfFileName.getText() == null || tfFileName.getText().equals("")) {
             enterFileNameWindow();
             return;
         }
         else fileName = tfFileName.getText();
         File selectedDirectory = fileChooser();
-        if (selectedDirectory == null || selectedDirectory.equals("")){
+        if ((selectedDirectory == null) || selectedDirectory.equals("")){
             return;
         }
         File f = new File(selectedDirectory + "\\" + fileName + ".pdf");

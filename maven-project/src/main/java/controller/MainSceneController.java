@@ -21,8 +21,6 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static java.util.Objects.*;
-
 public class MainSceneController implements Initializable {
 
     @FXML

@@ -62,6 +62,9 @@ public class ShowItemsController implements Initializable {
         if(item != null && item.getChildren().size() == 0) {
             DBConnection.getInstance().deleteExemplar(Integer.parseInt(item.getValue().getName()));
             this.refresh();
+        }else if(item != null && item.getChildren().size() != 0){
+            DBConnection.getInstance().deleteItemWithExemplars(Integer.parseInt(item.getValue().getId()));
+            this.refresh();
         }
     }
 

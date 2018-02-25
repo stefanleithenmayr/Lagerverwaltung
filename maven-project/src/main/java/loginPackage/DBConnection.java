@@ -4,7 +4,6 @@ import model.Item;
 import model.Rent;
 import model.User;
 
-import java.awt.font.ShapeGraphicAttribute;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -342,5 +341,12 @@ public class DBConnection {
             }
         }
         return  itemName;
+    }
+
+    public void deleteItemWithExemplars(int id) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM EXEMPLAR WHERE ITEMID = " + id);
+        Statement secStmt = conn.createStatement();
+        secStmt.execute("DELETE FROM ITEMS WHERE ITEMID = " + id);
     }
 }
