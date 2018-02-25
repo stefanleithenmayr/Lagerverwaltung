@@ -105,11 +105,11 @@ public class LoginController implements Initializable {
     @FXML
     private void changeFont(ActionEvent event){
         loginPane.getStylesheets().clear();
-        if(toggleButton.isSelected()){
+        if(toggleButton.isSelected()) {
             avaterIMG.setImage(new Image("icons/user1.png"));
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             loginPane.getStylesheets().add("css/loginPaneWHITE.css");
-        }else{
+        } else {
             avaterIMG.setImage(new Image("icons/user.png"));
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             loginPane.getStylesheets().add("css/loginPaneDARK.css");
