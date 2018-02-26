@@ -304,7 +304,8 @@ public class DBConnection {
 
     public List<Rent> getRentsByUsername(String username) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * from LEIHE");
+        ResultSet rs = stmt.executeQuery("SELECT * from LEIHE " +
+                "   where USERNAME = '" + username+"'");
 
 
         List<Rent> rents = new ArrayList<>();
