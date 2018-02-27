@@ -120,7 +120,7 @@ public class DBConnection {
     public void addProduct(String name, String description) throws SQLException {
         if (!name.equals("")) {
             String SQLCommand = "INSERT INTO PRODUCTS " +
-                    "VALUES (" + productID + ",'" + description + "','" + name + "'" + ")";
+                    "VALUES (" + productID + ",'" + description + "','" + name + "'," + "'a'," + "'b'" +")";
 
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
@@ -220,7 +220,7 @@ public class DBConnection {
 
     public void rentItem(String name) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("INSERT INTO LEND VALUES (" + (DBConnection.getInstance().getLastLendID() + 1) + ", '"+ userName +"'," + name +")");
+        stmt.execute("INSERT INTO LEND VALUES (" + (DBConnection.getInstance().getLastLendID() + 1) + ", '"+ userName +"'," + name + ",null" + ",null" + ")");
         conn.commit();
     }
 
