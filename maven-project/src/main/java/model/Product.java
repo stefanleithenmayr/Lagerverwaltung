@@ -4,13 +4,13 @@ import loginPackage.DBConnection;
 
 import java.sql.SQLException;
 
-public class Item {
+public class Product {
 
             private final String name;
             private final String description;
             private final String id;
 
-            public Item(String name, String description, String id){
+            public Product(String name, String description, String id){
                 this.name = name;
                 this.description = description;
                 this.id = id;
@@ -30,7 +30,7 @@ public class Item {
 
             public String getTotalExemplars() throws SQLException {
                 if (!this.getId().isEmpty()){
-                    return DBConnection.getInstance().countExemplars(Integer.parseInt(this.getId()));
+                    return DBConnection.getInstance().countItems(Integer.parseInt(this.getId()));
                 }
                 return "";
             }
@@ -38,7 +38,7 @@ public class Item {
             public String getAvailableExemplars() throws SQLException {
                 String total = getTotalExemplars();
                 if (!this.getId().isEmpty() && !total.isEmpty()) {
-                    return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableExemplarsCount(Integer.parseInt(this.getId()))));
+                    return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableItemsCount(Integer.parseInt(this.getId()))));
                 }
                 return "";
             }

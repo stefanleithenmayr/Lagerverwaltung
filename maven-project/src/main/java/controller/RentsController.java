@@ -61,7 +61,7 @@ public class RentsController implements Initializable{
         }
 
         productNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("itemName"));
+                new PropertyValueFactory<>("productName"));
 
         exemplarIDCol.setCellValueFactory(
                 new PropertyValueFactory<>("iD"));
