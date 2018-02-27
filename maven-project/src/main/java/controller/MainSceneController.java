@@ -18,6 +18,7 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
@@ -118,7 +119,7 @@ public class MainSceneController implements Initializable {
     }
 
     /**
-     * switcht das Theme
+     * Switcht das Theme!
      */
 
     @FXML
@@ -154,7 +155,7 @@ public class MainSceneController implements Initializable {
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
             subPane.getChildren().clear();
-            showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
+            showItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml")));
             subPane.getChildren().add(showItemPane);
             showItemPane.getStylesheets().clear();
             showItemPane.setPrefWidth(bounds.getWidth() - 280);
@@ -176,91 +177,100 @@ public class MainSceneController implements Initializable {
     @FXML
     private void switchPane(ActionEvent event) throws IOException {
         Button button = (Button) event.getSource();
+        String buttonName = button.getId();
+
         addItemBT.setStyle("-fx-background-color:transparent");
         showItemsBT.setStyle("-fx-background-color:transparent");
         rentBT.setStyle("-fx-background-color:transparent");
         userManagerBT.setStyle("-fx-background-color:transparent");
         statisticsBT.setStyle("-fx-background-color:transparent");
         exportDatasBT.setStyle("-fx-background-color:transparent");
-        String buttonName = button.getId();
+
         subPane.getChildren().clear();
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
-        if (buttonName.equals("addItemBT")) {
-            addItemBT.setStyle("-fx-background-color:#3D4956");
-            subPane.getChildren().add(addItemPane);
-            acutalPane = "addItemPane";
-        } else if (buttonName.equals("showItemsBT")) {
-            showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
-            showItemsBT.setStyle("-fx-background-color:#3D4956");
-            subPane.getChildren().add(showItemPane);
-            showItemPane.getStylesheets().clear();
-            showItemPane.setPrefWidth(bounds.getWidth() - 280);
-            showItemPane.setPrefHeight(bounds.getHeight() - 120);
-            if (theme) {
-                showItemPane.getStylesheets().add("css/showItemsWHITE.css");
-            } else {
-                showItemPane.getStylesheets().add("css/showItemsDARK.css");
-            }
-            acutalPane = "showItemPane";
-        } else if (buttonName.equals("rentBT")) {
-            rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
-            rentBT.setStyle("-fx-background-color:#3D4956");
-            subPane.getChildren().add(rentsPane);
-            rentsPane.setPrefWidth(bounds.getWidth() - 280);
-            rentsPane.setPrefHeight(bounds.getHeight() - 120);
-            rentsPane.getStylesheets().clear();
+        switch (buttonName) {
+            case "addItemBT":
+                addItemBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(addItemPane);
+                acutalPane = "addItemPane";
+                break;
+            case "showItemsBT":
+                showItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml")));
+                showItemsBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(showItemPane);
+                showItemPane.getStylesheets().clear();
+                showItemPane.setPrefWidth(bounds.getWidth() - 280);
+                showItemPane.setPrefHeight(bounds.getHeight() - 120);
+                if (theme) {
+                    showItemPane.getStylesheets().add("css/showItemsWHITE.css");
+                } else {
+                    showItemPane.getStylesheets().add("css/showItemsDARK.css");
+                }
+                acutalPane = "showItemPane";
+                break;
+            case "rentBT":
+                rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));
+                rentBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(rentsPane);
+                rentsPane.setPrefWidth(bounds.getWidth() - 280);
+                rentsPane.setPrefHeight(bounds.getHeight() - 120);
+                rentsPane.getStylesheets().clear();
 
-            if (theme) {
-                rentsPane.getStylesheets().add("css/rentsWHITE.css");
-            } else {
-                rentsPane.getStylesheets().add("css/rentsDark.css");
-            }
-            acutalPane = "rentsPane";
-        } else if (buttonName.equals("statisticsBT")) {
-            statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
-            statisticsBT.setStyle("-fx-background-color:#3D4956");
-            subPane.getChildren().add(statisticsPane);
-            statisticsPane.setPrefWidth(bounds.getWidth() - 280);
-            statisticsPane.setPrefHeight(bounds.getHeight() - 120);
-            statisticsPane.getStylesheets().clear();
+                if (theme) {
+                    rentsPane.getStylesheets().add("css/rentsWHITE.css");
+                } else {
+                    rentsPane.getStylesheets().add("css/rentsDark.css");
+                }
+                acutalPane = "rentsPane";
+                break;
+            case "statisticsBT":
+                statisticsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml")));
+                statisticsBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(statisticsPane);
+                statisticsPane.setPrefWidth(bounds.getWidth() - 280);
+                statisticsPane.setPrefHeight(bounds.getHeight() - 120);
+                statisticsPane.getStylesheets().clear();
 
-            if (theme) {
-                statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
-            } else {
-                statisticsPane.getStylesheets().add("css/statisticsDARK.css");
-            }
-            acutalPane = "statisticsPane";
-        } else if (buttonName.equals("userManagerBT")) {
-            userManagerPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml"));
-            userManagerBT.setStyle("-fx-background-color:#3D4956");
-            subPane.getChildren().add(userManagerPane);
-            userManagerPane.setPrefWidth(bounds.getWidth() - 280);
-            userManagerPane.setPrefHeight(bounds.getHeight() - 120);
-            userManagerPane.getStylesheets().clear();
+                if (theme) {
+                    statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
+                } else {
+                    statisticsPane.getStylesheets().add("css/statisticsDARK.css");
+                }
+                acutalPane = "statisticsPane";
+                break;
+            case "userManagerBT":
+                userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
+                userManagerBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(userManagerPane);
+                userManagerPane.setPrefWidth(bounds.getWidth() - 280);
+                userManagerPane.setPrefHeight(bounds.getHeight() - 120);
+                userManagerPane.getStylesheets().clear();
 
-            if (theme) {
-                userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
-            } else {
-                userManagerPane.getStylesheets().add("css/userManagerDARK.css");
-            }
-            acutalPane = "userManagerPane";
-        } else if (buttonName.equals("exportDatasBT")) {
-            exportDatasPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml"));
-            exportDatasBT.setStyle("-fx-background-color:#3D4956");
-            subPane.getChildren().add(exportDatasPane);
-            exportDatasPane.setPrefWidth(bounds.getWidth() - 280);
-            exportDatasPane.setPrefHeight(bounds.getHeight() - 120);
-            exportDatasPane.getStylesheets().clear();
+                if (theme) {
+                    userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
+                } else {
+                    userManagerPane.getStylesheets().add("css/userManagerDARK.css");
+                }
+                acutalPane = "userManagerPane";
+                break;
+            case "exportDatasBT":
+                exportDatasPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml")));
+                exportDatasBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(exportDatasPane);
+                exportDatasPane.setPrefWidth(bounds.getWidth() - 280);
+                exportDatasPane.setPrefHeight(bounds.getHeight() - 120);
+                exportDatasPane.getStylesheets().clear();
 
-            if (theme) {
-                exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
-            } else {
-                exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
-            }
-            acutalPane = "exportDatasPane";
+                if (theme) {
+                    exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
+                } else {
+                    exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
+                }
+                acutalPane = "exportDatasPane";
+                break;
         }
     }
 
@@ -268,12 +278,12 @@ public class MainSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         theme = false;
         try {
-            addItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddItem.fxml"));
-            showItemPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml"));
-            rentsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Rents.fxml"));
-            statisticsPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml"));
-            userManagerPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml"));
-            exportDatasPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml"));
+            addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
+            showItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml")));
+            rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));
+            statisticsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml")));
+            userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
+            exportDatasPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -61,7 +61,7 @@ public class RentsController implements Initializable{
         }
 
         productNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("itemName"));
+                new PropertyValueFactory<>("productName"));
 
         exemplarIDCol.setCellValueFactory(
                 new PropertyValueFactory<>("iD"));
@@ -75,11 +75,14 @@ public class RentsController implements Initializable{
         productNameCol.setMinWidth(200);
         exemplarIDCol.setMinWidth(200);
         userCol.setMinWidth(200);
+        fullNameCol.setMinWidth(200);
 
         chooseRents.getItems().add("My Rents");
         chooseRents.getItems().add("All Rents");
+        chooseRents.getSelectionModel().selectFirst();
     }
 
+    //Submethods
     private void loadAllRents() {
         rentList = null;
         try {
@@ -90,7 +93,7 @@ public class RentsController implements Initializable{
         tableViewRents.setItems(rentList);
     }
 
-    public void loadMyRents(){
+    private void loadMyRents(){
         rentList = null;
         try {
             rentList = FXCollections.observableArrayList(DBConnection.getInstance().getUserRents());

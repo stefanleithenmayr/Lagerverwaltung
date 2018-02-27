@@ -43,6 +43,5 @@
       <JFXToggleButton fx:id="toggleButton" layoutX="14.0" layoutY="10.0" onAction="#changeFont" />
       <JFXButton fx:id="loginBT" defaultButton="true" layoutX="247.0" layoutY="330.0" onAction="#loginAction" text="Login" />
       <Text fx:id="falseInputField" layoutX="126.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="false input" visible="false" />
-      <JFXButton fx:id="registerBT" defaultButton="true" layoutX="24.0" layoutY="330.0" onAction="#loginAction" text="Register" />
     </children>
 </AnchorPane>

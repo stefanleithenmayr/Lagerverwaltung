@@ -9,7 +9,19 @@
     -fx-table-cell-border-color: #33363F;
     -fx-text-fill: #33363F;
     -fx-fill: #33363F;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
+
+.table-column {
+    -fx-alignment: center;
+}
+
+#tableViewRents .table-column {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
 .table-row-cell .text {
     -fx-fill: #33363F;
 }
@@ -147,9 +159,17 @@
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
 }
+
 .combo-box .cell:selected {
     -fx-background-color: #F06060;
 }
+
 .combo-box .cell:hover{
     -fx-background-color: #F06060;
+}
+
+.combo-box{
+    -fx-unfocus-color: white;
+    -fx-focus-color: white;
+    -fx-faint-focus-color: white;
 }

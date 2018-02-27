@@ -1,16 +1,14 @@
 package loginPackage;
 
-import model.Item;
+import model.Product;
 import model.Rent;
 import model.User;
 
 import java.io.*;
 import java.sql.*;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
@@ -19,8 +17,8 @@ public class DBConnection {
     private final String CONNECTION_STRING = "jdbc:derby://localhost:1527/db;create=true";
     private String userName;
     private String password;
-    private Integer itemExemplarId;
-    private Integer itemID;
+    private Integer itemId;
+    private Integer productID;
 
     private Connection conn;
 
@@ -34,16 +32,16 @@ public class DBConnection {
         return INSTANCE;
     }
 
-    private Integer getLastLeihID() throws SQLException {
+    private Integer getLastLendID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM LEIHE");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM LEND");
         if (!rs.next()){
             return 10000;
         }
 
-        Integer biggestID = rs.getInt("LEIHID");
+        Integer biggestID = rs.getInt("LENDID");
         while (rs.next()){
-            Integer cache = rs.getInt("LEIHID");
+            Integer cache = rs.getInt("LENDID");
             if (cache > biggestID){
                 biggestID = cache;
             }
@@ -51,32 +49,32 @@ public class DBConnection {
         return biggestID;
     }
 
-    private Integer getLastItemExemplarID() throws SQLException {
+    private Integer getLastItemID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM EXEMPLAR");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
         if (!rs.next()){
             return 100000;
         }
 
-        Integer biggestID = rs.getInt("EXEMPLARID");
+        Integer biggestID = rs.getInt("ITEMID");
         while (rs.next()){
-            Integer cache = rs.getInt("EXEMPLARID");
+            Integer cache = rs.getInt("ITEMID");
             if (cache > biggestID){
                 biggestID = cache;
             }
         }
         return biggestID;
     }
-    public Integer getLastItemID() throws SQLException {
+    public Integer getLastProductID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTS");
         if (!rs.next()){
             return 1000;
         }
 
-        Integer biggestID = rs.getInt("ITEMID");
+        Integer biggestID = rs.getInt("PRODUCTID");
         while (rs.next()){
-            int cache = rs.getInt("ITEMID");
+            int cache = rs.getInt("PRODUCTID");
             if (cache > biggestID){
                 biggestID = cache;
             }
@@ -85,8 +83,8 @@ public class DBConnection {
     }
 
     public boolean login(String userName, String password) throws ClassNotFoundException, IOException, SQLException {
-        userName = "stuetz";
-        password = "12345";
+        //userName = "stuetz";
+        //password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
         this.userName = userName;
@@ -99,8 +97,8 @@ public class DBConnection {
             File file = new File("src/main/resources/db/startScript.sql");
             this.importSQL(new FileInputStream(file));
         }
-        itemExemplarId = this.getLastItemExemplarID()+1;
-        itemID = this.getLastItemID()+1;
+        itemId = this.getLastItemID()+1;
+        productID = this.getLastProductID()+1;
         return existUser(userName, password);
     }
 
@@ -119,34 +117,34 @@ public class DBConnection {
         return false;
     }
 
-    public void addItem(String name, String description) throws SQLException {
+    public void addProduct(String name, String description) throws SQLException {
         if (!name.equals("")) {
-            String SQLCommand = "INSERT INTO ITEMS " +
-                    "VALUES (" + itemID + ",'" + description + "','" + name + "'" + ")";
+            String SQLCommand = "INSERT INTO PRODUCTS " +
+                    "VALUES (" + productID + ",'" + description + "','" + name + "'" + ")";
 
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
         }
-        itemID++;
+        productID++;
     }
 
-    public void addItemExemplar(Integer itemID) throws SQLException {
-        String SQLCommand = "INSERT INTO EXEMPLAR " +
-                    "VALUES ("+ itemExemplarId + ","+ itemID + ")";
+    public void addItem(Integer itemID) throws SQLException {
+        String SQLCommand = "INSERT INTO ITEMS " +
+                    "VALUES ("+ itemId + ","+ itemID + ")";
 
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        itemExemplarId++;
+        itemId++;
     }
 
-    public List<Item> getItemsList() throws SQLException {
+    public List<Product> getProductsList() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ITEMS");
-        List<Item> items = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTS");
+        List<Product> products = new ArrayList<>();
         while (rs.next()) {
-            items.add(new Item(rs.getString("ITEMNAME"), rs.getString("DESCRIPTION"), Integer.toString(rs.getInt("ITEMID" +""))));
+            products.add(new Product(rs.getString("PRODUCTNAME"), rs.getString("DESCRIPTION"), Integer.toString(rs.getInt("PRODUCTID" +""))));
         }
-        return items;
+        return products;
     }
 
     private void importSQL(InputStream in) throws SQLException {
@@ -171,9 +169,9 @@ public class DBConnection {
         st.close();
     }
 
-    public String countExemplars(Integer id) throws SQLException {
+    public String countItems(Integer id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(EXEMPLARID) FROM EXEMPLAR WHERE ITEMID = " + id + " GROUP BY ITEMID");
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(ITEMID) FROM ITEMS WHERE PRODUCTID = " + id + " GROUP BY PRODUCTID");
         if (rs.next()){
             return Integer.toString(rs.getInt(1));
         }
@@ -197,7 +195,7 @@ public class DBConnection {
 
         Statement secStmt = conn.createStatement();
         secStmt.execute("DELETE " +
-                "FROM LEIHE " +
+                "FROM LEND " +
                 "WHERE USERNAME = '" + username + "'");
     }
 
@@ -222,7 +220,7 @@ public class DBConnection {
 
     public void rentItem(String name) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("INSERT INTO LEIHE VALUES (" + (DBConnection.getInstance().getLastLeihID() + 1) + ", '"+ userName +"'," + name +")");
+        stmt.execute("INSERT INTO LEND VALUES (" + (DBConnection.getInstance().getLastLendID() + 1) + ", '"+ userName +"'," + name +")");
         conn.commit();
     }
 
@@ -231,35 +229,35 @@ public class DBConnection {
      * @param id
      * @throws SQLException
      */
-    public void deleteExemplar(int id) throws SQLException {
+    public void deleteItem(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("DELETE FROM EXEMPLAR WHERE EXEMPLARID = " + id);
+        stmt.execute("DELETE FROM ITEMS WHERE ITEMID = " + id);
         conn.commit();
     }
     
 
-    public List<Integer> getAvailableExemplars(int id) throws SQLException {
+    public List<Integer> getAvailableItems(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT e.EXEMPLARID \n" +
-                "FROM EXEMPLAR e \n" +
-                "WHERE ITEMID = "+ id +" AND \n" +
-                "    e.EXEMPLARID NOT IN \n" +
-                "        (SELECT EXEMPLARID \n" +
-                "        FROM LEIHE)");
+        ResultSet rs = stmt.executeQuery("SELECT i.ITEMID \n" +
+                "FROM ITEMS i \n" +
+                "WHERE PRODUCTID = "+ id +" AND \n" +
+                "    i.ITEMID NOT IN \n" +
+                "        (SELECT ITEMID \n" +
+                "        FROM LEND)");
 
         List<Integer> ids = new ArrayList<>();
         while (rs.next()){
-                ids.add(rs.getInt("EXEMPLARID"));
+                ids.add(rs.getInt("ITEMID"));
         }
         return ids;
     }
 
-    public String getAvailableExemplarsCount(int id) throws SQLException {
+    public String getAvailableItemsCount(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select count(l.exemplarid)\n" +
-                "from exemplar e\n" +
-                "    join leihe l on l.EXEMPLARID = e.EXEMPLARID\n" +
-                "where itemid =" + id);
+        ResultSet rs = stmt.executeQuery("select count(l.itemid)\n" +
+                "from items i\n" +
+                "    join lend l on l.ITEMID = i.ITEMID\n" +
+                "where productid =" + id);
         if (rs.next()){
              return Integer.toString(rs.getInt(1));
         }
@@ -268,34 +266,34 @@ public class DBConnection {
 
     public List<Rent> getUserRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
-                "        FROM leihe l \n" +
-                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+        ResultSet rs = stmt.executeQuery("SELECT p.productname, l.itemid, l.USERNAME, u.name\n" +
+                "        FROM lend l \n" +
+                "                JOIN items i ON l.ITEMID = i.ITEMID\n" +
+                "                JOIN products p ON p.PRODUCTID = i.PRODUCTID\n" +
                 "                JOIN users u ON l.USERNAME = u.username\n"+
                 "WHERE l.USERNAME = '" + userName + "'");
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-               rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("USERNAME"), rs.getString("NAME")));
+               rents.add(new Rent(rs.getString("PRODUCTNAME"),rs.getString("ITEMID"), rs.getString("USERNAME"), rs.getString("NAME")));
         }
         return rents;
     }
 
-    public void removeRent(String exemplarID) throws SQLException {
+    public void removeRent(String itemID) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("DELETE FROM LEIHE WHERE EXEMPLARID = " + exemplarID);
+        stmt.execute("DELETE FROM LEND WHERE ITEMID = " + itemID);
     }
     public List<Rent> getAllRents() throws SQLException {
         Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
-                "        FROM leihe l \n" +
-                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
+            ResultSet rs = stmt.executeQuery("SELECT p.productname, l.itemid, l.USERNAME, u.name\n" +
+                "        FROM lend l \n" +
+                "                JOIN items i ON l.ITEMID = i.ITEMID\n" +
+                "                JOIN products p ON p.PRODUCTID = i.PRODUCTID\n" +
                 "                JOIN users u ON l.USERNAME = u.username");
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-        rents.add(new Rent(rs.getString("ITEMNAME"),rs.getString("EXEMPLARID"), rs.getString("username"), rs.getString("name")));
+        rents.add(new Rent(rs.getString("PRODUCTNAME"),rs.getString("ITEMID"), rs.getString("username"), rs.getString("name")));
         }
         return rents;
     }
@@ -306,19 +304,15 @@ public class DBConnection {
 
     public List<Rent> getRentsByUsername(String username) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.itemname, l.exemplarid, l.USERNAME, u.name\n" +
-                                "        FROM leihe l \n" +
-                "                JOIN exemplar e ON l.EXEMPLARID = e.EXEMPLARID\n" +
-                "                JOIN items i ON i.ITEMID = e.ITEMID\n" +
-                "                JOIN users u ON l.USERNAME = u.USERNAME\n" +
-                "WHERE u.USERNAME = '"+username+"'");
+        ResultSet rs = stmt.executeQuery("SELECT * from LEND " +
+                "   where USERNAME = '" + username+"'");
 
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
             String realName = this.getRealNameByUserName(rs.getString("USERNAME"));
-            String itemName = this.getItemnameByExemplarID(rs.getString("EXEMPLARID"));
-            rents.add(new Rent(itemName,rs.getString("LEIHID"),rs.getString("USERNAME"),realName));
+            String itemName = this.getProductnameByItemID(rs.getString("ITEMID"));
+            rents.add(new Rent(itemName,rs.getString("LENDID"),rs.getString("USERNAME"),realName));
         }
         return  rents;
     }
@@ -332,38 +326,23 @@ public class DBConnection {
         return  "";
     }
 
-    private String getItemnameByExemplarID(String exemplarid) throws SQLException {
+    private String getProductnameByItemID(String itemid) throws SQLException {
         String itemName = "";
         Statement stmt = conn.createStatement();
-        ResultSet rs1 = stmt.executeQuery("SELECT ITEMID FROM EXEMPLAR WHERE EXEMPLARID = " + Integer.parseInt(exemplarid));
+        ResultSet rs1 = stmt.executeQuery("SELECT PRODUCTID FROM ITEMS WHERE ITEMID = " + Integer.parseInt(itemid));
         if (rs1.next()){
-            ResultSet rs2 = stmt.executeQuery("SELECT ITEMNAME FROM ITEMS WHERE ITEMID = " + rs1.getInt("ITEMID"));
+            ResultSet rs2 = stmt.executeQuery("SELECT PRODUCTNAME FROM PRODUCTS WHERE PRODUCTID = " + rs1.getInt("PRODUCTID"));
             if (rs2.next()){
-                itemName = rs2.getString("ITEMNAME");
+                itemName = rs2.getString("PRODUCTNAME");
             }
         }
         return  itemName;
     }
 
-    public void deleteItemWithExemplars(int id) throws SQLException {
+    public void deleteProductWithItems(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("DELETE FROM EXEMPLAR WHERE ITEMID = " + id);
+        stmt.execute("DELETE FROM ITEMS WHERE PRODUCTID = " + id);
         Statement secStmt = conn.createStatement();
-        secStmt.execute("DELETE FROM ITEMS WHERE ITEMID = " + id);
-    }
-
-    public void insertIntoLog() throws SQLException, IOException, ClassNotFoundException {
-        if(DBConnection.getInstance().login(userName,password)) {
-            Statement stmt = conn.createStatement();
-            stmt.execute("INSERT INTO LOG VALUES ("+ userName +", '"+getTime() +"',"+ "i");
-        }
-    }
-
-    public String getTime() {
-        Date date = (Date) Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormatter =
-                new SimpleDateFormat("dd.MM.yyyy - hh.mm.ss");
-        String dateString = dateFormatter.format(date);
-        return dateString;
+        secStmt.execute("DELETE FROM PRODUCTS WHERE PRODUCTID = " + id);
     }
 }

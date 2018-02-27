@@ -7,7 +7,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import loginPackage.DBConnection;
-import model.Item;
+import model.Product;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -17,15 +17,11 @@ import java.util.ResourceBundle;
 public class ShowItemsController implements Initializable {
 
     @FXML
-    private TreeTableView<Item> itemsTV;
+    private TreeTableView<Product> itemsTV;
     @FXML
-    private TreeTableColumn<Item, String> prodNameCol;
+    private TreeTableColumn<Product, String> prodNameCol, descCol, totalProdCol;
     @FXML
-    private TreeTableColumn<Item, String> descCol;
-    @FXML
-    private TreeTableColumn<Item, String> totalProdCol;
-    @FXML
-    private TreeTableColumn<Item, Integer> availableProdCol;
+    private TreeTableColumn<Product, Integer> availableProdCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,6 +34,7 @@ public class ShowItemsController implements Initializable {
         prodNameCol.setMinWidth(200);
         descCol.setMinWidth(300);
         totalProdCol.setMinWidth(300);
+        availableProdCol.setMinWidth(300);
 
         try {
             this.refresh();
@@ -48,7 +45,7 @@ public class ShowItemsController implements Initializable {
 
     @FXML
     private void rentProduct() throws SQLException {
-        TreeItem<Item> item = itemsTV.getSelectionModel().getSelectedItem();
+        TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
         if (item != null && item.getChildren().size() == 0){
             DBConnection.getInstance().rentItem(item.getValue().getName());
             this.refresh();
@@ -61,25 +58,30 @@ public class ShowItemsController implements Initializable {
      */
     @FXML
     private void deleteProduct() throws SQLException {
-        TreeItem<Item> item = itemsTV.getSelectionModel().getSelectedItem();
+        TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
         if(item != null && item.getChildren().size() == 0) {
-            DBConnection.getInstance().deleteExemplar(Integer.parseInt(item.getValue().getName()));
+            DBConnection.getInstance().deleteItem(Integer.parseInt(item.getValue().getName()));
+            this.refresh();
+        }else if(item != null && item.getChildren().size() != 0){
+            DBConnection.getInstance().deleteProductWithItems(Integer.parseInt(item.getValue().getId()));
             this.refresh();
         }
     }
 
     private void refresh() throws SQLException {
         itemsTV.setRoot(null);
-        List<Item> items = DBConnection.getInstance().getItemsList();
 
-        TreeItem<Item> root = new TreeItem<>(new Item("", "", ""));
-        for (Item item : items) {
-            TreeItem<Item> cache = new TreeItem<>(item);
+        List<Product> items = DBConnection.getInstance().getProductsList();
+        TreeItem<Product> root = new TreeItem<>(new Product("", "", "")); //empty root element
+
+        for (Product item : items) {
+            TreeItem<Product> cache = new TreeItem<>(item);
+
             try {
-                List<Integer> ids = DBConnection.getInstance().getAvailableExemplars(Integer.parseInt(item.getId()));
-                for (Integer id : ids) {
-                    TreeItem<Item> secondCache = new TreeItem<>(new Item(Integer.toString(id), "", ""));
-                    cache.getChildren().add(secondCache);
+                List<Integer> itemIDS = DBConnection.getInstance().getAvailableItems(Integer.parseInt(item.getId()));
+                for (Integer itemID : itemIDS) {
+                    TreeItem<Product> subCacheItem = new TreeItem<>(new Product(Integer.toString(itemID), "", ""));
+                    cache.getChildren().add(subCacheItem);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

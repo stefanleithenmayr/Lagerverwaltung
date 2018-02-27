@@ -48,10 +48,10 @@ public class AddItemController implements Initializable {
     @FXML
     public void insertItem() throws SQLException {
         int counter  = 0;
-        DBConnection.getInstance().addItem(tfItemName.getText(), tfDescription.getText());
-        int itemId = DBConnection.getInstance().getLastItemID();
+        DBConnection.getInstance().addProduct(tfItemName.getText(), tfDescription.getText());
+        int itemId = DBConnection.getInstance().getLastProductID();
         while(counter != quantity){
-            DBConnection.getInstance().addItemExemplar(itemId);
+            DBConnection.getInstance().addItem(itemId);
             counter++;
         }
     }
@@ -62,6 +62,7 @@ public class AddItemController implements Initializable {
         quantity = value.intValue();
         tfQuantity.setText(quantity.toString());
     }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         quantity = 0;

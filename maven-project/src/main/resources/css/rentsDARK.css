@@ -9,7 +9,18 @@
     -fx-table-cell-border-color: white;
     -fx-text-fill: white;
     -fx-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
+
+.table-column {
+    -fx-alignment: center;
+}
+
+#tableViewRents .table-column {
+    -fx-alignment: center;
+}
+
 .table-row-cell .text {
     -fx-fill: white;
 }
@@ -153,4 +164,10 @@
  }
 .combo-box .cell:hover{
     -fx-background-color: #F06060;
+}
+
+.combo-box{
+    -fx-unfocus-color: #33363F;
+    -fx-focus-color: #33363F;
+    -fx-faint-focus-color: #33363F;
 }
