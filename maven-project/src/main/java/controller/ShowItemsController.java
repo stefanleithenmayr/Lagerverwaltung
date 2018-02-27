@@ -65,12 +65,14 @@ public class ShowItemsController implements Initializable {
         }else if(item != null && item.getChildren().size() != 0){
             DBConnection.getInstance().deleteProductWithItems(Integer.parseInt(item.getValue().getId()));
             this.refresh();
+        }else if(item != null && item.getChildren().size() != 0){
+            DBConnection.getInstance().deleteItemWithExemplars(Integer.parseInt(item.getValue().getId()));
+            this.refresh();
         }
     }
 
     private void refresh() throws SQLException {
         itemsTV.setRoot(null);
-
         List<Product> items = DBConnection.getInstance().getProductsList();
         TreeItem<Product> root = new TreeItem<>(new Product("", "", "")); //empty root element
 

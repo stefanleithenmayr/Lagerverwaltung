@@ -116,11 +116,10 @@ Wir erstellen unsere Software um die Verwaltung der Produkte im RoboLab zu verei
 
 **Geschäftsprozesse**
 
-> - Ein bzw. Auslagern von Gütern
-> - Lagerstand zeigen
-> - beim Lieferanten bestellen 
-> - Journal eines Zeitraumes zeigen
-> - Lieferanten verwalten
+> - neue Produkte einlagern
+> - Produkte ausleihen
+> - aktuell ausgeliehene Produkte ansehen 
+> - Zeitraum der ausgeliehenen Produkte ansehen
 
 3.2 GUI
 --------
