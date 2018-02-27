@@ -270,6 +270,7 @@ public class DBConnection {
                 "        FROM lend l \n" +
                 "                JOIN items i ON l.ITEMID = i.ITEMID\n" +
                 "                JOIN products p ON p.PRODUCTID = i.PRODUCTID\n" +
+
                 "                JOIN users u ON l.USERNAME = u.username\n"+
                 "WHERE l.USERNAME = '" + userName + "'");
         List<Rent> rents = new ArrayList<>();
