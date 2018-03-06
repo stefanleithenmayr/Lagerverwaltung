@@ -47,6 +47,7 @@ public class LoginController implements Initializable {
     private JFXButton loginBT;
 
     private boolean loginSuccessful;
+    private boolean alreadyUser;
 
     @FXML
     private void closeWindow(ActionEvent event) {
@@ -59,7 +60,14 @@ public class LoginController implements Initializable {
 
         if (!loginSuccessful){
             loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
-            if (!loginSuccessful){
+            alreadyUser = DBConnection.getInstance().alreadyUser(userNameField.getText());
+            if (!loginSuccessful && alreadyUser){
+                falseInputField.setText("Wrong Password");
+                falseInputField.setVisible(true);
+                return;
+            }
+            if(!loginSuccessful && !alreadyUser) {
+                falseInputField.setText("Not registered");
                 falseInputField.setVisible(true);
                 return;
             }

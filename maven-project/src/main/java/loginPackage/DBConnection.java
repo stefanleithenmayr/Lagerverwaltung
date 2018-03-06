@@ -117,6 +117,16 @@ public class DBConnection {
         return false;
     }
 
+    public boolean alreadyUser(String userName) throws SQLException {
+        ResultSet rs = getInstance().GetUsers();
+        while (rs.next()) {
+            if(rs.getString("USERNAME").equals(userName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addProduct(String name, String description) throws SQLException {
         if (!name.equals("")) {
             String SQLCommand = "INSERT INTO PRODUCTS " +
