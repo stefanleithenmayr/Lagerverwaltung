@@ -8,7 +8,18 @@
 	-fx-text-fill: #3D4956;
 }
 
+#registerBT{
+	-fx-background-color: transparent;
+	-fx-text-fill: #3D4956;
+}
+
 #userNameField{
+	-fx-prompt-text-fill: #3D4956;
+	-fx-unfocus-color: #3D4956;
+	-fx-focus-color: #3D4956;
+}
+
+#nameField{
 	-fx-prompt-text-fill: #3D4956;
 	-fx-unfocus-color: #3D4956;
 	-fx-focus-color: #3D4956;

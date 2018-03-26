@@ -32,6 +32,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
+    private JFXTextField nameField;
+    @FXML
     private JFXTextField userNameField;
     @FXML
     private JFXPasswordField passwordField;
@@ -67,8 +69,10 @@ public class LoginController implements Initializable {
                 return;
             }
             if(!loginSuccessful && !alreadyUser) {
-                falseInputField.setText("Not registered");
+                falseInputField.setText("Please register");
                 falseInputField.setVisible(true);
+                nameField.setDisable(false);
+                nameField.setOpacity(1.0);
                 return;
             }
 

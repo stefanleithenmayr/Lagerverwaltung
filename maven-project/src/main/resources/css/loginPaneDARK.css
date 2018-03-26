@@ -8,12 +8,25 @@
 	-fx-text-fill: white;
 }
 
+#registerBT{
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
 #userNameField{
 	-fx-prompt-text-fill: white;
 	-fx-unfocus-color: white;
 	-fx-focus-color: white;
     -fx-text-fill: white;
     -fx-faint-focus-color: white;
+}
+
+#nameField{
+	-fx-prompt-text-fill: white;
+	-fx-unfocus-color: white;
+	-fx-focus-color: white;
+	-fx-text-fill: white;
+	-fx-faint-focus-color: white;
 }
 
 #passwordField{
