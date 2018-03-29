@@ -11,24 +11,10 @@
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
    <children>
+      <AnchorPane fx:id="subPane" layoutX="263.0" layoutY="100.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0" />
       <Rectangle fx:id="recLayout" arcHeight="5.0" arcWidth="5.0" fill="#2d3139" height="650.0" layoutY="71.0" stroke="BLACK" strokeType="INSIDE" width="248.0" />
       <Rectangle fx:id="dashBoard" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="71.0" layoutY="1.0" stroke="#585d6e" strokeType="INSIDE" styleClass="recStyle" width="248.0" AnchorPane.bottomAnchor="644.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1032.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="rentBT" layoutY="154.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="My Rents">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic></Button>
-      <Button fx:id="showItemsBT" layoutY="83.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Manager">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic></Button>
+      <Button fx:id="rentBT" layoutY="172.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="185.0" />
       <Button fx:id="statisticsBT" layoutY="525.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="0.0">
          <graphic>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics ">
@@ -38,14 +24,12 @@
             </Text>
          </graphic>
       </Button>
-      <Button fx:id="addItemBT" layoutX="14.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Manager">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic></Button>
+      <Button fx:id="addItemBT" layoutY="155.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0" />
+      <Text fx:id="productManagerText" fill="WHITE" layoutX="63.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Manager" AnchorPane.leftAnchor="63.0" AnchorPane.topAnchor="170.734375">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
       <Button fx:id="exportDatasBT" layoutY="585.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0">
          <graphic>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Export Datas">
@@ -64,11 +48,7 @@
             </Text>
          </graphic>
       </Button>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../icons/rent-sign.png" />
-         </image>
-      </ImageView>
+      <Button layoutY="85.0" mnemonicParsing="false" onAction="#dropDown" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" />
       <Text layoutX="42.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dashBoardStyle" text="DASHBOARD">
          <font>
             <Font size="28.0" />
@@ -81,15 +61,9 @@
       </ImageView>
       <Button fx:id="cancelBT" layoutX="1227.0" layoutY="21.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="20.0" />
       <JFXToggleButton fx:id="changeThemeBT" layoutX="1158.0" layoutY="9.0" onAction="#changeFont" AnchorPane.rightAnchor="65.0" />
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
+      <ImageView fx:id="productManagerIV" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
          <image>
             <Image url="@../icons/icon.png" />
-         </image>
-      </ImageView>
-      <AnchorPane fx:id="subPane" layoutX="263.0" layoutY="100.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0" />
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
-         <image>
-            <Image url="@../icons/database.png" />
          </image>
       </ImageView>
       <ImageView fx:id="statIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="149.0" AnchorPane.leftAnchor="15.0">
@@ -107,5 +81,26 @@
             <Image url="@../icons/user.png" />
          </image>
       </ImageView>
+      <Text fill="WHITE" layoutX="70.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rents">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="rentIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/rent-sign.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="showItemsBT" layoutY="112.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="130.0" />
+      <Text fx:id="createRentTEXT" fill="WHITE" layoutX="90.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Create new Rent" visible="false" AnchorPane.leftAnchor="90.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="showRentsTEXT" fill="WHITE" layoutX="90.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Show Rents" visible="false">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

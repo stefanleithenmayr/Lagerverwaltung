@@ -14,8 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@SuppressWarnings("Duplicates")
-public class ShowItemsController implements Initializable {
+public class ItemSelectionController implements Initializable {
 
     @FXML
     private TreeTableView<Product> itemsTV;
@@ -26,7 +25,6 @@ public class ShowItemsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("description"));
         totalProdCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("totalExemplars"));
@@ -40,35 +38,7 @@ public class ShowItemsController implements Initializable {
         try {
             this.refresh();
         } catch (SQLException e) {
-             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void rentProduct() throws SQLException {
-        TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
-        if (item != null && item.getChildren().size() == 0){
-            DBConnection.getInstance().rentItem(item.getValue().getName());
-            this.refresh();
-        }
-    }
-
-    /**
-     * Löscht das ausgewählte Produkt
-     * @throws SQLException
-     */
-    @FXML
-    private void deleteProduct() throws SQLException {
-        TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
-        if(item != null && item.getChildren().size() == 0) {
-            DBConnection.getInstance().deleteItem(Integer.parseInt(item.getValue().getName()));
-            this.refresh();
-        }else if(item != null && item.getChildren().size() != 0){
-            DBConnection.getInstance().deleteProductWithItems(Integer.parseInt(item.getValue().getId()));
-            this.refresh();
-        }else if(item != null && item.getChildren().size() != 0){
-            DBConnection.getInstance().deleteItem(Integer.parseInt(item.getValue().getId()));
-            this.refresh();
+            e.printStackTrace();
         }
     }
 

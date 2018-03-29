@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,13 +51,15 @@ public class LoginController implements Initializable {
     private boolean alreadyUser;
 
     @FXML
-    private void closeWindow(ActionEvent event) {
+    private void closeWindow() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
     @FXML
-    private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+    private void loginAction() throws ClassNotFoundException, IOException, SQLException {
 
         if (!loginSuccessful){
             loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
