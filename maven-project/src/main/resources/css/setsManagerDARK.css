@@ -1,46 +1,34 @@
-#userSelectionPane{
+#setsManagerPane{
     -fx-background-color: #33363F;
+}
+.btStyle{
+    -fx-border-color: white;
     -fx-text-fill: white;
-    -fx-font-size: 20px;
-    -fx-fill:white;
+    -fx-border-width: 0.5;
 }
 
-
-
-
+.text-field{
+    -fx-font-size: 19;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -fx-faint-focus-color: white;
+}
 .textFieldStyle{
     -fx-prompt-text-fill: white;
+    -fx-font-size: 30;
     -fx-unfocus-color: white;
     -fx-focus-color: white;
     -fx-text-fill: white;
     -fx-faint-focus-color: white;
-}
-/*.jfx-text-field{
-    -fx-pref-height:3;
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-text-fill: white;
-}*/
-
-.jfx-text-field{
     -fx-background-color: #33363F;
     -fx-text-fill:white;
-    -fx-font-size: 15;
     -fx-border-color: #33363F;
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-alignment: center;
 }
-
-.combo-box-base {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 3px, 3px, 2px, 1px;
-}.combo-box .cell:selected {
-     -fx-background-color: #F06060;
- }
-.combo-box .cell:hover{
-    -fx-background-color: #F06060;
+.jfx-text-area{
+    -jfx-unfocus-color: white;
+    -fx-text-fill: white;
 }
 
 .table-view{
@@ -68,16 +56,7 @@
     -fx-text-fill: white;
 }
 
-.table-row-cell:hover:selected .label,
-.table-row-cell:focused:selected .label{
-    -fx-fill:#F06060;
-    -fx-text-fill: white;
-}
 
-.table-row-cell:hover , .table-row-cell:selected{
-    -fx-background-color:#F06060;
-    -fx-text-fill: white;
-}
 
 .table-view > .column-header-background {
     -fx-background-size: stretch;
@@ -91,7 +70,6 @@
     -fx-background-color: -design;
     -fx-fill: #2a2d35;
     -fx-text-fill: #2a2d35;
-    -fx-text-alignment: center;
 }
 
 .table-view > .column-header-background > .nested-column-header > .column-header.table-column {
@@ -174,14 +152,23 @@
     -fx-border-width: 0px;
 }
 
-#tvUser .table-column {
-    -fx-alignment: CENTER;
+.btStyle{
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-border-width: 0.5;
 }
 
 #tvUser .table-column {
     -fx-alignment: CENTER;
 }
 
-.text-input:disabled {
-    -fx-opacity: 1.0;
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}.combo-box .cell:selected {
+     -fx-background-color: #F06060;
+ }
+.combo-box .cell:hover{
+    -fx-background-color: #F06060;
 }

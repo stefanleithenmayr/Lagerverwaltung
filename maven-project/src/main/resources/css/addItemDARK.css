@@ -59,3 +59,8 @@
     -fx-prompt-text-fill: white;
     -fx-faint-focus-color: white;
 }
+.jfx-text-area{
+    -jfx-unfocus-color: white;
+    -jfx-focus-color: red;
+    -fx-text-fill: white;
+}
