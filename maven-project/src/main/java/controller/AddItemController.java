@@ -49,9 +49,9 @@ public class AddItemController implements Initializable {
     public void insertItem() throws SQLException {
         int counter  = 0;
         DBConnection.getInstance().addProduct(tfItemName.getText(), tfDescription.getText());
-        int itemId = DBConnection.getInstance().getLastProductID();
+        int productID = DBConnection.getInstance().getLastProductID();
         while(counter != quantity){
-            DBConnection.getInstance().addItem(itemId);
+            DBConnection.getInstance().addItem(productID);
             counter++;
         }
     }

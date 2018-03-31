@@ -1,5 +1,7 @@
 package loginPackage;
 
+import javafx.collections.ObservableList;
+import model.Item;
 import model.Product;
 import model.Rent;
 import model.User;
@@ -53,7 +55,7 @@ public class DBConnection {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM");
         if (!rs.next()){
-            return 100000;
+            return 1001;
         }
 
         Integer biggestID = rs.getInt("ITEMNR");
@@ -69,7 +71,7 @@ public class DBConnection {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ST_PRODUCT");
         if (!rs.next()){
-            return 1000;
+            return 1001;
         }
 
         Integer biggestID = rs.getInt("PRODUCTNR");
@@ -130,7 +132,7 @@ public class DBConnection {
     public void addProduct(String name, String description) throws SQLException {
         if (!name.equals("")) {
             String SQLCommand = "INSERT INTO ST_PRODUCT " +
-                    "VALUES (" + productID + ",'" + description + "','" + name + "'," + "'a'," + "'b'" +")";
+                    "VALUES (" + productID + ",'" + name + "','" + description + "')" ;
 
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
@@ -138,9 +140,9 @@ public class DBConnection {
         productID++;
     }
 
-    public void addItem(Integer itemID) throws SQLException {
+    public void addItem(Integer productID) throws SQLException {
         String SQLCommand = "INSERT INTO ST_ITEM " +
-                    "VALUES ("+ itemId + ","+ itemID + ")";
+                    "VALUES ("+ itemId + ","+ productID + ",'eanCode', "+ 1000 +")";
 
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
@@ -355,5 +357,75 @@ public class DBConnection {
         stmt.execute("DELETE FROM ST_ITEM WHERE PRODUCTNR = " + id);
         Statement secStmt = conn.createStatement();
         secStmt.execute("DELETE FROM ST_PRODUCT WHERE PRODUCTNR = " + id);
+    }
+
+    public void saveNewSet(String setName, String setDescription, List<Product> products) throws SQLException {
+        Statement stmt = conn.createStatement();
+        int prevItemId = 0, nextItemId = 0;
+        for (int i = 0; i+1 < products.size(); i++){
+            prevItemId = getFirstAvailableItemID(Integer.parseInt(products.get(i).getId()));
+            nextItemId = getFirstAvailableItemID(Integer.parseInt(products.get(i+1).getId()));
+            stmt.executeUpdate("UPDATE ST_ITEM set REFITEMNR = " + nextItemId +"where ITEMNR = "+ prevItemId);
+        }
+        stmt.executeUpdate("UPDATE ST_ITEM set REFITEMNR = " + null +" where ITEMNR = "+ nextItemId);
+    }
+
+    private int getFirstAvailableItemID(int productID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE PRODUCTNR = " + productID);
+        while (rs.next()){
+            if (rs.getInt("REFITEMNR") == 1000){
+                return Integer.parseInt(rs.getString("ITEMNR"));
+            }
+        }
+        return -1;
+    }
+
+    public int countSets() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE REFITEMNR is NULL ");
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        return count;
+    }
+
+    public List<Item> getSet(int overStep) throws SQLException {
+        List<Item> items = new ArrayList<>();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE REFITEMNR is NULL ");
+        int counter = 0;
+
+        while (rs.next()){
+            if (overStep == counter){
+                int itemnr = rs.getInt("ITEMNR");
+                items.add(new Item(rs.getInt("ITEMNR"), rs.getInt("PRODUCTNR"), rs.getString("EANCODE"), rs.getInt("REFITEMNR")));
+                ResultSet rs1 = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE REFITEMNR is not NULL ");
+                while (rs1.next()){
+                    if (rs1.getInt("REFITEMNR") == itemnr){
+                        items.add(new Item(rs1.getInt("ITEMNR"), rs1.getInt("PRODUCTNR"), rs1.getString("EANCODE"), rs1.getInt("REFITEMNR")));
+                        itemnr = rs1.getInt("ITEMNR");
+                        rs1 = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE REFITEMNR is not NULL ");
+                    }
+                }
+                return items;
+            }
+            counter++;
+        }
+        return null;
+    }
+
+    public String getProductNameByItemID(int itemnr) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE ITEMNR = " + itemnr);
+        if (rs.next()){
+            productID = rs.getInt("PRODUCTNR");
+        }
+        ResultSet rs1 = stmt.executeQuery("SELECT * FROM ST_PRODUCT WHERE PRODUCTNR = " + productID);
+        if (rs1.next()){
+            return rs1.getString("NAME");
+        }
+        return  "";
     }
 }

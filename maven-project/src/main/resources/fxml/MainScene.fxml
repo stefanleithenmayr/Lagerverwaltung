@@ -25,7 +25,7 @@
          </graphic>
       </Button>
       <Button fx:id="addItemBT" layoutY="155.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0" />
-      <Text fx:id="productManagerText" fill="WHITE" layoutX="63.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Manager" AnchorPane.leftAnchor="63.0" AnchorPane.topAnchor="170.734375">
+      <Text fx:id="productManagerText" fill="WHITE" layoutX="63.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new Product" AnchorPane.leftAnchor="63.0" AnchorPane.topAnchor="170.734375">
          <font>
             <Font size="16.0" />
          </font>
@@ -102,5 +102,14 @@
             <Font size="16.0" />
          </font>
       </Text>
+      <Button fx:id="btSetsManager" layoutY="465.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="0.0">
+         <graphic>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="sets Manager">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

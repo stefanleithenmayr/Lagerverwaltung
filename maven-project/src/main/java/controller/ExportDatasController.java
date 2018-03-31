@@ -59,7 +59,7 @@ public class ExportDatasController implements Initializable {
     }
     @FXML
     private  void searchUser(KeyEvent event){
-        List<User> cache = new ArrayList<>(users);
+        List<User> cache = new ArrayList(users);
         tvUser.getItems().clear();
         try {
             users = FXCollections.observableArrayList(DBConnection.getInstance().getUsers());
