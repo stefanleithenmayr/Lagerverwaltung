@@ -1,6 +1,6 @@
 package model;
 
-public class Rent {
+public claRent {
 
     private final String id;
     private final String itemName;
