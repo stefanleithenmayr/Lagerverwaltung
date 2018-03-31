@@ -250,13 +250,11 @@ public class DBConnection {
 
     public List<Integer> getAvailableItems(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.ITEMNR \n" +
-                "FROM ST_ITEM i \n" +
-                "WHERE PRODUCTNR = "+ id +" AND \n" +
-                "    i.ITEMID NOT IN \n" +
+        ResultSet rs = stmt.executeQuery("SELECT i.ITEMNR FROM ST_ITEM i " +
+                "WHERE PRODUCTNR = "+ id +" AND" +
+                "    i.ITEMNR NOT IN \n" +
                 "        (SELECT ITEMNR \n" +
-                "        FROM ST_RENT)");
-
+                "        FROM RENT_ITEM)");
         List<Integer> ids = new ArrayList<>();
         while (rs.next()){
                 ids.add(rs.getInt("ITEMNR"));
