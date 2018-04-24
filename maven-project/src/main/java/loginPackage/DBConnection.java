@@ -247,7 +247,6 @@ public class DBConnection {
         conn.commit();
     }
     
-
     public List<Integer> getAvailableProducts(int id) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT i.ProductNr FROM Product i " +
