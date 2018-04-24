@@ -89,4 +89,8 @@ insert into userrolle values (2, 'Lehrer');
 
 insert into st_user values('stefanleithenmayr', '12345', 'Stefan Leithenmayr', NULL, NULL, 1);
 insert into st_user values('stuetz', '12345', 'Stütz', NULL, NULL, 2);
+<<<<<<< HEAD
 commit;
+=======
+commit;
+>>>>>>> d4c421ca0010293d7f94662e2a4042bf98eba5b3

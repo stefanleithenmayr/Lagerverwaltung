@@ -96,6 +96,10 @@ public class MainSceneController implements Initializable {
 
             ParallelTransition pT = new ParallelTransition();
             pT.getChildren().addAll(translateTransition, secondTransition);
+<<<<<<< HEAD
+=======
+
+>>>>>>> d4c421ca0010293d7f94662e2a4042bf98eba5b3
             pT.play();
             createRentTEXT.setVisible(false);
             showRentsTEXT.setVisible(false);
