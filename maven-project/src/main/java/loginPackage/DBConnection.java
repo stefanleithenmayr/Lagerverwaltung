@@ -53,7 +53,7 @@ public class DBConnection {
 
     private Integer getLastItemID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM Product");
         if (!rs.next()){
             return 1001;
         }
@@ -69,7 +69,7 @@ public class DBConnection {
     }
     public Integer getLastProductID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_PRODUCT");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM Item");
         if (!rs.next()){
             return 1001;
         }
@@ -131,7 +131,7 @@ public class DBConnection {
 
     public void addProduct(String name, String description) throws SQLException {
         if (!name.equals("")) {
-            String SQLCommand = "INSERT INTO ST_PRODUCT " +
+            String SQLCommand = "INSERT INTO Item " +
                     "VALUES (" + productID + ",'" + name + "','" + description + "')" ;
 
             PreparedStatement ps = conn.prepareStatement(SQLCommand);
@@ -141,8 +141,8 @@ public class DBConnection {
     }
 
     public void addItem(Integer productID) throws SQLException {
-        String SQLCommand = "INSERT INTO ST_ITEM " +
-                    "VALUES ("+ itemId + ","+ productID + ",'eanCode', "+ 1000 +")";
+        String SQLCommand = "INSERT INTO Product " +
+                    "VALUES ("+ itemId + ","+ productID + ",'ProductEAN', "+ 1000 +")";
 
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
@@ -151,7 +151,7 @@ public class DBConnection {
 
     public List<Product> getProductsList() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_PRODUCT");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM Product");
         List<Product> products = new ArrayList<>();
         while (rs.next()) {
             products.add(new Product(rs.getString("NAME"), rs.getString("DESCRIPTION"), Integer.toString(rs.getInt("PRODUCTNR" +""))));
@@ -183,7 +183,7 @@ public class DBConnection {
 
     public String countItems(Integer id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(ITEMNR) FROM ITEMS WHERE PRODUCTNR = " + id + " GROUP BY PRODUCTNR");
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(ITEMNR) FROM ITEM WHERE PRODUCTNR = " + id + " GROUP BY PRODUCTNR");
         if (rs.next()){
             return Integer.toString(rs.getInt(1));
         }
@@ -207,7 +207,7 @@ public class DBConnection {
 
         Statement secStmt = conn.createStatement();
         secStmt.execute("DELETE " +
-                "FROM ST_RENT " +
+                "FROM Rent " +
                 "WHERE USERNAME = '" + username + "'");
     }
 
@@ -241,32 +241,31 @@ public class DBConnection {
      * @param id
      * @throws SQLException
      */
-    public void deleteItem(int id) throws SQLException {
+    public void deleteProduct(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("DELETE FROM ST_ITEM WHERE ITEMNR = " + id);
+        stmt.execute("DELETE FROM Product WHERE ProductNr = " + id);
         conn.commit();
     }
     
-
-    public List<Integer> getAvailableItems(int id) throws SQLException {
+    public List<Integer> getAvailableProducts(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT i.ITEMNR FROM ST_ITEM i " +
-                "WHERE PRODUCTNR = "+ id +" AND" +
-                "    i.ITEMNR NOT IN \n" +
-                "        (SELECT ITEMNR \n" +
-                "        FROM RENT_ITEM)");
+        ResultSet rs = stmt.executeQuery("SELECT i.ProductNr FROM Product i " +
+                "WHERE ProductNr = "+ id +" AND" +
+                "    i.ProductNr NOT IN \n" +
+                "        (SELECT ProductNR \n" +
+                "        FROM Item)");
         List<Integer> ids = new ArrayList<>();
         while (rs.next()){
-                ids.add(rs.getInt("ITEMNR"));
+                ids.add(rs.getInt("ProductNr"));
         }
         return ids;
     }
 
-    public String getAvailableItemsCount(int id) throws SQLException {
+    public String getAvailableProductsCount(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select count(l.itemnr)\n" +
-                "from st_item i\n" +
-                "    join ST_RENT l on l.ITEMNR = i.ITEMNR\n" +
+        ResultSet rs = stmt.executeQuery("select count(l.productnr)\n" +
+                "from product i\n" +
+                "    join rent l on l.productnr = i.productnr\n" +
                 "where productid =" + id);
         if (rs.next()){
              return Integer.toString(rs.getInt(1));
@@ -278,8 +277,8 @@ public class DBConnection {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT p.name, l.itemnr, l.USERNAME, u.name\n" +
                 "        FROM ST_RENT l \n" +
-                "                JOIN ST_ITEM i ON l.ITEMNR = i.ITEMNR\n" +
-                "                JOIN ST_PRODUCT p ON p.PRODUCTNR = i.PRODUCTNR\n" +
+                "                JOIN Product i ON l.productnr = i.productnr\n" +
+                "                JOIN item p ON p.itemnr = i.itemnr\n" +
 
                 "                JOIN ST_USER u ON l.USERNAME = u.username\n"+
                 "WHERE l.USERNAME = '" + userName + "'");
@@ -297,8 +296,8 @@ public class DBConnection {
     public List<Rent> getAllRents() throws SQLException {
         Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT p.productname, l.itemid, l.USERNAME, u.name\n" +
-                "        FROM ST_RENT l \n" +
-                "                JOIN ST_ITEM i ON l.ITEMNR = i.ITEMNR\n" +
+                "        FROM RENT r \n" +
+                "                JOIN PRODUCT p ON r.productnr = i.ITEMNR\n" +
                 "                JOIN ST_PRODUCT p ON p.PRODUCTNR = i.PRODUCTNR\n" +
                 "                JOIN ST_USER u ON l.USERNAME = u.username");
 

@@ -61,13 +61,13 @@ public class ShowItemsController implements Initializable {
     private void deleteProduct() throws SQLException {
         TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
         if(item != null && item.getChildren().size() == 0) {
-            DBConnection.getInstance().deleteItem(Integer.parseInt(item.getValue().getName()));
+            DBConnection.getInstance().deleteProduct(Integer.parseInt(item.getValue().getName()));
             this.refresh();
         }else if(item != null && item.getChildren().size() != 0){
             DBConnection.getInstance().deleteProductWithItems(Integer.parseInt(item.getValue().getId()));
             this.refresh();
         }else if(item != null && item.getChildren().size() != 0){
-            DBConnection.getInstance().deleteItem(Integer.parseInt(item.getValue().getId()));
+            DBConnection.getInstance().deleteProduct(Integer.parseInt(item.getValue().getId()));
             this.refresh();
         }
     }
@@ -81,7 +81,7 @@ public class ShowItemsController implements Initializable {
             TreeItem<Product> cache = new TreeItem<>(item);
 
             try {
-                List<Integer> itemIDS = DBConnection.getInstance().getAvailableItems(Integer.parseInt(item.getId()));
+                List<Integer> itemIDS = DBConnection.getInstance().getAvailableProducts(Integer.parseInt(item.getId()));
                 for (Integer itemID : itemIDS) {
                     TreeItem<Product> subCacheItem = new TreeItem<>(new Product(Integer.toString(itemID), "", ""));
                     cache.getChildren().add(subCacheItem);
