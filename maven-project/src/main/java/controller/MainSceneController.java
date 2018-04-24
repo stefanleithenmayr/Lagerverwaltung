@@ -57,9 +57,9 @@ public class MainSceneController implements Initializable {
         secondTransition.setDuration(Duration.millis(500));
         secondTransition.setNode(addItemBT);
 
-        TranslateTransition thirdTransition = new TranslateTransition();
+        /*TranslateTransition thirdTransition = new TranslateTransition();
         thirdTransition.setDuration(Duration.millis(500));
-        thirdTransition.setNode(productManagerText);
+        thirdTransition.setNode(productManagerText);*/
 
         TranslateTransition tetraTransition = new TranslateTransition();
         tetraTransition.setDuration(Duration.millis(500));
@@ -73,14 +73,14 @@ public class MainSceneController implements Initializable {
         if (!isDown){
             translateTransition.setToY(100);
             secondTransition.setToY(100);
-            thirdTransition.setToY(100);
+            //thirdTransition.setToY(100);
             tetraTransition.setFromX(-100);
             tetraTransition.setToX(0);
             fifthTransition.setFromX(-100);
             fifthTransition.setToX(0);
 
             ParallelTransition pT = new ParallelTransition();
-            pT.getChildren().addAll(translateTransition, secondTransition, thirdTransition, tetraTransition, fifthTransition);
+            pT.getChildren().addAll(translateTransition, secondTransition, tetraTransition, fifthTransition);
             createRentTEXT.setVisible(true);
             showRentsTEXT.setVisible(true);
             showItemsBT.setVisible(true);
@@ -90,12 +90,12 @@ public class MainSceneController implements Initializable {
         }else{
             translateTransition.setToY(0);
             secondTransition.setToY(0);
-            thirdTransition.setToY(0);
+            //thirdTransition.setToY(0);
             tetraTransition.setToX(-100);
             fifthTransition.setToX(-100);
 
             ParallelTransition pT = new ParallelTransition();
-            pT.getChildren().addAll(translateTransition, secondTransition, thirdTransition);
+            pT.getChildren().addAll(translateTransition, secondTransition);
             pT.play();
             createRentTEXT.setVisible(false);
             showRentsTEXT.setVisible(false);

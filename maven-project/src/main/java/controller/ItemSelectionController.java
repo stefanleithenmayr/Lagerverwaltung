@@ -51,7 +51,7 @@ public class ItemSelectionController implements Initializable {
             TreeItem<Product> cache = new TreeItem<>(item);
 
             try {
-                List<Integer> itemIDS = DBConnection.getInstance().getAvailableItems(Integer.parseInt(item.getId()));
+                List<Integer> itemIDS = DBConnection.getInstance().getAvailableProducts(Integer.parseInt(item.getId()));
                 for (Integer itemID : itemIDS) {
                     TreeItem<Product> subCacheItem = new TreeItem<>(new Product(Integer.toString(itemID), "", ""));
                     cache.getChildren().add(subCacheItem);

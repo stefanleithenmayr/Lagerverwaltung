@@ -45,7 +45,7 @@ public class Product {
     public String getAvailableExemplars() throws SQLException {
     String total = getTotalExemplars();
     if (!this.getId().isEmpty() && !total.isEmpty()) {
-        return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableItemsCount(Integer.parseInt(this.getId()))));
+        return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableProductsCount(Integer.parseInt(this.getId()))));
         }
         return "";
     }
