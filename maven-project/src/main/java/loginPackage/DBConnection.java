@@ -246,11 +246,7 @@ public class DBConnection {
         stmt.execute("DELETE FROM Product WHERE ProductNr = " + id);
         conn.commit();
     }
-    
-<<<<<<< HEAD
 
-=======
->>>>>>> d4c421ca0010293d7f94662e2a4042bf98eba5b3
     public List<Integer> getAvailableProducts(int id) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT i.ProductNr FROM Product i " +
