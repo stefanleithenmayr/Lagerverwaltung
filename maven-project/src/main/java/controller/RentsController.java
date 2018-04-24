@@ -61,7 +61,7 @@ public class RentsController implements Initializable{
         }
 
         productNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("itemName"));
+                new PropertyValueFactory<>("productName"));
 
         exemplarIDCol.setCellValueFactory(
                 new PropertyValueFactory<>("iD"));
@@ -79,6 +79,7 @@ public class RentsController implements Initializable{
 
         chooseRents.getItems().add("My Rents");
         chooseRents.getItems().add("All Rents");
+        chooseRents.getSelectionModel().selectFirst();
     }
 
     //Submethods

@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
+    private JFXTextField nameField;
+    @FXML
     private JFXTextField userNameField;
     @FXML
     private JFXPasswordField passwordField;
@@ -47,20 +50,32 @@ public class LoginController implements Initializable {
     private JFXButton loginBT;
 
     private boolean loginSuccessful;
+    private boolean alreadyUser;
 
     @FXML
-    private void closeWindow(ActionEvent event) {
+    private void closeWindow() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
     @FXML
-    private void loginAction(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+    private void loginAction() throws ClassNotFoundException, IOException, SQLException {
 
         if (!loginSuccessful){
             loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
-            if (!loginSuccessful){
+            alreadyUser = DBConnection.getInstance().alreadyUser(userNameField.getText());
+            if (!loginSuccessful && alreadyUser){
+                falseInputField.setText("Wrong Password");
                 falseInputField.setVisible(true);
+                return;
+            }
+            if(!loginSuccessful && !alreadyUser) {
+                falseInputField.setText("Please register");
+                falseInputField.setVisible(true);
+                nameField.setDisable(false);
+                nameField.setOpacity(1.0);
                 return;
             }
 

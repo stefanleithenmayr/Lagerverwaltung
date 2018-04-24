@@ -103,8 +103,8 @@ Wir erstellen unsere Software um die Verwaltung der Produkte im RoboLab zu verei
 >- Güter können zeiteffizient ein-/ausgelagert werden
 >- Journal eines gewissen Zeitraumes kann auf einen Blick betrachtet werden
 >- Aktueller Lagerstand kann dargestellt werden
->- Beim Lieferanten kann bestellt werden kann 
->- Lieferanten können verwaltet werden 
+>- ausgeliehene Produkte können angesehen werden
+>- Wer welches Produkt ausgeliehen hat kann dargestellt werden
 
 3.Funktionale Anforderungen
 ========
@@ -116,11 +116,10 @@ Wir erstellen unsere Software um die Verwaltung der Produkte im RoboLab zu verei
 
 **Geschäftsprozesse**
 
-> - Ein bzw. Auslagern von Gütern
-> - Lagerstand zeigen
-> - beim Lieferanten bestellen 
-> - Journal eines Zeitraumes zeigen
-> - Lieferanten verwalten
+> - neue Produkte einlagern
+> - Produkte ausleihen
+> - aktuell ausgeliehene Produkte ansehen 
+> - Zeitraum der ausgeliehenen Produkte ansehen
 
 3.2 GUI
 --------

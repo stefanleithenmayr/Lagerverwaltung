@@ -1,49 +1,47 @@
 package model;
 
-import loginPackage.DBConnection;
-
-import java.sql.SQLException;
-
 public class Item {
+    private int  itemnr;
+    private int productnr;
+    private String eancode;
+    private int refItemnr;
 
-            private final String name;
-            private final String description;
-            private final String id;
+    public Item (int itemnr, int productnr, String eancode, int refItemnr){
+        this.itemnr = itemnr;
+        this.productnr = productnr;
+        this.eancode = eancode;
+        this.refItemnr = refItemnr;
+    }
 
-            public Item(String name, String description, String id){
-                this.name = name;
-                this.description = description;
-                this.id = id;
-            }
+    public int getItemnr() {
+        return itemnr;
+    }
 
-            public String getName() {
-                return name;
-            }
+    public void setItemnr(int itemnr) {
+        this.itemnr = itemnr;
+    }
 
-            public String getDescription() {
-                return description;
-            }
+    public int getProductnr() {
+        return productnr;
+    }
 
-            public String getId() {
-                return id;
-            }
+    public void setProductnr(int productnr) {
+        this.productnr = productnr;
+    }
 
-            public String getTotalExemplars() throws SQLException {
-                if (!this.getId().isEmpty()){
-                    return DBConnection.getInstance().countExemplars(Integer.parseInt(this.getId()));
-                }
-                return "";
-            }
+    public String getEancode() {
+        return eancode;
+    }
 
-            public String getAvailableExemplars() throws SQLException {
-                String total = getTotalExemplars();
-                if (!this.getId().isEmpty() && !total.isEmpty()) {
-                    return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableExemplarsCount(Integer.parseInt(this.getId()))));
-                }
-                return "";
-            }
-    @Override
-    public String toString() {
-        return this.getName();
+    public void setEancode(String eancode) {
+        this.eancode = eancode;
+    }
+
+    public int getRefItemnr() {
+        return refItemnr;
+    }
+
+    public void setRefItemnr(int refItemnr) {
+        this.refItemnr = refItemnr;
     }
 }

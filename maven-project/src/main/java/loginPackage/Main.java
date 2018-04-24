@@ -30,7 +30,7 @@ public class Main extends Application {
 
         stage.getIcons().add(new Image("https://raw.githubusercontent.com/stefanleithenmayr/Lagerverwaltung/master/maven-project/src/main/resources/icons/atom.png"));
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         stage.show();
     }

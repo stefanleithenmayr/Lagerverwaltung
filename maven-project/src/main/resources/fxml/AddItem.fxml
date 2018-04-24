@@ -12,37 +12,37 @@
 
 <AnchorPane fx:id="addItemPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/addItemDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemController">
    <children>
-      <JFXSlider fx:id="slQuantity" layoutX="53.0" layoutY="186.0" min="1.0" onMouseClicked="#upDateQuantitySlider" value="1.0" AnchorPane.leftAnchor="40.0" />
-      <JFXTextField fx:id="tfQuantity" alignment="CENTER" layoutX="290.0" layoutY="165.0" maxWidth="48.0" minWidth="48.0" prefHeight="0.0" prefWidth="48.0" promptText="1" AnchorPane.leftAnchor="263.0">
+      <JFXSlider fx:id="slQuantity" layoutX="19.0" layoutY="155.0" min="1.0" onMouseClicked="#upDateQuantitySlider" value="1.0" AnchorPane.leftAnchor="19.0" />
+      <JFXTextField fx:id="tfQuantity" alignment="CENTER" layoutX="242.0" layoutY="134.0" maxWidth="48.0" minWidth="48.0" prefHeight="0.0" prefWidth="48.0" promptText="1" AnchorPane.leftAnchor="242.0">
          <font>
             <Font size="21.0" />
          </font></JFXTextField>
-      <ImageView fitHeight="25.0" fitWidth="17.0" layoutX="277.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="245.0">
+      <ImageView fitHeight="25.0" fitWidth="17.0" layoutX="224.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="231.0">
          <image>
             <Image url="@../icons/leftarrowwhite.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnDown" layoutX="277.0" layoutY="180.0" mnemonicParsing="false" onAction="#substractQuantity" prefHeight="25.0" prefWidth="17.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="245.0" />
-      <ImageView fitHeight="25.0" fitWidth="17.0" layoutX="333.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="310.0">
+      <Button fx:id="btnDown" layoutX="231.0" layoutY="149.0" mnemonicParsing="false" onAction="#substractQuantity" prefHeight="17.0" prefWidth="17.0" style="-fx-background-color: transparent;" />
+      <ImageView fitHeight="25.0" fitWidth="17.0" layoutX="280.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/rightarrowwhite.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnUpp" layoutX="333.0" layoutY="180.0" mnemonicParsing="false" onAction="#addQuantity" prefHeight="25.0" prefWidth="17.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="310.0" />
-      <JFXTextField fx:id="tfDescription" layoutX="459.0" layoutY="41.0" maxWidth="663.0" minWidth="575.0" onMouseClicked="#upDateQuantity" prefHeight="216.0" prefWidth="663.0" promptText="Description" styleClass="descStyle">
+      <Button fx:id="btnUpp" layoutX="280.0" layoutY="149.0" mnemonicParsing="false" onAction="#addQuantity" prefHeight="25.0" prefWidth="17.0" style="-fx-background-color: transparent;" />
+      <JFXTextField fx:id="tfDescription" layoutX="404.0" layoutY="25.0" maxWidth="663.0" minWidth="575.0" onMouseClicked="#upDateQuantity" prefHeight="216.0" prefWidth="663.0" promptText="Description" styleClass="descStyle">
          <font>
             <Font size="19.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="btnInsert" layoutX="1146.0" layoutY="545.0" onAction="#insertItem" prefHeight="41.0" prefWidth="80.0" text="Insert" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <JFXButton fx:id="btnInsert" layoutX="1575.0" layoutY="235.0" onAction="#insertItem" prefHeight="41.0" prefWidth="80.0" text="Insert">
          <font>
             <Font size="19.0" />
          </font></JFXButton>
-      <Text fx:id="qText" layoutX="51.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity" AnchorPane.leftAnchor="40.0">
+      <Text fx:id="qText" layoutX="19.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity" AnchorPane.leftAnchor="19.0">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <JFXTextField fx:id="tfItemName" layoutX="26.0" layoutY="41.0" maxWidth="329.0" minWidth="329.0" prefHeight="48.0" prefWidth="329.0" promptText="Itemname" AnchorPane.leftAnchor="40.0" />
+      <JFXTextField fx:id="tfItemName" layoutX="7.0" layoutY="25.0" maxWidth="329.0" minWidth="329.0" prefHeight="48.0" prefWidth="329.0" promptText="Itemname" AnchorPane.leftAnchor="7.0" />
    </children>
 </AnchorPane>
