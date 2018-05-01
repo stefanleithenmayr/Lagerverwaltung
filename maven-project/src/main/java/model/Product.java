@@ -7,50 +7,53 @@ import java.sql.SQLException;
 
 public class Product {
 
-    private final String name;
-    private final String description;
-    private final String id;
+    private Integer productID;
+    private Integer producttypeID;
+    private String productEan;
+    private Integer superProductID;
+    private Integer statusID;
     private CheckBox selected;
 
-    public Product(String name, String description, String id){
-        this.name = name;
-        this.description = description;
-        this.id = id;
+    public Product(Integer productID, Integer producttypeID, String picture, String productean, Integer superProductID, Integer statusID){
+        this.productID = productID;
+        this. producttypeID = producttypeID;
+        this.productEan = productean;
+        this.superProductID = superProductID;
+        this.statusID = statusID;
         selected = new CheckBox();
     }
-
-    public String getName() {
-                return name;
-            }
-
-    public String getDescription() {
-                return description;
-            }
-
-    public String getId() {
-                return id;
-            }
-
     public CheckBox getSelected() {return selected; }
 
     public void setSelected(CheckBox selected) {this.selected = selected;}
 
-    public String getTotalExemplars() throws SQLException {
-        if (!this.getId().isEmpty()){
-            return DBConnection.getInstance().countItems(Integer.parseInt(this.getId()));
-        }
-        return "";
+
+    public Integer getProductID() {
+        return productID;
     }
 
-    public String getAvailableExemplars() throws SQLException {
-    String total = getTotalExemplars();
-    if (!this.getId().isEmpty() && !total.isEmpty()) {
-        return Integer.toString(Integer.parseInt(total) - Integer.parseInt(DBConnection.getInstance().getAvailableProductsCount(Integer.parseInt(this.getId()))));
-        }
-        return "";
+    public Integer getProducttypeID() {
+        return producttypeID;
     }
-    @Override
-    public String toString() {
-        return this.getName();
+
+    public String getProductEan() {
+        return productEan;
+    }
+
+    public Integer getSuperProductID() {
+        return superProductID;
+    }
+
+    public Integer getStatusID() {
+        return statusID;
+    }
+    public String getProductTypeName() throws SQLException {
+        return DBConnection.getInstance().getProductTypeNameByID(this.producttypeID);
+    }
+
+    public String getTotalExemplars() throws SQLException {
+        /*if (!this.getId().isEmpty()){
+            return DBConnection.getInstance().countItems(Integer.parseInt(this.getId()));
+        }*/
+        return "";
     }
 }

@@ -1,16 +1,16 @@
 package loginPackage;
 
 import javafx.collections.ObservableList;
-import model.Item;
-import model.Product;
-import model.Rent;
-import model.User;
+import model.*;
 
+import javax.swing.text.html.ListView;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.sql.JDBCType.NULL;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
@@ -21,11 +21,14 @@ public class DBConnection {
     private String password;
     private Integer itemId;
     private Integer productID;
+    private Integer setID;
 
     private Connection conn;
 
     private DBConnection() {
     }
+
+
 
     public static DBConnection getInstance() {
         if (INSTANCE == null) {
@@ -58,9 +61,9 @@ public class DBConnection {
             return 1001;
         }
 
-        Integer biggestID = rs.getInt("ITEMNR");
+        Integer biggestID = rs.getInt("PRODUCTNR");
         while (rs.next()){
-            Integer cache = rs.getInt("ITEMNR");
+            Integer cache = rs.getInt("PRODUCTNR");
             if (cache > biggestID){
                 biggestID = cache;
             }
@@ -149,12 +152,49 @@ public class DBConnection {
         itemId++;
     }
 
+    public void InsertTestDatas() throws SQLException {
+        String SQLCommand = "insert into producttype values (1, 'Monitor', 'LG - Monitor 400Hz')";
+        PreparedStatement ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into producttype values (2, 'Rechner', 'Lenovo Rechner')";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into producttype values (3, 'HDMI-Kabel', 'Kabel zum Bildlichen übertragen')";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+
+
+        SQLCommand = "insert into STATUS values(1,'Ausgeliehen')";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into STATUS values(2,'Im Lager')";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+
+        SQLCommand = "insert into product values(1, 1, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into product values(2, 1, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into product values(3, 2, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into product values(4, 3, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into product values(5, 3, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+    }
+
     public List<Product> getProductsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM Product");
         List<Product> products = new ArrayList<>();
         while (rs.next()) {
-            products.add(new Product(rs.getString("NAME"), rs.getString("DESCRIPTION"), Integer.toString(rs.getInt("PRODUCTNR" +""))));
+            products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"),
+                rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
         return products;
     }
@@ -356,28 +396,16 @@ public class DBConnection {
         secStmt.execute("DELETE FROM ST_PRODUCT WHERE PRODUCTNR = " + id);
     }
 
-    public void saveNewSet(String setName, String setDescription, List<Product> products) throws SQLException {
+    public String getProductTypeNameByID(Integer id) throws SQLException {
         Statement stmt = conn.createStatement();
-        int prevItemId = 0, nextItemId = 0;
-        for (int i = 0; i+1 < products.size(); i++){
-            prevItemId = getFirstAvailableItemID(Integer.parseInt(products.get(i).getId()));
-            nextItemId = getFirstAvailableItemID(Integer.parseInt(products.get(i+1).getId()));
-            stmt.executeUpdate("UPDATE ST_ITEM set REFITEMNR = " + nextItemId +"where ITEMNR = "+ prevItemId);
-        }
-        stmt.executeUpdate("UPDATE ST_ITEM set REFITEMNR = " + null +" where ITEMNR = "+ nextItemId);
-    }
-
-    private int getFirstAvailableItemID(int productID) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE PRODUCTNR = " + productID);
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTTYPE ");
         while (rs.next()){
-            if (rs.getInt("REFITEMNR") == 1000){
-                return Integer.parseInt(rs.getString("ITEMNR"));
+            if (rs.getInt("PRODUCTTYPENR") == id){
+                return rs.getString("TYPENAME");
             }
         }
-        return -1;
+        return  "";
     }
-
     public int countSets() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM ST_ITEM WHERE REFITEMNR is NULL ");
@@ -424,5 +452,85 @@ public class DBConnection {
             return rs1.getString("NAME");
         }
         return  "";
+    }
+
+    public int getAvailAbleProductsByProductType(Integer productTypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT WHERE " +
+                                                "PRODUCTTYPENR = "+productTypeID +
+                                                " AND  STATUS = 2");
+        int counter = 0;
+        while (rs.next()){
+            counter++;
+        }
+        return counter;
+    }
+
+    public List<ProductType> getAllProductTypes() throws SQLException {
+        List<ProductType> productTypes = new ArrayList<>();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTTYPE");
+        while (rs.next()){
+            productTypes.add(new ProductType(rs.getInt("PRODUCTTYPENR"), rs.getString("TYPENAME"), rs.getString("TYPEDESCRIPTION"), null));
+        }
+        return  productTypes;
+    }
+
+    public List<Product> getProductsByProductTypeId(Integer productTypeID) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT where PRODUCTTYPENR = "+productTypeID);
+
+        while (rs.next()){
+            products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"), rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
+        }
+        return  products;
+    }
+
+    public int getTotalProductsByProductTypeID(Integer productTypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT WHERE " +
+                "PRODUCTTYPENR = "+productTypeID );
+        int counter = 0;
+        while (rs.next()){
+            counter++;
+        }
+        return  counter;
+    }
+
+    public int getProductTypeIdByProductID(int productID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT WHERE PRODUCTNR = "+productID);
+        if (rs.next()){
+            return rs.getInt("PRODUCTTYPENR");
+        }
+        return -1;
+    }
+
+    public String getProductEanByProductID(int productID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT WHERE PRODUCTNR = "+productID);
+        if (rs.next()){
+            return  rs.getString("PRODUCTEAN");
+        }
+        return "";
+    }
+
+    public int getProductStatusByProductID(int productID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT WHERE PRODUCTNR = "+productID);
+        if (rs.next()){
+            return rs.getInt("STATUS");
+        }
+        return -1;
+    }
+
+    public int getSuperProductIDByProductID(int productID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT WHERE PRODUCTNR = "+productID);
+        if (rs.next()){
+            return rs.getInt("SUPERPRODUCTNR");
+        }
+        return -1;
     }
 }

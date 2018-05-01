@@ -42,7 +42,7 @@ public class ItemSelectionController implements Initializable {
         }
     }
 
-    private void refresh() throws SQLException {
+    private void refresh() throws SQLException {/*
         itemsTV.setRoot(null);
         List<Product> items = DBConnection.getInstance().getProductsList();
         TreeItem<Product> root = new TreeItem<>(new Product("", "", "")); //empty root element
@@ -62,6 +62,6 @@ public class ItemSelectionController implements Initializable {
             root.getChildren().add(cache);
         }
         itemsTV.setShowRoot(false);
-        itemsTV.setRoot(root);
+        itemsTV.setRoot(root);*/
     }
 }
