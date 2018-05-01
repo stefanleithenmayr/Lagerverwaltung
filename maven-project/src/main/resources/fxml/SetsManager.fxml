@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Line?>
 
 <AnchorPane fx:id="setsManagerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" styleClass="..\css\setsManagerDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SetsManagerController">
    <children>
-      <JFXTextField fx:id="tfSetName" layoutX="41.0" layoutY="123.0" maxWidth="329.0" minWidth="329.0" prefHeight="48.0" prefWidth="329.0" promptText="Setname" />
-      <TableView fx:id="tvProducts" layoutX="436.0" layoutY="196.0" prefHeight="171.0" prefWidth="307.0">
-         <columns>
-            <TableColumn fx:id="tcProduct" prefWidth="229.0" text="User" />
-            <TableColumn fx:id="tcSelect" prefWidth="56.0" text="Select" />
-         </columns>
+      <JFXTextField fx:id="tfSetName" layoutX="42.0" layoutY="67.0" maxWidth="329.0" minWidth="329.0" prefHeight="48.0" prefWidth="329.0" promptText="Setname" />
+      <JFXTextField fx:id="tfSearch" layoutX="42.0" layoutY="292.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Serach" />
+      <JFXButton fx:id="btCreateSet" layoutX="1409.0" layoutY="852.0" onAction="#createNewSet" prefHeight="31.0" prefWidth="70.0" styleClass="btStyle" text="Create" visible="false" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="21.0" />
+      <Label layoutX="23.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Create new Set" />
+      <TreeTableView fx:id="TTVProductTypes" layoutX="42.0" layoutY="348.0" prefHeight="431.0" prefWidth="643.0">
+        <columns>
+          <TreeTableColumn fx:id="prodNameCol" prefWidth="188.0" text="Producttype Name" />
+          <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="258.0" text="Description" />
+            <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="102.0" text="Select" />
+            <TreeTableColumn fx:id="totalProdCol" minWidth="9.0" prefWidth="88.0" text="Total Products" />
+        </columns>
+      </TreeTableView>
+      <JFXTextField fx:id="taDescription" layoutX="42.0" layoutY="137.0" maxWidth="1051.0" minWidth="329.0" prefHeight="48.0" prefWidth="643.0" promptText="Description" />
+      <JFXTextField fx:id="tfEanCode" layoutX="42.0" layoutY="804.0" maxWidth="643.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Scan your eancode" />
+      <JFXButton fx:id="btAddToBoardEancode" layoutX="571.0" layoutY="813.0" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
+      <JFXButton fx:id="btAddToBoardTTV" layoutX="571.0" layoutY="301.0" onAction="#addSelectedProductsFromTTV" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
+      <TableView fx:id="TVfinalProductsForSet" layoutX="849.0" layoutY="70.0" prefHeight="810.0" prefWidth="390.0" visible="false">
+        <columns>
+          <TableColumn fx:id="tcProductName" prefWidth="260.0" text="Product Name" />
+            <TableColumn fx:id="tcProductID" prefWidth="119.0" text="ID" />
+        </columns>
       </TableView>
-      <JFXTextField fx:id="tfSearch" layoutX="436.0" layoutY="123.0" maxWidth="329.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="307.0" promptText="Serach" />
-      <JFXTextArea fx:id="taDescription" layoutX="43.0" layoutY="196.0" maxWidth="381.0" minWidth="307.0" prefHeight="171.0" prefWidth="329.0" promptText="Description">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </JFXTextArea>
-      <JFXTextField fx:id="createNewSet" editable="false" focusColor="BLACK" layoutX="14.0" layoutY="14.0" maxWidth="446.0" minWidth="446.0" prefHeight="70.0" prefWidth="446.0" styleClass="textFieldStyle" text="Create new Set" unFocusColor="BLACK" />
-      <JFXButton fx:id="btCreateSet" layoutX="1370.0" layoutY="336.0" onAction="#createNewSet" prefHeight="31.0" prefWidth="70.0" styleClass="btStyle" text="Create" AnchorPane.bottomAnchor="533.0" AnchorPane.rightAnchor="60.0" />
-      <ListView fx:id="lvSets" layoutX="190.0" layoutY="450.0" prefHeight="337.0" prefWidth="418.0" />
+      <Line endY="900.0" layoutX="793.0" stroke="#f06060" />
+      <Label fx:id="LyourSet" layoutX="835.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Your new Set" visible="false" />
    </children>
 </AnchorPane>

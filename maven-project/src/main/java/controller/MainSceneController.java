@@ -160,7 +160,7 @@ public class MainSceneController implements Initializable {
             case "exportDatasBT":
                 exportDatasBT.setStyle("-fx-background-color:#3D4956");
                 break;
-            case "btSetsManagers":
+            case "btSetsManager":
                 btSetsManager.setStyle("-fx-background-color:#3D4956");
                 break;
         }

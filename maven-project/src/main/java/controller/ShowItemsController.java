@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class ShowItemsController implements Initializable {
 
     @FXML
-    private TreeTableView<Product> itemsTV;
+    private TreeTableView<Product> productsTV;
     @FXML
     private TreeTableColumn<Product, String> prodNameCol, descCol, totalProdCol;
     @FXML
@@ -45,12 +45,12 @@ public class ShowItemsController implements Initializable {
     }
 
     @FXML
-    private void rentProduct() throws SQLException {
-        TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
+    private void rentProduct() throws SQLException {/*
+        TreeItem<Product> item = productsTV.getSelectionModel().getSelectedItem();
         if (item != null && item.getChildren().size() == 0){
             DBConnection.getInstance().rentItem(item.getValue().getName());
             this.refresh();
-        }
+        }*/
     }
 
     /**
@@ -58,8 +58,8 @@ public class ShowItemsController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    private void deleteProduct() throws SQLException {
-        TreeItem<Product> item = itemsTV.getSelectionModel().getSelectedItem();
+    private void deleteProduct() throws SQLException {/*
+        TreeItem<Product> item = productsTV.getSelectionModel().getSelectedItem();
         if(item != null && item.getChildren().size() == 0) {
             DBConnection.getInstance().deleteProduct(Integer.parseInt(item.getValue().getName()));
             this.refresh();
@@ -69,16 +69,16 @@ public class ShowItemsController implements Initializable {
         }else if(item != null && item.getChildren().size() != 0){
             DBConnection.getInstance().deleteProduct(Integer.parseInt(item.getValue().getId()));
             this.refresh();
-        }
+        }*/
     }
 
-    private void refresh() throws SQLException {
-        itemsTV.setRoot(null);
-        List<Product> items = DBConnection.getInstance().getProductsList();
-        TreeItem<Product> root = new TreeItem<>(new Product("", "", "")); //empty root element
+    private void refresh() throws SQLException {/*
+        productsTV.setRoot(null);
+        List<Product> products = DBConnection.getInstance().getProductsList();
+        TreeItem<Product> root = new TreeItem<>(new Product(-1, -1, "", "", -1, -1)); //empty root element
 
-        for (Product item : items) {
-            TreeItem<Product> cache = new TreeItem<>(item);
+        for (Product product : products) {
+            TreeItem<Product> cache = new TreeItem<>(product);
 
             try {
                 List<Integer> itemIDS = DBConnection.getInstance().getAvailableProducts(Integer.parseInt(item.getId()));
@@ -91,7 +91,7 @@ public class ShowItemsController implements Initializable {
             }
             root.getChildren().add(cache);
         }
-        itemsTV.setShowRoot(false);
-        itemsTV.setRoot(root);
+        productsTV.setShowRoot(false);
+        productsTV.setRoot(root);*/
     }
 }

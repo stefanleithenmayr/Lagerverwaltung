@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
    <children>
       <AnchorPane fx:id="subPane" layoutX="263.0" layoutY="100.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0" />
       <Rectangle fx:id="recLayout" arcHeight="5.0" arcWidth="5.0" fill="#2d3139" height="650.0" layoutY="71.0" stroke="BLACK" strokeType="INSIDE" width="248.0" />
@@ -117,5 +117,10 @@
             </Text>
          </graphic>
       </Button>
+      <ImageView fx:id="statIV1" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="479.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="209.0" AnchorPane.leftAnchor="15.0">
+         <image>
+            <Image url="@../icons/setManager.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
