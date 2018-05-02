@@ -30,7 +30,6 @@ public class SetsManagerController implements Initializable{
     JFXTextField tfSearch, tfSetName, taDescription, tfEanCode;
     @FXML
     JFXButton btCreateSet, btAddToBoardTTV, btAddToBoardEancode;
-    ObservableList<Product> products;
     @FXML
     private TreeTableView<ProductType> TTVProductTypes;
     private List<ProductType> productTypeList;
@@ -50,22 +49,29 @@ public class SetsManagerController implements Initializable{
     List<Product> selectedProductsCache;
     @FXML
     Label LyourSet;
-    int counter = 0;
+    @FXML
+    TableView<Product> tvShowSets;
+    @FXML
+    TableColumn<Product, String> tcShowProductsName;
+    @FXML
+    TableColumn<Product, Integer> tcShowProductsID;
 
     @FXML
     private void createNewSet() throws SQLException {
-
+        if (tfSetName.getText().equals("")){
+            return;
+        }
+        int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
+        int productHeaderId = DBConnection.getInstance().createNewSetHeaderProduct(productTypeID);
+        for (int i = 0; i < selectedProducts.size(); i++){
+            DBConnection.getInstance().addProductToSetHeader(selectedProducts.get(i).getProductID(),productHeaderId);
+        }
     }
 
     @FXML
     private  void addSelectedProductsFromTTV(){
         TVfinalProductsForSet.setVisible(true);
-        btCreateSet.setVisible(true);
         LyourSet.setVisible(true);
-        counter++;
-        if (counter == 2){
-            int a = 12;
-        }
         for (int i = 0; i < productTypeList.size(); i++){
             if (productTypeList.get(i).getSelected() != null && productTypeList.get(i).getSelected().isSelected()){
                 try{
@@ -87,8 +93,10 @@ public class SetsManagerController implements Initializable{
         tcProductID.setCellValueFactory(new PropertyValueFactory<>("productID"));
         selectedProducts = FXCollections.observableArrayList(selectedProductsCache);
         TVfinalProductsForSet.setItems(selectedProducts);
-
-        refreshTTV(counter);
+        if (selectedProducts.size() > 1){
+            btCreateSet.setVisible(true);
+        }
+        refreshTTV(1);
     }
 
     private boolean ContainsProductInList(Product p) {
@@ -98,26 +106,6 @@ public class SetsManagerController implements Initializable{
             }
         }
         return false;
-    }
-
-    private List<Product> getSelectedProducts() {
-        List<Product> cache = new ArrayList<>();
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getSelected().isSelected()){
-                cache.add(products.get(i));
-            }
-        }
-        return  cache;
-    }
-
-    private boolean enoughProductsSelected() {
-        int counter = 0;
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getSelected().isSelected()){
-                counter++;
-            }
-        }
-        return counter >= 2;
     }
 
     @FXML
@@ -131,30 +119,25 @@ public class SetsManagerController implements Initializable{
             search = search.substring(0,search.length()-1);
         }
         else search += event.getText();
-        if (search.equals("m")){
-            int a =1;
-        }
-
-        try {
-            productTypeList = DBConnection.getInstance().getAllProductTypes();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         List<ProductType> productTypesCache = new ArrayList<>(productTypeList);
         TreeItem<ProductType> root = new TreeItem<>(new ProductType(-1, "", "", null)); //empty root element
 
         for (int i = 0; i < productTypesCache.size(); i++){
-            TreeItem<ProductType> cache1 = new TreeItem<>(productTypesCache.get(i));
-            List<Product> products = DBConnection.getInstance().getProductsByProductTypeId(cache1.getValue().getProductTypeID());
-            for (int k = 0; k < products.size(); k++){
-                ProductType p = new ProductType(products.get(k).getProductID(), cache1.getValue().getTypeName(), Integer.toString(products.get(k).getProductID()), getChoiceBoxByProductID(products.get(k).getProductID(), cache));
-                productTypeList.add(p);
-                TreeItem<ProductType> subCacheProduct = new TreeItem<>(p);
-                cache1.getChildren().add(subCacheProduct);
-            }
-            if (productTypesCache.get(i).getTypeName().toLowerCase().contains(search.toLowerCase())){
-                root.getChildren().add(cache1);
+            if (productTypesCache.get(i).getSelected() == null){
+                TreeItem<ProductType> cache1 = new TreeItem<>(productTypesCache.get(i));
+                List<Product> products = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(cache1.getValue().getProductTypeID());
+                for (int k = 0; k < products.size(); k++){
+                    if (!IsProductSelected(products.get(k).getProductID())) {
+                        ProductType p = new ProductType(products.get(k).getProductID(), cache1.getValue().getTypeName(), Integer.toString(products.get(k).getProductID()), getChoiceBoxByProductID(products.get(k).getProductID(), cache));
+                        productTypeList.add(p);
+                        TreeItem<ProductType> subCacheProduct = new TreeItem<>(p);
+                        cache1.getChildren().add(subCacheProduct);
+                    }
+                }
+                if (productTypesCache.get(i).getTypeName().toLowerCase().contains(search.toLowerCase()) && cache1.getChildren().size() != 0){
+                    root.getChildren().add(cache1);
+                }
             }
         }
 
@@ -179,7 +162,7 @@ public class SetsManagerController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       /* try {
+        /*try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,11 +179,27 @@ public class SetsManagerController implements Initializable{
         }
         refreshTTV(0);
 
-    }
-    private void  refreshTTV(int i){
-        if (i == 2){
-            int a = 2;
+        try {
+            ShowAllRents(); //Methode wird später gelöscht
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
+
+    private void ShowAllRents() throws SQLException {
+        List<Product> setHeaders = DBConnection.getInstance().getHighestSetHeaders();
+        for (int i = 0; i < setHeaders.size(); i++){
+            Product product = setHeaders.get(i);
+            List<Product> juniors = DBConnection.getInstance().getProductJuniorsByProductId(product);
+            /*while(juniors.size() == 0){
+                juniors = DBConnection.getInstance().getProductJuniorsByProductId(juniors.get(0));
+            }*/
+
+            System.out.println("Name: "+DBConnection.getInstance().getProductTypeNameByID(setHeaders.get(i).getProducttypeID())+"  ID: "+setHeaders.get(i).getProductID());
+        }
+    }
+
+    private void  refreshTTV(int i){
         TTVProductTypes.setRoot(null);
         List<ProductType> productTypesCache = new ArrayList<>(productTypeList);
         TreeItem<ProductType> root = new TreeItem<>(new ProductType(-1, "", "", null)); //empty root element
@@ -209,7 +208,7 @@ public class SetsManagerController implements Initializable{
             if (productType.getSelected() == null){
                 TreeItem<ProductType> cache = new TreeItem<>(productType);
                 try {
-                    List<Product> products = DBConnection.getInstance().getProductsByProductTypeId(cache.getValue().getProductTypeID());
+                    List<Product> products = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(cache.getValue().getProductTypeID());
                     for (Product product : products){
                         if (!IsProductSelected(product.getProductID())){
                             ProductType p = new ProductType(product.getProductID(), cache.getValue().getTypeName(), Integer.toString(product.getProductID()));
@@ -228,7 +227,9 @@ public class SetsManagerController implements Initializable{
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                root.getChildren().add(cache);
+                if (cache.getChildren().size() != 0){
+                    root.getChildren().add(cache);
+                }
             }
         }
         TTVProductTypes.setShowRoot(false);
