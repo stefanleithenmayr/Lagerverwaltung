@@ -186,6 +186,28 @@ public class DBConnection {
         SQLCommand = "insert into product values(5, 3, NULL, NULL, NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
+
+        //Insert a TestSet
+        SQLCommand = "insert into producttype values (4, 'HDMI Adapter', 'Stecker für ein HDMI-Kabel')";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        SQLCommand = "insert into producttype values (5, 'HDMI-Kabel-Adapter Set', 'HDMI Kabel mit Adapter')";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+
+        //Dummy Product/Set Header
+        SQLCommand = "insert into product values(6, 5, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        // Set Products
+            //HDMI-Kabel
+            SQLCommand = "insert into product values(7, 3, NULL, NULL, 6, 2)";
+            ps = conn.prepareStatement(SQLCommand);
+            ps.executeUpdate();
+            //HDMI-Adapter
+            SQLCommand = "insert into product values(8, 4, NULL, NULL, 6, 2)";
+            ps = conn.prepareStatement(SQLCommand);
+            ps.executeUpdate();
     }
 
     public List<Product> getProductsList() throws SQLException {
@@ -476,10 +498,10 @@ public class DBConnection {
         return  productTypes;
     }
 
-    public List<Product> getProductsByProductTypeId(Integer productTypeID) throws SQLException {
+    public List<Product> getProductsByProductTypeIdWhichAraNotInaSet(Integer productTypeID) throws SQLException {
         List<Product> products = new ArrayList<>();
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT where PRODUCTTYPENR = "+productTypeID);
+        ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT where PRODUCTTYPENR = "+productTypeID +" AND SUPERPRODUCTNR is null");
 
         while (rs.next()){
             products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"), rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
