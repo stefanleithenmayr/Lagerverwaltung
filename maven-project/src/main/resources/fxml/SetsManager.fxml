@@ -28,7 +28,7 @@
       <JFXTextField fx:id="tfEanCode" layoutX="42.0" layoutY="804.0" maxWidth="643.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Scan your eancode" />
       <JFXButton fx:id="btAddToBoardEancode" layoutX="571.0" layoutY="813.0" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
       <JFXButton fx:id="btAddToBoardTTV" layoutX="571.0" layoutY="301.0" onAction="#addSelectedProductsFromTTV" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
-      <TableView fx:id="TVfinalProductsForSet" layoutX="849.0" layoutY="70.0" prefHeight="810.0" prefWidth="390.0" visible="false">
+      <TableView fx:id="TVfinalProductsForSet" layoutX="849.0" layoutY="70.0" prefHeight="288.0" prefWidth="390.0" visible="false">
         <columns>
           <TableColumn fx:id="tcProductName" prefWidth="260.0" text="Product Name" />
             <TableColumn fx:id="tcProductID" prefWidth="119.0" text="ID" />
@@ -36,5 +36,11 @@
       </TableView>
       <Line endY="900.0" layoutX="793.0" stroke="#f06060" />
       <Label fx:id="LyourSet" layoutX="835.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Your new Set" visible="false" />
+      <TableView fx:id="tvShowSets" layoutX="868.0" layoutY="554.0" prefHeight="269.0" prefWidth="406.0">
+        <columns>
+          <TableColumn fx:id="tcShowProductsName" prefWidth="255.0" text="Name" />
+          <TableColumn fx:id="tcShowProductsID" minWidth="0.0" prefWidth="150.0" text="ProductNR" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

@@ -49,16 +49,28 @@ public class SetsManagerController implements Initializable{
     List<Product> selectedProductsCache;
     @FXML
     Label LyourSet;
+    @FXML
+    TableView<Product> tvShowSets;
+    @FXML
+    TableColumn<Product, String> tcShowProductsName;
+    @FXML
+    TableColumn<Product, Integer> tcShowProductsID;
 
     @FXML
     private void createNewSet() throws SQLException {
-
+        if (tfSetName.getText().equals("")){
+            return;
+        }
+        int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
+        int productHeaderId = DBConnection.getInstance().createNewSetHeaderProduct(productTypeID);
+        for (int i = 0; i < selectedProducts.size(); i++){
+            DBConnection.getInstance().addProductToSetHeader(selectedProducts.get(i).getProductID(),productHeaderId);
+        }
     }
 
     @FXML
     private  void addSelectedProductsFromTTV(){
         TVfinalProductsForSet.setVisible(true);
-        btCreateSet.setVisible(true);
         LyourSet.setVisible(true);
         for (int i = 0; i < productTypeList.size(); i++){
             if (productTypeList.get(i).getSelected() != null && productTypeList.get(i).getSelected().isSelected()){
@@ -81,7 +93,9 @@ public class SetsManagerController implements Initializable{
         tcProductID.setCellValueFactory(new PropertyValueFactory<>("productID"));
         selectedProducts = FXCollections.observableArrayList(selectedProductsCache);
         TVfinalProductsForSet.setItems(selectedProducts);
-
+        if (selectedProducts.size() > 1){
+            btCreateSet.setVisible(true);
+        }
         refreshTTV(1);
     }
 
@@ -148,7 +162,7 @@ public class SetsManagerController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       /* try {
+        /*try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +179,26 @@ public class SetsManagerController implements Initializable{
         }
         refreshTTV(0);
 
+        try {
+            ShowAllRents(); //Methode wird später gelöscht
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void ShowAllRents() throws SQLException {
+        List<Product> setHeaders = DBConnection.getInstance().getHighestSetHeaders();
+        for (int i = 0; i < setHeaders.size(); i++){
+            Product product = setHeaders.get(i);
+            List<Product> juniors = DBConnection.getInstance().getProductJuniorsByProductId(product);
+            /*while(juniors.size() == 0){
+                juniors = DBConnection.getInstance().getProductJuniorsByProductId(juniors.get(0));
+            }*/
+
+            System.out.println("Name: "+DBConnection.getInstance().getProductTypeNameByID(setHeaders.get(i).getProducttypeID())+"  ID: "+setHeaders.get(i).getProductID());
+        }
+    }
+
     private void  refreshTTV(int i){
         TTVProductTypes.setRoot(null);
         List<ProductType> productTypesCache = new ArrayList<>(productTypeList);
