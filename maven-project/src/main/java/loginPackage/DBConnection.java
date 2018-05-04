@@ -194,9 +194,6 @@ public class DBConnection {
         SQLCommand = "insert into product values(2, 1, NULL, NULL, NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(3, 2, NULL, NULL, NULL, 2)";
-        ps = conn.prepareStatement(SQLCommand);
-        ps.executeUpdate();
         SQLCommand = "insert into product values(4, 3, NULL, NULL, NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
@@ -212,17 +209,21 @@ public class DBConnection {
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
+        SQLCommand = "insert into product values(3, 5, NULL, NULL, NULL, 2)";
+        ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+
         //Dummy Product/Set Header
-        SQLCommand = "insert into product values(6, 5, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(6, 2, NULL, NULL, NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         // Set Products
             //HDMI-Kabel
-            SQLCommand = "insert into product values(7, 3, NULL, NULL, 6, 2)";
+            SQLCommand = "insert into product values(7, 3, NULL, NULL, 3, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
             //HDMI-Adapter
-            SQLCommand = "insert into product values(8, 4, NULL, NULL, 6, 2)";
+            SQLCommand = "insert into product values(8, 4, NULL, NULL, 3, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
     }
@@ -639,15 +640,46 @@ public class DBConnection {
         return  products;
     }
 
-    public List<Product> getProductJuniorsByProductId(Product parentProduct) throws SQLException {
+
+
+    public List<Product> getProductsChildrenByProductID(Product parentProduct) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT where SUPERPRODUCTNR = "+parentProduct.getProductID());
         List<Product> juniors = new ArrayList<>();
 
         while (rs.next()){
             juniors.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
-                rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
         return juniors;
+
+    }
+
+    public String getProductTypeDescriptionByID(Integer producttypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCTTYPE where PRODUCTTYPENR = "+ producttypeID);
+        if (rs.next()){
+            return rs.getString("TYPEDESCRIPTION");
+        }
+        return "";
+    }
+
+    public Product getProductPerProductTypeID(Integer productTypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTTYPENR = "+ productTypeID);
+        if (rs.next()){
+            return  this.getProductByProductID(rs.getInt("PRODUCTNR"));
+        }
+        return null;
+    }
+
+    private Product getProductByProductID(int productnr) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTNR = "+ productnr);
+        if (rs.next()){
+            return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
+        }
+        return null;
     }
 }

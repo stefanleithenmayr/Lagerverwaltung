@@ -2,22 +2,15 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.LinearGradient;
 import loginPackage.DBConnection;
 import model.Product;
 import model.ProductType;
-import sun.security.pkcs11.Secmod;
-
-import javax.sound.sampled.Line;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,30 +24,19 @@ public class SetsManagerController implements Initializable{
     @FXML
     JFXButton btCreateSet, btAddToBoardTTV, btAddToBoardEancode;
     @FXML
-    private TreeTableView<ProductType> TTVProductTypes;
-    private List<ProductType> productTypeList;
+    private TreeTableView<Product> TTVProductToChoose;
     @FXML
-    private TreeTableColumn<Product, String> prodNameCol, descCol ;
+    private TreeTableView<Product> TTVShowSets, TTVfinalProductsForSet;
+    private List<Product> products;
+    private List<Product> finalSelectedProducts;
     @FXML
-    private TreeTableColumn<Product, Integer> totalProdCol;
+    private TreeTableColumn<Product, String> prodNameCol, descCol, tcShowSetsProductName, tcShowSetsDescription, tcFinalProductsForSetProductName, tcFinalProductsForSetProductDescription;
+    @FXML
+    private TreeTableColumn<Product, Integer> tcFinalProductsForSetProductID;
     @FXML
     private TreeTableColumn selectCol;
     @FXML
-    private TableView<Product> TVfinalProductsForSet;
-    @FXML
-    private TableColumn<Product, String> tcProductName;
-    @FXML
-    private TableColumn<Product, String> tcProductID;
-    ObservableList<Product> selectedProducts;
-    List<Product> selectedProductsCache;
-    @FXML
     Label LyourSet;
-    @FXML
-    TableView<Product> tvShowSets;
-    @FXML
-    TableColumn<Product, String> tcShowProductsName;
-    @FXML
-    TableColumn<Product, Integer> tcShowProductsID;
 
     @FXML
     private void createNewSet() throws SQLException {
@@ -63,56 +45,35 @@ public class SetsManagerController implements Initializable{
         }
         int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
         int productHeaderId = DBConnection.getInstance().createNewSetHeaderProduct(productTypeID);
-        for (int i = 0; i < selectedProducts.size(); i++){
-            DBConnection.getInstance().addProductToSetHeader(selectedProducts.get(i).getProductID(),productHeaderId);
+        for (int i = 0; i < finalSelectedProducts.size(); i++){
+            DBConnection.getInstance().addProductToSetHeader(finalSelectedProducts.get(i).getProductID(),productHeaderId);
         }
     }
-
     @FXML
-    private  void addSelectedProductsFromTTV(){
-        TVfinalProductsForSet.setVisible(true);
+    private  void addSelectedProductsFromTTV() throws SQLException {
+        TreeItem<Product> rootTTVFinalProductsForSet = new TreeItem<>(new Product(DBConnection.getInstance().getLastProductID()
+                ,null,null,null, null, null));
+        TTVfinalProductsForSet.setVisible(true);
         LyourSet.setVisible(true);
-        for (int i = 0; i < productTypeList.size(); i++){
-            if (productTypeList.get(i).getSelected() != null && productTypeList.get(i).getSelected().isSelected()){
-                try{
-                    int productID = Integer.parseInt(productTypeList.get(i).getDescription());
-                    int productTypeID = DBConnection.getInstance().getProductTypeIdByProductID(productID);
-                    String productEan = DBConnection.getInstance().getProductEanByProductID(productID);
-                    int superProductID = DBConnection.getInstance().getSuperProductIDByProductID(productID);
-                    int statusID = DBConnection.getInstance().getProductStatusByProductID(productID);
-                    Product p = new Product(productID, productTypeID, "", productEan, superProductID, statusID);
-                    if (productTypeID != -1 && statusID != -1 && superProductID != -1 && !ContainsProductInList(p)){
-                        selectedProductsCache.add(p);
-                    }
-                }catch(Exception e){
-
-                }
+        for (Product product : products){
+            if (IsProductInSelectedList(product.getProductID()) || product.getSelected() != null && product.getSelected().isSelected()){
+                finalSelectedProducts.add(product);
+                TreeItem<Product> cache = new TreeItem<>(product);
+                printSetsTree(product, cache);
+                rootTTVFinalProductsForSet.getChildren().add(cache);
+                product.setIsChild(false);
             }
         }
-        tcProductName.setCellValueFactory(new PropertyValueFactory<>("productTypeName"));
-        tcProductID.setCellValueFactory(new PropertyValueFactory<>("productID"));
-        selectedProducts = FXCollections.observableArrayList(selectedProductsCache);
-        TVfinalProductsForSet.setItems(selectedProducts);
-        if (selectedProducts.size() > 1){
+        if (rootTTVFinalProductsForSet.getChildren().size() > 1){
             btCreateSet.setVisible(true);
         }
+        TTVfinalProductsForSet.setShowRoot(false);
+        TTVfinalProductsForSet.setRoot(rootTTVFinalProductsForSet);
         refreshTTV(1);
     }
-
-    private boolean ContainsProductInList(Product p) {
-        for (int i = 0; i < selectedProductsCache.size(); i++){
-            if (selectedProductsCache.get(i).getProductID() == p.getProductID()){
-                return true;
-            }
-        }
-        return false;
-    }
-
     @FXML
     private  void serachProduct(KeyEvent event) throws SQLException {
-        List<ProductType> cache = new ArrayList<>(productTypeList);
-        TTVProductTypes.setRoot(null);
-
+        TTVProductToChoose.setRoot(null);
         KeyCode keycode = event.getCode();
         String search = tfSearch.getText();
         if(keycode == KeyCode.BACK_SPACE && search.length() > 0){
@@ -120,127 +81,153 @@ public class SetsManagerController implements Initializable{
         }
         else search += event.getText();
 
-        List<ProductType> productTypesCache = new ArrayList<>(productTypeList);
-        TreeItem<ProductType> root = new TreeItem<>(new ProductType(-1, "", "", null)); //empty root element
-
-        for (int i = 0; i < productTypesCache.size(); i++){
-            if (productTypesCache.get(i).getSelected() == null){
-                TreeItem<ProductType> cache1 = new TreeItem<>(productTypesCache.get(i));
-                List<Product> products = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(cache1.getValue().getProductTypeID());
-                for (int k = 0; k < products.size(); k++){
-                    if (!IsProductSelected(products.get(k).getProductID())) {
-                        ProductType p = new ProductType(products.get(k).getProductID(), cache1.getValue().getTypeName(), Integer.toString(products.get(k).getProductID()), getChoiceBoxByProductID(products.get(k).getProductID(), cache));
-                        productTypeList.add(p);
-                        TreeItem<ProductType> subCacheProduct = new TreeItem<>(p);
-                        cache1.getChildren().add(subCacheProduct);
-                    }
+        TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
+        List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        for (Product listHeader : listHeaders){
+            TreeItem<Product> parent = new TreeItem<>(listHeader);
+            List<Product> childs = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(listHeader.getProducttypeID());
+            for(Product child : childs){
+                if (IsProductSelected(child.getProductID())){
+                    CheckBox cb = new CheckBox();
+                    cb.setSelected(true);
+                    child.setSelected(cb);
                 }
-                if (productTypesCache.get(i).getTypeName().toLowerCase().contains(search.toLowerCase()) && cache1.getChildren().size() != 0){
-                    root.getChildren().add(cache1);
+                removeProduct(child.getProductID());
+                products.add(child);
+                if (!IsProductInSelectedList(child.getProductID())){
+                    child.setIsChild(true);
+                    TreeItem<Product> cache = new TreeItem<>(child);
+                    printSetsTree(child, cache);
+                    parent.getChildren().add(cache);
                 }
+            }
+            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())){
+                root.getChildren().add(parent);
             }
         }
-
-        TTVProductTypes.setShowRoot(false);
-        TTVProductTypes.setRoot(root);
+        TTVProductToChoose.setShowRoot(false);
+        TTVProductToChoose.setRoot(root);
     }
-
-    private CheckBox getChoiceBoxByProductID(Integer productID, List<ProductType> cache) {
-        for (int i = 0; i < cache.size(); i++){
-            int id = -1;
-            try{
-                id =  Integer.parseInt(cache.get(i).getDescription());
-            }catch(Exception e){
-
-            }
-            if (id == productID){
-                return cache.get(i).getSelected();
-            }
-        }
-        return  null;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        TTVfinalProductsForSet.setRoot(null);
+
         /*try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();
         }*/
-        selectedProductsCache = new ArrayList<>();
-        prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("typeName"));
-        descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("description"));
-        totalProdCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("totalProducts"));
+        finalSelectedProducts = new ArrayList<>();
+        products = new ArrayList<>();
+
+        prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
+        descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
+
         try {
-            productTypeList = DBConnection.getInstance().getAllProductTypes();
+            refreshTTV(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        refreshTTV(0);
 
+        tcShowSetsProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
+        tcShowSetsDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
+        tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
+        tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
+        tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
         try {
             ShowAllRents(); //Methode wird später gelöscht
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    private void  refreshTTV(int i) throws SQLException {
+        TTVProductToChoose.setRoot(null);
+        TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
 
-    private void ShowAllRents() throws SQLException {
-        List<Product> setHeaders = DBConnection.getInstance().getHighestSetHeaders();
-        for (int i = 0; i < setHeaders.size(); i++){
-            Product product = setHeaders.get(i);
-            List<Product> juniors = DBConnection.getInstance().getProductJuniorsByProductId(product);
-            /*while(juniors.size() == 0){
-                juniors = DBConnection.getInstance().getProductJuniorsByProductId(juniors.get(0));
-            }*/
+        List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
 
-            System.out.println("Name: "+DBConnection.getInstance().getProductTypeNameByID(setHeaders.get(i).getProducttypeID())+"  ID: "+setHeaders.get(i).getProductID());
-        }
-    }
-
-    private void  refreshTTV(int i){
-        TTVProductTypes.setRoot(null);
-        List<ProductType> productTypesCache = new ArrayList<>(productTypeList);
-        TreeItem<ProductType> root = new TreeItem<>(new ProductType(-1, "", "", null)); //empty root element
-
-        for (ProductType productType : productTypesCache) {
-            if (productType.getSelected() == null){
-                TreeItem<ProductType> cache = new TreeItem<>(productType);
-                try {
-                    List<Product> products = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(cache.getValue().getProductTypeID());
-                    for (Product product : products){
-                        if (!IsProductSelected(product.getProductID())){
-                            ProductType p = new ProductType(product.getProductID(), cache.getValue().getTypeName(), Integer.toString(product.getProductID()));
-                            if (i == 0){
-                                productTypeList.add(p);
-                            }
-                            else{
-                                productTypeList.remove(product.getProductID());
-                                productTypeList.add(p);
-                            }
-                            TreeItem<ProductType> subCacheProduct = new TreeItem<>(p);
-                            cache.getChildren().add(subCacheProduct);
-                        }
-                    }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        for (Product listHeader : listHeaders){
+            TreeItem<Product> parent = new TreeItem<>(listHeader);
+            List<Product> childs = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(listHeader.getProducttypeID());
+            for (Product child: childs){
+                if (i == 0)products.add(child);
+                if (i == 1){
+                    removeProduct(child.getProductID());
+                    products.add(child);
                 }
-                if (cache.getChildren().size() != 0){
-                    root.getChildren().add(cache);
+                if (!IsProductInSelectedList(child.getProductID())){
+                    child.setIsChild(true);
+                    TreeItem<Product> cache = new TreeItem<>(child);
+                    printSetsTree(child, cache);
+                    parent.getChildren().add(cache);
                 }
             }
+            if (parent.getChildren().size() > 0){
+                root.getChildren().add(parent);
+            }
         }
-        TTVProductTypes.setShowRoot(false);
-        TTVProductTypes.setRoot(root);
+        TTVProductToChoose.setShowRoot(false);
+        TTVProductToChoose.setRoot(root);
     }
 
-
     private boolean IsProductSelected(Integer productID) {
-        for (int i = 0; i < productTypeList.size(); i++){
-            if (productTypeList.get(i).getProductTypeID() == productID && productTypeList.get(i).getSelected() != null && productTypeList.get(i).getSelected().isSelected()){
+        for (Product product : products){
+            if (product.getProductID() == productID && product.getSelected().isSelected()){
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Product> GetListHeaders(List<ProductType> productTypes) throws SQLException {
+        List<Product> listHeaders = new ArrayList<>();
+        for(ProductType productType : productTypes){
+            Product p = DBConnection.getInstance().getProductPerProductTypeID(productType.getProductTypeID());
+            p.setIsChild(false);
+            p.setSelected(null);
+            if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
+                listHeaders.add(p);
+            }
+        }
+        return  listHeaders;
+    }
+
+    private void removeProduct(Integer productID) {
+        for (int i = 0; i < products.size(); i++){
+            if (products.get(i).getProductID() == productID){
+                products.remove(i);
+            }
+        }
+    }
+    public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
+        List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
+        for(int i = 0; i < listOfChildren.size(); i++) {
+            listOfChildren.get(i).setIsChild(true);
+            listOfChildren.get(i).setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+            father.getChildren().add(child);
+            Product childProduct = listOfChildren.get(i);
+            printSetsTree(childProduct,child);
+        }
+    }
+    private void ShowAllRents() throws SQLException {
+        List<Product> setHeaders = DBConnection.getInstance().getHighestSetHeaders();
+
+        TTVShowSets.setRoot(null);
+        TreeItem<Product> root = new TreeItem<>(new Product(-1,null,null,null, null, null));
+        for (int i = 0; i < setHeaders.size(); i++){
+            TreeItem<Product> cache = new TreeItem<>(setHeaders.get(i));
+            this.printSetsTree(setHeaders.get(i), cache);
+            root.getChildren().add(cache);
+        }
+        TTVShowSets.setShowRoot(false);
+        TTVShowSets.setRoot(root);
+    }
+    private boolean IsProductInSelectedList(Integer productID) {
+        for (Product product : finalSelectedProducts){
+            if (product.getProductID() == productID){
+                return  true;
             }
         }
         return  false;
