@@ -14,6 +14,16 @@ public class Product {
     private Integer statusID;
     private CheckBox selected;
 
+    public Boolean getIsChild() {
+        return isChild;
+    }
+
+    public void setIsChild(Boolean listHeader) {
+        this.isChild = listHeader;
+    }
+
+    private Boolean isChild;
+
     public Product(Integer productID, Integer producttypeID, String picture, String productean, Integer superProductID, Integer statusID){
         this.productID = productID;
         this. producttypeID = producttypeID;
@@ -21,6 +31,7 @@ public class Product {
         this.superProductID = superProductID;
         this.statusID = statusID;
         selected = new CheckBox();
+        setIsChild(false);
     }
     public CheckBox getSelected() {return selected; }
 
@@ -48,6 +59,10 @@ public class Product {
     }
     public String getProductTypeName() throws SQLException {
         return DBConnection.getInstance().getProductTypeNameByID(this.producttypeID);
+    }
+    public String getProductTypeDescription() throws SQLException {
+        if (isChild) return this.getProductID().toString();
+        return DBConnection.getInstance().getProductTypeDescriptionByID(this.producttypeID);
     }
 
     public String getTotalExemplars() throws SQLException {
