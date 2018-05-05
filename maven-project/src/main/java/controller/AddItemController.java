@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 
@@ -11,60 +12,46 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddItemController implements Initializable {
-    private Integer quantity;
     @FXML
-    private JFXTextField tfQuantity, tfDescription, tfItemName;
+    private JFXTextField tfQuantity, tfDescription, tfProductTypeName;
     @FXML
     private JFXSlider slQuantity;
     @FXML
     private JFXButton btnInsert;
     @FXML
     private Text qText;
-    @FXML
-    public void substractQuantity() {
-        if (quantity > 1) {
-            quantity--;
-        }
-        tfQuantity.setText(Integer.toString(quantity));
-        slQuantity.setValue(quantity);
-    }
-
-    @FXML
-    public void addQuantity() {
-        if (quantity < 100) {
-            quantity++;
-        }
-        tfQuantity.setText(Integer.toString(quantity));
-        slQuantity.setValue(quantity);
-    }
 
     @FXML
     public void upDateQuantity() {
-        if (!tfQuantity.getText().equals("")){
-            quantity = Integer.parseInt(tfQuantity.getText());
-            slQuantity.setValue(quantity);
+        double quantity = slQuantity.getValue();
+        if (quantity-(int)quantity >= 0.5){
+            double value = quantity+ (1-(quantity-(int)quantity));
+            tfQuantity.setText(Integer.toString((int)value));
+        }
+        else{
+            double value = quantity-(quantity-(int)quantity);
+            tfQuantity.setText(Integer.toString((int)value));
         }
     }
     @FXML
-    public void insertItem() throws SQLException {
-        int counter  = 0;
-        DBConnection.getInstance().addProduct(tfItemName.getText(), tfDescription.getText());
-        int productID = DBConnection.getInstance().getLastProductTypeID();
-        while(counter != quantity){
-            DBConnection.getInstance().addProduct(productID);
+    public void insertProductTypeWithProducts() throws SQLException {
+        int amount = Integer.parseInt(tfQuantity.getText());
+        if (tfProductTypeName.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Enter a Producttypename!");
+            alert.showAndWait();
+            return;
+        }
+        int productTypeID = DBConnection.getInstance().addNewProductType(tfProductTypeName.getText(), tfDescription.getText());
+        int counter = 0;
+        while (counter != amount){
+            DBConnection.getInstance().addNewProduct(productTypeID);
             counter++;
         }
     }
-
-    @FXML
-    public void upDateQuantitySlider() {
-        Double value = slQuantity.getValue();
-        quantity = value.intValue();
-        tfQuantity.setText(quantity.toString());
-    }
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        quantity = 0;
     }
 }
