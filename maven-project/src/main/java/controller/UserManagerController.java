@@ -103,8 +103,6 @@ public class UserManagerController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        nameCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
 
         userNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("username"));

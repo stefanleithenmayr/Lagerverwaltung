@@ -41,6 +41,11 @@ public class SetsManagerController implements Initializable{
     @FXML
     private void createNewSet() throws SQLException {
         if (tfSetName.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Enter a Setname!");
+            alert.showAndWait();
             return;
         }
         int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
@@ -144,8 +149,9 @@ public class SetsManagerController implements Initializable{
     private void  refreshTTV(int i) throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
-
+        List<ProductType> productTypes = DBConnection.getInstance().getAllProductTypes();
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        if (listHeaders == null) return;
 
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
@@ -184,6 +190,7 @@ public class SetsManagerController implements Initializable{
         List<Product> listHeaders = new ArrayList<>();
         for(ProductType productType : productTypes){
             Product p = DBConnection.getInstance().getProductPerProductTypeID(productType.getProductTypeID());
+            if (p == null) break;
             p.setIsChild(false);
             p.setSelected(null);
             if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
