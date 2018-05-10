@@ -20,8 +20,8 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <JFXDatePicker defaultColor="#f06060" layoutX="437.0" layoutY="60.0" prefHeight="39.0" prefWidth="225.0" AnchorPane.topAnchor="60.0" />
-      <JFXDatePicker defaultColor="#f06060" layoutX="702.0" layoutY="60.0" AnchorPane.topAnchor="60.0" />
+      <JFXDatePicker fx:id="startDateField" defaultColor="#f06060" layoutX="437.0" layoutY="60.0" prefHeight="39.0" prefWidth="225.0" AnchorPane.topAnchor="60.0" />
+      <JFXDatePicker fx:id="endDateField" defaultColor="#f06060" layoutX="702.0" layoutY="60.0" AnchorPane.topAnchor="60.0" />
       <Text fill="WHITE" layoutX="437.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textStyle" text="Select Startdate" AnchorPane.topAnchor="29.0">
          <font>
             <Font size="20.0" />

@@ -181,13 +181,13 @@
 
 
 .tree-table-view{
-    -fx-background-color: transparent;
-    -fx-table-cell-border-color: white;
-    -fx-text-fill: white;
-    -fx-fill: white;
-    -fx-text-alignment: center;
-    -fx-alignment: center;
-}
+     -fx-background-color: transparent;
+     -fx-table-cell-border-color: white;
+     -fx-text-fill: white;
+     -fx-fill: white;
+     -fx-text-alignment: center;
+     -fx-alignment: center;
+ }
 
 
 #productTypes .table-column {

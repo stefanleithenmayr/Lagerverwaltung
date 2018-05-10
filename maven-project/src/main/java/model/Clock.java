@@ -15,7 +15,7 @@ public class Clock extends Observable {
     public void triggerObserver(){
         Runnable timeTask = () -> {
             Calendar time = Calendar.getInstance();
-            int hour = time.get(Calendar.HOUR);
+            int hour = time.get(Calendar.HOUR_OF_DAY);
             int min = time.get(Calendar.MINUTE);
             int sec = time.get(Calendar.SECOND);
             //System.out.printf("%02d:%02d:%02d\n", hour,min,sec);
@@ -34,4 +34,3 @@ public class Clock extends Observable {
         return INSTANCE;
     }
 }
-

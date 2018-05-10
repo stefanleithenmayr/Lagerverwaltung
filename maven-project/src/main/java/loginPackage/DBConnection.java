@@ -1,16 +1,13 @@
 package loginPackage;
 
-import javafx.collections.ObservableList;
 import model.*;
 
-import javax.swing.text.html.ListView;
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import static java.sql.JDBCType.NULL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
@@ -28,8 +25,6 @@ public class DBConnection {
     private DBConnection() {
     }
 
-
-
     public static DBConnection getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new DBConnection();
@@ -39,9 +34,9 @@ public class DBConnection {
 
     private Integer getLastLendID() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM ST_RENT");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM RENT");
         if (!rs.next()){
-            return 10000;
+            return 1;
         }
 
         Integer biggestID = rs.getInt("RENTNR");
@@ -109,6 +104,7 @@ public class DBConnection {
         password = "12345";
         Class.forName(DRIVER_STRING);
         conn = DriverManager.getConnection(CONNECTION_STRING, "app", "app");
+        conn.setAutoCommit(true);
         this.userName = userName;
         this.password = password;
 
@@ -681,5 +677,34 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
         }
         return null;
+    }
+
+    public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
+        //this.setAllProductsToRent(true, products);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsed = format.parse(actualDataPackage.getStartDate().toString());
+        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+        PreparedStatement p = conn.prepareStatement("insert into rent values(?, ?, ? ,?)");
+        p.setInt(1, this.getLastLendID()+1);
+        p.setString(2, actualDataPackage.getUser().getUsername().getText());
+        p.setDate(3, sql);
+        parsed = format.parse(actualDataPackage.getEndDate().toString());
+        sql = new java.sql.Date(parsed.getTime());
+        p.setDate(4,sql);
+        p.executeUpdate();
+    }
+
+    private void setAllProductsToRent(boolean rent, List<Product> products) throws SQLException {
+
+        for (Product p: products) {
+            Statement stmt = conn.createStatement();
+            if (rent){
+                stmt.executeUpdate("update PRODUCT set status = 1 where PRODUCTNR = " + p.getProductID());
+            }else{
+                stmt.executeUpdate("update PRODUCT set status = 2 where PRODUCTNR = " + p.getProductID());
+            }
+        }
     }
 }
