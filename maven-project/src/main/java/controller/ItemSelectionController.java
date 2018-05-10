@@ -29,12 +29,12 @@ public class ItemSelectionController implements Initializable {
     private TreeTableColumn selectCol;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {/*
         try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         finalSelectedProducts = new ArrayList<>();
         products = new ArrayList<>();
 
