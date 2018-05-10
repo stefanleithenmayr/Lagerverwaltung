@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,13 +12,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import loginPackage.DBConnection;
+import model.DataPackage;
 import model.User;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 
-public class UserSelectionController implements Initializable, Observer {
+public class UserSelectionController implements Initializable {
     @FXML
     private TableView<User> tvUser;
     private ObservableList<User> users;
@@ -25,6 +27,10 @@ public class UserSelectionController implements Initializable, Observer {
     private TableColumn<User,String> tcUser;
     @FXML
     JFXTextField tfSearchName;
+    @FXML
+    JFXDatePicker startDateField;
+    @FXML
+    JFXDatePicker endDateField;
 
     @FXML
     private void searchUser(KeyEvent event){
@@ -50,7 +56,7 @@ public class UserSelectionController implements Initializable, Observer {
         }
     }
 
-    @Override
+    @FXML
     public void initialize(URL location, ResourceBundle resources) {
         tcUser.setCellValueFactory(new PropertyValueFactory<>("realName"));
         try {
@@ -61,8 +67,10 @@ public class UserSelectionController implements Initializable, Observer {
         tvUser.setItems(users);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public DataPackage getData() {
+        if (tvUser.getSelectionModel().getSelectedItem() == null || startDateField.getValue() == null || endDateField.getValue() == null){
+            return null;
+        }
+        return new DataPackage(tvUser.getSelectionModel().getSelectedItem(), startDateField.getValue(), endDateField.getValue());
     }
 }

@@ -13,14 +13,19 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
+import loginPackage.DBConnection;
+import model.DataPackage;
+import model.Product;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.Observable;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class RentManagerController extends Observable implements Initializable {
+public class RentManagerController implements Initializable {
 
     @FXML
     private AnchorPane subPane, cachePane, userSelectionPane, itemSelectionPane;
@@ -38,9 +43,12 @@ public class RentManagerController extends Observable implements Initializable {
     private ProgressBar progressBar;
 
     private int actualPane;
+    private FXMLLoader firstLoader, secondLoader;
+
+    private DataPackage actualDataPackage;
 
     @FXML
-    private void showNextPane() throws InterruptedException {
+    private void showNextPane() throws SQLException, ParseException {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setToX(-1200);
         translateTransition.setDuration(Duration.millis(1000));
@@ -56,6 +64,15 @@ public class RentManagerController extends Observable implements Initializable {
         timeline.getKeyFrames().add(keyFrame);
 
         if (actualPane == 0){
+            actualDataPackage  = ((UserSelectionController) firstLoader.getController()).getData();
+            if (actualDataPackage == null){
+                JOptionPane.showMessageDialog(new JPanel(), "Please select a User, StartDate and EndDate!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 1) {
+                JOptionPane.showMessageDialog(new JPanel(), "EndDate is before StartDate", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             backBT.setVisible(true);
             backIV.setVisible(true);
             backText.setVisible(true);
@@ -73,7 +90,21 @@ public class RentManagerController extends Observable implements Initializable {
             parallelTransition.getChildren().addAll(translateTransition, secondTransition, timeline);
             parallelTransition.play();
         }
+        else if(actualPane == 1){
+            List<Product> products = ((ItemSelectionController) secondLoader.getController()).getSelectedItems();
+            if (products == null || products.isEmpty()){
+                JOptionPane.showMessageDialog(new JPanel(), "No Products selected", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            DBConnection.getInstance().createRent(products, actualDataPackage);
+            JOptionPane.showMessageDialog(new JPanel(), "Rent Sucessfully created", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
+            this.reset();
+        }
+    }
+
+    private void reset() {
+        this.initialize(null,null);
     }
 
     @FXML
@@ -116,17 +147,25 @@ public class RentManagerController extends Observable implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        subPane.getChildren().clear();
+        progressBar.setProgress(0);
         this.actualPane = 0;
         backIV.setVisible(false);
         backBT.setVisible(false);
         backText.setVisible(false);
 
         try {
-            userSelectionPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserSelectionScene.fxml")));
-            itemSelectionPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ItemSelectionScene.fxml")));
+            firstLoader = new FXMLLoader();
+            firstLoader.setLocation(getClass().getClassLoader().getResource("fxml/UserSelectionScene.fxml"));
+            userSelectionPane = firstLoader.load();
+
+            secondLoader = new FXMLLoader();
+            secondLoader.setLocation(getClass().getClassLoader().getResource("fxml/ItemSelectionScene.fxml"));
+            itemSelectionPane = secondLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
@@ -135,7 +174,7 @@ public class RentManagerController extends Observable implements Initializable {
 
         itemSelectionPane.setPrefWidth(bounds.getWidth() - 280);
         itemSelectionPane.setPrefHeight(bounds.getHeight() - 470);
-
         subPane.getChildren().add(userSelectionPane);
+
     }
 }

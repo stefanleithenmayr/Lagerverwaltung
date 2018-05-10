@@ -62,7 +62,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private void loginAction() throws ClassNotFoundException, IOException, SQLException {
-
         if (!loginSuccessful){
             loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
             alreadyUser = DBConnection.getInstance().alreadyUser(userNameField.getText());
