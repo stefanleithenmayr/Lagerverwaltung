@@ -112,11 +112,11 @@ public class SetsManagerController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         TTVfinalProductsForSet.setRoot(null);
 
-        /*try {
+        try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
         finalSelectedProducts = new ArrayList<>();
         products = new ArrayList<>();
 
