@@ -14,7 +14,7 @@
       <JFXTextField fx:id="tfSearch" layoutX="42.0" layoutY="292.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Serach" />
       <JFXButton fx:id="btCreateSet" layoutX="1409.0" layoutY="852.0" onAction="#createNewSet" prefHeight="31.0" prefWidth="70.0" styleClass="btStyle" text="Create" visible="false" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="21.0" />
       <Label layoutX="23.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Create new Set" />
-      <TreeTableView fx:id="TTVProductToChoose" layoutX="42.0" layoutY="348.0" prefHeight="431.0" prefWidth="643.0">
+      <TreeTableView fx:id="TTVProductToChoose" layoutX="42.0" layoutY="348.0" prefHeight="431.0" prefWidth="661.0">
         <columns>
           <TreeTableColumn fx:id="prodNameCol" prefWidth="188.0" text="Producttype Name" />
           <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="399.0" text="Description" />

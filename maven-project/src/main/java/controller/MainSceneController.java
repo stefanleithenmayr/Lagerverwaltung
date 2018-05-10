@@ -31,24 +31,25 @@ public class MainSceneController implements Initializable {
     @FXML
     private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane;
     @FXML
-    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, statisticsBT, userManagerBT, btSetsManager;
+    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, statisticsBT, userManagerBT, btSetsManager, btShowSets,
+            btCreateNewSet;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
-    private ImageView imageVCancelBT, statIV, expIV, userIV, rentIV, productManagerIV;
+    private ImageView imageVCancelBT, statIV, expIV, userIV, rentIV, productManagerIV, setsManagerIV;
     @FXML
     private Rectangle recLayout;
     @FXML
-    private Text showRentsTEXT, createRentTEXT,productManagerText;
+    private Text showRentsTEXT, createRentTEXT,productManagerText, createNewSetTEXT, showSetsTEXT;
 
     private double xOffset;
     private double yOffset;
 
-    private boolean theme, isDown; //false = dark, true = white
+    private boolean theme, isDownRents, isDownSetsManager; //false = dark, true = white
     private String acutalPane;
 
     @FXML
-    private void dropDown(){
+    private void dropDownRents(){
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setDuration(Duration.millis(500));
         translateTransition.setNode(productManagerIV);
@@ -69,10 +70,40 @@ public class MainSceneController implements Initializable {
         fifthTransition.setDuration(Duration.millis(500));
         fifthTransition.setNode(showRentsTEXT);
 
+        TranslateTransition sixthTransition = new TranslateTransition();
+        sixthTransition.setDuration(Duration.millis(500));
+        sixthTransition.setNode(btSetsManager);
 
-        if (!isDown){
+        TranslateTransition seventhTranisiton = new TranslateTransition();
+        seventhTranisiton.setDuration(Duration.millis(500));
+        seventhTranisiton.setNode(setsManagerIV);
+
+        TranslateTransition Transition8 = new TranslateTransition();
+        Transition8.setDuration(Duration.millis(500));
+        Transition8.setNode(btCreateNewSet);
+
+        TranslateTransition Transition9 = new TranslateTransition();
+        Transition9.setDuration(Duration.millis(500));
+        Transition9.setNode(btShowSets);
+
+        TranslateTransition Transition10 = new TranslateTransition();
+        Transition10.setDuration(Duration.millis(500));
+        Transition10.setNode(showSetsTEXT);
+
+        TranslateTransition Transition11 = new TranslateTransition();
+        Transition11.setDuration(Duration.millis(500));
+        Transition11.setNode(createNewSetTEXT);
+
+
+        if (!isDownRents){
             translateTransition.setToY(100);
             secondTransition.setToY(100);
+            sixthTransition.setToY(100);
+            seventhTranisiton.setToY(100);
+            Transition8.setToY(100);
+            Transition9.setToY(100);
+            Transition10.setToY(0);
+            Transition11.setToY(0);
             //thirdTransition.setToY(100);
             tetraTransition.setFromX(-100);
             tetraTransition.setToX(0);
@@ -80,28 +111,82 @@ public class MainSceneController implements Initializable {
             fifthTransition.setToX(0);
 
             ParallelTransition pT = new ParallelTransition();
-            pT.getChildren().addAll(translateTransition, secondTransition, tetraTransition, fifthTransition);
+            pT.getChildren().addAll(translateTransition, secondTransition, tetraTransition, fifthTransition,
+                        sixthTransition, seventhTranisiton, Transition8, Transition9, Transition10, Transition11);
             createRentTEXT.setVisible(true);
             showRentsTEXT.setVisible(true);
             showItemsBT.setVisible(true);
             rentBT.setVisible(true);
-            isDown = true;
+            isDownRents = true;
             pT.play();
         }else{
             translateTransition.setToY(0);
             secondTransition.setToY(0);
+            sixthTransition.setToY(0);
+            seventhTranisiton.setToY(0);
+            Transition8.setToY(0);
+            Transition9.setToY(0);
+            Transition10.setToY(0);
+            Transition11.setToY(0);
             //thirdTransition.setToY(0);
             tetraTransition.setToX(-100);
             fifthTransition.setToX(-100);
 
             ParallelTransition pT = new ParallelTransition();
-            pT.getChildren().addAll(translateTransition, secondTransition);
+            pT.getChildren().addAll(translateTransition, secondTransition, sixthTransition, seventhTranisiton,
+                    Transition8, Transition9, Transition10, Transition11);
             pT.play();
             createRentTEXT.setVisible(false);
             showRentsTEXT.setVisible(false);
             showItemsBT.setVisible(false);
             rentBT.setVisible(false);
-            isDown = false;
+            isDownRents = false;
+        }
+    }
+    @FXML public void dropDownSetsManager(){
+        TranslateTransition Transition1 = new TranslateTransition();
+        Transition1.setDuration(Duration.millis(500));
+        Transition1.setNode(btShowSets);
+
+        TranslateTransition Transition2 = new TranslateTransition();
+        Transition2.setDuration(Duration.millis(500));
+        Transition2.setNode(btCreateNewSet);
+
+        TranslateTransition Transition3 = new TranslateTransition();
+        Transition3.setDuration(Duration.millis(500));
+        Transition3.setNode(showSetsTEXT);
+
+        TranslateTransition Transition4 = new TranslateTransition();
+        Transition4.setDuration(Duration.millis(500));
+        Transition4.setNode(createNewSetTEXT);
+
+
+        if (!isDownSetsManager){
+            btShowSets.setVisible(true);
+            btCreateNewSet.setVisible(true);
+            createNewSetTEXT.setVisible(true);
+            showSetsTEXT.setVisible(true);
+            isDownSetsManager = true;
+
+            Transition1.setFromX(-100);
+            Transition1.setToX(0);
+            Transition2.setFromX(-100);
+            Transition2.setToX(0);
+            Transition3.setFromX(-100);
+            Transition3.setToX(0);
+            Transition4.setFromX(-100);
+            Transition4.setToX(0);
+
+            ParallelTransition pT = new ParallelTransition();
+            pT.getChildren().addAll(Transition1, Transition2, Transition3, Transition4);
+            pT.play();
+        }
+        else {
+            btShowSets.setVisible(false);
+            btCreateNewSet.setVisible(false);
+            createNewSetTEXT.setVisible(false);
+            showSetsTEXT.setVisible(false);
+            isDownSetsManager = false;
         }
     }
 
@@ -160,6 +245,12 @@ public class MainSceneController implements Initializable {
             case "exportDatasBT":
                 exportDatasBT.setStyle("-fx-background-color:#3D4956");
                 break;
+            case "btShowSets":
+                btShowSets.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "btCreateNewSet":
+                btCreateNewSet.setStyle("-fx-background-color:#3D4956");
+                break;
             case "btSetsManager":
                 btSetsManager.setStyle("-fx-background-color:#3D4956");
                 break;
@@ -185,9 +276,14 @@ public class MainSceneController implements Initializable {
             userManagerBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")) {
             exportDatasBT.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btSetsManager") && !acutalPane.equals("setsManagerPane")) {
+        }else if (buttonName.equals("btSetsManager")) {
             btSetsManager.setStyle("-fx-background-color:transparent");
+        }else if (buttonName.equals("btCreateNewSet") && !acutalPane.equals("setsManagerPane")) {
+            btCreateNewSet.setStyle("-fx-background-color:transparent");
+        }else if (buttonName.equals("btShowSets")) {
+            btShowSets.setStyle("-fx-background-color:transparent");
         }
+
     }
 
     /**
@@ -264,6 +360,8 @@ public class MainSceneController implements Initializable {
         statisticsBT.setStyle("-fx-background-color:transparent");
         exportDatasBT.setStyle("-fx-background-color:transparent");
         btSetsManager.setStyle("-fx-background-color:transparent");
+        btCreateNewSet.setStyle("-fx-background-color:transparent");
+        btShowSets.setStyle("-fx-background-color:transparent");
 
         subPane.getChildren().clear();
 
@@ -350,9 +448,9 @@ public class MainSceneController implements Initializable {
                 }
                 acutalPane = "exportDatasPane";
                 break;
-            case "btSetsManager":
+            case "btCreateNewSet":
                 setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
-                btSetsManager.setStyle("-fx-background-color:#3D4956");
+                btCreateNewSet.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(setsManagerPane);
                 setsManagerPane.setPrefWidth(bounds.getWidth() - 280);
                 setsManagerPane.setPrefHeight(bounds.getHeight() - 120);
@@ -430,7 +528,8 @@ public class MainSceneController implements Initializable {
             expIV.setVisible(false);
             userIV.setVisible(false);
         }
-        isDown = false;
+        isDownRents = false;
+        isDownSetsManager = false;
         acutalPane = "";
     }
 }

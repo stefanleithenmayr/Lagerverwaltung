@@ -679,6 +679,20 @@ public class DBConnection {
         return null;
     }
 
+    public int addNewProductType(String name, String descriptionText) throws SQLException {
+        int id = this.getLastProductTypeID()+1;
+        String SQLCommand = "INSERT INTO PRODUCTTYPE VALUES (" + id + ",'" + name + "','" + descriptionText + "')" ;
+        PreparedStatement ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+        return  id;
+    }
+
+    public void addNewProduct(int productTypeID) throws SQLException {
+        int id = this.getLastProductID()+1;
+        String SQLCommand = "INSERT INTO PRODUCT VALUES (" + id + "," + productTypeID + ", NULL, null, null, " + 2 + ")" ;
+        PreparedStatement ps = conn.prepareStatement(SQLCommand);
+        ps.executeUpdate();
+    }
     public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
         //this.setAllProductsToRent(true, products);
 
