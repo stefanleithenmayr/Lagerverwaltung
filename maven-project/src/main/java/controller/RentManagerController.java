@@ -175,6 +175,5 @@ public class RentManagerController implements Initializable {
         itemSelectionPane.setPrefWidth(bounds.getWidth() - 280);
         itemSelectionPane.setPrefHeight(bounds.getHeight() - 470);
         subPane.getChildren().add(userSelectionPane);
-
     }
 }

@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
@@ -693,32 +694,70 @@ public class DBConnection {
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
     }
-    public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
-        //this.setAllProductsToRent(true, products);
 
+    public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
+        products = products.stream().distinct().collect(Collectors.toList());
+        
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsed = format.parse(actualDataPackage.getStartDate().toString());
         java.sql.Date sql = new java.sql.Date(parsed.getTime());
 
+        int id = this.getLastLendID() + 1;
+
         PreparedStatement p = conn.prepareStatement("insert into rent values(?, ?, ? ,?)");
-        p.setInt(1, this.getLastLendID()+1);
+        p.setInt(1, id);
         p.setString(2, actualDataPackage.getUser().getUsername().getText());
         p.setDate(3, sql);
         parsed = format.parse(actualDataPackage.getEndDate().toString());
         sql = new java.sql.Date(parsed.getTime());
         p.setDate(4,sql);
         p.executeUpdate();
+
+        for (Product prod : products) {
+            PreparedStatement stmt = conn.prepareStatement("insert into item values(?,?)");
+            stmt.setInt(1, id);
+            stmt.setInt(2, prod.getProductID());
+            stmt.executeUpdate();
+
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT PRODUCTNR FROM PRODUCT WHERE SUPERPRODUCTNR="+ prod.getProductID());
+            while(rs.next()){
+                stmt = conn.prepareStatement("insert into item values(?,?)");
+                stmt.setInt(1, id);
+                stmt.setInt(2, rs.getInt(1));
+                stmt.executeUpdate();
+            }
+        }
+        this.setAllProductsToRent(true, products);
     }
 
     private void setAllProductsToRent(boolean rent, List<Product> products) throws SQLException {
-
         for (Product p: products) {
             Statement stmt = conn.createStatement();
             if (rent){
-                stmt.executeUpdate("update PRODUCT set status = 1 where PRODUCTNR = " + p.getProductID());
+                ResultSet rs = stmt.executeQuery("SELECT PRODUCTNR FROM PRODUCT WHERE SUPERPRODUCTNR="+ p.getProductID());
+                Statement updateStat = conn.createStatement();
+                while(rs.next()){
+                    updateStat.executeUpdate("update PRODUCT set status = 1 where PRODUCTNR = " + rs.getInt(1));
+                }
+                updateStat.executeUpdate("update PRODUCT set status = 1 where PRODUCTNR = " + p.getProductID());
             }else{
-                stmt.executeUpdate("update PRODUCT set status = 2 where PRODUCTNR = " + p.getProductID());
+                ResultSet rs = stmt.executeQuery("SELECT PRODUCTNR FROM PRODUCT WHERE SUPERPRODUCTNR="+ p.getProductID());
+                Statement updateStat = conn.createStatement();
+                while(rs.next()){
+                    updateStat.executeUpdate("update PRODUCT set status = 2 where PRODUCTNR = " + rs.getInt(1));
+                }
+                updateStat.executeUpdate("update PRODUCT set status = 2 where PRODUCTNR = " + p.getProductID());
             }
         }
+    }
+
+    public boolean isProductRented(Product product) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTNR = "+ product.getProductID());
+        if(rs.next()) {
+            return rs.getInt(6) == 1;
+        }
+        return false;
     }
 }
