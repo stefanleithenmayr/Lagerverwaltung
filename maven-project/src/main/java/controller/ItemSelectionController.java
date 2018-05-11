@@ -9,6 +9,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import loginPackage.DBConnection;
 import model.Product;
 import model.ProductType;
+import sun.security.pkcs11.Secmod;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,11 +31,11 @@ public class ItemSelectionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
+        /*try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         finalSelectedProducts = new ArrayList<>();
         products = new ArrayList<>();
 
@@ -59,6 +60,9 @@ public class ItemSelectionController implements Initializable {
     }
 
     private List<Product> GetListHeaders(List<ProductType> productTypes) throws SQLException {
+        if (productTypes == null || productTypes.isEmpty()){
+            return null;
+        }
         List<Product> listHeaders = new ArrayList<>();
         for(ProductType productType : productTypes){
             Product p = DBConnection.getInstance().getProductPerProductTypeID(productType.getProductTypeID());
@@ -81,13 +85,20 @@ public class ItemSelectionController implements Initializable {
 
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
+        if (listOfChildren.isEmpty()){
+            products.remove(head);
+            return;
+        }
         for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
-            father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            boolean isProductRented = DBConnection.getInstance().isProductRented(listOfChildren.get(i));
+            if (!isProductRented){
+                listOfChildren.get(i).setIsChild(true);
+                TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+                father.getChildren().add(child);
+                Product childProduct = listOfChildren.get(i);
+                products.add(childProduct);
+                printSetsTree(childProduct,child);
+            }
         }
     }
 
@@ -99,25 +110,32 @@ public class ItemSelectionController implements Initializable {
         }
         return  false;
     }
-    private void  refreshTTV(int i) throws SQLException {
+    private void refreshTTV(int i) throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
 
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        if (listHeaders == null || listHeaders.isEmpty()){
+            return;
+        }
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(listHeader.getProducttypeID());
             for (Product child: childs){
-                if (i == 0)products.add(child);
-                if (i == 1){
-                    removeProduct(child.getProductID());
-                    products.add(child);
-                }
-                if (!IsProductInSelectedList(child.getProductID())){
-                    child.setIsChild(true);
-                    TreeItem<Product> cache = new TreeItem<>(child);
-                    printSetsTree(child, cache);
-                    parent.getChildren().add(cache);
+                boolean isProductRented = DBConnection.getInstance().isProductRented(child);
+                if (!isProductRented) {
+                    if (i == 0) products.add(child);
+                    if (i == 1) {
+                        removeProduct(child.getProductID());
+                        products.add(child);
+                    }
+                    if (!IsProductInSelectedList(child.getProductID())) {
+                        products.add(child);
+                        child.setIsChild(true);
+                        TreeItem<Product> cache = new TreeItem<>(child);
+                        printSetsTree(child, cache);
+                        parent.getChildren().add(cache);
+                    }
                 }
             }
             if (parent.getChildren().size() > 0){
