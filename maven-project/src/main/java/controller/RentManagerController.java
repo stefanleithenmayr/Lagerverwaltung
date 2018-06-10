@@ -10,11 +10,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import loginPackage.DBConnection;
 import model.DataPackage;
+import model.ErrorMessageUtils;
 import model.Product;
 
 import javax.swing.*;
@@ -42,6 +44,12 @@ public class RentManagerController implements Initializable {
     @FXML
     private ProgressBar progressBar;
 
+    @FXML
+    private Rectangle errorRec;
+
+    @FXML
+    private Text errorTxt;
+
     private int actualPane;
     private FXMLLoader firstLoader, secondLoader;
 
@@ -66,11 +74,11 @@ public class RentManagerController implements Initializable {
         if (actualPane == 0){
             actualDataPackage  = ((UserSelectionController) firstLoader.getController()).getData();
             if (actualDataPackage == null){
-                JOptionPane.showMessageDialog(new JPanel(), "Please select a User, StartDate and EndDate!", "Error", JOptionPane.ERROR_MESSAGE);
+                ErrorMessageUtils.showErrorMessage("Please select a User, StartDate and EndDate!", errorRec, errorTxt);
                 return;
             }
             if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 1) {
-                JOptionPane.showMessageDialog(new JPanel(), "EndDate is before StartDate", "Error", JOptionPane.ERROR_MESSAGE);
+                ErrorMessageUtils.showErrorMessage("EndDate is before StartDate", errorRec, errorTxt);
                 return;
             }
             backBT.setVisible(true);
@@ -93,7 +101,7 @@ public class RentManagerController implements Initializable {
         else if(actualPane == 1){
             List<Product> products = ((ItemSelectionController) secondLoader.getController()).getSelectedItems();
             if (products == null || products.isEmpty()){
-                JOptionPane.showMessageDialog(new JPanel(), "No Products selected", "Error", JOptionPane.ERROR_MESSAGE);
+                ErrorMessageUtils.showErrorMessage("No Products selected!", errorRec, errorTxt);
                 return;
             }
 
