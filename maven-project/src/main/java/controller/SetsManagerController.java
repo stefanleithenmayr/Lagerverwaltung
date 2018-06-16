@@ -116,8 +116,7 @@ public class SetsManagerController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TTVfinalProductsForSet.setRoot(null);
-/*
-        try {
+        /*try {
             DBConnection.getInstance().InsertTestDatas();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane, showSetsPane;
     @FXML
     private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, statisticsBT, userManagerBT, btSetsManager, btShowSets,
             btCreateNewSet;
@@ -300,6 +300,7 @@ public class MainSceneController implements Initializable {
         rentsPane.getStylesheets().clear();
         rentManagerPane.getStylesheets().clear();
         setsManagerPane.getStylesheets().clear();
+        showSetsPane.getStylesheets().clear();
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -311,6 +312,7 @@ public class MainSceneController implements Initializable {
             exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
             rentManagerPane.getStylesheets().add("css/rentsManagerWHITE.css");
             setsManagerPane.getStylesheets().add("css/setsManagerWHITE.css");
+            showSetsPane.getStylesheets().add("css/showSetsWHITE.css");
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
@@ -322,6 +324,7 @@ public class MainSceneController implements Initializable {
             exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
             rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
             setsManagerPane.getStylesheets().add("css/setsManagerDARK.css");
+            showSetsPane.getStylesheets().add("css/showSetsDARK.css");
             theme = false;
         }
 
@@ -463,6 +466,21 @@ public class MainSceneController implements Initializable {
                 }
                 acutalPane = "setsManagerPane";
                 break;
+            case "btShowSets":
+                showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
+                btShowSets.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(showSetsPane);
+                showSetsPane.setPrefWidth(bounds.getWidth() - 280);
+                showSetsPane.setPrefHeight(bounds.getHeight() - 120);
+                showSetsPane.getStylesheets().clear();
+
+                if (theme) {
+                    showSetsPane.getStylesheets().add("css/setsManagerWHITE.css");
+                } else {
+                    showSetsPane.getStylesheets().add("css/setsManagerDARK.css");
+                }
+                acutalPane = "setsManagerPane";
+                break;
         }
     }
 
@@ -479,6 +497,8 @@ public class MainSceneController implements Initializable {
             dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
             rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
             setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
+            showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -515,6 +535,10 @@ public class MainSceneController implements Initializable {
 
         setsManagerPane.setPrefWidth(bounds.getWidth() - 280);
         setsManagerPane.setPrefHeight(bounds.getHeight() - 120);
+
+        showSetsPane.setPrefWidth(bounds.getWidth() - 280);
+        showSetsPane.setPrefHeight(bounds.getHeight() - 120);
+
 
         subPane.getChildren().add(dashboardPane);
         recLayout.setHeight(bounds.getHeight() - 71);
