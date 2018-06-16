@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="lagerverwaltung" />
+        <module name="Lagerverwaltung" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lagerverwaltung" target="1.8" />
+      <module name="Lagerverwaltung" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

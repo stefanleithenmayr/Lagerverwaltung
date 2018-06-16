@@ -35,7 +35,6 @@ public class AddItemController implements Initializable {
 
     @FXML
     public void upDateQuantity() {
-        Platform.runLater(() -> {
             double quantity = slQuantity.getValue();
             if (quantity-(int)quantity >= 0.5){
                 amount = (int) (quantity+ (1-(quantity-(int)quantity)));
@@ -45,7 +44,7 @@ public class AddItemController implements Initializable {
             }
             slQuantity.setValue(amount);
             tfQuantity.setText(Integer.toString(amount));
-        });
+        System.out.println(amount);
     }
 
 
@@ -64,9 +63,7 @@ public class AddItemController implements Initializable {
     }
     @FXML
     public void insertProductTypeWithProducts() throws SQLException {
-        tfProductTypeName.clear();
-        tfQuantity.setText("1");
-        tfDescription.clear();
+        System.out.println(tfProductTypeName.getText());
         if (amount < 1) return;
         if (tfProductTypeName.getText().equals("")){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -82,6 +79,13 @@ public class AddItemController implements Initializable {
             DBConnection.getInstance().addNewProduct(productTypeID);
             counter++;
         }
+        tfProductTypeName.clear();
+        tfDescription.clear();
+        slQuantity.setValue(0);
+        tfQuantity.clear();
+        productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
+        tvProductTypes.getItems().clear();
+        tvProductTypes.setItems(productTypes);
     }
     @FXML
     public void insertProductsIntoProductType() throws SQLException {
@@ -100,6 +104,7 @@ public class AddItemController implements Initializable {
         }
         tfQuantity1.setText("");
         slQuantity1.setValue(0);
+        tvProductTypes.getSelectionModel().clearSelection();
     }
     @FXML
     public void productTypeSelected(){

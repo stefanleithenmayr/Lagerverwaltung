@@ -27,7 +27,7 @@
       <JFXButton fx:id="btAddToBoardTTV" layoutX="571.0" layoutY="301.0" onAction="#addSelectedProductsFromTTV" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
       <Line endY="900.0" layoutX="793.0" stroke="#f06060" />
       <Label fx:id="LyourSet" layoutX="835.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Your new Set" visible="false" />
-      <TreeTableView fx:id="TTVShowSets" layoutX="809.0" layoutY="450.0" prefHeight="431.0" prefWidth="629.0" visible="false">
+      <TreeTableView fx:id="TTVShowSets" layoutX="809.0" layoutY="450.0" prefHeight="431.0" prefWidth="629.0">
          <columns>
             <TreeTableColumn fx:id="tcShowSetsProductName" prefWidth="242.0" text="Producttype Name" />
             <TreeTableColumn fx:id="tcShowSetsDescription" minWidth="9.0" prefWidth="386.0" text="Description" />
