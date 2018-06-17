@@ -6,15 +6,15 @@
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="showSetsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/showSetsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShowSetsController">
+<AnchorPane fx:id="showSetsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#refreshTTV" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/showSetsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShowSetsController">
    <children>
-      <TreeTableView fx:id="TTVShowSets" layoutX="39.0" layoutY="147.0" prefHeight="739.0" prefWidth="1424.0">
+      <TreeTableView fx:id="TTVShowSets" layoutX="39.0" layoutY="147.0" onMouseMoved="#refreshTTV" prefHeight="739.0" prefWidth="1460.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0">
          <columns>
             <TreeTableColumn fx:id="tcShowSetsProductName" prefWidth="292.9999694824219" text="Producttype Name" />
             <TreeTableColumn fx:id="tcShowSetsDescription" minWidth="9.0" prefWidth="628.0" text="Description" />
          </columns>
       </TreeTableView>
-      <Label layoutX="26.0" layoutY="31.0" styleClass="labelStyle" text="All Sets In a Overview" />
-      <JFXTextField layoutX="39.0" layoutY="78.0" maxWidth="433.0" minWidth="250.0" prefHeight="61.0" prefWidth="433.0" promptText="Search" />
+      <Label layoutX="26.0" layoutY="31.0" onMouseMoved="#refreshTTV" styleClass="labelStyle" text="All Sets" />
+      <JFXTextField fx:id="tfSearch" layoutX="39.0" layoutY="78.0" maxWidth="433.0" minWidth="250.0" onKeyPressed="#serachProduct" onMouseMoved="#refreshTTV" prefHeight="61.0" prefWidth="433.0" promptText="Search" />
    </children>
 </AnchorPane>
