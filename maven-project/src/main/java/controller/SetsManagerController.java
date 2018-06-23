@@ -120,11 +120,6 @@ public class SetsManagerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TTVfinalProductsForSet.setRoot(null);
-        /*try {
-            DBConnection.getInstance().InsertTestDatas();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
         finalSelectedProducts = new ArrayList<>();
         products = new ArrayList<>();
 
@@ -225,5 +220,47 @@ public class SetsManagerController implements Initializable {
     public void refreshTTV(){
         TTVProductToChoose.refresh();
         TTVfinalProductsForSet.refresh();
+    }
+    @FXML
+    public void addProductToListByEanCode() throws SQLException {
+        String code = tfEanCode.getText();
+        Product scannedProduct = DBConnection.getInstance().getProductByProductEanNotInASet(code);
+        if (scannedProduct == null) return;
+        for (int i = 0; i < products.size(); i++){
+            if (scannedProduct.getProductID() == products.get(i).getProductID()){
+
+                CheckBox cb = new CheckBox();
+                cb.setSelected(true);
+                products.get(i).setSelected(cb);
+            }
+        }
+        this.addSelectedProductsFromTTV();
+        /*
+        TreeItem<Product> rootTTVFinalProductsForSet = new TreeItem<>(new Product(DBConnection.getInstance().getLastProductID()
+                ,null,null,null, null, null));
+        TTVfinalProductsForSet.setVisible(true);
+        LyourSet.setVisible(true);
+        for (Product product : products){
+            if (IsProductInSelectedList(product.getProductID()) || product.getSelected() != null && product.getSelected().isSelected()||product.getProductEan().equals(scannedProduct.getProductEan())){
+                finalSelectedProducts.add(product);
+                TreeItem<Product> cache = new TreeItem<>(product);
+                printSetsTree(product, cache);
+                rootTTVFinalProductsForSet.getChildren().add(cache);
+                product.setIsChild(false);
+                break;
+            }
+        }
+        if (rootTTVFinalProductsForSet.getChildren().size() > 1){
+            btCreateSet.setVisible(true);
+        }
+        TTVfinalProductsForSet.setShowRoot(false);
+        TTVfinalProductsForSet.setRoot(rootTTVFinalProductsForSet);
+        refreshTTV(1);*/
+        tfEanCode.clear();
+    }
+
+    @FXML
+    public void eanCodeEntered(){
+        System.out.println("Hallo Welt");
     }
 }
