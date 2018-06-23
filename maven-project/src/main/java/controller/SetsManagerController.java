@@ -127,11 +127,26 @@ public class SetsManagerController implements Initializable {
         descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
 
+/*
+        try {
+            DBConnection.getInstance().deleteAllDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+*/
+
         try {
             refreshTTV(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
@@ -139,7 +154,7 @@ public class SetsManagerController implements Initializable {
     private void  refreshTTV(int i) throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
-        List<ProductType> productTypes = DBConnection.getInstance().getAllProductTypes();
+
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
         if (listHeaders == null) return;
 
