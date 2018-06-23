@@ -109,6 +109,11 @@ public class ItemSelectionController implements Initializable {
             }
         }
 
+        for (Product p : listOfChildren){
+            products.add(p);
+        }
+
+
         for(int i = 0; i < listOfChildren.size(); i++) {
             boolean isProductRented = DBConnection.getInstance().isProductRented(listOfChildren.get(i));
             if (!isProductRented){
@@ -225,7 +230,7 @@ public class ItemSelectionController implements Initializable {
         }
 
         selectedProducts.add(searchedProduct);
-        for (Product p : selectedProducts){
+        for (Product p : products){
             System.out.println(p.getProductID());
         }
         refreshTTV(0, selectedProducts);
