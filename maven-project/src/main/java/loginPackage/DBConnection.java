@@ -185,16 +185,16 @@ public class DBConnection {
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
-        SQLCommand = "insert into product values(1, 1, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(1, 1, NULL, '1', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(2, 1, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(2, 1, NULL, '2', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(4, 3, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(4, 3, NULL, '4', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(5, 3, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(5, 3, NULL, '5', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
@@ -206,21 +206,21 @@ public class DBConnection {
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
-        SQLCommand = "insert into product values(3, 5, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(3, 5, NULL, '3', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
         //Dummy Product/Set Header
-        SQLCommand = "insert into product values(6, 2, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(6, 2, NULL, '6', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         // Set Products
             //HDMI-Kabel
-            SQLCommand = "insert into product values(7, 3, NULL, NULL, 3, 2)";
+            SQLCommand = "insert into product values(7, 3, NULL, '7', 3, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
             //HDMI-Adapter
-            SQLCommand = "insert into product values(8, 4, NULL, NULL, 3, 2)";
+            SQLCommand = "insert into product values(8, 4, NULL, '8', 3, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
     }
@@ -763,4 +763,13 @@ public class DBConnection {
         return false;
     }
 
+    public Product getProductByProductEanNotInASet(String eanCode) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTEAN = '"+ eanCode+"' and SUPERPRODUCTNR is NULL ");
+        if (rs.next()){
+            return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
+        }
+        return null;
+    }
 }
