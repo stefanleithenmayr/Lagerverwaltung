@@ -6,6 +6,10 @@
 #addItemPane{
     -fx-background-color: #33363F;
 }
+#CBGenerateBarcodes{
+    -fx-font-size: 19;
+    -fx-text-fill: white;
+}
 #tfItemName{
     -fx-prompt-text-fill: white;
     -fx-unfocus-color: white;

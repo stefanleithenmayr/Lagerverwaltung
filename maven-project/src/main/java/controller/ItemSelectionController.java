@@ -66,11 +66,14 @@ public class ItemSelectionController implements Initializable {
         List<Product> listHeaders = new ArrayList<>();
         for(ProductType productType : productTypes){
             Product p = DBConnection.getInstance().getProductPerProductTypeID(productType.getProductTypeID());
-            p.setIsChild(false);
-            p.setSelected(null);
-            if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
-                listHeaders.add(p);
+            if(p != null){
+                p.setIsChild(false);
+                p.setSelected(null);
+                if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
+                    listHeaders.add(p);
+                }
             }
+
         }
         return listHeaders;
     }

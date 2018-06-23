@@ -225,7 +225,7 @@ public class DBConnection {
             ps.executeUpdate();
     }
 
-    public List<Product> getProductsList() throws SQLException {
+    public List<Product> getAllProductsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM Product");
         List<Product> products = new ArrayList<>();
@@ -670,7 +670,7 @@ public class DBConnection {
         return null;
     }
 
-    private Product getProductByProductID(int productnr) throws SQLException {
+    public Product getProductByProductID(int productnr) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTNR = "+ productnr);
         if (rs.next()){
@@ -688,11 +688,13 @@ public class DBConnection {
         return  id;
     }
 
-    public void addNewProduct(int productTypeID) throws SQLException {
+    public int  addNewProduct(int productTypeID) throws SQLException {
+
         int id = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO PRODUCT VALUES (" + id + "," + productTypeID + ", NULL, null, null, " + 2 + ")" ;
+        String SQLCommand = "INSERT INTO PRODUCT VALUES (" + id + "," + productTypeID + ", NULL,'"+id+"', null, " + 2 + ")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
+        return id;
     }
 
     public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
@@ -760,4 +762,5 @@ public class DBConnection {
         }
         return false;
     }
+
 }

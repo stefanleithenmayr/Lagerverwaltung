@@ -27,6 +27,7 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class MainSceneController implements Initializable {
@@ -487,7 +488,12 @@ public class MainSceneController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
         theme = false;
         try {
             addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
