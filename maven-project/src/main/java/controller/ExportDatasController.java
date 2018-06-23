@@ -121,7 +121,7 @@ public class ExportDatasController implements Initializable {
 
             contentStream.endText();
 
-            List<User> selectedUser = new ArrayList<>();
+            /*List<User> selectedUser = new ArrayList<>();
             List<Rent> selectedUsersRents = new ArrayList<>();
             for (User user : users) {
                 if (user.getSelected().isSelected()) {
@@ -144,7 +144,7 @@ public class ExportDatasController implements Initializable {
                 content[i + 1][3] = selectedUsersRents.get(i).getFullName();
             }
             writeToPdf(contentStream, content);
-            contentStream.close();
+            contentStream.close();*/
         }
 
         String fileName;

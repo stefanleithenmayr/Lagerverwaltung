@@ -2,31 +2,25 @@ package model;
 
 public class Rent {
 
-    private final String id;
-    private final String itemName;
     private final String userName;
-    private final String fullName;
+    private final String from;
+    private final String until;
 
-    public Rent(String itemName, String id, String userName, String fullName) {
-        this.itemName = itemName;
-        this.id = id;
+    public Rent(String userName, String from, String until) {
         this.userName = userName;
-        this.fullName = fullName;
-    }
-
-    public String getID() {
-        return id;
-    }
-
-    public String getItemName() {
-        return itemName;
+        this.from = from;
+        this.until = until;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFrom() {
+        return from;
+    }
+
+    public String getUntil() {
+        return until;
     }
 }
