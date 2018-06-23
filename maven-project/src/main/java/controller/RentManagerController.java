@@ -106,8 +106,13 @@ public class RentManagerController implements Initializable {
                 return;
             }
 
+            for (Product p : products){
+                if (p.getStatusID() == 1){
+                    products.remove(p);
+                }
+            }
             DBConnection.getInstance().createRent(products, actualDataPackage);
-            JOptionPane.showMessageDialog(new JPanel(), "Rent Sucessfully created", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
+            ErrorMessageUtils.showErrorMessage("Successfully Inserted", errorRec, errorTxt);
             this.reset();
         }
     }
