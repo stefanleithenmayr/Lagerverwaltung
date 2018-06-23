@@ -611,7 +611,7 @@ public class DBConnection {
 
     public int createNewSetHeaderProduct(int productTypeID) throws SQLException {
         int productID = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL, NULL, Null, "+ 2+")" ;
+        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL,'"+Integer.toString(productID) +"', Null, "+ 2+")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return  productID;

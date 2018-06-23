@@ -127,7 +127,6 @@ public class SetsManagerController implements Initializable {
         descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
 
-//        List<Product> productsNotInASet = DBConnection.getInstance().getAllProductsWhichAreNotInASet();
 /*
         try {
             DBConnection.getInstance().deleteAllDatas();

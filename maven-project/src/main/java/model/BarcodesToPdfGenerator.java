@@ -34,8 +34,9 @@ public class BarcodesToPdfGenerator {
                     !Integer.toString(products.get(i).getProductID()).equals("")){
                 lastProductName = productName;
                 productName =DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(products.get(i).getProductID()));
-                if (!lastProductName.equals(productName)){
+                if (!lastProductName.equals(productName) && x != 20){
                     y-=70;
+                    x=20;
                 }
                 ColumnText ct = new ColumnText(pdfWriter.getDirectContent());
                 ct.setSimpleColumn(x,y,600,0);//600 600

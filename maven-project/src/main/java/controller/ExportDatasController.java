@@ -1,5 +1,6 @@
 package controller;
 
+import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,9 +12,11 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import loginPackage.DBConnection;
+import model.BarcodesToPdfGenerator;
 import model.Product;
 import model.ProductType;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
@@ -28,7 +31,6 @@ public class ExportDatasController implements Initializable {
     @FXML
     private TreeTableColumn selectCol;
     List<Product> products;
-    List<Product> finalSelectedProducts;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,7 +39,6 @@ public class ExportDatasController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finalSelectedProducts = new ArrayList<>();
 
         prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
@@ -50,8 +51,14 @@ public class ExportDatasController implements Initializable {
         }
     }
     @FXML
-    public void exportDatas(){
-
+    public void exportDatas() throws SQLException, FileNotFoundException, DocumentException {
+        List<Product> selectedProducts = new ArrayList<>();
+        for (int i = 0; i < products.size(); i++){
+            if (products.get(i).getSelected() != null && products.get(i).getSelected().isSelected()){
+                selectedProducts.add(products.get(i));
+            }
+        }
+        BarcodesToPdfGenerator.generateBarcoeds(selectedProducts);
     }
 
     @FXML
@@ -77,12 +84,11 @@ public class ExportDatasController implements Initializable {
                 }
                 removeProduct(child.getProductID());
                 products.add(child);
-                if (!IsProductInSelectedList(child.getProductID())){
-                    child.setIsChild(true);
-                    TreeItem<Product> cache = new TreeItem<>(child);
-                    printSetsTree(child, cache);
-                    parent.getChildren().add(cache);
-                }
+
+                child.setIsChild(true);
+                TreeItem<Product> cache = new TreeItem<>(child);
+                printSetsTree(child, cache);
+                parent.getChildren().add(cache);
             }
             if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())){
                 root.getChildren().add(parent);
@@ -134,14 +140,6 @@ public class ExportDatasController implements Initializable {
             printSetsTree(childProduct,child);
         }
     }
-    private boolean IsProductInSelectedList(Integer productID) {
-        for (Product product : finalSelectedProducts){
-            if (product.getProductID() == productID){
-                return  true;
-            }
-        }
-        return  false;
-    }
     private void  refreshTTV(int i) throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
@@ -158,12 +156,10 @@ public class ExportDatasController implements Initializable {
                     removeProduct(child.getProductID());
                     products.add(child);
                 }
-                if (!IsProductInSelectedList(child.getProductID())){
-                    child.setIsChild(true);
-                    TreeItem<Product> cache = new TreeItem<>(child);
-                    printSetsTree(child, cache);
-                    parent.getChildren().add(cache);
-                }
+                child.setIsChild(true);
+                TreeItem<Product> cache = new TreeItem<>(child);
+                printSetsTree(child, cache);
+                parent.getChildren().add(cache);
             }
             if (parent.getChildren().size() > 0){
                 root.getChildren().add(parent);
