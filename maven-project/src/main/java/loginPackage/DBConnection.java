@@ -788,7 +788,17 @@ public class DBConnection {
 
     public Product getProductByProductEanNotInASet(String eanCode) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTEAN = '"+ eanCode+"' and SUPERPRODUCTNR is NULL ");
+        ResultSet rs = stmt.executeQuery("SELECT * from product where PRODUCTEAN = '"+ eanCode+"' and SUPERPRODUCTNR is NULL ");
+        if (rs.next()){
+            return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
+        }
+        return null;
+    }
+
+    public Product getProductPerEan(String eanCode) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from product where PRODUCTEAN = '"+ eanCode + "'");
         if (rs.next()){
             return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
