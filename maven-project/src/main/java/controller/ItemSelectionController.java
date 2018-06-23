@@ -113,7 +113,6 @@ public class ItemSelectionController implements Initializable {
             products.add(p);
         }
 
-
         for(int i = 0; i < listOfChildren.size(); i++) {
             boolean isProductRented = DBConnection.getInstance().isProductRented(listOfChildren.get(i));
             if (!isProductRented){
