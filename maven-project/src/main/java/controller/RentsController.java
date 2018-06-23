@@ -21,62 +21,25 @@ public class RentsController implements Initializable{
     @FXML
     private TableView<Rent> tableViewRents;
     @FXML
-    private TableColumn<?,?> productNameCol, exemplarIDCol, userCol, fullNameCol;
-    @FXML
-    private JFXComboBox<String> chooseRents;
-    @FXML
-    private JFXButton returnBT;
+    private TableColumn<?,?> userNameCol, fromCol, untilCol;
 
     private ObservableList<Rent> rentList;
 
-    @FXML
-    private void returnExemplar() throws SQLException {
-        Rent selectedRent = tableViewRents.getSelectionModel().getSelectedItem();
-        if (selectedRent != null){
-            //DBConnection.getInstance().removeRent(selectedRent.getID());
-            rentList.remove(selectedRent);
-        }
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (DBConnection.getInstance().getActualUser().equals("stuetz")) {
-            chooseRents.setVisible(true);
-            userCol.setVisible(true);
-            fullNameCol.setVisible(true);
-
-            chooseRents.valueProperty().addListener((ov, oldVal, newVal) -> {
-                if (newVal != null){
-                    if (newVal.equals("My Rents")){
-                        //loadMyRents();
-                        returnBT.setDisable(false);
-                    }else if(newVal.equals("All Rents")){
-                        loadAllRents();
-                        returnBT.setDisable(true);
-                    }
-                }
-            });
-        }else{
-            //loadMyRents();
-        }
-
-        productNameCol.setCellValueFactory(
+        this.loadAllRents();
+        userNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("UserName"));
 
-        exemplarIDCol.setCellValueFactory(
+        fromCol.setCellValueFactory(
                 new PropertyValueFactory<>("From"));
 
-        fullNameCol.setCellValueFactory(
+        untilCol.setCellValueFactory(
                 new PropertyValueFactory<>("Until"));
 
-        productNameCol.setMinWidth(200);
-        exemplarIDCol.setMinWidth(200);
-        userCol.setMinWidth(200);
-        fullNameCol.setMinWidth(200);
-
-        chooseRents.getItems().add("My Rents");
-        chooseRents.getItems().add("All Rents");
-        chooseRents.getSelectionModel().selectFirst();
+        fromCol.setMinWidth(200);
+        untilCol.setMinWidth(200);
+        userNameCol.setMinWidth(200);
     }
 
     //Submethods
@@ -89,14 +52,4 @@ public class RentsController implements Initializable{
         }
         tableViewRents.setItems(rentList);
     }
-
-    /*private void loadMyRents(){
-        rentList = null;
-        try {
-            rentList = FXCollections.observableArrayList(DBConnection.getInstance().getUserRents());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        tableViewRents.setItems(rentList);
-    }*/
 }

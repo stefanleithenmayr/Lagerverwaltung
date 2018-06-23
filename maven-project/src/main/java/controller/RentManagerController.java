@@ -88,6 +88,7 @@ public class RentManagerController implements Initializable {
             secondTransition.setNode(itemSelectionPane);
             cachePane.getChildren().add(itemSelectionPane);
             actualPane++;
+            ((ItemSelectionController)secondLoader.getController()).refresh();
             translateTransition.setOnFinished(event -> {
                 subPane.getChildren().clear();
                 subPane.getChildren().add(itemSelectionPane);
@@ -178,10 +179,10 @@ public class RentManagerController implements Initializable {
         Rectangle2D bounds = screen.getVisualBounds();
 
         userSelectionPane.setPrefWidth(bounds.getWidth() - 280);
-        userSelectionPane.setPrefHeight(bounds.getHeight() - 470);
+        userSelectionPane.setPrefHeight(bounds.getHeight() - 300);
 
         itemSelectionPane.setPrefWidth(bounds.getWidth() - 280);
-        itemSelectionPane.setPrefHeight(bounds.getHeight() - 470);
+        itemSelectionPane.setPrefHeight(bounds.getHeight() - 300);
         subPane.getChildren().add(userSelectionPane);
     }
 }
