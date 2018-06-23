@@ -81,8 +81,8 @@ public class RentsController implements Initializable{
         chooseRents.getItems().add("All Rents");
         chooseRents.getSelectionModel().selectFirst();
     }
-
-    //Submethodsalskdfj
+    //TestComment
+    //Submetho
     private void loadAllRents() {
         rentList = null;
         try {
