@@ -1,15 +1,19 @@
 package controller;
 
 import com.jfoenix.controls.JFXToggleButton;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,13 +27,13 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.*;
 
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane, showSetsPane;
     @FXML
     private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, statisticsBT, userManagerBT, btSetsManager, btShowSets,
             btCreateNewSet;
@@ -47,7 +51,6 @@ public class MainSceneController implements Initializable {
 
     private boolean theme, isDownRents, isDownSetsManager; //false = dark, true = white
     private String acutalPane;
-
     @FXML
     private void dropDownRents(){
         TranslateTransition translateTransition = new TranslateTransition();
@@ -291,7 +294,7 @@ public class MainSceneController implements Initializable {
      */
 
     @FXML
-    private void changeFont() throws IOException {
+    private synchronized void changeFont() throws IOException {
         mainPane.getStylesheets().clear();
         addItemPane.getStylesheets().clear();
         statisticsPane.getStylesheets().clear();
@@ -300,6 +303,7 @@ public class MainSceneController implements Initializable {
         rentsPane.getStylesheets().clear();
         rentManagerPane.getStylesheets().clear();
         setsManagerPane.getStylesheets().clear();
+        showSetsPane.getStylesheets().clear();
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -311,6 +315,7 @@ public class MainSceneController implements Initializable {
             exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
             rentManagerPane.getStylesheets().add("css/rentsManagerWHITE.css");
             setsManagerPane.getStylesheets().add("css/setsManagerWHITE.css");
+            showSetsPane.getStylesheets().add("css/showSetsWHITE.css");
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
@@ -322,6 +327,7 @@ public class MainSceneController implements Initializable {
             exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
             rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
             setsManagerPane.getStylesheets().add("css/setsManagerDARK.css");
+            showSetsPane.getStylesheets().add("css/showSetsDARK.css");
             theme = false;
         }
 
@@ -463,11 +469,31 @@ public class MainSceneController implements Initializable {
                 }
                 acutalPane = "setsManagerPane";
                 break;
+            case "btShowSets":
+                showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
+                btShowSets.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(showSetsPane);
+                showSetsPane.setPrefWidth(bounds.getWidth() - 280);
+                showSetsPane.setPrefHeight(bounds.getHeight() - 120);
+                showSetsPane.getStylesheets().clear();
+
+                if (theme) {
+                    showSetsPane.getStylesheets().add("css/showSetsWHITE.css");
+                } else {
+                    showSetsPane.getStylesheets().add("css/showSetsDARK.css");
+                }
+                acutalPane = "setsManagerPane";
+                break;
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         theme = false;
         try {
             addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
@@ -479,6 +505,8 @@ public class MainSceneController implements Initializable {
             dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
             rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
             setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
+            showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -515,6 +543,10 @@ public class MainSceneController implements Initializable {
 
         setsManagerPane.setPrefWidth(bounds.getWidth() - 280);
         setsManagerPane.setPrefHeight(bounds.getHeight() - 120);
+
+        showSetsPane.setPrefWidth(bounds.getWidth() - 280);
+        showSetsPane.setPrefHeight(bounds.getHeight() - 120);
+
 
         subPane.getChildren().add(dashboardPane);
         recLayout.setHeight(bounds.getHeight() - 71);

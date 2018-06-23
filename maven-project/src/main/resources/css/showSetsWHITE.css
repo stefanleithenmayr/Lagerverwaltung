@@ -1,20 +1,4 @@
-#setsManagerPane{
-    -fx-background-color: white;
-}
-.textFieldStyle{
-    -fx-prompt-text-fill: #3D4956;
-    -fx-unfocus-color: #3D4956;
-    -fx-focus-color: #3D4956;
-    -fx-text-fill: #3D4956;
-}
-.btStyle{
-    -fx-border-color: #33363F;
-    -fx-text-fill: #33363F;
-    -fx-border-width: 0.5;
-}
-.lineStyle{
-    -fx-stroke: #33363F;
-}
+
 .labelStyle{
     -fx-font-size: 25;
     -fx-text-fill: #33363F;
@@ -31,13 +15,6 @@
     -jfx-unfocus-color: #3D4956;
     -jfx-focus-color: red;
 }
-.jfx-text-area{
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-text-fill: white;
-}
-
-
 
 
 .tree-table-view{

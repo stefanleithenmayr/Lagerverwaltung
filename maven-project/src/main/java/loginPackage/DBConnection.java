@@ -211,16 +211,16 @@ public class DBConnection {
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
-        SQLCommand = "insert into product values(1, 1, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(1, 1, NULL, '1', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(2, 1, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(2, 1, NULL, '2', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(4, 3, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(4, 3, NULL, '4', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(5, 3, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(5, 3, NULL, '5', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
@@ -232,26 +232,26 @@ public class DBConnection {
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
-        SQLCommand = "insert into product values(3, 5, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(3, 5, NULL, '3', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
         //Dummy Product/Set Header
-        SQLCommand = "insert into product values(6, 2, NULL, NULL, NULL, 2)";
+        SQLCommand = "insert into product values(6, 2, NULL, '6', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         // Set Products
             //HDMI-Kabel
-            SQLCommand = "insert into product values(7, 3, NULL, NULL, 3, 2)";
+            SQLCommand = "insert into product values(7, 3, NULL, '7', 3, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
             //HDMI-Adapter
-            SQLCommand = "insert into product values(8, 4, NULL, NULL, 3, 2)";
+            SQLCommand = "insert into product values(8, 4, NULL, '8', 3, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
     }
 
-    public List<Product> getProductsList() throws SQLException {
+    public List<Product> getAllProductsList() throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM product");
         List<Product> products = new ArrayList<>();
@@ -693,7 +693,7 @@ public class DBConnection {
         return null;
     }
 
-    private Product getProductByProductID(int productnr) throws SQLException {
+    public Product getProductByProductID(int productnr) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * from product where PRODUCTNR = "+ productnr);
         if (rs.next()){
@@ -711,11 +711,13 @@ public class DBConnection {
         return  id;
     }
 
-    public void addNewProduct(int productTypeID) throws SQLException {
+    public int  addNewProduct(int productTypeID) throws SQLException {
+
         int id = this.getLastProductID()+1;
         String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL, null, null, " + 2 + ")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
+        return id;
     }
 
     public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
@@ -782,5 +784,15 @@ public class DBConnection {
             return rs.getInt(6) == 1;
         }
         return false;
+    }
+
+    public Product getProductByProductEanNotInASet(String eanCode) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTEAN = '"+ eanCode+"' and SUPERPRODUCTNR is NULL ");
+        if (rs.next()){
+            return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
+        }
+        return null;
     }
 }

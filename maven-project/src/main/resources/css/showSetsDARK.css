@@ -3,89 +3,32 @@
     -fx-text-fill: white;
     -fx-faint-focus-color: white;
 }
-#addItemPane{
-    -fx-background-color: #33363F;
-}
-#CBGenerateBarcodes{
-    -fx-font-size: 19;
-    -fx-text-fill: white;
-}
-#tfItemName{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-#tfQuantity{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
-#qText{
-    -fx-fill: white;
-}
-
-#tfDescription{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
-#btnInsert{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
-.jfx-text-field{
-    -fx-pref-height:3;
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-text-fill: white;
-}
-
-.jfx-combo-box {
-    -fx-pref-height:3;
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-font-size: 19;
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
 .text-field{
     -fx-font-size: 19;
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
     -fx-faint-focus-color: white;
 }
-.jfx-text-area{
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-text-fill: white;
-}
 
 
-.table-view{
+.tree-table-view{
     -fx-background-color: transparent;
     -fx-table-cell-border-color: white;
     -fx-text-fill: white;
     -fx-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
-.table-row-cell .text {
-    -fx-fill: white;
+#productTypes .table-cell {
+    -fx-alignment: center;
 }
 
-.table-row-cell {
+.tree-table-row-cell .text {
+    -fx-fill: white;
+    -fx-text-alignment: center;
+}
+
+.tree-table-row-cell {
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-border-color: white;
@@ -93,25 +36,17 @@
     -fx-table-cell-border-color:transparent;
     -fx-padding: 3;
     -fx-cell-size: 40px;
+    -fx-content-display: CENTER;
+    -fx-position-shape: true;
+    -fx-text-alignment: CENTER;
 }
 
-.table-row-cell:hover .label,
-.table-row-cell:selected .label{
+.tree-table-row-cell:hover .label,
+.tree-table-row-cell:selected .label{
     -fx-text-fill: white;
 }
 
-.table-row-cell:hover:selected .label,
-.table-row-cell:focused:selected .label{
-    -fx-fill:#F06060;
-    -fx-text-fill: white;
-}
-
-.table-row-cell:hover , .table-row-cell:selected{
-    -fx-background-color:#F06060;
-    -fx-text-fill: white;
-}
-
-.table-view > .column-header-background {
+.tree-table-view > .column-header-background {
     -fx-background-size: stretch;
     -design: white;
     -fx-fill: #2a2d35;
@@ -119,30 +54,27 @@
     -fx-font-weight: bold;
 }
 
-.table-view > .column-header-background > .filler {
+.tree-table-view > .column-header-background > .filler {
     -fx-background-color: -design;
     -fx-fill: #2a2d35;
     -fx-text-fill: #2a2d35;
-    -fx-text-alignment: center;
 }
 
-.table-view > .column-header-background > .nested-column-header > .column-header.table-column {
+.tree-table-view > .column-header-background > .nested-column-header > .column-header.table-column {
     -fx-background-color: -design;
     -fx-fill: #2a2d35;
     -fx-text-fill: #2a2d35;
-    -fx-text-alignment: center;
+
 }
 
-.table-view .column-header .label {
+.tree-table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-text-alignment: center;
 }
 
-.table-view .column-header .label {
+.tree-table-view .column-header .label {
     -fx-text-fill: #2a2d35;
     -fx-font-weight: bold;
-    -fx-text-alignment: center;
 }
 
 .corner {
@@ -195,13 +127,21 @@
     -fx-background-color: transparent;
 }
 
-.table-row-cell:empty {
+.tree-table-row-cell:empty {
     -fx-background-color: #33363F;
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-table-cell-border-color:transparent;
 }
 
-.table-row-cell:empty .table-cell {
+.tree-table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
+}
+
+.tree-table-row-cell .tree-disclosure-node .arrow {
+    -fx-background-color: white;
+}
+
+.tree-table-row-cell:expanded .tree-disclosure-node .arrow {
+    -fx-rotate: 90;
 }
