@@ -502,7 +502,6 @@ public class MainSceneController implements Initializable {
             setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
             showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }

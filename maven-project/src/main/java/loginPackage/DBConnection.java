@@ -795,6 +795,16 @@ public class DBConnection {
         }
         return null;
     }
+
+    public Product getProductPerEan(String eanCode) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from product where PRODUCTEAN = '"+ eanCode + "'");
+        if (rs.next()){
+            return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
+        }
+        return null;
+    }
     public void deleteAllDatas() throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate("DELETE FROM item");
