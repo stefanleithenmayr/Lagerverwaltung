@@ -33,7 +33,7 @@ public class RentsController implements Initializable{
     private void returnExemplar() throws SQLException {
         Rent selectedRent = tableViewRents.getSelectionModel().getSelectedItem();
         if (selectedRent != null){
-            DBConnection.getInstance().removeRent(selectedRent.getID());
+            //DBConnection.getInstance().removeRent(selectedRent.getID());
             rentList.remove(selectedRent);
         }
     }
@@ -48,7 +48,7 @@ public class RentsController implements Initializable{
             chooseRents.valueProperty().addListener((ov, oldVal, newVal) -> {
                 if (newVal != null){
                     if (newVal.equals("My Rents")){
-                        loadMyRents();
+                        //loadMyRents();
                         returnBT.setDisable(false);
                     }else if(newVal.equals("All Rents")){
                         loadAllRents();
@@ -57,20 +57,17 @@ public class RentsController implements Initializable{
                 }
             });
         }else{
-            loadMyRents();
+            //loadMyRents();
         }
 
         productNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("productName"));
+                new PropertyValueFactory<>("UserName"));
 
         exemplarIDCol.setCellValueFactory(
-                new PropertyValueFactory<>("iD"));
-
-        userCol.setCellValueFactory(
-                new PropertyValueFactory<>("userName"));
+                new PropertyValueFactory<>("From"));
 
         fullNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("fullName"));
+                new PropertyValueFactory<>("Until"));
 
         productNameCol.setMinWidth(200);
         exemplarIDCol.setMinWidth(200);
@@ -93,7 +90,7 @@ public class RentsController implements Initializable{
         tableViewRents.setItems(rentList);
     }
 
-    private void loadMyRents(){
+    /*private void loadMyRents(){
         rentList = null;
         try {
             rentList = FXCollections.observableArrayList(DBConnection.getInstance().getUserRents());
@@ -101,5 +98,5 @@ public class RentsController implements Initializable{
             e.printStackTrace();
         }
         tableViewRents.setItems(rentList);
-    }
+    }*/
 }
