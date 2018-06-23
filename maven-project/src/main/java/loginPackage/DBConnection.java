@@ -204,10 +204,10 @@ public class DBConnection {
         ps.executeUpdate();
 
 
-        SQLCommand = "insert into STATUS values(1,'Ausgeliehen')";
+        SQLCommand = "insert into status values(1,'Ausgeliehen')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into STATUS values(2,'Im Lager')";
+        SQLCommand = "insert into status values(2,'Im Lager')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
@@ -714,7 +714,7 @@ public class DBConnection {
     public int  addNewProduct(int productTypeID) throws SQLException {
 
         int id = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL, null, null, " + 2 + ")" ;
+        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'"+Integer.toString(id)+"', null, " + 2 + ")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return id;
@@ -788,11 +788,18 @@ public class DBConnection {
 
     public Product getProductByProductEanNotInASet(String eanCode) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * from PRODUCT where PRODUCTEAN = '"+ eanCode+"' and SUPERPRODUCTNR is NULL ");
+        ResultSet rs = stmt.executeQuery("SELECT * from product where PRODUCTEAN = '"+ eanCode+"' and SUPERPRODUCTNR is NULL ");
         if (rs.next()){
             return new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
         }
         return null;
+    }
+    public void deleteAllDatas() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM item");
+        stmt.executeUpdate("DELETE FROM rent");
+        stmt.executeUpdate("DELETE FROM product");
+        stmt.executeUpdate("DELETE FROM producttype");
     }
 }

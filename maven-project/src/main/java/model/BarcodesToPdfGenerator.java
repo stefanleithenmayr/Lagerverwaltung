@@ -30,29 +30,31 @@ public class BarcodesToPdfGenerator {
         String lastProductName;
         Barcode128 barcode128 = new Barcode128();
         for (int i = 0; i < products.size(); i++){
-            lastProductName = productName;
-            productName =DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(products.get(i).getProductID()));
-            if (!lastProductName.equals(productName)){
-                y-=70;
-            }
-            ColumnText ct = new ColumnText(pdfWriter.getDirectContent());
-            ct.setSimpleColumn(x,y,600,0);//600 600
-            Paragraph p=new Paragraph();
-            p.add(productName);
-            ct.addElement(p);
-            ct.go();
+            if (Integer.toString(products.get(i).getProductID()) != null &&
+                    !Integer.toString(products.get(i).getProductID()).equals("")){
+                lastProductName = productName;
+                productName =DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(products.get(i).getProductID()));
+                if (!lastProductName.equals(productName)){
+                    y-=70;
+                }
+                ColumnText ct = new ColumnText(pdfWriter.getDirectContent());
+                ct.setSimpleColumn(x,y,600,0);//600 600
+                Paragraph p=new Paragraph();
+                p.add(productName);
+                ct.addElement(p);
+                ct.go();
 
 
-            barcode128.setCode(Integer.toString(products.get(i).getProductID()));
-            Image a = barcode128.createImageWithBarcode(pdfWriter.getDirectContent(), null, null);
-            a.setAbsolutePosition(x  , y);
-            if(productName.length() > 40){
-                x = 20;
+                barcode128.setCode(Integer.toString(products.get(i).getProductID()));
+                Image a = barcode128.createImageWithBarcode(pdfWriter.getDirectContent(), null, null);
+                a.setAbsolutePosition(x  , y);
+                if(productName.length() > 40){
+                    x = 20;
+                }
+                else x = getNextXPosition2Colums(x);
+                if(x == 20)y -= 70;
+                doc.add(a);
             }
-            else x = getNextXPosition2Colums(x);
-            if(x == 20)y -= 70;
-            doc.add(a);
-            //doc.add(p);
         }
         doc.close();
     }

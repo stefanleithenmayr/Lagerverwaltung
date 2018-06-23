@@ -47,16 +47,15 @@ public class AddItemController implements Initializable {
 
     @FXML
     public void upDateQuantity() {
-            double quantity = slQuantity.getValue();
-            if (quantity-(int)quantity >= 0.5){
-                amount = (int) (quantity+ (1-(quantity-(int)quantity)));
-            }
-            else{
-                amount = (int)(quantity-(quantity-(int)quantity));
-            }
-            slQuantity.setValue(amount);
-            tfQuantity.setText(Integer.toString(amount));
-        System.out.println(amount);
+        double quantity = slQuantity.getValue();
+        if (quantity-(int)quantity >= 0.5){
+            amount = (int) (quantity+ (1-(quantity-(int)quantity)));
+        }
+        else{
+            amount = (int)(quantity-(quantity-(int)quantity));
+        }
+        slQuantity.setValue(amount);
+        tfQuantity.setText(Integer.toString(amount));
     }
 
 
@@ -75,7 +74,6 @@ public class AddItemController implements Initializable {
     }
     @FXML
     public void insertProductTypeWithProducts() throws SQLException, FileNotFoundException, DocumentException {
-        System.out.println(tfProductTypeName.getText());
         if (amount < 1) return;
         if (tfProductTypeName.getText().equals("")){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -106,32 +104,6 @@ public class AddItemController implements Initializable {
         productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
         tvProductTypes.getItems().clear();
         tvProductTypes.setItems(productTypes);
-    }
-
-    private int getNextXPosition(int x) {
-        if (x == 20) return 270;
-        else if (x == 270) return 540;
-        return 20;
-    }
-
-    public static BufferedImage getBufferedImageForCode128Bean(String barcodeString) {
-        Code128Bean code128Bean = new Code128Bean();
-        final int dpi = 150;
-        code128Bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); //makes the narrow bar
-        code128Bean.doQuietZone(false);
-        BitmapCanvasProvider canvas1 = new BitmapCanvasProvider(
-                dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0
-        );
-        //Generate the barcode
-        code128Bean.generateBarcode(canvas1, barcodeString);
-        return canvas1.getBufferedImage();
-    }
-
-    private File fileChooser() {
-        Stage primaryStage = new Stage();
-
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        return directoryChooser.showDialog(primaryStage);
     }
     @FXML
     public void insertProductsIntoProductType() throws SQLException {
@@ -198,12 +170,6 @@ public class AddItemController implements Initializable {
             e.printStackTrace();
             e.printStackTrace();
         }
-        //Image image = new Image("maven-project\\barcode.png");
-        //IVBarcode.setImage(image);
-
-        System.out.println("alskdjf");
-
-
 
         selectedProductType = null;
         tfQuantity.textProperty().addListener((observable, oldValue, newValue) -> {
