@@ -1,5 +1,9 @@
 package controller;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.Barcode128;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -8,15 +12,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import loginPackage.DBConnection;
+import model.BarcodesToPdfGenerator;
 import model.Product;
 import model.ProductType;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +42,8 @@ public class AddItemController implements Initializable {
     ProductType selectedProductType;
     @FXML
     private TableColumn<ProductType, String> tcProducttypeName, tcProducttypeDescription;
+    @FXML
+    private CheckBox CBGenerateBarcodes;
 
     @FXML
     public void upDateQuantity() {
@@ -62,7 +74,7 @@ public class AddItemController implements Initializable {
         });
     }
     @FXML
-    public void insertProductTypeWithProducts() throws SQLException {
+    public void insertProductTypeWithProducts() throws SQLException, FileNotFoundException, DocumentException {
         System.out.println(tfProductTypeName.getText());
         if (amount < 1) return;
         if (tfProductTypeName.getText().equals("")){
@@ -75,9 +87,17 @@ public class AddItemController implements Initializable {
         }
         int productTypeID = DBConnection.getInstance().addNewProductType(tfProductTypeName.getText(), tfDescription.getText());
         int counter = 0;
+
+        List<Product> insertedProducts = new ArrayList<>();
         while (counter != amount){
-            DBConnection.getInstance().addNewProduct(productTypeID);
+            int productID = DBConnection.getInstance().addNewProduct(productTypeID);
+            if (CBGenerateBarcodes.isSelected()){
+                insertedProducts.add(DBConnection.getInstance().getProductByProductID(productID));
+            }
             counter++;
+        }
+        if(CBGenerateBarcodes.isSelected()){
+            BarcodesToPdfGenerator.generateBarcoeds(insertedProducts);
         }
         tfProductTypeName.clear();
         tfDescription.clear();
@@ -86,6 +106,32 @@ public class AddItemController implements Initializable {
         productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
         tvProductTypes.getItems().clear();
         tvProductTypes.setItems(productTypes);
+    }
+
+    private int getNextXPosition(int x) {
+        if (x == 20) return 270;
+        else if (x == 270) return 540;
+        return 20;
+    }
+
+    public static BufferedImage getBufferedImageForCode128Bean(String barcodeString) {
+        Code128Bean code128Bean = new Code128Bean();
+        final int dpi = 150;
+        code128Bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); //makes the narrow bar
+        code128Bean.doQuietZone(false);
+        BitmapCanvasProvider canvas1 = new BitmapCanvasProvider(
+                dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0
+        );
+        //Generate the barcode
+        code128Bean.generateBarcode(canvas1, barcodeString);
+        return canvas1.getBufferedImage();
+    }
+
+    private File fileChooser() {
+        Stage primaryStage = new Stage();
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        return directoryChooser.showDialog(primaryStage);
     }
     @FXML
     public void insertProductsIntoProductType() throws SQLException {
@@ -112,7 +158,53 @@ public class AddItemController implements Initializable {
 
     }
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
+        tfQuantity.setText("1");
+        tfQuantity1.setText("1");
+        Code128Bean code128 = new Code128Bean();
+        code128.setHeight(15f);
+        code128.setModuleWidth(0.3);
+        code128.setQuietZone(10);
+        code128.doQuietZone(true);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(baos, "image/x-png", 400, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        code128.generateBarcode(canvas, "6549874");
+        try {
+            canvas.finish();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream("barcode.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(baos.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.printStackTrace();
+        }
+        //Image image = new Image("maven-project\\barcode.png");
+        //IVBarcode.setImage(image);
+
+        System.out.println("alskdjf");
+
+
+
         selectedProductType = null;
         tfQuantity.textProperty().addListener((observable, oldValue, newValue) -> {
             for (int i = 0; i < newValue.length(); i++){

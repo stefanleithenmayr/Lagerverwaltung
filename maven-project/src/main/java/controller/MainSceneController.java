@@ -1,15 +1,19 @@
 package controller;
 
 import com.jfoenix.controls.JFXToggleButton;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,8 +27,8 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.*;
 
 public class MainSceneController implements Initializable {
 
@@ -47,7 +51,6 @@ public class MainSceneController implements Initializable {
 
     private boolean theme, isDownRents, isDownSetsManager; //false = dark, true = white
     private String acutalPane;
-
     @FXML
     private void dropDownRents(){
         TranslateTransition translateTransition = new TranslateTransition();
@@ -291,7 +294,7 @@ public class MainSceneController implements Initializable {
      */
 
     @FXML
-    private void changeFont() throws IOException {
+    private synchronized void changeFont() throws IOException {
         mainPane.getStylesheets().clear();
         addItemPane.getStylesheets().clear();
         statisticsPane.getStylesheets().clear();
@@ -475,9 +478,9 @@ public class MainSceneController implements Initializable {
                 showSetsPane.getStylesheets().clear();
 
                 if (theme) {
-                    showSetsPane.getStylesheets().add("css/setsManagerWHITE.css");
+                    showSetsPane.getStylesheets().add("css/showSetsWHITE.css");
                 } else {
-                    showSetsPane.getStylesheets().add("css/setsManagerDARK.css");
+                    showSetsPane.getStylesheets().add("css/showSetsDARK.css");
                 }
                 acutalPane = "setsManagerPane";
                 break;
@@ -485,7 +488,12 @@ public class MainSceneController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
         theme = false;
         try {
             addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));

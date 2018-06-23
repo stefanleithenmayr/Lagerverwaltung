@@ -3,22 +3,25 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import loginPackage.DBConnection;
+import loginPackage.Main;
 import model.Product;
 import model.ProductType;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
-public class SetsManagerController implements Initializable{
+public class SetsManagerController implements Initializable {
     @FXML
     JFXTextField tfSearch, tfSetName, taDescription, tfEanCode;
     @FXML
@@ -26,17 +29,18 @@ public class SetsManagerController implements Initializable{
     @FXML
     private TreeTableView<Product> TTVProductToChoose;
     @FXML
-    private TreeTableView<Product> TTVShowSets, TTVfinalProductsForSet;
+    private TreeTableView<Product> TTVfinalProductsForSet;
     private List<Product> products;
     private List<Product> finalSelectedProducts;
     @FXML
-    private TreeTableColumn<Product, String> prodNameCol, descCol, tcShowSetsProductName, tcShowSetsDescription, tcFinalProductsForSetProductName, tcFinalProductsForSetProductDescription;
+    private TreeTableColumn<Product, String> prodNameCol, descCol, tcFinalProductsForSetProductName, tcFinalProductsForSetProductDescription;
     @FXML
     private TreeTableColumn<Product, Integer> tcFinalProductsForSetProductID;
     @FXML
     private TreeTableColumn selectCol;
     @FXML
     Label LyourSet;
+
 
     @FXML
     private void createNewSet() throws SQLException {
@@ -133,17 +137,9 @@ public class SetsManagerController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        tcShowSetsProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
-        tcShowSetsDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
-        try {
-            ShowAllRents(); //Methode wird später gelöscht
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
     private void  refreshTTV(int i) throws SQLException {
         TTVProductToChoose.setRoot(null);
@@ -217,19 +213,6 @@ public class SetsManagerController implements Initializable{
             printSetsTree(childProduct,child);
         }
     }
-    private void ShowAllRents() throws SQLException {
-        List<Product> setHeaders = DBConnection.getInstance().getHighestSetHeaders();
-
-        TTVShowSets.setRoot(null);
-        TreeItem<Product> root = new TreeItem<>(new Product(-1,null,null,null, null, null));
-        for (int i = 0; i < setHeaders.size(); i++){
-            TreeItem<Product> cache = new TreeItem<>(setHeaders.get(i));
-            this.printSetsTree(setHeaders.get(i), cache);
-            root.getChildren().add(cache);
-        }
-        TTVShowSets.setShowRoot(false);
-        TTVShowSets.setRoot(root);
-    }
     private boolean IsProductInSelectedList(Integer productID) {
         for (Product product : finalSelectedProducts){
             if (product.getProductID() == productID){
@@ -237,5 +220,10 @@ public class SetsManagerController implements Initializable{
             }
         }
         return  false;
+    }
+    @FXML
+    public void refreshTTV(){
+        TTVProductToChoose.refresh();
+        TTVfinalProductsForSet.refresh();
     }
 }
