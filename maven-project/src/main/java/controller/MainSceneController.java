@@ -1,19 +1,15 @@
 package controller;
 
 import com.jfoenix.controls.JFXToggleButton;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
-import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,15 +23,14 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 
 public class MainSceneController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, statisticsPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane, showSetsPane;
+    private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, returnProductPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane, showSetsPane;
     @FXML
-    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, statisticsBT, userManagerBT, btSetsManager, btShowSets,
+    private Button cancelBT, addItemBT, showItemsBT, rentBT, exportDatasBT, returnProductBT, userManagerBT, btSetsManager, btShowSets,
             btCreateNewSet;
     @FXML
     private JFXToggleButton changeThemeBT;
@@ -239,8 +234,8 @@ public class MainSceneController implements Initializable {
             case "exportBT":
                 exportDatasBT.setStyle("-fx-background-color:#3D4956");
                 break;
-            case "statisticsBT":
-                statisticsBT.setStyle("-fx-background-color:#3D4956");
+            case "returnProductBT":
+                returnProductBT.setStyle("-fx-background-color:#3D4956");
                 break;
             case "userManagerBT":
                 userManagerBT.setStyle("-fx-background-color:#3D4956");
@@ -273,8 +268,8 @@ public class MainSceneController implements Initializable {
             rentBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("exportBT") && !acutalPane.equals("exportPane")) {
             exportDatasBT.setStyle("-fx-background-color:transparent");
-        } else if (buttonName.equals("statisticsBT") && !acutalPane.equals("statisticsPane")) {
-            statisticsBT.setStyle("-fx-background-color:transparent");
+        } else if (buttonName.equals("returnProductBT") && !acutalPane.equals("returnProductPane")) {
+            returnProductBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("userManagerBT") && !acutalPane.equals("userManagerPane")) {
             userManagerBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")) {
@@ -297,7 +292,7 @@ public class MainSceneController implements Initializable {
     private synchronized void changeFont() throws IOException {
         mainPane.getStylesheets().clear();
         addItemPane.getStylesheets().clear();
-        statisticsPane.getStylesheets().clear();
+        returnProductPane.getStylesheets().clear();
         userManagerPane.getStylesheets().clear();
         exportDatasPane.getStylesheets().clear();
         rentsPane.getStylesheets().clear();
@@ -310,7 +305,7 @@ public class MainSceneController implements Initializable {
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
             addItemPane.getStylesheets().add("css/addItemWHITE.css");
             rentsPane.getStylesheets().add("css/rentsWHITE.css");
-            statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
+            returnProductPane.getStylesheets().add("css/returnProductWHITE.css");
             userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
             exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
             rentManagerPane.getStylesheets().add("css/rentsManagerWHITE.css");
@@ -322,7 +317,7 @@ public class MainSceneController implements Initializable {
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
             addItemPane.getStylesheets().add("css/addItemDARK.css");
             rentsPane.getStylesheets().add("css/rentsDARK.css");
-            statisticsPane.getStylesheets().add("css/statisticsDARK.css");
+            returnProductPane.getStylesheets().add("css/returnProductDARK.css");
             userManagerPane.getStylesheets().add("css/userManagerDARK.css");
             exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
             rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
@@ -363,7 +358,7 @@ public class MainSceneController implements Initializable {
         showItemsBT.setStyle("-fx-background-color:transparent");
         rentBT.setStyle("-fx-background-color:transparent");
         userManagerBT.setStyle("-fx-background-color:transparent");
-        statisticsBT.setStyle("-fx-background-color:transparent");
+        returnProductBT.setStyle("-fx-background-color:transparent");
         exportDatasBT.setStyle("-fx-background-color:transparent");
         btSetsManager.setStyle("-fx-background-color:transparent");
         btCreateNewSet.setStyle("-fx-background-color:transparent");
@@ -409,20 +404,20 @@ public class MainSceneController implements Initializable {
                 }
                 acutalPane = "rentsPane";
                 break;
-            case "statisticsBT":
-                statisticsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml")));
-                statisticsBT.setStyle("-fx-background-color:#3D4956");
-                subPane.getChildren().add(statisticsPane);
-                statisticsPane.setPrefWidth(bounds.getWidth() - 280);
-                statisticsPane.setPrefHeight(bounds.getHeight() - 120);
-                statisticsPane.getStylesheets().clear();
+            case "returnProductBT":
+                returnProductPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ReturnProductScene.fxml")));
+                returnProductBT.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(returnProductPane);
+                returnProductPane.setPrefWidth(bounds.getWidth() - 280);
+                returnProductPane.setPrefHeight(bounds.getHeight() - 120);
+                returnProductPane.getStylesheets().clear();
 
                 if (theme) {
-                    statisticsPane.getStylesheets().add("css/statisticsWHITE.css");
+                    returnProductPane.getStylesheets().add("css/returnProductWHITE.css");
                 } else {
-                    statisticsPane.getStylesheets().add("css/statisticsDARK.css");
+                    returnProductPane.getStylesheets().add("css/returnProductDARK.css");
                 }
-                acutalPane = "statisticsPane";
+                acutalPane = "returnProductPane";
                 break;
             case "userManagerBT":
                 userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
@@ -494,7 +489,7 @@ public class MainSceneController implements Initializable {
             addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
             showItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml")));
             rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));
-            statisticsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/StatisticsScene.fxml")));
+            returnProductPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ReturnProductScene.fxml")));
             userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
             exportDatasPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml")));
             dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
@@ -520,8 +515,8 @@ public class MainSceneController implements Initializable {
         rentsPane.setPrefWidth(bounds.getWidth() - 280);
         rentsPane.setPrefHeight(bounds.getHeight() - 120);
 
-        statisticsPane.setPrefWidth(bounds.getWidth() - 280);
-        statisticsPane.setPrefHeight(bounds.getHeight() - 120);
+        returnProductPane.setPrefWidth(bounds.getWidth() - 280);
+        returnProductPane.setPrefHeight(bounds.getHeight() - 120);
 
         userManagerPane.setPrefWidth(bounds.getWidth() - 280);
         userManagerPane.setPrefHeight(bounds.getHeight() - 120);
@@ -548,7 +543,7 @@ public class MainSceneController implements Initializable {
         if (!DBConnection.getInstance().getActualUser().equals("stuetz") && !DBConnection.getInstance().getActualUser().equals("renedeicker")
                 &&!DBConnection.getInstance().getActualUser().equals("stefanleithenmayr") && !DBConnection.getInstance().getActualUser().equals("maxhofer")) {
             exportDatasBT.setVisible(false);
-            statisticsBT.setVisible(false);
+            returnProductBT.setVisible(false);
             userManagerBT.setVisible(false);
             statIV.setVisible(false);
             expIV.setVisible(false);

@@ -14,10 +14,8 @@ import sun.security.pkcs11.Secmod;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ItemSelectionController implements Initializable {
 
@@ -229,6 +227,7 @@ public class ItemSelectionController implements Initializable {
         }
 
         selectedProducts.add(searchedProduct);
+        selectedProducts = selectedProducts.stream().distinct().collect(Collectors.toList());
         for (Product p : products){
             System.out.println(p.getProductID());
         }

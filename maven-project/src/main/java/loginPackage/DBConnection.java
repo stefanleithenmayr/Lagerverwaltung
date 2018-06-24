@@ -399,11 +399,11 @@ public class DBConnection {
 
     public List<Rent> getAllRents() throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT USERNAME, RENTFROM, RENTUNTIL FROM rent");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM rent");
 
         List<Rent> rents = new ArrayList<>();
         while (rs.next()){
-            rents.add(new Rent(rs.getString("USERNAME"),rs.getString("RENTFROM"), rs.getString("RENTUNTIL")));
+            rents.add(new Rent(rs.getInt("RENTNR"), rs.getString("USERNAME"),rs.getString("RENTFROM"), rs.getString("RENTUNTIL")));
         }
         return rents;
     }
@@ -804,5 +804,78 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
         }
         return null;
+    }
+
+    public boolean isProductByThisRent(Product child, Rent rent) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from item where RENTNR = "+ rent.getRentID() + " AND PRODUCTNR = " + child.getProductID());
+        if (rs.next()){
+            return true;
+        }
+        return false;
+    }
+
+    public List<Output> unrentAllProducts(Product p) throws SQLException {
+        Statement stmt = conn.createStatement();
+        List<Output> returnList = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery("WITH RECURSIVE ancestors AS \n" +
+                " ( SELECT productnr,superproductnr, 0 AS is_cycle FROM product\n" +
+                "   WHERE productnr=" + p.getProductID() + "\n" +
+                "   UNION ALL\n" +
+                "   SELECT f.productnr,f.superproductnr, is_cycle + 1\n" +
+                "   FROM product as f\n" +
+                "   join ancestors on ancestors.productnr = f.superproductnr)\n" +
+                "SELECT * FROM ancestors");
+        while (rs.next()){
+            stmt.executeUpdate("UPDATE product SET Status = 2 WHERE PRODUCTNR = " + rs.getInt("productnr"));
+            String s = DBConnection.getInstance().returnProduct(rs.getInt("productnr"));
+            Output output = new Output(Integer.toString(rs.getInt("productnr")), DBConnection.getInstance().getProductTypeNameByProductNr(rs.getInt("productnr")),
+                    DBConnection.getInstance().getRentUser(rs.getInt("productnr")),rs.getInt("is_cycle"));
+            output.setSuccessfully(s);
+            returnList.add(output);
+        }
+        DBConnection.getInstance().cleanRent();
+        return returnList;
+    }
+
+    private void cleanRent() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select rentnr from rent");
+
+        while(rs.next()){
+           ResultSet secondRS = stmt.executeQuery("select * from item where rentnr = " + rs.getInt("rentnr"));
+            if (!secondRS.next()){
+                stmt.executeUpdate("delete from rent where rentnr = " + rs.getInt("rentnr"));
+            }
+        }
+    }
+
+    private String getProductTypeNameByProductNr(int productnr) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select typename from product p join producttype pt on pt.producttypenr = p.producttypenr where p.productnr = " + productnr);
+        if(rs.next()) {
+            return rs.getString("typename");
+        }
+        return "";
+    }
+
+    private String getRentUser(int productnr) throws SQLException {
+        Statement stmt = conn.createStatement();
+        List<Output> returnList = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery("select r.username from item i join rent r on r.rentnr = i.rentnr where i.productnr=" + productnr);
+        if (rs.next()){
+            return rs.getString("username");
+        }
+        return "Error";
+    }
+
+    private String returnProduct(int productnr) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select productnr from item where productnr=" + productnr);
+        if (rs.next()){
+            stmt.executeUpdate("delete from item where productnr=" + productnr);
+            return "Returned";
+        }
+        return "Not Rented";
     }
 }
