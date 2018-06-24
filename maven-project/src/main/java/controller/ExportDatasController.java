@@ -168,4 +168,8 @@ public class ExportDatasController implements Initializable {
         TTVProductToChoose.setShowRoot(false);
         TTVProductToChoose.setRoot(root);
     }
+    @FXML
+    public void refresh(){
+        TTVProductToChoose.refresh();
+    }
 }

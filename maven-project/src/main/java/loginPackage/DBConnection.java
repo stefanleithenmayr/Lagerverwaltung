@@ -929,4 +929,15 @@ public class DBConnection {
         }
         return rents;
     }
+
+    public List<Product> getallProductWhichAreNotRentet(Integer producttypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT  * from product where producttypenr = "+producttypeID +" and productnr not in(select productnr from item)");
+        List<Product> products = new ArrayList<>();
+        while(rs.next()){
+            products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
+        }
+        return  products;
+    }
 }
