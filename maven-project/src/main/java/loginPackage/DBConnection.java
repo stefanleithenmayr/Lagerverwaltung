@@ -812,4 +812,15 @@ public class DBConnection {
         stmt.executeUpdate("DELETE FROM product");
         stmt.executeUpdate("DELETE FROM producttype");
     }
+
+    public List<Product> getAllProductsByProductTypeID(Integer producttypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        List<Product> products = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery("SELECT * from product where producttypenr = "+producttypeID);
+        while(rs.next()){
+            products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
+        }
+        return  products;
+    }
 }

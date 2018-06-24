@@ -75,7 +75,7 @@ public class ExportDatasController implements Initializable {
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
-            List<Product> childs = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(listHeader.getProducttypeID());
+            List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
             for(Product child : childs){
                 if (IsProductSelected(child.getProductID())){
                     CheckBox cb = new CheckBox();
@@ -149,7 +149,7 @@ public class ExportDatasController implements Initializable {
 
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
-            List<Product> childs = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(listHeader.getProducttypeID());
+            List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
             for (Product child: childs){
                 if (i == 0)products.add(child);
                 if (i == 1){
