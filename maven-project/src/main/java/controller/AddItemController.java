@@ -133,44 +133,6 @@ public class AddItemController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         tfQuantity.setText("1");
         tfQuantity1.setText("1");
-        Code128Bean code128 = new Code128Bean();
-        code128.setHeight(15f);
-        code128.setModuleWidth(0.3);
-        code128.setQuietZone(10);
-        code128.doQuietZone(true);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BitmapCanvasProvider canvas = new BitmapCanvasProvider(baos, "image/x-png", 400, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-        code128.generateBarcode(canvas, "6549874");
-        try {
-            canvas.finish();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream("barcode.png");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            fos.write(baos.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            e.printStackTrace();
-        }
-
         selectedProductType = null;
         tfQuantity.textProperty().addListener((observable, oldValue, newValue) -> {
             for (int i = 0; i < newValue.length(); i++){

@@ -44,9 +44,8 @@ public class BarcodesToPdfGenerator {
                 p.add(productName);
                 ct.addElement(p);
                 ct.go();
-
-
-                barcode128.setCode(Integer.toString(products.get(i).getProductID()));
+                String ean = products.get(i).getProductEan();
+                barcode128.setCode(ean);
                 Image a = barcode128.createImageWithBarcode(pdfWriter.getDirectContent(), null, null);
                 a.setAbsolutePosition(x  , y);
                 if(productName.length() > 40){
