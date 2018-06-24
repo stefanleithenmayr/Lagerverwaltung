@@ -6,8 +6,9 @@ import javafx.scene.control.TextField;
 
 public class User {
 
-    private final String username, password, name;
-    private final TextField nameField, userNameField, passwordField;
+    private final String username, password, name, email, klasse;
+    private final int userrole;
+    private final TextField nameField, userNameField, passwordField, emailField, klasseField, userroleField;
     private final SimpleStringProperty realName;
     private CheckBox selected;
     private boolean isActivated;
@@ -46,6 +47,24 @@ public class User {
         this.nameField.setText(this.name);
         return this.nameField;
     }
+
+    public TextField getEmail(){
+        this.emailField.setDisable(this.isActivated);
+        this.emailField.setText(this.email);
+        return this.emailField;
+    }
+
+    public TextField getKlasse(){
+        this.klasseField.setDisable(this.isActivated);
+        this.klasseField.setText(this.klasse);
+        return this.klasseField;
+    }
+
+    public TextField getUserRole(){
+        this.userroleField.setDisable(this.isActivated);
+        this.userroleField.setText(Integer.toString(this.userrole));
+        return this.userroleField;
+    }
     public String getRealName() {
         return realName.get();
     }
@@ -65,16 +84,33 @@ public class User {
         return passwordField;
     }
 
-    public User(String username, String password, String name) {
+    public TextField getEmailField() {
+        return emailField;
+    }
+
+    public TextField getKlasseField() {
+        return klasseField;
+    }
+
+    public TextField getUserroleField() {
+        return userroleField;
+    }
+
+    public User(String username, String password, String name, String email, String klasse, int userrole) {
         this.nameField = new TextField();
         this.userNameField = new TextField();
         this.passwordField = new TextField();
+        this.klasseField = new TextField();
+        this.emailField = new TextField();
+        this.userroleField = new TextField();
         this.username = username;
         this.password = password;
         this.name = name;
+        this.email = email;
+        this.klasse = klasse;
+        this.userrole = userrole;
         this.isActivated = true;
         this.realName = new SimpleStringProperty(name);
         selected = new CheckBox();
-
     }
 }
