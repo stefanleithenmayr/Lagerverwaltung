@@ -154,3 +154,9 @@
 .text-input:disabled {
     -fx-opacity: 1.0;
 }
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: white;
+}

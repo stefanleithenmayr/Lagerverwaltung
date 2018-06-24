@@ -21,7 +21,7 @@ public class UserManagerController implements Initializable{
     @FXML
     private TableView<User> userTV;
     @FXML
-    private TableColumn<?,?> nameCol, userNameCol, passwordCol;
+    private TableColumn<?,?> nameCol, userNameCol, passwordCol, classCol, roleCol, emailCol;
     @FXML
     private JFXButton cancelBT, saveBT, editBT, removeBT, newUserBT;
 
@@ -29,7 +29,7 @@ public class UserManagerController implements Initializable{
 
     @FXML
     private void addNewUser(){
-        obList.add(0, new User("Replace with Username",  "Replace with Password", "Replace with Name"));
+        obList.add(0, new User("Replace with Username",  "Replace with Password", "Replace with Name", "", "", 2));
         userTV.getSelectionModel().select(0);
         this.activateEditing();
     }
@@ -80,15 +80,18 @@ public class UserManagerController implements Initializable{
         String name = user.getNameField().getText();
         String userName = user.getUserNameField().getText();
         String password = user.getPasswordField().getText();
+        String email = user.getEmailField().getText();
+        String klasse = user.getKlasseField().getText();
+        int userrolenr = Integer.parseInt(user.getUserroleField().getText());
         if (!(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
                 &&user.getPassword().getText().equals("Replace with Password"))){
-            DBConnection.getInstance().upDateUser(user, name, userName, password);
+            DBConnection.getInstance().upDateUser(user, name, userName, password, email, klasse, userrolenr);
         }
         else if(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
                 &&user.getPassword().getText().equals("Replace with Password")){
-            DBConnection.getInstance().saveNewUser(name, userName, password);
+            DBConnection.getInstance().saveNewUser(name, userName, password, email, klasse, userrolenr);
         }
-        obList.add(new User(userName, password,name));
+        obList.add(new User(userName, password,name,email, klasse, userrolenr));
         obList.remove(user);
         handleButton(false);
         user.setIsActivated(true);
@@ -104,12 +107,23 @@ public class UserManagerController implements Initializable{
             e.printStackTrace();
         }
 
+        nameCol.setCellValueFactory(
+                new PropertyValueFactory<>("name"));
+
         userNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("username"));
 
         passwordCol.setCellValueFactory(
                 new PropertyValueFactory<>("password"));
 
+        roleCol.setCellValueFactory(
+                new PropertyValueFactory<>("userRole"));
+
+        classCol.setCellValueFactory(
+                new PropertyValueFactory<>("klasse"));
+
+        emailCol.setCellValueFactory(
+                new PropertyValueFactory<>("email"));
         nameCol.setMinWidth(300);
         userNameCol.setMinWidth(300);
         passwordCol.setMinWidth(300);

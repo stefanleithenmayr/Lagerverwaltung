@@ -297,7 +297,7 @@ public class DBConnection {
         ResultSet users = DBConnection.getInstance().GetUsers();
         List<User> userList = new ArrayList<>();
         while (users.next()) {
-            userList.add(new User(users.getString("username"), users.getString("password"), users.getString("name")));
+            userList.add(new User(users.getString("username"), users.getString("password"), users.getString("name"), users.getString("email"), users.getString("klasse"), users.getInt("userrolenr")));
         }
         return userList;
     }
@@ -314,22 +314,25 @@ public class DBConnection {
                 "WHERE USERNAME = '" + username + "'");
     }
 
-    public void upDateUser(User user, String name, String userName, String password) throws SQLException {
+    public void upDateUser(User user, String name, String userName, String password, String email, String klasse, int userrole) throws SQLException {
         Statement stmt = conn.createStatement();
         if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
             stmt.executeUpdate("UPDATE st_user set NAME = '" + name +"'where username = '"+ user.getUsername().getText()+"'");
             stmt.executeUpdate("UPDATE st_user set PASSWORD = '" + password +"'where username = '"+ user.getUsername().getText()+"'");
             stmt.executeUpdate("UPDATE st_user set USERNAME = '" + userName +"'where username = '"+ user.getUsername().getText()+"'");
+            stmt.executeUpdate("UPDATE st_user set email = '" + email +"'where username = '"+ user.getUsername().getText()+"'");
+            stmt.executeUpdate("UPDATE st_user set klasse = '" + klasse +"'where username = '"+ user.getUsername().getText()+"'");
+            stmt.executeUpdate("UPDATE st_user set userrolenr = " + userrole +" where username = '"+ user.getUsername().getText()+"'");
         }
     }
-    public void saveNewUser(String name, String userName, String password) throws SQLException {
+    public void saveNewUser(String name, String userName, String password, String email, String klasse, int userrole) throws SQLException {
         if (name != null && !name.equals("") && password != null && !password.equals("") &&
                 userName != null && !userName.equals("")){
-            String SQLCommand = "INSERT INTO st_user " +
-                    "VALUES ('"+ userName + "','"+ password+ "','"+ name+"')";
-            PreparedStatement ps = conn.prepareStatement(SQLCommand);
-            ps.executeUpdate();
+            String SQLCommand = "INSERT INTO st_user (username, password, name, email, klasse, userrolenr)" +
+                    "VALUES ('"+ userName + "','"+ password+ "','"+ name + "','" + email + "','" + klasse + "','" + userrole + "')";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(SQLCommand);
         }
     }
 

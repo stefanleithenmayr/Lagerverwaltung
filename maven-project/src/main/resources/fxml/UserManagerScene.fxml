@@ -9,9 +9,12 @@
    <children>
       <TableView fx:id="userTV" layoutX="33.0" layoutY="83.0" prefHeight="495.0" prefWidth="970.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="80.0">
          <columns>
-            <TableColumn fx:id="nameCol" prefWidth="263.0" text="Full Name" />
-            <TableColumn fx:id="userNameCol" prefWidth="381.0" text="Username" />
-            <TableColumn fx:id="passwordCol" prefWidth="325.0" text="Password" />
+            <TableColumn fx:id="nameCol" prefWidth="220.0" text="Full Name" />
+            <TableColumn fx:id="userNameCol" prefWidth="220.0" text="Username" />
+            <TableColumn fx:id="passwordCol" prefWidth="220.0" text="Password" />
+            <TableColumn fx:id="roleCol" prefWidth="166.0" text="Rolle" />
+            <TableColumn fx:id="classCol" minWidth="0.0" prefWidth="200.0" text="Klasse" />
+            <TableColumn fx:id="emailCol" prefWidth="200.0" text="Email" />
          </columns>
       </TableView>
       <JFXButton fx:id="removeBT" layoutX="15.0" layoutY="29.0" onAction="#removeUser" text="Remove User" AnchorPane.leftAnchor="15.0" />
