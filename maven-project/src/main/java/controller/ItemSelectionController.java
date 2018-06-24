@@ -213,6 +213,10 @@ public class ItemSelectionController implements Initializable {
                 selectedProducts.add(product);
             }
         }
+
+        for (Product p : selectedProducts){
+            System.out.println(p.getProductID());
+        }
         return selectedProducts;
     }
 

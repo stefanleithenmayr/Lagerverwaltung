@@ -36,6 +36,7 @@ public class ReturnProductController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userNameCol.setMinWidth(200);
         productNrCol.setCellValueFactory(new PropertyValueFactory<>("productNr"));
         productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         userNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
