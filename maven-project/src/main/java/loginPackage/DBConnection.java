@@ -872,11 +872,12 @@ public class DBConnection {
     private String returnProduct(int productnr) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("select productnr from item where productnr=" + productnr);
-        if (rs.next()){
+        if (rs.next()) {
             stmt.executeUpdate("delete from item where productnr=" + productnr);
             return "Returned";
         }
         return "Not Rented";
+    }
     public void deleteAllDatas() throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate("DELETE FROM item");
