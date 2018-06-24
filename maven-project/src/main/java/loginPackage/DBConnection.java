@@ -884,6 +884,7 @@ public class DBConnection {
         stmt.executeUpdate("DELETE FROM rent");
         stmt.executeUpdate("DELETE FROM product");
         stmt.executeUpdate("DELETE FROM producttype");
+        
     }
 
     public List<Product> getAllProductsByProductTypeID(Integer producttypeID) throws SQLException {

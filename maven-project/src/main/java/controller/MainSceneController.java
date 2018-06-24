@@ -75,10 +75,10 @@ public class MainSceneController implements Initializable {
 
         if (!isDownProductManager){
             if (isDownRents){
-                transation1.setToY(200);
-                transation6.setToY(200);
-                transation4.setToY(200);
-                transation5.setToY(200);
+                transation1.setToY(250);
+                transation6.setToY(250);
+                transation4.setToY(250);
+                transation5.setToY(250);
             }
             else{
                 transation1.setToY(100);
@@ -104,10 +104,10 @@ public class MainSceneController implements Initializable {
         }
         else{
             if (isDownRents){
-                transation1.setToY(100);
-                transation4.setToY(100);
-                transation5.setToY(100);
-                transation6.setToY(100);
+                transation1.setToY(150);
+                transation4.setToY(150);
+                transation5.setToY(150);
+                transation6.setToY(150);
             }
             else{
                 transation1.setToY(0);
@@ -166,24 +166,22 @@ public class MainSceneController implements Initializable {
         Transition15.setNode(btDeleteItem);
 
         if (!isDownRents){
-            translateTransition.setToY(100);
-            secondTransition.setToY(100);
+            translateTransition.setToY(150);
+            secondTransition.setToY(150);
             if (isDownProductManager){
-                //System.out.println("a");
-                sixthTransition.setToY(200);
-                seventhTranisiton.setToY(200);
-                Transition9.setToY(200);
-                Transition8.setToY(200);
+                sixthTransition.setToY(250);
+                seventhTranisiton.setToY(250);
+                Transition9.setToY(250);
+                Transition8.setToY(250);
             }
             else{
-                //System.out.println("b");
-                sixthTransition.setToY(100);
-                seventhTranisiton.setToY(100);
-                Transition8.setToY(100);
-                Transition9.setToY(100);
+                sixthTransition.setToY(150);
+                seventhTranisiton.setToY(150);
+                Transition8.setToY(150);
+                Transition9.setToY(150);
             }
-            Transition12.setToY(100);
-            Transition15.setToY(100);
+            Transition12.setToY(150);
+            Transition15.setToY(150);
 
 
             ParallelTransition pT = new ParallelTransition();
@@ -193,18 +191,17 @@ public class MainSceneController implements Initializable {
             showRentsTEXT.setVisible(true);
             showItemsBT.setVisible(true);
             rentBT.setVisible(true);
+            returnProductBT.setVisible(true);
             isDownRents = true;
             pT.play();
         }else{
             if (isDownProductManager){
-                //System.out.println("c");
                 sixthTransition.setToY(100);
                 seventhTranisiton.setToY(100);
                 Transition8.setToY(100);
                 Transition9.setToY(100);
             }
             else{
-                //System.out.println("d");
                 sixthTransition.setToY(0);
                 seventhTranisiton.setToY(0);
                 Transition8.setToY(0);
@@ -223,6 +220,7 @@ public class MainSceneController implements Initializable {
             showRentsTEXT.setVisible(false);
             showItemsBT.setVisible(false);
             rentBT.setVisible(false);
+            returnProductBT.setVisible(false);
             isDownRents = false;
         }
     }
@@ -295,11 +293,14 @@ public class MainSceneController implements Initializable {
         String buttonName = button.getId();
 
         switch (buttonName) {
-            case "btProductManager":
-                btProductManager.setStyle("-fx-background-color:#3D4956");
-                break;
             case "showItemsBT":
                 showItemsBT.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "btDeleteItem":
+                btDeleteItem.setStyle("-fx-background-color:#3D4956");
+                break;
+            case "btAddItem":
+                btAddItem.setStyle("-fx-background-color:#3D4956");
                 break;
             case "rentBT":
                 rentBT.setStyle("-fx-background-color:#3D4956");
@@ -322,9 +323,6 @@ public class MainSceneController implements Initializable {
             case "btCreateNewSet":
                 btCreateNewSet.setStyle("-fx-background-color:#3D4956");
                 break;
-            case "btSetsManager":
-                btSetsManager.setStyle("-fx-background-color:#3D4956");
-                break;
         }
     }
 
@@ -333,9 +331,7 @@ public class MainSceneController implements Initializable {
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
 
-        if (buttonName.equals("btProductManager") && !acutalPane.equals("addItemPane")) {
-            btProductManager.setStyle("-fx-background-color:transparent");
-        } else if (buttonName.equals("showItemsBT") && !acutalPane.equals("showItemPane")) {
+        if (buttonName.equals("showItemsBT") && !acutalPane.equals("rentsManagerPane")) {
             showItemsBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("rentBT") && !acutalPane.equals("rentsPane")) {
             rentBT.setStyle("-fx-background-color:transparent");
@@ -347,14 +343,18 @@ public class MainSceneController implements Initializable {
             userManagerBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")) {
             exportDatasBT.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btSetsManager")) {
-            btSetsManager.setStyle("-fx-background-color:transparent");
         }else if (buttonName.equals("btCreateNewSet") && !acutalPane.equals("setsManagerPane")) {
             btCreateNewSet.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btShowSets")) {
+        }else if (buttonName.equals("btShowSets")&& !acutalPane.equals("showSetsPane")) {
             btShowSets.setStyle("-fx-background-color:transparent");
-        }
+        }else if (buttonName.equals("btAddItem") && !acutalPane.equals("addItemPane")) {
+            btAddItem.setStyle("-fx-background-color:transparent");
 
+        }else if (buttonName.equals("btDeleteItems") && !acutalPane.equals("deleteItemPane")) {
+            btDeleteItem.setStyle("-fx-background-color:transparent");
+        }else if (buttonName.equals("returnProductBT") && !acutalPane.equals("returnProductPane")) {
+            returnProductBT.setStyle("-fx-background-color:transparent");
+        }
     }
 
     /**
@@ -372,6 +372,8 @@ public class MainSceneController implements Initializable {
         rentManagerPane.getStylesheets().clear();
         setsManagerPane.getStylesheets().clear();
         showSetsPane.getStylesheets().clear();
+        deleteItemPane.getStylesheets().clear();
+
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
@@ -384,6 +386,7 @@ public class MainSceneController implements Initializable {
             rentManagerPane.getStylesheets().add("css/rentsManagerWHITE.css");
             setsManagerPane.getStylesheets().add("css/setsManagerWHITE.css");
             showSetsPane.getStylesheets().add("css/showSetsWHITE.css");
+            deleteItemPane.getStylesheets().add("css/deleteItemWHITE.css");
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
@@ -396,6 +399,7 @@ public class MainSceneController implements Initializable {
             rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
             setsManagerPane.getStylesheets().add("css/setsManagerDARK.css");
             showSetsPane.getStylesheets().add("css/showSetsDARK.css");
+            deleteItemPane.getStylesheets().add("css/deleteItemDARK.css");
             theme = false;
         }
 
@@ -436,6 +440,9 @@ public class MainSceneController implements Initializable {
         btSetsManager.setStyle("-fx-background-color:transparent");
         btCreateNewSet.setStyle("-fx-background-color:transparent");
         btShowSets.setStyle("-fx-background-color:transparent");
+        btAddItem.setStyle("-fx-background-color:transparent");
+        btDeleteItem.setStyle("-fx-background-color:transparent");
+
 
         subPane.getChildren().clear();
 
@@ -443,10 +450,34 @@ public class MainSceneController implements Initializable {
         Rectangle2D bounds = screen.getVisualBounds();
 
         switch (buttonName) {
-            case "btProductManager":
-                btProductManager.setStyle("-fx-background-color:#3D4956");
+
+            case "btAddItem":
+                addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
+                btAddItem.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(addItemPane);
+                addItemPane.getStylesheets().clear();
+                addItemPane.setPrefWidth(bounds.getWidth() - 280);
+                addItemPane.setPrefHeight(bounds.getHeight() - 120);
+                if (theme) {
+                    addItemPane.getStylesheets().add("css/addItemWHITE.css");
+                } else {
+                    addItemPane.getStylesheets().add("css/addItemDARK.css");
+                }
                 acutalPane = "addItemPane";
+                break;
+            case "btDeleteItem":
+                deleteItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DeleteItem.fxml")));
+                btDeleteItem.setStyle("-fx-background-color:#3D4956");
+                subPane.getChildren().add(deleteItemPane);
+                deleteItemPane.getStylesheets().clear();
+                deleteItemPane.setPrefWidth(bounds.getWidth() - 280);
+                deleteItemPane.setPrefHeight(bounds.getHeight() - 120);
+                if (theme) {
+                    deleteItemPane.getStylesheets().add("css/deleteItemWHITE.css");
+                } else {
+                    deleteItemPane.getStylesheets().add("css/deleteItemDARK.css");
+                }
+                acutalPane = "deleteItemPane";
                 break;
             case "showItemsBT":
                 rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
@@ -550,7 +581,7 @@ public class MainSceneController implements Initializable {
                 } else {
                     showSetsPane.getStylesheets().add("css/showSetsDARK.css");
                 }
-                acutalPane = "setsManagerPane";
+                acutalPane = "showSetsPane";
                 break;
         }
     }
