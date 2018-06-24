@@ -75,15 +75,12 @@ public class MainSceneController implements Initializable {
 
         if (!isDownProductManager){
             if (isDownRents){
-                System.out.println("A");
-
                 transation1.setToY(200);
                 transation6.setToY(200);
                 transation4.setToY(200);
                 transation5.setToY(200);
             }
             else{
-                System.out.println("B");
                 transation1.setToY(100);
                 transation6.setToY(100);
                 transation4.setToY(100);
@@ -107,14 +104,12 @@ public class MainSceneController implements Initializable {
         }
         else{
             if (isDownRents){
-                System.out.println("C");
                 transation1.setToY(100);
                 transation4.setToY(100);
                 transation5.setToY(100);
                 transation6.setToY(100);
             }
             else{
-                System.out.println("D");
                 transation1.setToY(0);
                 transation4.setToY(0);
                 transation5.setToY(0);

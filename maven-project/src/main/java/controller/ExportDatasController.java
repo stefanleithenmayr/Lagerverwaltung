@@ -115,9 +115,8 @@ public class ExportDatasController implements Initializable {
             if (p == null) break;
             p.setIsChild(false);
             p.setSelected(null);
-            if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
-                listHeaders.add(p);
-            }
+
+            listHeaders.add(p);
         }
         return  listHeaders;
     }
@@ -161,8 +160,9 @@ public class ExportDatasController implements Initializable {
                 printSetsTree(child, cache);
                 parent.getChildren().add(cache);
             }
+
+            root.getChildren().add(parent);
             if (parent.getChildren().size() > 0){
-                root.getChildren().add(parent);
             }
         }
         TTVProductToChoose.setShowRoot(false);
