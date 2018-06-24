@@ -22,8 +22,7 @@
         </columns>
       </TreeTableView>
       <JFXTextField fx:id="taDescription" layoutX="42.0" layoutY="137.0" maxWidth="1051.0" minWidth="329.0" prefHeight="48.0" prefWidth="643.0" promptText="Description" />
-      <JFXTextField fx:id="tfEanCode" layoutX="42.0" layoutY="804.0" maxWidth="643.0" minWidth="289.0" onKeyPressed="#eanCodeEntered" prefHeight="48.0" prefWidth="515.0" promptText="Scan your eancode" />
-      <JFXButton fx:id="btAddToBoardEancode" layoutX="571.0" layoutY="813.0" onAction="#addProductToListByEanCode" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
+      <JFXTextField fx:id="tfEanCode" layoutX="42.0" layoutY="804.0" maxWidth="661.0" minWidth="289.0" onKeyPressed="#eanEntered" prefHeight="48.0" prefWidth="661.0" promptText="Scan your eancode" />
       <JFXButton fx:id="btAddToBoardTTV" layoutX="571.0" layoutY="301.0" onAction="#addSelectedProductsFromTTV" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
       <Line endY="900.0" layoutX="793.0" stroke="#f06060" />
       <Label fx:id="LyourSet" layoutX="835.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Your new Set" visible="false" />

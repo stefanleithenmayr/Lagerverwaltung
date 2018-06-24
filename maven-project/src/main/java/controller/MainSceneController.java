@@ -23,6 +23,7 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class MainSceneController implements Initializable {
@@ -160,11 +161,20 @@ public class MainSceneController implements Initializable {
         Transition12.setDuration(Duration.millis(500));
         Transition12.setNode(btAddItem);
 
-
         TranslateTransition Transition15 = new TranslateTransition();
         Transition15.setDuration(Duration.millis(500));
         Transition15.setNode(btDeleteItem);
-
+/*
+        TranslateTransition Transition16 = new TranslateTransition();
+        Transition15.setDuration(Duration.millis(500));
+        Transition15.setNode(returnProductBT);
+        TranslateTransition Transition17 = new TranslateTransition();
+        Transition15.setDuration(Duration.millis(500));
+        Transition15.setNode(rentBT);
+        TranslateTransition Transition18 = new TranslateTransition();
+        Transition15.setDuration(Duration.millis(500));
+        Transition15.setNode(showItemsBT);
+*/
         if (!isDownRents){
             translateTransition.setToY(150);
             secondTransition.setToY(150);
@@ -182,7 +192,6 @@ public class MainSceneController implements Initializable {
             }
             Transition12.setToY(150);
             Transition15.setToY(150);
-
 
             ParallelTransition pT = new ParallelTransition();
             pT.getChildren().addAll(translateTransition, secondTransition,
@@ -662,6 +671,11 @@ public class MainSceneController implements Initializable {
         }
         isDownRents = false;
         isDownSetsManager = false;
-        acutalPane = "";
+        acutalPane = "";/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
     }
 }

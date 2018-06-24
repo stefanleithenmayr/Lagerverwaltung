@@ -193,13 +193,13 @@ public class DBConnection {
     }
 
     public void InsertTestDatas() throws SQLException {
-        String SQLCommand = "insert into producttype values (1, 'Monitor', 'LG - Monitor 400Hz')";
+        String SQLCommand = "insert into producttype values (1001, 'Monitor', 'LG - Monitor 400Hz')";
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into producttype values (2, 'Rechner', 'Lenovo Rechner')";
+        SQLCommand = "insert into producttype values (1002, 'Rechner', 'Lenovo Rechner')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into producttype values (3, 'HDMI-Kabel', 'Kabel zum Bildlichen übertragen')";
+        SQLCommand = "insert into producttype values (1003, 'HDMI-Kabel', 'Kabel zum Bildlichen übertragen')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
@@ -210,45 +210,60 @@ public class DBConnection {
         SQLCommand = "insert into status values(2,'Im Lager')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-
-        SQLCommand = "insert into product values(1, 1, NULL, '1', NULL, 2)";
+        String ean = this.getEanByID(1);
+        SQLCommand = "insert into product values(1001, 1001, NULL, '"+ean+"', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(2, 1, NULL, '2', NULL, 2)";
+        ean = this.getEanByID(2);
+        SQLCommand = "insert into product values(1002, 1001, NULL, '"+ean+"', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(4, 3, NULL, '4', NULL, 2)";
+        ean = this.getEanByID(4);
+        SQLCommand = "insert into product values(1004, 1003, NULL, '"+ean+"', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into product values(5, 3, NULL, '5', NULL, 2)";
+        ean = this.getEanByID(5);
+        SQLCommand = "insert into product values(1005, 1003, NULL, '"+ean+"', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
         //Insert a TestSet
-        SQLCommand = "insert into producttype values (4, 'HDMI Adapter', 'Stecker für ein HDMI-Kabel')";
+        SQLCommand = "insert into producttype values (1004, 'HDMI Adapter', 'Stecker für ein HDMI-Kabel')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into producttype values (5, 'HDMI-Kabel-Adapter Set', 'HDMI Kabel mit Adapter')";
+        SQLCommand = "insert into producttype values (1005, 'HDMI-Kabel-Adapter Set', 'HDMI Kabel mit Adapter')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
-        SQLCommand = "insert into product values(3, 5, NULL, '3', NULL, 2)";
+        ean = this.getEanByID(3);
+        SQLCommand = "insert into product values(1003, 1005, NULL, '"+ean+"', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
         //Dummy Product/Set Header
-        SQLCommand = "insert into product values(6, 2, NULL, '6', NULL, 2)";
+        ean = this.getEanByID(6);
+        SQLCommand = "insert into product values(1006, 1002, NULL, '"+ean+"', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         // Set Products
             //HDMI-Kabel
-            SQLCommand = "insert into product values(7, 3, NULL, '7', 3, 2)";
+            ean = this.getEanByID(7);
+            SQLCommand = "insert into product values(1007, 1003, NULL, '"+ean+"', 1003, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
             //HDMI-Adapter
-            SQLCommand = "insert into product values(8, 4, NULL, '8', 3, 2)";
+            ean = this.getEanByID(8);
+            SQLCommand = "insert into product values(1008, 1004, NULL, '"+ean+"', 1003, 2)";
             ps = conn.prepareStatement(SQLCommand);
             ps.executeUpdate();
+    }
+
+    private String getEanByID(int id) {
+        String ean = Integer.toString(id);
+        for(int i = ean.length(); i <11;i++){
+            ean="0"+ean;
+        }
+        return  ean;
     }
 
     public List<Product> getAllProductsList() throws SQLException {
@@ -715,9 +730,9 @@ public class DBConnection {
     }
 
     public int  addNewProduct(int productTypeID) throws SQLException {
-
         int id = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'"+Integer.toString(id)+"', null, " + 2 + ")" ;
+        String ean = this.getEanByID(id);
+        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'"+ean+"', null, " + 2 + ")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return id;
@@ -877,7 +892,7 @@ public class DBConnection {
         stmt.executeUpdate("DELETE FROM rent");
         stmt.executeUpdate("DELETE FROM product");
         stmt.executeUpdate("DELETE FROM producttype");
-        
+
     }
 
     public List<Product> getAllProductsByProductTypeID(Integer producttypeID) throws SQLException {
