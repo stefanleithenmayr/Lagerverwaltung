@@ -238,8 +238,8 @@ public class RentsController implements Initializable{
         selectedProducts = selectedProducts.stream().distinct().collect(Collectors.toList());
         return selectedProducts;
     }
-
-    //Submethods
+    //TestComment asdfk
+    //Submetho
     private void loadAllRents() {
         rentList = null;
         try {

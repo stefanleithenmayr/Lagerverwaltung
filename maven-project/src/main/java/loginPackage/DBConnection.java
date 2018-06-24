@@ -204,10 +204,10 @@ public class DBConnection {
         ps.executeUpdate();
 
 
-        SQLCommand = "insert into STATUS values(1,'Ausgeliehen')";
+        SQLCommand = "insert into status values(1,'Ausgeliehen')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into STATUS values(2,'Im Lager')";
+        SQLCommand = "insert into status values(2,'Im Lager')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
@@ -611,7 +611,7 @@ public class DBConnection {
 
     public int createNewSetHeaderProduct(int productTypeID) throws SQLException {
         int productID = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL, NULL, Null, "+ 2+")" ;
+        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL,'"+Integer.toString(productID) +"', Null, "+ 2+")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return  productID;
@@ -714,7 +714,7 @@ public class DBConnection {
     public int  addNewProduct(int productTypeID) throws SQLException {
 
         int id = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL, null, null, " + 2 + ")" ;
+        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'"+Integer.toString(id)+"', null, " + 2 + ")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return id;
@@ -877,5 +877,22 @@ public class DBConnection {
             return "Returned";
         }
         return "Not Rented";
+    public void deleteAllDatas() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM item");
+        stmt.executeUpdate("DELETE FROM rent");
+        stmt.executeUpdate("DELETE FROM product");
+        stmt.executeUpdate("DELETE FROM producttype");
+    }
+
+    public List<Product> getAllProductsByProductTypeID(Integer producttypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        List<Product> products = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery("SELECT * from product where producttypenr = "+producttypeID);
+        while(rs.next()){
+            products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
+        }
+        return  products;
     }
 }
