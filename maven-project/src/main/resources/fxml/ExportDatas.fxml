@@ -16,6 +16,6 @@
             <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="121.0" text="Select" />
          </columns>
       </TreeTableView>
-      <JFXTextField fx:id="tfSearch" layoutX="23.0" layoutY="30.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Serach" />
+      <JFXTextField fx:id="tfSearch" layoutX="23.0" layoutY="30.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Search" style="-fx-font-color: white;" />
    </children>
 </AnchorPane>

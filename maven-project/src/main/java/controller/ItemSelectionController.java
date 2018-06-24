@@ -236,5 +236,6 @@ public class ItemSelectionController implements Initializable {
             System.out.println(p.getProductID());
         }
         refreshTTV(0, selectedProducts);
+        eanCodeTF.clear();
     }
 }

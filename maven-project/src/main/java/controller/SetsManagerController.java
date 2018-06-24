@@ -41,7 +41,6 @@ public class SetsManagerController implements Initializable {
     @FXML
     Label LyourSet;
 
-
     @FXML
     private void createNewSet() throws SQLException {
         if (tfSetName.getText().equals("")){
@@ -242,7 +241,7 @@ public class SetsManagerController implements Initializable {
         Product scannedProduct = DBConnection.getInstance().getProductByProductEanNotInASet(code);
         if (scannedProduct == null) return;
         for (int i = 0; i < products.size(); i++){
-            if (scannedProduct.getProductID() == products.get(i).getProductID()){
+            if (scannedProduct.getProductID().equals(products.get(i).getProductID())){
 
                 CheckBox cb = new CheckBox();
                 cb.setSelected(true);
