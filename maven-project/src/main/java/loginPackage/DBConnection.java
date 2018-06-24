@@ -739,40 +739,30 @@ public class DBConnection {
         p.executeUpdate();
 
         for (Product prod : products) {
-            PreparedStatement stmt = conn.prepareStatement("insert into item values(?,?)");
-            stmt.setInt(1, id);
-            stmt.setInt(2, prod.getProductID());
-            stmt.executeUpdate();
-
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT PRODUCTNR FROM product WHERE SUPERPRODUCTNR="+ prod.getProductID());
-            while(rs.next()){
-                stmt = conn.prepareStatement("insert into item values(?,?)");
-                stmt.setInt(1, id);
-                stmt.setInt(2, rs.getInt(1));
-                stmt.executeUpdate();
-            }
-        }
-        this.setAllProductsToRent(true, products);
-    }
+            ResultSet rs = st.executeQuery("WITH RECURSIVE ancestors AS \n" +
+                    " ( SELECT productnr,superproductnr, 0 AS is_cycle FROM product\n" +
+                    "   WHERE productnr=" + prod.getProductID() + " AND "+ prod.getStatusID() +"= 2\n" +
+                    "   UNION ALL\n" +
+                    "   SELECT f.productnr,f.superproductnr, is_cycle + 1\n" +
+                    "   FROM product as f\n" +
+                    "   join ancestors on ancestors.productnr = f.superproductnr)\n" +
+                    "SELECT * FROM ancestors");
 
-    private void setAllProductsToRent(boolean rent, List<Product> products) throws SQLException {
-        for (Product p: products) {
-            Statement stmt = conn.createStatement();
-            if (rent){
-                ResultSet rs = stmt.executeQuery("SELECT PRODUCTNR FROM product WHERE SUPERPRODUCTNR="+ p.getProductID());
-                Statement updateStat = conn.createStatement();
-                while(rs.next()){
-                    updateStat.executeUpdate("update product set status = 1 where PRODUCTNR = " + rs.getInt(1));
+            while(rs.next()){
+                Statement thirdStmt = conn.createStatement();
+                ResultSet cacheRS = thirdStmt.executeQuery("select p.status from product p where productnr = "+ rs.getInt("productnr"));
+                if (cacheRS.next()){
+                    if (cacheRS.getInt("status") == 2){
+                        PreparedStatement stmt = conn.prepareStatement("insert into item values(?,?)");
+                        stmt.setInt(1, id);
+                        stmt.setInt(2, rs.getInt("productnr"));
+                        stmt.executeUpdate();
+
+                        Statement secondSt = conn.createStatement();
+                        secondSt.executeUpdate("update product set status = 1 where productnr = " + rs.getInt("productnr"));
+                    }
                 }
-                updateStat.executeUpdate("update product set status = 1 where PRODUCTNR = " + p.getProductID());
-            }else{
-                ResultSet rs = stmt.executeQuery("SELECT PRODUCTNR FROM product WHERE SUPERPRODUCTNR="+ p.getProductID());
-                Statement updateStat = conn.createStatement();
-                while(rs.next()){
-                    updateStat.executeUpdate("update product set status = 2 where PRODUCTNR = " + rs.getInt(1));
-                }
-                updateStat.executeUpdate("update product set status = 2 where PRODUCTNR = " + p.getProductID());
             }
         }
     }
@@ -828,9 +818,9 @@ public class DBConnection {
                 "SELECT * FROM ancestors");
         while (rs.next()){
             stmt.executeUpdate("UPDATE product SET Status = 2 WHERE PRODUCTNR = " + rs.getInt("productnr"));
-            String s = DBConnection.getInstance().returnProduct(rs.getInt("productnr"));
             Output output = new Output(Integer.toString(rs.getInt("productnr")), DBConnection.getInstance().getProductTypeNameByProductNr(rs.getInt("productnr")),
                     DBConnection.getInstance().getRentUser(rs.getInt("productnr")),rs.getInt("is_cycle"));
+            String s = DBConnection.getInstance().returnProduct(rs.getInt("productnr"));
             output.setSuccessfully(s);
             returnList.add(output);
         }
@@ -861,8 +851,7 @@ public class DBConnection {
 
     private String getRentUser(int productnr) throws SQLException {
         Statement stmt = conn.createStatement();
-        List<Output> returnList = new ArrayList<>();
-        ResultSet rs = stmt.executeQuery("select r.username from item i join rent r on r.rentnr = i.rentnr where i.productnr=" + productnr);
+        ResultSet rs = stmt.executeQuery("select username as username from item i join rent r on r.rentnr = i.rentnr where i.productnr=" + productnr);
         if (rs.next()){
             return rs.getString("username");
         }
@@ -878,6 +867,7 @@ public class DBConnection {
         }
         return "Not Rented";
     }
+
     public void deleteAllDatas() throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate("DELETE FROM item");
@@ -896,5 +886,18 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
         return  products;
+    }
+
+    public List<SimpleOutput> getItemsFromRent(int rentid) throws SQLException {
+        Statement stmt = conn.createStatement();
+        List<SimpleOutput> returnList = new ArrayList<>();
+
+        ResultSet secondRs = stmt.executeQuery("select * from item where rentnr= " + rentid);
+            while (secondRs.next()){
+                SimpleOutput output = new SimpleOutput(Integer.toString(secondRs.getInt("productnr")), DBConnection.getInstance().getProductTypeNameByProductNr(secondRs.getInt("productnr")));
+                returnList.add(output);
+            }
+
+        return returnList;
     }
 }
