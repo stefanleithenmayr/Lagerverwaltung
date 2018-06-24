@@ -1,21 +1,32 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import loginPackage.DBConnection;
 import model.Clock;
+import model.Rent;
 
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.*;
 
 public class DashboardController implements Initializable, Observer {
 
     @FXML
     private Text timeOutput;
+    @FXML
+    private TableView<Rent> tableViewRents;
+
+    @FXML
+    private TableColumn<?,?> userNameCol, fromCol, untilCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -26,6 +37,23 @@ public class DashboardController implements Initializable, Observer {
         timeOutput.setText(String.format("%02d:%02d:%02d\n", hour,min,sec));
         Clock.getInstance().addObserver(this);
         Clock.getInstance().triggerObserver();
+
+        userNameCol.setCellValueFactory(
+                new PropertyValueFactory<>("UserName"));
+
+        fromCol.setCellValueFactory(
+                new PropertyValueFactory<>("From"));
+
+        untilCol.setCellValueFactory(
+                new PropertyValueFactory<>("Until"));
+
+        List<Rent> criticalRents = null;
+        try {
+            criticalRents = FXCollections.observableArrayList(DBConnection.getInstance().getCriticalRents());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tableViewRents.setItems((ObservableList<Rent>) criticalRents);
     }
 
     @Override

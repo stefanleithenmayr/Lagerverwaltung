@@ -903,4 +903,15 @@ public class DBConnection {
 
         return returnList;
     }
+
+    public List<Rent> getCriticalRents() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM rent r where DATEDIFF(CURRENT_DATE(), r.rentuntil) > 0");
+
+        List<Rent> rents = new ArrayList<>();
+        while (rs.next()){
+            rents.add(new Rent(rs.getInt("RENTNR"), rs.getString("USERNAME"),rs.getString("RENTFROM"), rs.getString("RENTUNTIL")));
+        }
+        return rents;
+    }
 }

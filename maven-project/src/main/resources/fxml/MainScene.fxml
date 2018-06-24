@@ -153,5 +153,6 @@
             </Text>
          </graphic>
       </Button>
+      <Button fx:id="dashboardBT" layoutY="8.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" />
    </children>
 </AnchorPane>
