@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:id="dashboardPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+<AnchorPane fx:id="dashboardPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/dashboardStyleDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
-      <Text fx:id="timeOutput" fill="WHITE" layoutX="356.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00" wrappingWidth="230.13671875" AnchorPane.leftAnchor="356.0" AnchorPane.topAnchor="28.5703125">
+      <Text fx:id="timeOutput" fill="WHITE" layoutX="356.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00" wrappingWidth="230.13671875" AnchorPane.leftAnchor="370.0" AnchorPane.topAnchor="28.5703125">
          <font>
             <Font size="56.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="14.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aktuelle Uhrzeit:">
+      <Text fill="WHITE" layoutX="14.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aktuelle Uhrzeit:" AnchorPane.leftAnchor="30.0">
          <font>
             <Font size="45.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tableViewRents" layoutX="35.0" layoutY="110.0" prefHeight="400.0" prefWidth="649.0" style="-fx-fill: #F06060;" stylesheets="@../css/rentsDARK.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="180.0">
+         <columns>
+            <TableColumn fx:id="userNameCol" prefWidth="250.0" text="Username" />
+            <TableColumn fx:id="fromCol" prefWidth="250.0" text="From" />
+            <TableColumn fx:id="untilCol" prefWidth="250.0" text="Until" />
+         </columns>
+      </TableView>
+      <Text fill="WHITE" layoutX="14.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Critical Rents" AnchorPane.leftAnchor="30.0">
+         <font>
+            <Font size="35.0" />
          </font>
       </Text>
    </children>

@@ -31,7 +31,7 @@ public class MainSceneController implements Initializable {
     private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, returnProductPane, userManagerPane, exportDatasPane, dashboardPane, rentManagerPane, setsManagerPane, showSetsPane,deleteItemPane;
     @FXML
     private Button cancelBT, btProductManager, showItemsBT, rentBT, exportDatasBT, returnProductBT, userManagerBT, btSetsManager, btShowSets,
-            btCreateNewSet, btDeleteItem, btAddItem;
+            btCreateNewSet, btDeleteItem, btAddItem, dashboardBT;
     @FXML
     private JFXToggleButton changeThemeBT;
     @FXML
@@ -582,6 +582,13 @@ public class MainSceneController implements Initializable {
                     showSetsPane.getStylesheets().add("css/showSetsDARK.css");
                 }
                 acutalPane = "showSetsPane";
+                break;
+            case "dashboardBT":
+                dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
+                subPane.getChildren().add(dashboardPane);
+                dashboardPane.setPrefWidth(bounds.getWidth() - 280);
+                dashboardPane.setPrefHeight(bounds.getHeight() - 120);
+                acutalPane = "dashBoardPane";
                 break;
         }
     }
