@@ -364,7 +364,7 @@ public class DBConnection {
      */
     public void deleteProduct(int id) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("DELETE FROM product WHERE ProductNr = " + id);
+        stmt.execute("DELETE FROM product WHERE productnr = " + id);
         conn.commit();
     }
 
@@ -629,7 +629,8 @@ public class DBConnection {
 
     public int createNewSetHeaderProduct(int productTypeID) throws SQLException {
         int productID = this.getLastProductID()+1;
-        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL,'"+Integer.toString(productID) +"', Null, "+ 2+")" ;
+        String ean = this.getEanByID(productID);
+        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL,'"+ean +"', Null, "+ 2+")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return  productID;
@@ -939,5 +940,46 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
         return  products;
+    }
+
+    public List<Product> getAllChildsOfProduct(Integer productID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT  * from product where  superproductnr= "+productID);
+
+        List<Product> products = new ArrayList<>();
+        while(rs.next()){
+            products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"),
+                    rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
+        }
+        return  products;
+    }
+
+    public List<Product> getAllSetHaders() throws SQLException {
+        List<Product> headers = new ArrayList<>();
+        List<Product> products = this.getAllProducts();
+        for (int i = 0; i < products.size(); i++){
+            if (products.get(i).getSuperProductID() != null && !products.get(i).getSuperProductID().equals(0) && !IsInSetHeaders(products.get(i).getSuperProductID(), headers)){
+                headers.add(this.getProductByProductID(products.get(i).getSuperProductID()));
+            }
+        }
+        return headers;
+    }
+
+    private boolean IsInSetHeaders(Integer productID, List<Product> headers) {
+        for (int i = 0; i < headers.size(); i++){
+            if (headers.get(i).getProductID().equals(productID)) return true;
+        }
+        return  false;
+    }
+
+    public void setSuperProductNrNullBySuperProductNR(Integer superproductID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("UPDATE product set superproductnr = " + null +" where superproductnr = "+ superproductID);
+    }
+
+    public void deleteProductTypeByID(Integer producttypeID) throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.execute("DELETE FROM producttype WHERE producttypenr = " + producttypeID);
+        conn.commit();
     }
 }
