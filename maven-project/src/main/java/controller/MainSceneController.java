@@ -23,6 +23,7 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class MainSceneController implements Initializable {
@@ -160,11 +161,20 @@ public class MainSceneController implements Initializable {
         Transition12.setDuration(Duration.millis(500));
         Transition12.setNode(btAddItem);
 
-
         TranslateTransition Transition15 = new TranslateTransition();
         Transition15.setDuration(Duration.millis(500));
         Transition15.setNode(btDeleteItem);
-
+/*
+        TranslateTransition Transition16 = new TranslateTransition();
+        Transition15.setDuration(Duration.millis(500));
+        Transition15.setNode(returnProductBT);
+        TranslateTransition Transition17 = new TranslateTransition();
+        Transition15.setDuration(Duration.millis(500));
+        Transition15.setNode(rentBT);
+        TranslateTransition Transition18 = new TranslateTransition();
+        Transition15.setDuration(Duration.millis(500));
+        Transition15.setNode(showItemsBT);
+*/
         if (!isDownRents){
             translateTransition.setToY(150);
             secondTransition.setToY(150);
@@ -182,7 +192,6 @@ public class MainSceneController implements Initializable {
             }
             Transition12.setToY(150);
             Transition15.setToY(150);
-
 
             ParallelTransition pT = new ParallelTransition();
             pT.getChildren().addAll(translateTransition, secondTransition,
@@ -597,17 +606,17 @@ public class MainSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         theme = false;
         try {
-            addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
-            showItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml")));
-            rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));
-            returnProductPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ReturnProductScene.fxml")));
-            userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
-            exportDatasPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml")));
+            //addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
+            //showItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowItemsScene.fxml")));
+            //rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));
+            //returnProductPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ReturnProductScene.fxml")));
+            //userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
+            //exportDatasPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml")));
             dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
-            rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
-            setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
-            showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
-
+            //rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
+            //setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
+            //showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
+            //deleteItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DeleteItem.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -617,7 +626,7 @@ public class MainSceneController implements Initializable {
         subPane.setPrefWidth(bounds.getWidth() - 280);
         subPane.setPrefHeight(bounds.getHeight() - 120);
 
-        addItemPane.setPrefWidth(bounds.getWidth() - 280);
+        /*addItemPane.setPrefWidth(bounds.getWidth() - 280);
         addItemPane.setPrefHeight(bounds.getHeight() - 120);
 
         showItemPane.setPrefWidth(bounds.getWidth() - 280);
@@ -633,19 +642,19 @@ public class MainSceneController implements Initializable {
         userManagerPane.setPrefHeight(bounds.getHeight() - 120);
 
         exportDatasPane.setPrefWidth(bounds.getWidth() - 280);
-        exportDatasPane.setPrefHeight(bounds.getHeight() - 120);
+        exportDatasPane.setPrefHeight(bounds.getHeight() - 120);*/
 
         dashboardPane.setPrefWidth(bounds.getWidth() - 280);
         dashboardPane.setPrefHeight(bounds.getHeight() - 120);
 
-        rentManagerPane.setPrefWidth(bounds.getWidth() - 280);
+        /*rentManagerPane.setPrefWidth(bounds.getWidth() - 280);
         rentManagerPane.setPrefHeight(bounds.getHeight() - 120);
 
         setsManagerPane.setPrefWidth(bounds.getWidth() - 280);
         setsManagerPane.setPrefHeight(bounds.getHeight() - 120);
 
         showSetsPane.setPrefWidth(bounds.getWidth() - 280);
-        showSetsPane.setPrefHeight(bounds.getHeight() - 120);
+        showSetsPane.setPrefHeight(bounds.getHeight() - 120);*/
 
 
         subPane.getChildren().add(dashboardPane);
@@ -663,5 +672,10 @@ public class MainSceneController implements Initializable {
         isDownRents = false;
         isDownSetsManager = false;
         acutalPane = "";
+        /*try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
     }
 }

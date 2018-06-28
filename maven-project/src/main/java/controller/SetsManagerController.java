@@ -41,6 +41,7 @@ public class SetsManagerController implements Initializable {
     @FXML
     Label LyourSet;
 
+
     @FXML
     private void createNewSet() throws SQLException {
         if (tfSetName.getText().equals("")){
@@ -126,19 +127,6 @@ public class SetsManagerController implements Initializable {
         descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
 
-/*
-        try {
-            DBConnection.getInstance().deleteAllDatas();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            DBConnection.getInstance().InsertTestDatas();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-*/
 
         try {
             refreshTTV(0);
@@ -149,20 +137,25 @@ public class SetsManagerController implements Initializable {
         tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
+/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
     }
-    private void  refreshTTV(int i) throws SQLException {
+    private void  refreshTTV(Integer i) throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
 
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
         if (listHeaders == null) return;
-
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(listHeader.getProducttypeID());
             for (Product child: childs){
-                if (i == 0)products.add(child);
-                if (i == 1){
+                if (i.equals(0))products.add(child);
+                if (i.equals(1)){
                     removeProduct(child.getProductID());
                     products.add(child);
                 }
@@ -183,7 +176,7 @@ public class SetsManagerController implements Initializable {
 
     private boolean IsProductSelected(Integer productID) {
         for (Product product : products){
-            if (product.getProductID() == productID && product.getSelected().isSelected()){
+            if (product.getProductID().equals(productID)  && product.getSelected().isSelected()){
                 return true;
             }
         }
@@ -206,7 +199,7 @@ public class SetsManagerController implements Initializable {
 
     private void removeProduct(Integer productID) {
         for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getProductID() == productID){
+            if (products.get(i).getProductID().equals(productID) ){
                 products.remove(i);
             }
         }
@@ -224,7 +217,7 @@ public class SetsManagerController implements Initializable {
     }
     private boolean IsProductInSelectedList(Integer productID) {
         for (Product product : finalSelectedProducts){
-            if (product.getProductID() == productID){
+            if (product.getProductID().equals(productID) ){
                 return  true;
             }
         }
@@ -236,45 +229,22 @@ public class SetsManagerController implements Initializable {
         TTVfinalProductsForSet.refresh();
     }
     @FXML
-    public void addProductToListByEanCode() throws SQLException {
+    public void eanEntered() throws SQLException {
+        if (tfEanCode.getText().length() != 11) return;
         String code = tfEanCode.getText();
         Product scannedProduct = DBConnection.getInstance().getProductByProductEanNotInASet(code);
-        if (scannedProduct == null) return;
+        if (scannedProduct == null){
+            tfEanCode.clear();
+            return;
+        }
         for (int i = 0; i < products.size(); i++){
-            if (scannedProduct.getProductID().equals(products.get(i).getProductID())){
-
+            if (scannedProduct.getProductID().equals( products.get(i).getProductID())){
                 CheckBox cb = new CheckBox();
                 cb.setSelected(true);
                 products.get(i).setSelected(cb);
             }
         }
         this.addSelectedProductsFromTTV();
-        /*
-        TreeItem<Product> rootTTVFinalProductsForSet = new TreeItem<>(new Product(DBConnection.getInstance().getLastProductID()
-                ,null,null,null, null, null));
-        TTVfinalProductsForSet.setVisible(true);
-        LyourSet.setVisible(true);
-        for (Product product : products){
-            if (IsProductInSelectedList(product.getProductID()) || product.getSelected() != null && product.getSelected().isSelected()||product.getProductEan().equals(scannedProduct.getProductEan())){
-                finalSelectedProducts.add(product);
-                TreeItem<Product> cache = new TreeItem<>(product);
-                printSetsTree(product, cache);
-                rootTTVFinalProductsForSet.getChildren().add(cache);
-                product.setIsChild(false);
-                break;
-            }
-        }
-        if (rootTTVFinalProductsForSet.getChildren().size() > 1){
-            btCreateSet.setVisible(true);
-        }
-        TTVfinalProductsForSet.setShowRoot(false);
-        TTVfinalProductsForSet.setRoot(rootTTVFinalProductsForSet);
-        refreshTTV(1);*/
         tfEanCode.clear();
-    }
-
-    @FXML
-    public void eanCodeEntered(){
-        System.out.println("Hallo Welt");
     }
 }

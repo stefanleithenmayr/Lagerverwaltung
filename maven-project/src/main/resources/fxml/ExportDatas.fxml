@@ -6,16 +6,16 @@
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="exportDatasPane" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/exportDatasDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ExportDatasController">
+<AnchorPane fx:id="exportDatasPane" onMouseMoved="#refresh" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/exportDatasDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ExportDatasController">
    <children>
       <JFXButton fx:id="btnExport" layoutX="903.0" layoutY="542.0" onAction="#exportDatas" styleClass="btStyle" text="Export" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="32.0" />
-      <TreeTableView fx:id="TTVProductToChoose" layoutX="29.0" layoutY="85.0" prefHeight="449.0" prefWidth="939.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="85.0">
+      <TreeTableView fx:id="TTVProductToChoose" layoutX="29.0" layoutY="85.0" onMouseMoved="#refresh" prefHeight="449.0" prefWidth="939.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="85.0">
          <columns>
             <TreeTableColumn fx:id="prodNameCol" prefWidth="418.0" text="Producttype Name" />
             <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="889.0" text="Description" />
             <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="121.0" text="Select" />
          </columns>
       </TreeTableView>
-      <JFXTextField fx:id="tfSearch" layoutX="23.0" layoutY="30.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Search" style="-fx-font-color: white;" />
+      <JFXTextField fx:id="tfSearch" layoutX="23.0" layoutY="30.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Serach" />
    </children>
 </AnchorPane>

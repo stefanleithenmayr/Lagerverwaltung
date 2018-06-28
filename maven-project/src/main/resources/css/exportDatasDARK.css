@@ -9,13 +9,6 @@
     -fx-text-fill: white;
 }
 
-.text-field{
-    -fx-font-size: 19;
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
 .textFieldStyle{
     -fx-prompt-text-fill: white;
     -fx-unfocus-color: white;

@@ -1,10 +1,12 @@
 package controller;
 
 import javafx.animation.*;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -173,9 +175,23 @@ public class RentManagerController implements Initializable {
             firstLoader.setLocation(getClass().getClassLoader().getResource("fxml/UserSelectionScene.fxml"));
             userSelectionPane = firstLoader.load();
 
-            secondLoader = new FXMLLoader();
-            secondLoader.setLocation(getClass().getClassLoader().getResource("fxml/ItemSelectionScene.fxml"));
-            itemSelectionPane = secondLoader.load();
+            Task<Parent> loadTask = new Task<Parent>() {
+                @Override
+                public Parent call() throws IOException {
+                    secondLoader = new FXMLLoader();
+                    secondLoader.setLocation(getClass().getClassLoader().getResource("fxml/ItemSelectionScene.fxml"));
+                    itemSelectionPane = secondLoader.load();
+                    Screen screen = Screen.getPrimary();
+                    Rectangle2D bounds = screen.getVisualBounds();
+                    itemSelectionPane.setPrefWidth(bounds.getWidth() - 280);
+                    itemSelectionPane.setPrefHeight(bounds.getHeight() - 300);
+                    return itemSelectionPane;
+                }
+            };
+
+            Thread thread = new Thread(loadTask);
+            thread.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -186,8 +202,7 @@ public class RentManagerController implements Initializable {
         userSelectionPane.setPrefWidth(bounds.getWidth() - 280);
         userSelectionPane.setPrefHeight(bounds.getHeight() - 300);
 
-        itemSelectionPane.setPrefWidth(bounds.getWidth() - 280);
-        itemSelectionPane.setPrefHeight(bounds.getHeight() - 300);
+
         subPane.getChildren().add(userSelectionPane);
     }
 }
