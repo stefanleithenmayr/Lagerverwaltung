@@ -57,6 +57,7 @@ public class SetsManagerController implements Initializable {
         for (int i = 0; i < finalSelectedProducts.size(); i++){
             DBConnection.getInstance().addProductToSetHeader(finalSelectedProducts.get(i).getProductID(),productHeaderId);
         }
+        this.Prepare();
     }
     @FXML
     private  void addSelectedProductsFromTTV() throws SQLException {
@@ -119,6 +120,18 @@ public class SetsManagerController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Prepare();
+
+/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    private void Prepare() {
+        TTVfinalProductsForSet.setVisible(false);
         TTVfinalProductsForSet.setRoot(null);
         finalSelectedProducts = new ArrayList<>();
         products = new ArrayList<>();
@@ -144,6 +157,7 @@ public class SetsManagerController implements Initializable {
             e.printStackTrace();
         }*/
     }
+
     private void  refreshTTV(Integer i) throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element

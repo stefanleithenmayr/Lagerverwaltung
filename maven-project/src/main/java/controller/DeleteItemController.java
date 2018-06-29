@@ -104,6 +104,9 @@ public class DeleteItemController implements Initializable{
         for (int i = 0; i < products.size(); i++){
             if (products.get(i).getSelected().isSelected()){
                 DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
+                if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProductID()).size() == 0){
+                    DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
+                }
             }
         }
         refreshTTV(1);
