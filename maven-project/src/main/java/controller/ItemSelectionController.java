@@ -1,6 +1,11 @@
 package controller;
 
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
@@ -10,21 +15,29 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import loginPackage.DBConnection;
 import model.Product;
 import model.ProductType;
+import model.TestProduct;
 import sun.security.pkcs11.Secmod;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class ItemSelectionController implements Initializable {
 
     @FXML
-    private TreeTableView<Product> TTVProductToChoose;
+    private TreeTableView<Product> TTVProductToChoose; //Betroffene TreeTableView
     private List<Product> products;
     private List<Product> finalSelectedProducts;
     @FXML
-    private TreeTableColumn<Product, String> prodNameCol, descCol;
+    private TreeTableColumn<Product, String> prodNameCol, descCol; //Spalten
     @FXML
     private TreeTableColumn selectCol;
     @FXML

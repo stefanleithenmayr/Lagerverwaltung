@@ -5,7 +5,7 @@ import loginPackage.DBConnection;
 
 import java.sql.SQLException;
 
-public class Product {
+public class TestProduct {
 
     private Integer productID;
     private Integer producttypeID;
@@ -13,27 +13,16 @@ public class Product {
     private Integer superProductID;
     private Integer statusID;
     private CheckBox selected;
-    private String productTypeName;
-    private String productTypeDescription;
+    private int hyrachieNumber;
 
-    public Boolean getIsChild() {
-        return isChild;
-    }
-
-    public void setIsChild(Boolean listHeader) {
-        this.isChild = listHeader;
-    }
-
-    private Boolean isChild;
-
-    public Product(Integer productID, Integer producttypeID, String picture, String productean, Integer superProductID, Integer statusID){
+    public TestProduct(Integer productID, Integer producttypeID, String picture, String productean, Integer superProductID, Integer statusID, int hyrachieNumber){
         this.productID = productID;
         this. producttypeID = producttypeID;
         this.productEan = productean;
         this.superProductID = superProductID;
         this.statusID = statusID;
+        this.hyrachieNumber = hyrachieNumber;
         selected = new CheckBox();
-        setIsChild(false);
     }
     public CheckBox getSelected() {return selected; }
 
@@ -52,14 +41,6 @@ public class Product {
         return productEan;
     }
 
-    public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
-    }
-
-    public void setProductTypeDescription(String productTypeDescription) {
-        this.productTypeDescription = productTypeDescription;
-    }
-
     public Integer getSuperProductID() {
         return superProductID;
     }
@@ -68,12 +49,13 @@ public class Product {
         return statusID;
     }
     public String getProductTypeName() throws SQLException {
-        return this.productTypeName;
-        //return DBConnection.getInstance().getProductTypeNameByID(this.producttypeID);
+        return DBConnection.getInstance().getProductTypeNameByID(this.producttypeID);
     }
     public String getProductTypeDescription() throws SQLException {
-        if (isChild) return this.getProductID().toString();
-        //return DBConnection.getInstance().getProductTypeDescriptionByID(this.producttypeID);
-        return this.productTypeDescription;
+        return DBConnection.getInstance().getProductTypeDescriptionByID(this.producttypeID);
+    }
+
+    public int getHyrachieNumber() {
+        return hyrachieNumber;
     }
 }

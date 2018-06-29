@@ -107,7 +107,7 @@ public class LoginController implements Initializable {
                 newStage.initStyle(StageStyle.TRANSPARENT);
 
                 newStage.setScene(mainScene);
-                //newStage.setResizable(false);
+                newStage.setResizable(true);
                 mainScene.setFill(javafx.scene.paint.Color.TRANSPARENT);
                 newStage.show();
 
