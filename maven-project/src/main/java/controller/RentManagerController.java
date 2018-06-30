@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -74,11 +76,11 @@ public class RentManagerController implements Initializable {
         if (actualPane == 0){
             actualDataPackage  = ((UserSelectionController) firstLoader.getController()).getData();
             if (actualDataPackage == null){
-                ErrorMessageUtils.showErrorMessage("Please select a User, StartDate and EndDate!", errorRec, errorTxt);
+                ErrorMessageUtils.showErrorMessage("Please select a user, startdate and enddate!", errorRec, errorTxt);
                 return;
             }
             if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 1) {
-                ErrorMessageUtils.showErrorMessage("EndDate is before StartDate", errorRec, errorTxt);
+                ErrorMessageUtils.showErrorMessage("Enddate is before startdate", errorRec, errorTxt);
                 return;
             }
             backBT.setVisible(true);
@@ -102,6 +104,9 @@ public class RentManagerController implements Initializable {
         else if(actualPane == 1){
             List<Product> products = ((ItemSelectionController) secondLoader.getController()).getSelectedItems();
             if (products == null || products.isEmpty()){
+
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
                 ErrorMessageUtils.showErrorMessage("No Products selected!", errorRec, errorTxt);
                 return;
             }
@@ -112,7 +117,9 @@ public class RentManagerController implements Initializable {
                 }
             }
             DBConnection.getInstance().createRent(products, actualDataPackage);
-            ErrorMessageUtils.showErrorMessage("Successfully Inserted", errorRec, errorTxt);
+            errorRec.setFill(Color.web("#00802b"));
+            errorRec.setStroke(Color.web("#00802b"));
+            ErrorMessageUtils.showErrorMessage("Successfully created", errorRec, errorTxt);
             this.reset();
         }
     }

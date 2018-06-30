@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -22,7 +22,8 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <JFXTextField fx:id="eanCodeTF" layoutX="278.0" layoutY="19.0" maxWidth="643.0" minWidth="289.0" prefHeight="48.0" prefWidth="515.0" promptText="Scan your eancode" AnchorPane.leftAnchor="278.0" AnchorPane.topAnchor="25.0" />
-      <JFXButton fx:id="btAddToBoardTTV" layoutX="816.0" layoutY="34.0" onAction="#markProductAsSelected" prefHeight="31.0" prefWidth="81.0" styleClass="btStyle" text="Select" />
+      <JFXTextField fx:id="eanCodeTF" layoutX="278.0" layoutY="19.0" maxWidth="643.0" minWidth="289.0" onKeyPressed="#markProductAsSelected" prefHeight="48.0" prefWidth="515.0" promptText="Scan your eancode" AnchorPane.leftAnchor="278.0" AnchorPane.topAnchor="25.0" />
+      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1335.0" layoutY="30.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Text fx:id="errorTxt" layoutX="853.0" layoutY="48.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="34.865234375" AnchorPane.topAnchor="35.05078125" />
    </children>
 </AnchorPane>

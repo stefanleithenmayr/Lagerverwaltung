@@ -10,8 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 import loginPackage.Main;
+import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
 
@@ -39,17 +43,19 @@ public class SetsManagerController implements Initializable {
     @FXML
     private TreeTableColumn selectCol;
     @FXML
+    Rectangle errorRec;
+    @FXML
+    Text errorTxt;
+    @FXML
     Label LyourSet;
 
 
     @FXML
     private void createNewSet() throws SQLException {
         if (tfSetName.getText().equals("")){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Enter a Setname!");
-            alert.showAndWait();
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("Please enter a setname", errorRec, errorTxt);
             return;
         }
         int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
@@ -58,6 +64,9 @@ public class SetsManagerController implements Initializable {
             DBConnection.getInstance().addProductToSetHeader(finalSelectedProduct.getProductID(), productHeaderId);
         }
         this.Prepare();
+        errorRec.setFill(Color.web("#00802b"));
+        errorRec.setStroke(Color.web("#00802b"));
+        ErrorMessageUtils.showErrorMessage("Successfully created", errorRec, errorTxt);
     }
     @FXML
     private  void addSelectedProductsFromTTV() throws SQLException {
@@ -121,16 +130,10 @@ public class SetsManagerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Prepare();
-
-/*
-        try {
-            DBConnection.getInstance().InsertTestDatas();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void Prepare() {
+        LyourSet.setVisible(false);
         TTVfinalProductsForSet.setVisible(false);
         TTVfinalProductsForSet.setRoot(null);
         finalSelectedProducts = new ArrayList<>();
@@ -150,12 +153,6 @@ public class SetsManagerController implements Initializable {
         tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
-/*
-        try {
-            DBConnection.getInstance().InsertTestDatas();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void  refreshTTV(Integer i) throws SQLException {
@@ -248,11 +245,23 @@ public class SetsManagerController implements Initializable {
         String code = tfEanCode.getText();
         Product scannedProduct = DBConnection.getInstance().getProductByProductEanNotInASet(code);
         if (scannedProduct == null){
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("Scanned product is already in a Set or doesn´t exist", errorRec, errorTxt);
             tfEanCode.clear();
             return;
         }
-        for (Product product : products) {
-            if (scannedProduct.getProductID().equals(product.getProductID())) {
+        for (int i = 0; i < finalSelectedProducts.size();i++){
+            if (finalSelectedProducts.get(i).getProductID().equals(scannedProduct.getProductID())){
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("Product is already scanned", errorRec, errorTxt);
+                tfEanCode.clear();
+                return;
+            }
+        }
+        for (int i = 0; i < products.size(); i++){
+            if (scannedProduct.getProductID().equals( products.get(i).getProductID())){
                 CheckBox cb = new CheckBox();
                 cb.setSelected(true);
                 product.setSelected(cb);

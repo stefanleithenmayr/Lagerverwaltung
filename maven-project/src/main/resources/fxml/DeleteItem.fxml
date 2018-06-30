@@ -5,26 +5,26 @@
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="deleteItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            onMouseMoved="#refresh" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.141"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteItemController">
-   <TreeTableView fx:id="TTVShowProducts" layoutX="20.0" layoutY="97.0" prefHeight="769.0" prefWidth="1460.0"
-                  AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
-      <columns>
-         <TreeTableColumn fx:id="tcProductName" prefWidth="410.0" text="Producttype Name"/>
-         <TreeTableColumn fx:id="tcDescription" minWidth="9.0" prefWidth="941.0" text="Description"/>
-         <TreeTableColumn fx:id="tcSelect" minWidth="9.0" prefWidth="97.0" text="Select"/>
-      </columns>
-   </TreeTableView>
-   <JFXButton layoutX="1367.0" layoutY="840.0" onAction="#deleteSelectedProducts" prefHeight="46.0" prefWidth="113.0"
-              text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0"/>
-   <JFXTextField fx:id="tfSearch" layoutX="14.0" layoutY="26.0" maxWidth="445.0" minWidth="445.0"
-                 onKeyPressed="#serachProduct" prefHeight="59.0" prefWidth="445.0" promptText="Search"
-                 AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="0.0">
-      <font>
-         <Font size="18.0"/>
-      </font>
-   </JFXTextField>
+<AnchorPane fx:id="deleteItemPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#refresh" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteItemController">
+   <children>
+      <TreeTableView fx:id="TTVShowProducts" layoutX="20.0" layoutY="97.0" prefHeight="722.0" prefWidth="1440.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+         <columns>
+            <TreeTableColumn fx:id="tcProductName" prefWidth="410.0" text="Producttype Name" />
+            <TreeTableColumn fx:id="tcDescription" minWidth="9.0" prefWidth="941.0" text="Description" />
+            <TreeTableColumn fx:id="tcSelect" minWidth="9.0" prefWidth="97.0" text="Select" />
+         </columns>
+      </TreeTableView>
+      <JFXButton layoutX="1367.0" layoutY="840.0" onAction="#deleteSelectedProducts" prefHeight="46.0" prefWidth="113.0" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0" />
+      <JFXTextField fx:id="tfSearch" layoutX="30.0" layoutY="34.0" maxWidth="445.0" minWidth="445.0" onKeyPressed="#serachProduct" prefHeight="59.0" prefWidth="445.0" promptText="Search" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="34.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1335.0" layoutY="30.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Text fx:id="errorTxt" layoutX="1353.0" layoutY="48.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0" />
+   </children>
 </AnchorPane>
