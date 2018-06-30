@@ -166,7 +166,7 @@ public class AddItemController implements Initializable {
             slQuantity1.setValue(amount1);
         });
         try {
-            productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
+            productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllNotSetProductTypes());
         } catch (SQLException e) {
             e.printStackTrace();
         }

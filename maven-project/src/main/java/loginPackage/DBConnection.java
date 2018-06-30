@@ -982,4 +982,32 @@ public class DBConnection {
         stmt.execute("DELETE FROM producttype WHERE producttypenr = " + producttypeID);
         conn.commit();
     }
+
+    public List<ProductType> getAllNotSetProductTypes() throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rsProductTypes = stmt.executeQuery("SELECT * FROM producttype");
+        List<ProductType> productTypes = new ArrayList<>();
+
+        while (rsProductTypes.next()){
+            ProductType p = new ProductType(rsProductTypes.getInt("PRODUCTTYPENR"), rsProductTypes.getString("TYPENAME"), rsProductTypes.getString("TYPEDESCRIPTION"), null);
+            if (IsNotASetProductType(p)){
+                productTypes.add(p);
+            }
+        }
+        return productTypes;
+    }
+
+
+    private boolean IsNotASetProductType(ProductType p) throws SQLException {
+        List<Product> productsWithProductType = this.getAllProductsByProductTypeID(p.getProductTypeID());
+        List<Product> allProducts = this.getAllProducts();
+        for (int i = 0; i < productsWithProductType.size(); i++){
+            for (int k = 0; k < allProducts.size(); k++){
+                if (productsWithProductType.get(i).getProductID().equals(allProducts.get(k).getSuperProductID())){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

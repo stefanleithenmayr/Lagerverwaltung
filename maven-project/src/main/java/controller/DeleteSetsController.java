@@ -1,7 +1,6 @@
 package controller;
 
 import com.jfoenix.controls.*;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -9,6 +8,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import loginPackage.DBConnection;
 import model.Product;
 import java.net.URL;
@@ -54,6 +55,36 @@ public class DeleteSetsController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private  void serachProduct(KeyEvent event) throws SQLException {
+        TTVSets.setRoot(null);
+        KeyCode keycode = event.getCode();
+        String search = tfSearch.getText();
+        if(keycode == KeyCode.BACK_SPACE && search.length() > 0){
+            search = search.substring(0,search.length()-1);
+        }
+        else search += event.getText();
+
+        TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
+        List<Product> listHeaders = DBConnection.getInstance().getAllSetHaders();
+        for (Product listHeader : listHeaders){
+            TreeItem<Product> parent = new TreeItem<>(listHeader);
+            List<Product> childs = DBConnection.getInstance().getAllChildsOfProduct(listHeader.getProductID());
+            for(Product child : childs){
+                child.setSelected(null);
+                child.setIsChild(true);
+                TreeItem<Product> cache = new TreeItem<>(child);
+                printSetsTree(child, cache);
+                parent.getChildren().add(cache);
+            }
+            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())){
+                root.getChildren().add(parent);
+            }
+        }
+        TTVSets.setShowRoot(false);
+        TTVSets.setRoot(root);
     }
     @FXML
     public void deleteSelectedSets() throws SQLException {
