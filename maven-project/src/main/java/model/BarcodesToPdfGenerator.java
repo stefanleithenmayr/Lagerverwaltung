@@ -36,32 +36,31 @@ public class BarcodesToPdfGenerator {
         String productName = DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(products.get(0).getProductID()));
         String lastProductName;
         Barcode128 barcode128 = new Barcode128();
-        for (int i = 0; i < products.size(); i++){
-            if (Integer.toString(products.get(i).getProductID()) != null &&
-                    !Integer.toString(products.get(i).getProductID()).equals("")){
+        for (Product product : products) {
+            if (Integer.toString(product.getProductID()) != null &&
+                    !Integer.toString(product.getProductID()).equals("")) {
                 lastProductName = productName;
-                productName =DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(products.get(i).getProductID()));
-                if (!lastProductName.equals(productName) && x != 20){
-                    y-=70;
-                    x=20;
+                productName = DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(product.getProductID()));
+                if (!lastProductName.equals(productName) && x != 20) {
+                    y -= 70;
+                    x = 20;
                 }
                 ColumnText ct = new ColumnText(pdfWriter.getDirectContent());
-                ct.setSimpleColumn(x,y,600,0);//600 600
-                Paragraph p=new Paragraph();
+                ct.setSimpleColumn(x, y, 600, 0);//600 600
+                Paragraph p = new Paragraph();
                 p.add(productName);
                 ct.addElement(p);
                 ct.go();
-                String ean = products.get(i).getProductEan();
+                String ean = product.getProductEan();
                 barcode128.setCode(ean);
                 Image a = barcode128.createImageWithBarcode(pdfWriter.getDirectContent(), null, null);
-                a.setAbsolutePosition(x  , y);
-                if(productName.length() > 40){
+                a.setAbsolutePosition(x, y);
+                if (productName.length() > 40) {
                     x = 20;
-                }
-                else x = getNextXPosition2Colums(x);
-                if(x == 20)y -= 70;
+                } else x = getNextXPosition2Colums(x);
+                if (x == 20) y -= 70;
                 doc.add(a);
-                if (y == -40 && x == 270){
+                if (y == -40 && x == 270) {
                     y = 800;
                     x = 20;
                     doc.newPage();

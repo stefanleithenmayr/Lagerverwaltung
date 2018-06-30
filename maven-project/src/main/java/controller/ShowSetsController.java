@@ -40,10 +40,10 @@ public class ShowSetsController implements Initializable{
 
         TTVShowSets.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1,null,null,null, null, null));
-        for (int i = 0; i < setHeaders.size(); i++){
-            TreeItem<Product> cache = new TreeItem<>(setHeaders.get(i));
+        for (Product setHeader : setHeaders) {
+            TreeItem<Product> cache = new TreeItem<>(setHeader);
             try {
-                this.printSetsTree(setHeaders.get(i), cache);
+                this.printSetsTree(setHeader, cache);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -55,13 +55,13 @@ public class ShowSetsController implements Initializable{
 
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            Product childProduct = aListOfChildren;
+            printSetsTree(childProduct, child);
         }
     }
     @FXML

@@ -7,11 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
-import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -21,7 +20,6 @@ import model.DataPackage;
 import model.ErrorMessageUtils;
 import model.Product;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;

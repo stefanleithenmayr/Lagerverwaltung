@@ -255,11 +255,11 @@ public class DBConnection {
     }
 
     private String getEanByID(int id) {
-        String ean = Integer.toString(id);
+        StringBuilder ean = new StringBuilder(Integer.toString(id));
         for (int i = ean.length(); i < 11; i++) {
-            ean = "0" + ean;
+            ean.insert(0, "0");
         }
-        return ean;
+        return ean.toString();
     }
 
     public List<Product> getAllProductsList() throws SQLException {
@@ -651,12 +651,12 @@ public class DBConnection {
         List<Product> products = this.getAllProducts();
         List<Product> setsHeaders = new ArrayList<>();
         while (rs.next()) {
-            for (int i = 0; i < products.size(); i++) {
-                if (products.get(i).getSuperProductID() == rs.getInt("PRODUCTNR")) {
+            for (Product product : products) {
+                if (product.getSuperProductID() == rs.getInt("PRODUCTNR")) {
                     Product p = new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
                             rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
-                        p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
-                        p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
+                    p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
+                    p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
 
                     if (!setsHeadersContainProduct(p, setsHeaders)) {
                         setsHeaders.add(p);
@@ -669,8 +669,8 @@ public class DBConnection {
     }
 
     private boolean setsHeadersContainProduct(Product product, List<Product> setsHeaders) {
-        for (int i = 0; i < setsHeaders.size(); i++) {
-            if (setsHeaders.get(i).getProductID() == product.getSuperProductID()) {
+        for (Product setsHeader : setsHeaders) {
+            if (setsHeader.getProductID().equals(product.getSuperProductID())) {
                 return true;
             }
         }
@@ -812,10 +812,7 @@ public class DBConnection {
     public boolean isProductRented(Product product) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * from product where PRODUCTNR = " + product.getProductID());
-        if (rs.next()) {
-            return rs.getInt(6) == 1;
-        }
-        return false;
+        return rs.next() && rs.getInt(6) == 1;
     }
 
     public Product getProductByProductEanNotInASet(String eanCode) throws SQLException {
@@ -1002,17 +999,17 @@ public class DBConnection {
     public List<Product> getAllSetHaders() throws SQLException {
         List<Product> headers = new ArrayList<>();
         List<Product> products = this.getAllProducts();
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getSuperProductID() != null && !products.get(i).getSuperProductID().equals(0) && !IsInSetHeaders(products.get(i).getSuperProductID(), headers)){
-                headers.add(this.getProductByProductID(products.get(i).getSuperProductID()));
+        for (Product product : products) {
+            if (product.getSuperProductID() != null && !product.getSuperProductID().equals(0) && !IsInSetHeaders(product.getSuperProductID(), headers)) {
+                headers.add(this.getProductByProductID(product.getSuperProductID()));
             }
         }
         return headers;
     }
 
     private boolean IsInSetHeaders(Integer productID, List<Product> headers) {
-        for (int i = 0; i < headers.size(); i++){
-            if (headers.get(i).getProductID().equals(productID)) return true;
+        for (Product header : headers) {
+            if (header.getProductID().equals(productID)) return true;
         }
         return  false;
     }
@@ -1046,9 +1043,9 @@ public class DBConnection {
     private boolean IsNotASetProductType(ProductType p) throws SQLException {
         List<Product> productsWithProductType = this.getAllProductsByProductTypeID(p.getProductTypeID());
         List<Product> allProducts = this.getAllProducts();
-        for (int i = 0; i < productsWithProductType.size(); i++){
-            for (int k = 0; k < allProducts.size(); k++){
-                if (productsWithProductType.get(i).getProductID().equals(allProducts.get(k).getSuperProductID())){
+        for (Product aProductsWithProductType : productsWithProductType) {
+            for (Product allProduct : allProducts) {
+                if (aProductsWithProductType.getProductID().equals(allProduct.getSuperProductID())) {
                     return false;
                 }
             }

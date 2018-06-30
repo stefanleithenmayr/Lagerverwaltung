@@ -2,16 +2,13 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import loginPackage.DBConnection;
 import model.Product;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("Duplicates")
