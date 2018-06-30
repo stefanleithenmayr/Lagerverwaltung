@@ -10,7 +10,11 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import loginPackage.DBConnection;
+import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
 
@@ -27,22 +31,19 @@ public class DeleteItemController implements Initializable{
     TreeTableColumn tcProductName, tcDescription, tcSelect;
     @FXML
     JFXTextField tfSearch;
+    @FXML
+    Rectangle errorRec;
+    @FXML
+    Text errorTxt;
     private List<Product> products;
     @Override
-    public void initialize(URL location, ResourceBundle resources) {/*
-        try {
-            DBConnection.getInstance().InsertTestDatas();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+    public void initialize(URL location, ResourceBundle resources) {
         TTVShowProducts.setRoot(null);
         products = new ArrayList<>();
 
         tcProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         tcDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcSelect.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
-
-
         try {
             refreshTTV(0);
         } catch (SQLException e) {
@@ -118,7 +119,6 @@ public class DeleteItemController implements Initializable{
             search = search.substring(0,search.length()-1);
         }
         else search += event.getText();
-        System.out.println("A "+ search+" A");
 
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
 
@@ -143,15 +143,27 @@ public class DeleteItemController implements Initializable{
     }
     @FXML
     public void deleteSelectedProducts() throws SQLException {
+        boolean deleted = false;
         for (int i = 0; i < products.size(); i++){
             if (products.get(i).getSelected().isSelected()){
                 DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
                 if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProducttypeID()).size() == 0){
                     DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
                 }
+                deleted = true;
             }
         }
-        refreshTTV(1);
+        if (deleted){
+            errorRec.setFill(Color.web("#00802b"));
+            errorRec.setStroke(Color.web("#00802b"));
+            ErrorMessageUtils.showErrorMessage("Successfully deleted", errorRec, errorTxt);
+            refreshTTV(1);
+        }
+        else{
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("No products selected", errorRec, errorTxt);
+        }
     }
     @FXML
     public void refresh(){TTVShowProducts.refresh();}

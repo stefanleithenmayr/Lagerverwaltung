@@ -8,8 +8,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import loginPackage.DBConnection;
+import model.ErrorMessageUtils;
 import model.Output;
+import model.Product;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,13 +29,30 @@ public class ReturnProductController implements Initializable {
     private TableColumn<?,?> productNrCol, productNameCol, sucessfullCol, userNameCol;
     @FXML
     private JFXTextField eanCodeTF;
+    @FXML
+    Rectangle errorRec;
+    @FXML
+    Text errorTxt;
 
     @FXML
     private void addToBoard() throws SQLException {
+        if (eanCodeTF.getText().equals("")){
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("No eancode scanned", errorRec, errorTxt);
+        }
         String eanCode = eanCodeTF.getText();
         if (eanCode != null && !eanCode.isEmpty()){
-            List<Output> outputs = FXCollections.observableArrayList(DBConnection.getInstance().unrentAllProducts(DBConnection.getInstance().getProductPerEan(eanCode)));
-            logTV.setItems((ObservableList) outputs);
+            Product p = DBConnection.getInstance().getProductPerEan(eanCode);
+            if (DBConnection.getInstance().IsProductRented(p)){
+                List<Output> outputs = FXCollections.observableArrayList(DBConnection.getInstance().unrentAllProducts(p));
+                logTV.setItems((ObservableList) outputs);
+            }
+            else{
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("Scanned product isn´t rented", errorRec, errorTxt);
+            }
         }
     }
 

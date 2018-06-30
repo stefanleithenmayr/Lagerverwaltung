@@ -201,10 +201,10 @@ public class DBConnection {
         ps.executeUpdate();
 
 
-        SQLCommand = "INSERT INTO STATUS VALUES(1,'Ausgeliehen')";
+        SQLCommand = "INSERT INTO status VALUES(1,'Ausgeliehen')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "INSERT INTO STATUS VALUES(2,'Im Lager')";
+        SQLCommand = "INSERT INTO status VALUES(2,'Im Lager')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         String ean = this.getEanByID(1);
@@ -1054,5 +1054,16 @@ public class DBConnection {
             }
         }
         return true;
+    }
+
+    public boolean IsProductRented(Product product) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM item");
+        while(rs.next()){
+            if (rs.getInt("productnr") == product.getProductID()){
+                return true;
+            }
+        }
+        return  false;
     }
 }

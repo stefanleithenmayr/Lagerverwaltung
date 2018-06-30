@@ -12,6 +12,7 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import loginPackage.DBConnection;
@@ -19,11 +20,11 @@ import model.BarcodesToPdfGenerator;
 import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
-
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.List;
 
 public class ExportDatasController implements Initializable {
     @FXML
@@ -64,16 +65,22 @@ public class ExportDatasController implements Initializable {
     public void exportDatas() throws SQLException, FileNotFoundException, DocumentException {
         List<Product> selectedProducts = new ArrayList<>();
         for (int i = 0; i < products.size(); i++){
+            CheckBox c = products.get(i).getSelected();
             if (products.get(i).getSelected() != null && products.get(i).getSelected().isSelected()){
                 selectedProducts.add(products.get(i));
             }
         }
         if (selectedProducts.size() == 0){
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("No products selected", errorRec, errorTxt);
             return;
         }
 
         BarcodesToPdfGenerator.generateBarcoeds(selectedProducts);
+        errorRec.setFill(Color.web("#00802b"));
+        errorRec.setStroke(Color.web("#00802b"));
+        ErrorMessageUtils.showErrorMessage("PDF Succesfully created", errorRec, errorTxt);
     }
 
     @FXML
@@ -92,6 +99,7 @@ public class ExportDatasController implements Initializable {
         if (listHeaders == null) return;
 
         for (Product listHeader : listHeaders){
+            if (!listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())) break;
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
             for (Product child: childs){
@@ -151,6 +159,8 @@ public class ExportDatasController implements Initializable {
                     cb.setSelected(true);
                     child.setSelected(cb);
                 }
+                removeProductByProductID(child.getProductID());
+                products.add(child);
                 child.setIsChild(true);
                 TreeItem<Product> cache = new TreeItem<>(child);
                 printSetsTree(child, cache);
@@ -163,6 +173,14 @@ public class ExportDatasController implements Initializable {
         }
         TTVProductToChoose.setShowRoot(false);
         TTVProductToChoose.setRoot(root);
+    }
+
+    private void removeProductByProductID(Integer productID) {
+        for (int i = 0; i < products.size(); i++){
+            if (products.get(i).getProductID().equals(productID)){
+                products.remove(i);
+            }
+        }
     }
 
     private boolean getSelectedByID(Integer productID) {
