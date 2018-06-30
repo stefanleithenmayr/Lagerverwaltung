@@ -24,7 +24,11 @@ public class DeleteItemController implements Initializable{
     @FXML
     TreeTableView<Product> TTVShowProducts;
     @FXML
-    TreeTableColumn tcProductName, tcDescription, tcSelect;
+    TreeTableColumn<Object, Object> tcProductName;
+    @FXML
+    TreeTableColumn tcDescription;
+    @FXML
+    TreeTableColumn tcSelect;
     @FXML
     JFXTextField tfSearch;
     private List<Product> products;
@@ -99,13 +103,13 @@ public class DeleteItemController implements Initializable{
     }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            Product childProduct = aListOfChildren;
+            printSetsTree(childProduct, child);
         }
     }
 
@@ -143,11 +147,11 @@ public class DeleteItemController implements Initializable{
     }
     @FXML
     public void deleteSelectedProducts() throws SQLException {
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getSelected().isSelected()){
-                DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
-                if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProducttypeID()).size() == 0){
-                    DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
+        for (Product product : products) {
+            if (product.getSelected().isSelected()) {
+                DBConnection.getInstance().deleteProduct(product.getProductID());
+                if (DBConnection.getInstance().getAllProductsByProductTypeID(product.getProducttypeID()).size() == 0) {
+                    DBConnection.getInstance().deleteProductTypeByID(product.getProducttypeID());
                 }
             }
         }

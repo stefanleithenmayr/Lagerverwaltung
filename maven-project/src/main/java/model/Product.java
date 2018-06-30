@@ -1,7 +1,6 @@
 package model;
 
 import javafx.scene.control.CheckBox;
-import loginPackage.DBConnection;
 
 import java.sql.SQLException;
 
