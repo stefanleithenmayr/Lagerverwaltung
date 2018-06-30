@@ -28,7 +28,11 @@ public class DeleteItemController implements Initializable{
     @FXML
     TreeTableView<Product> TTVShowProducts;
     @FXML
-    TreeTableColumn tcProductName, tcDescription, tcSelect;
+    TreeTableColumn<Object, Object> tcProductName;
+    @FXML
+    TreeTableColumn tcDescription;
+    @FXML
+    TreeTableColumn tcSelect;
     @FXML
     JFXTextField tfSearch;
     @FXML
@@ -100,13 +104,13 @@ public class DeleteItemController implements Initializable{
     }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            Product childProduct = aListOfChildren;
+            printSetsTree(childProduct, child);
         }
     }
 

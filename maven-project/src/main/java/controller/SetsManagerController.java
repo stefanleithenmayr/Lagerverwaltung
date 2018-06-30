@@ -60,8 +60,8 @@ public class SetsManagerController implements Initializable {
         }
         int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
         int productHeaderId = DBConnection.getInstance().createNewSetHeaderProduct(productTypeID);
-        for (int i = 0; i < finalSelectedProducts.size(); i++){
-            DBConnection.getInstance().addProductToSetHeader(finalSelectedProducts.get(i).getProductID(),productHeaderId);
+        for (Product finalSelectedProduct : finalSelectedProducts) {
+            DBConnection.getInstance().addProductToSetHeader(finalSelectedProduct.getProductID(), productHeaderId);
         }
         this.Prepare();
         errorRec.setFill(Color.web("#00802b"));
@@ -217,13 +217,13 @@ public class SetsManagerController implements Initializable {
     }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            Product childProduct = aListOfChildren;
+            printSetsTree(childProduct, child);
         }
     }
     private boolean IsProductInSelectedList(Integer productID) {
@@ -264,7 +264,7 @@ public class SetsManagerController implements Initializable {
             if (scannedProduct.getProductID().equals( products.get(i).getProductID())){
                 CheckBox cb = new CheckBox();
                 cb.setSelected(true);
-                products.get(i).setSelected(cb);
+                product.setSelected(cb);
             }
         }
         this.addSelectedProductsFromTTV();

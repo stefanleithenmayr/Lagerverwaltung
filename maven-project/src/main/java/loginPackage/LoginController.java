@@ -93,6 +93,8 @@ public class LoginController implements Initializable {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+
+                assert mainRoot != null;
                 Scene mainScene = new Scene(mainRoot);
                 Stage newStage = new Stage();
 

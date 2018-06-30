@@ -61,6 +61,7 @@ public class UserManagerController implements Initializable{
             user.setIsActivated(true);
         }
 
+        assert user != null;
         if (user.getUserNameField().getText().equals("Replace with Username")){
             obList.remove(user);
         }

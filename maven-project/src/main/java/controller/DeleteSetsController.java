@@ -29,7 +29,11 @@ public class DeleteSetsController implements Initializable{
     @FXML
     TreeTableView<Product> TTVSets;
     @FXML
-    TreeTableColumn tcSelect,tcName, tcDescription;
+    TreeTableColumn<Object, Object> tcSelect;
+    @FXML
+    TreeTableColumn tcName;
+    @FXML
+    TreeTableColumn tcDescription;
     @FXML
     Rectangle errorRec;
     @FXML
@@ -76,12 +80,12 @@ public class DeleteSetsController implements Initializable{
     public void deleteSelectedSets() throws SQLException {
         boolean deleted = false;
         if (!cbdDeleteSubsets.isSelected()){
-            for (int i = 0; i < setHeaders.size(); i++){
-                if (setHeaders.get(i).getSelected().isSelected()){
-                    DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(setHeaders.get(i).getProductID());
-                    DBConnection.getInstance().deleteProduct(setHeaders.get(i).getProductID());
-                    if (DBConnection.getInstance().getAllProductsByProductTypeID(setHeaders.get(i).getProductID()).size() == 0){
-                        DBConnection.getInstance().deleteProductTypeByID(setHeaders.get(i).getProducttypeID());
+            for (Product setHeader : setHeaders) {
+                if (setHeader.getSelected().isSelected()) {
+                    DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(setHeader.getProductID());
+                    DBConnection.getInstance().deleteProduct(setHeader.getProductID());
+                    if (DBConnection.getInstance().getAllProductsByProductTypeID(setHeader.getProductID()).size() == 0) {
+                        DBConnection.getInstance().deleteProductTypeByID(setHeader.getProducttypeID());
                     }
                     deleted = true;
                 }
@@ -94,7 +98,6 @@ public class DeleteSetsController implements Initializable{
                     deleted = true;
                 }
             }
-        }
         if (deleted){
             errorRec.setFill(Color.web("#00802b"));
             errorRec.setStroke(Color.web("#00802b"));
@@ -139,8 +142,7 @@ public class DeleteSetsController implements Initializable{
                 DBConnection.getInstance().deleteProductTypeByID(head.getProducttypeID());
             }
         }
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            Product childProduct = listOfChildren.get(i);
+        for (Product childProduct : listOfChildren) {
             DeleteSetsWithUnderSets(childProduct);
         }
     }
@@ -189,13 +191,13 @@ public class DeleteSetsController implements Initializable{
     }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            Product childProduct = aListOfChildren;
+            printSetsTree(childProduct, child);
         }
     }
 }

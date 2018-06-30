@@ -12,22 +12,22 @@ public class Output {
     }
 
     public String getProductNr() {
-        String output = "     ";
+        StringBuilder output = new StringBuilder("     ");
         for (int i = 0; i < level*10; i++) {
-            output += " ";
+            output.append(" ");
         }
-        output += this.productNr;
-        return output;
+        output.append(this.productNr);
+        return output.toString();
 
     }
 
     public String getProductName() {
-        String output = String.format("%15s", "");
+        StringBuilder output = new StringBuilder(String.format("%15s", ""));
         for (int i = 0; i < level*10; i++) {
-            output += " ";
+            output.append(" ");
         }
-        output += this.productName;
-        return output;
+        output.append(this.productName);
+        return output.toString();
     }
 
     public String getSuccessfully() {

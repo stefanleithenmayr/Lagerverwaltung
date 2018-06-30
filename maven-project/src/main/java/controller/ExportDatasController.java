@@ -68,6 +68,7 @@ public class ExportDatasController implements Initializable {
             CheckBox c = products.get(i).getSelected();
             if (products.get(i).getSelected() != null && products.get(i).getSelected().isSelected()){
                 selectedProducts.add(products.get(i));
+
             }
         }
         if (selectedProducts.size() == 0){
@@ -135,13 +136,13 @@ public class ExportDatasController implements Initializable {
     }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            Product childProduct = aListOfChildren;
+            printSetsTree(childProduct, child);
         }
     }
     private void  refreshTTV() throws SQLException {
@@ -184,8 +185,8 @@ public class ExportDatasController implements Initializable {
     }
 
     private boolean getSelectedByID(Integer productID) {
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getProductID().equals(productID) && products.get(i).getSelected() != null && products.get(i).getSelected().isSelected()){
+        for (Product product : products) {
+            if (product.getProductID().equals(productID) && product.getSelected() != null && product.getSelected().isSelected()) {
                 return true;
             }
         }
@@ -195,10 +196,10 @@ public class ExportDatasController implements Initializable {
     @FXML
     public void seletcAll() throws SQLException {
         tfSearch.clear();
-        for (int i = 0; i < products.size(); i++){
+        for (Product product : products) {
             CheckBox cb = new CheckBox();
             cb.setSelected(cbSelectAll.isSelected());
-            products.get(i).setSelected(cb);
+            product.setSelected(cb);
         }
         refreshTTV();
     }
