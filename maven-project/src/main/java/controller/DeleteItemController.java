@@ -1,7 +1,9 @@
 package controller;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
@@ -23,9 +25,16 @@ public class DeleteItemController implements Initializable{
     TreeTableView<Product> TTVShowProducts;
     @FXML
     TreeTableColumn tcProductName, tcDescription, tcSelect;
+    @FXML
+    JFXTextField tfSearch;
     private List<Product> products;
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
         TTVShowProducts.setRoot(null);
         products = new ArrayList<>();
 
@@ -74,7 +83,7 @@ public class DeleteItemController implements Initializable{
             if (p == null) break;
             p.setIsChild(false);
             p.setSelected(null);
-            if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
+            if (DBConnection.getInstance().getAllChildsOfProduct(p.getProductID()).size() == 0){
                 listHeaders.add(p);
             }
         }
@@ -99,12 +108,45 @@ public class DeleteItemController implements Initializable{
             printSetsTree(childProduct,child);
         }
     }
+
+    @FXML
+    private  void serachProduct(KeyEvent event) throws SQLException {
+        TTVShowProducts.setRoot(null);
+        KeyCode keycode = event.getCode();
+        String search = tfSearch.getText();
+        if(keycode == KeyCode.BACK_SPACE && search.length() > 0){
+            search = search.substring(0,search.length()-1);
+        }
+        else search += event.getText();
+        System.out.println("A "+ search+" A");
+
+        TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
+
+        List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        for (Product listHeader : listHeaders){
+            TreeItem<Product> parent = new TreeItem<>(listHeader);
+            List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
+            for(Product child : childs){
+                CheckBox cb = new CheckBox();
+                child.setSelected(cb);
+                child.setIsChild(true);
+                TreeItem<Product> cache = new TreeItem<>(child);
+                printSetsTree(child, cache);
+                parent.getChildren().add(cache);
+            }
+            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())){
+                root.getChildren().add(parent);
+            }
+        }
+        TTVShowProducts.setShowRoot(false);
+        TTVShowProducts.setRoot(root);
+    }
     @FXML
     public void deleteSelectedProducts() throws SQLException {
         for (int i = 0; i < products.size(); i++){
             if (products.get(i).getSelected().isSelected()){
                 DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
-                if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProductID()).size() == 0){
+                if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProducttypeID()).size() == 0){
                     DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
                 }
             }

@@ -23,8 +23,15 @@ public class BarcodesToPdfGenerator {
             return;
         }
         Document doc  = new Document(new Rectangle(PageSize.A4));
-
-        PdfWriter pdfWriter = PdfWriter.getInstance(doc, new FileOutputStream(selectedDirectory + "\\barcodes.pdf"));
+        String fileName = "\\barcodes.pdf";
+        int counter = 0;
+        File f = new File(selectedDirectory + fileName);
+        while(f.exists() && !f.isDirectory()) {
+            counter++;
+            fileName = "\\barcodes"+counter+".pdf";
+            f = new File(selectedDirectory + fileName);
+        }
+        PdfWriter pdfWriter = PdfWriter.getInstance(doc, new FileOutputStream(selectedDirectory + fileName));
         doc.open();
         String productName = DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(products.get(0).getProductID()));
         String lastProductName;
@@ -54,6 +61,11 @@ public class BarcodesToPdfGenerator {
                 else x = getNextXPosition2Colums(x);
                 if(x == 20)y -= 70;
                 doc.add(a);
+                if (y == -40 && x == 270){
+                    y = 800;
+                    x = 20;
+                    doc.newPage();
+                }
             }
         }
         doc.close();

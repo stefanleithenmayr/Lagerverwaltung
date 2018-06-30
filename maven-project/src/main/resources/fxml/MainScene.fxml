@@ -41,7 +41,7 @@
          </graphic></Button>
       <Button fx:id="exportDatasBT" layoutY="585.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0">
          <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Export Datas">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Export Barcodes">
                <font>
                   <Font size="16.0" />
                </font>

@@ -1,6 +1,7 @@
 package controller;
 
 import com.itextpdf.text.DocumentException;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,8 +12,11 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 import model.BarcodesToPdfGenerator;
+import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
 
@@ -30,6 +34,12 @@ public class ExportDatasController implements Initializable {
     private TreeTableColumn<Product, String> prodNameCol, descCol;
     @FXML
     private TreeTableColumn selectCol;
+    @FXML
+    Rectangle errorRec;
+    @FXML
+    Text errorTxt;
+    @FXML
+    JFXCheckBox cbSelectAll;
     List<Product> products;
 
     @Override
@@ -45,7 +55,7 @@ public class ExportDatasController implements Initializable {
         selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
 
         try {
-            refreshTTV(0);
+            refreshTTV();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,6 +68,11 @@ public class ExportDatasController implements Initializable {
                 selectedProducts.add(products.get(i));
             }
         }
+        if (selectedProducts.size() == 0){
+            ErrorMessageUtils.showErrorMessage("No products selected", errorRec, errorTxt);
+            return;
+        }
+
         BarcodesToPdfGenerator.generateBarcoeds(selectedProducts);
     }
 
@@ -71,20 +86,20 @@ public class ExportDatasController implements Initializable {
         }
         else search += event.getText();
 
+        TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        if (listHeaders == null) return;
+
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
-            for(Product child : childs){
-                if (IsProductSelected(child.getProductID())){
+            for (Product child: childs){
+                if (getSelectedByID(child.getProductID())){
                     CheckBox cb = new CheckBox();
                     cb.setSelected(true);
                     child.setSelected(cb);
                 }
-                removeProduct(child.getProductID());
-                products.add(child);
-
                 child.setIsChild(true);
                 TreeItem<Product> cache = new TreeItem<>(child);
                 printSetsTree(child, cache);
@@ -96,16 +111,6 @@ public class ExportDatasController implements Initializable {
         }
         TTVProductToChoose.setShowRoot(false);
         TTVProductToChoose.setRoot(root);
-    }
-
-
-    private boolean IsProductSelected(Integer productID) {
-        for (Product product : products){
-            if (product.getProductID() == productID && product.getSelected().isSelected()){
-                return true;
-            }
-        }
-        return false;
     }
 
     private List<Product> GetListHeaders(List<ProductType> productTypes) throws SQLException {
@@ -120,14 +125,6 @@ public class ExportDatasController implements Initializable {
         }
         return  listHeaders;
     }
-
-    private void removeProduct(Integer productID) {
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getProductID() == productID){
-                products.remove(i);
-            }
-        }
-    }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
         for(int i = 0; i < listOfChildren.size(); i++) {
@@ -139,10 +136,9 @@ public class ExportDatasController implements Initializable {
             printSetsTree(childProduct,child);
         }
     }
-    private void  refreshTTV(int i) throws SQLException {
+    private void  refreshTTV() throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
-        List<ProductType> productTypes = DBConnection.getInstance().getAllProductTypes();
         List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
         if (listHeaders == null) return;
 
@@ -150,10 +146,10 @@ public class ExportDatasController implements Initializable {
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
             for (Product child: childs){
-                if (i == 0)products.add(child);
-                if (i == 1){
-                    removeProduct(child.getProductID());
-                    products.add(child);
+                if (getSelectedByID(child.getProductID())){
+                    CheckBox cb = new CheckBox();
+                    cb.setSelected(true);
+                    child.setSelected(cb);
                 }
                 child.setIsChild(true);
                 TreeItem<Product> cache = new TreeItem<>(child);
@@ -167,6 +163,26 @@ public class ExportDatasController implements Initializable {
         }
         TTVProductToChoose.setShowRoot(false);
         TTVProductToChoose.setRoot(root);
+    }
+
+    private boolean getSelectedByID(Integer productID) {
+        for (int i = 0; i < products.size(); i++){
+            if (products.get(i).getProductID().equals(productID) && products.get(i).getSelected() != null && products.get(i).getSelected().isSelected()){
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    @FXML
+    public void seletcAll() throws SQLException {
+        tfSearch.clear();
+        for (int i = 0; i < products.size(); i++){
+            CheckBox cb = new CheckBox();
+            cb.setSelected(cbSelectAll.isSelected());
+            products.get(i).setSelected(cb);
+        }
+        refreshTTV();
     }
     @FXML
     public void refresh(){

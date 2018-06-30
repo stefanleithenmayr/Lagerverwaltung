@@ -8,6 +8,10 @@
     -fx-border-width: 0.5;
     -fx-text-fill: white;
 }
+.cbStyle{
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+}
 
 .textFieldStyle{
     -fx-prompt-text-fill: white;

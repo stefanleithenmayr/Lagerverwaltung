@@ -156,3 +156,8 @@
 .tree-table-row-cell:expanded .tree-disclosure-node .arrow {
     -fx-rotate: 90;
 }
+
+.cbStyle{
+    -fx-font-size: 18;
+    -fx-text-fill: #3D4956;
+}

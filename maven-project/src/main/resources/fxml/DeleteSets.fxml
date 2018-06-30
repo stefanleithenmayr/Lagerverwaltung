@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="deleteSetsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/deleteItemDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteSetsController">
    <children>
-      <JFXTextField fx:id="tfSearch" layoutX="30.0" maxWidth="445.0" minWidth="445.0" prefHeight="59.0" prefWidth="445.0" promptText="Search" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="0.0">
+      <JFXTextField fx:id="tfSearch" layoutX="30.0" maxWidth="445.0" minWidth="445.0" onKeyPressed="#serachProduct" prefHeight="59.0" prefWidth="445.0" promptText="Search" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font size="18.0" />
          </font>
