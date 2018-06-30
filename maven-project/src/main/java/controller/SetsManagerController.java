@@ -264,7 +264,7 @@ public class SetsManagerController implements Initializable {
             if (scannedProduct.getProductID().equals( products.get(i).getProductID())){
                 CheckBox cb = new CheckBox();
                 cb.setSelected(true);
-                product.setSelected(cb);
+                products.get(i).setSelected(cb);
             }
         }
         this.addSelectedProductsFromTTV();

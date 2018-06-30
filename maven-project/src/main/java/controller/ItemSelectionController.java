@@ -1,6 +1,11 @@
 package controller;
 
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -15,13 +20,19 @@ import loginPackage.DBConnection;
 import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
+import model.TestProduct;
+import sun.security.pkcs11.Secmod;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.sql.Statement;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class ItemSelectionController implements Initializable {
@@ -61,15 +72,7 @@ public class ItemSelectionController implements Initializable {
     public void refresh(){
         TTVProductToChoose.refresh();
     }
-  
-    private boolean IsProductSelected(Integer productID) {
-        for (Product product : products){
-            if (product.getProductID().equals(productID) && product.getSelected().isSelected()){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     private List<Product> GetListHeaders(List<ProductType> productTypes) throws SQLException {
         if (productTypes == null || productTypes.isEmpty()){
@@ -119,36 +122,37 @@ public class ItemSelectionController implements Initializable {
             }
         }
 
-        products.addAll(listOfChildren);
+        for (Product p : listOfChildren){
+            products.add(p);
+        }
 
-        for (Product aListOfChildren : listOfChildren) {
-            boolean isProductRented = DBConnection.getInstance().isProductRented(aListOfChildren);
-            if (!isProductRented) {
-                aListOfChildren.setIsChild(true);
-                TreeItem<Product> child = new TreeItem<>(aListOfChildren);
+        for(int i = 0; i < listOfChildren.size(); i++) {
+            boolean isProductRented = DBConnection.getInstance().isProductRented(listOfChildren.get(i));
+            if (!isProductRented){
+                listOfChildren.get(i).setIsChild(true);
+                TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
                 father.getChildren().add(child);
-                Product childProduct = aListOfChildren;
+                Product childProduct = listOfChildren.get(i);
 
                 if (selectProducts != null){
-                        for (Product selectedProduct : selectProducts){
-                            if (childProduct.getProductEan().equals(selectedProduct.getProductEan())){
-                                CheckBox cb = new CheckBox();
-                                cb.setSelected(true);
-                                childProduct.setSelected(cb);
-                            }
+                    for (Product selectedProduct : selectProducts){
+                        if (childProduct.getProductEan().equals(selectedProduct.getProductEan())){
+                            CheckBox cb = new CheckBox();
+                            cb.setSelected(true);
+                            childProduct.setSelected(cb);
                         }
                     }
                 }
 
                 products.add(childProduct);
-                printSetsTree(selectProducts, childProduct, child);
+                printSetsTree(selectProducts,childProduct,child);
             }
         }
     }
 
     private boolean IsProductInSelectedList(Integer productID) {
         for (Product product : finalSelectedProducts){
-            if (product.getProductID().equals(productID)){
+            if (product.getProductID() == productID){
                 return  true;
             }
         }
@@ -186,12 +190,12 @@ public class ItemSelectionController implements Initializable {
                     if (i.equals(1)) {
                         removeProduct(child.getProductID());
                         if (selectProducts != null){
-                                for (Product selectedProduct : selectProducts){
-                                    if (child.getProductEan().equals(selectedProduct.getProductEan())){
-                                        CheckBox cb = new CheckBox();
-                                        cb.setSelected(true);
-                                        child.setSelected(cb);
-                                    }
+                            for (Product selectedProduct : selectProducts){
+                                if (child.getProductEan().equals(selectedProduct.getProductEan())){
+                                    CheckBox cb = new CheckBox();
+                                    cb.setSelected(true);
+                                    child.setSelected(cb);
+                                }
 
                             }
                         }
