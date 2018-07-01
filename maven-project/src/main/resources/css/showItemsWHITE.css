@@ -1,10 +1,10 @@
-#showItemPane{
+#showItemPane {
     -fx-background-color: white;
     -fx-font-size: 15px;
     -fx-text-fill: #33363F;
 }
 
-.tree-table-view{
+.tree-table-view {
     -fx-background-color: transparent;
     -fx-table-cell-border-color: #33363F;
     -fx-text-fill: #33363F;
@@ -28,24 +28,24 @@
     -fx-text-fill: #33363F;
     -fx-border-color: #33363F;
     -fx-border-width: 0.5;
-    -fx-table-cell-border-color:transparent;
+    -fx-table-cell-border-color: transparent;
     -fx-padding: 3;
     -fx-cell-size: 40px;
 }
 
 .tree-table-row-cell:hover .label,
-.tree-table-row-cell:selected .label{
+.tree-table-row-cell:selected .label {
     -fx-text-fill: white;
 }
 
 .tree-table-row-cell:hover:selected .label,
-.tree-table-row-cell:focused:selected .label{
-    -fx-fill:#F06060;
+.tree-table-row-cell:focused:selected .label {
+    -fx-fill: #F06060;
     -fx-text-fill: white;
 }
 
-.tree-table-row-cell:hover , .tree-table-row-cell:selected{
-    -fx-background-color:#F06060;
+.tree-table-row-cell:hover, .tree-table-row-cell:selected {
+    -fx-background-color: #F06060;
     -fx-text-fill: white;
 }
 
@@ -84,44 +84,52 @@
     -fx-background-color: transparent;
 }
 
-.scroll-bar{
+.scroll-bar {
     -fx-background-color: transparent;
     -fx-background-radius: 2em;
 }
+
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track {
     -fx-background-color: transparent;
-    -fx-border-color:transparent;
+    -fx-border-color: transparent;
     -fx-background-radius: 2em;
 }
+
 .scroll-bar:vertical .track-background,
 .scroll-bar:horizontal .track-background {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 0em;
 }
+
 .scroll-bar:horizontal .thumb {
     -fx-background-color: #33363F;
 }
+
 .scroll-bar:vertical .thumb {
     -fx-background-color: #33363F;
 }
+
 .scroll-bar:horizontal .thumb:hover,
 .scroll-bar:vertical .thumb:hover {
     -fx-background-color: #33363F;
 }
+
 .scroll-bar:horizontal .thumb:pressed,
 .scroll-bar:vertical .thumb:pressed {
     -fx-background-color: #33363F;
 }
+
 .scroll-bar:vertical .increment-button,
 .scroll-bar:vertical .decrement-button {
-    -fx-background-color:transparent;
+    -fx-background-color: transparent;
     -fx-background-radius: 0em;
 }
+
 .scroll-bar:horizontal .increment-button,
 .scroll-bar:horizontal .decrement-button {
-    -fx-background-color:#33363F;
+    -fx-background-color: #33363F;
     -fx-background-radius: 0em;
 }
 
@@ -134,7 +142,7 @@
     -fx-background-color: white;
     -fx-border-color: transparent;
     -fx-border-width: 0;
-    -fx-table-cell-border-color:transparent;
+    -fx-table-cell-border-color: transparent;
 }
 
 .tree-table-row-cell:empty .tree-table-cell {
@@ -153,7 +161,7 @@
     -fx-rotate: 90;
 }
 
-.jfx-button{
+.jfx-button {
     -fx-text-fill: #33363F;
     -fx-border-color: #33363F;
 }

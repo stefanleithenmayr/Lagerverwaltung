@@ -1,36 +1,38 @@
-#addItemPane{
+#addItemPane {
     -fx-background-color: white;
 }
-#tfItemName{
+
+#tfItemName {
     -fx-prompt-text-fill: #3D4956;
     -fx-unfocus-color: #3D4956;
     -fx-focus-color: #3D4956;
     -fx-text-fill: #3D4956;
 }
 
-.cbStyle{
+.cbStyle {
     -fx-font-size: 19;
     -fx-text-fill: #3D4956;
 }
-#tfQuantity{
+
+#tfQuantity {
     -fx-prompt-text-fill: #3D4956;
     -fx-unfocus-color: #3D4956;
     -fx-focus-color: #3D4956;
     -fx-text-fill: #3D4956;
 }
 
-#qText{
+#qText {
     -fx-fill: #3D4956;
 }
 
-#tfDescription{
+#tfDescription {
     -fx-prompt-text-fill: #3D4956;
     -fx-unfocus-color: #3D4956;
     -fx-focus-color: #3D4956;
     -fx-text-fill: #3D4956;
 }
 
-#btnInsert{
+#btnInsert {
     -fx-prompt-text-fill: #3D4956;
     -fx-unfocus-color: #3D4956;
     -fx-focus-color: #3D4956;
@@ -38,14 +40,14 @@
     -fx-faint-focus-color: #3D4956;
 }
 
-.jfx-text-field{
-    -fx-pref-height:3;
+.jfx-text-field {
+    -fx-pref-height: 3;
     -jfx-unfocus-color: #3D4956;
     -jfx-focus-color: red;
 }
 
 .jfx-combo-box {
-    -fx-pref-height:3;
+    -fx-pref-height: 3;
     -jfx-unfocus-color: #3D4956;
     -jfx-focus-color: red;
     -fx-font-size: 19;
@@ -54,7 +56,7 @@
     -fx-faint-focus-color: #3D4956;
 }
 
-.text-field{
+.text-field {
     -fx-font-size: 19;
     -fx-text-fill: #3D4956;
     -fx-prompt-text-fill: #3D4956;

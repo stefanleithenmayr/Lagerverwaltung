@@ -50,7 +50,6 @@ public class LoginController implements Initializable {
     private JFXButton loginBT;
 
     private boolean loginSuccessful;
-    private boolean alreadyUser;
 
     @FXML
     private void closeWindow() {
@@ -62,15 +61,15 @@ public class LoginController implements Initializable {
 
     @FXML
     private void loginAction() throws ClassNotFoundException, IOException, SQLException {
-        if (!loginSuccessful){
+        if (!loginSuccessful) {
             loginSuccessful = DBConnection.getInstance().login(userNameField.getText(), passwordField.getText());
-            alreadyUser = DBConnection.getInstance().alreadyUser(userNameField.getText());
-            if (!loginSuccessful && alreadyUser){
+            boolean alreadyUser = DBConnection.getInstance().alreadyUser(userNameField.getText());
+            if (!loginSuccessful && alreadyUser) {
                 falseInputField.setText("Wrong Password");
                 falseInputField.setVisible(true);
                 return;
             }
-            if(!loginSuccessful && !alreadyUser) {
+            if (!loginSuccessful && !alreadyUser) {
                 falseInputField.setText("Please register");
                 falseInputField.setVisible(true);
                 nameField.setDisable(false);
@@ -119,9 +118,9 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void changeFont(ActionEvent event){
+    private void changeFont() {
         loginPane.getStylesheets().clear();
-        if(toggleButton.isSelected()) {
+        if (toggleButton.isSelected()) {
             avaterIMG.setImage(new Image("icons/user1.png"));
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             loginPane.getStylesheets().add("css/loginPaneWHITE.css");

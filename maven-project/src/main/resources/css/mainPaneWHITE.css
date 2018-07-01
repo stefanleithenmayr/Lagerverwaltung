@@ -1,16 +1,16 @@
-#mainPane{
+#mainPane {
     -fx-background-color: white;
 }
 
-.lineDesign{
+.lineDesign {
     -fx-stroke: #3D4956;
 }
 
-.recStyle{
+.recStyle {
     -fx-fill: #F06060;
     -fx-stroke: #F06060;
 }
 
-.dashBoardStyle{
+.dashBoardStyle {
     -fx-fill: white;
 }

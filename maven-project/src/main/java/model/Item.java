@@ -1,12 +1,12 @@
 package model;
 
 public class Item {
-    private int  itemnr;
+    private int itemnr;
     private int productnr;
     private String eancode;
     private int refItemnr;
 
-    public Item (int itemnr, int productnr, String eancode, int refItemnr){
+    public Item(int itemnr, int productnr, String eancode, int refItemnr) {
         this.itemnr = itemnr;
         this.productnr = productnr;
         this.eancode = eancode;

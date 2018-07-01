@@ -4,24 +4,30 @@
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="itemSelectionPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/itemSelectionDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemSelectionController">
-   <children>
-      <TreeTableView fx:id="TTVProductToChoose" layoutX="15.0" layoutY="93.0" prefHeight="431.0" prefWidth="955.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="93.0">
-         <columns>
-            <TreeTableColumn fx:id="prodNameCol" prefWidth="263.0" text="Producttype Name" />
-            <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="596.0" text="Description" />
-            <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="94.0" text="Select" />
-         </columns>
-      </TreeTableView>
-      <Text fill="WHITE" layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textStyle" text="Please select Items to rent" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <JFXTextField fx:id="eanCodeTF" layoutX="278.0" layoutY="19.0" maxWidth="643.0" minWidth="289.0" onKeyPressed="#markProductAsSelected" prefHeight="48.0" prefWidth="515.0" promptText="Scan your eancode" AnchorPane.leftAnchor="278.0" AnchorPane.topAnchor="25.0" />
-   </children>
+<AnchorPane fx:id="itemSelectionPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/itemSelectionDARK.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.ItemSelectionController">
+    <children>
+        <TreeTableView fx:id="TTVProductToChoose" layoutX="15.0" layoutY="93.0" prefHeight="431.0" prefWidth="955.0"
+                       AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="30.0"
+                       AnchorPane.topAnchor="93.0">
+            <columns>
+                <TreeTableColumn fx:id="prodNameCol" prefWidth="263.0" text="Producttype Name"/>
+                <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="596.0" text="Description"/>
+                <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="94.0" text="Select"/>
+            </columns>
+        </TreeTableView>
+        <Text fill="WHITE" layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textStyle"
+              text="Please select Items to rent" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Text>
+        <JFXTextField fx:id="eanCodeTF" layoutX="278.0" layoutY="19.0" maxWidth="643.0" minWidth="289.0"
+                      onKeyPressed="#markProductAsSelected" prefHeight="48.0" prefWidth="515.0"
+                      promptText="Scan your eancode" AnchorPane.leftAnchor="278.0" AnchorPane.topAnchor="25.0"/>
+    </children>
 </AnchorPane>

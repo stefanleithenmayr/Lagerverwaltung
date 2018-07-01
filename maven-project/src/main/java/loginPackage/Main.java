@@ -17,7 +17,8 @@ public class Main extends Application {
     private double yOffset = 0;
 
     @Override
-    public void start(Stage stage) throws Exception{Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/LoginScene.fxml")));
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/LoginScene.fxml")));
         Scene scene = new Scene(root);
 
         stage.initStyle(StageStyle.TRANSPARENT);

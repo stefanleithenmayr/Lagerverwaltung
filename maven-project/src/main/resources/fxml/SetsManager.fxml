@@ -10,32 +10,50 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="setsManagerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#refreshTTV" prefHeight="900.0" prefWidth="1500.0" styleClass="..\css\setsManagerDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SetsManagerController">
-   <children>
-      <JFXTextField fx:id="tfSetName" layoutX="42.0" layoutY="67.0" maxWidth="329.0" minWidth="329.0" prefHeight="48.0" prefWidth="329.0" promptText="Setname" />
-      <JFXTextField fx:id="tfSearch" layoutX="42.0" layoutY="292.0" maxWidth="515.0" minWidth="289.0" onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Search" />
-      <JFXButton fx:id="btCreateSet" layoutX="1409.0" layoutY="852.0" onAction="#createNewSet" prefHeight="31.0" prefWidth="70.0" styleClass="btStyle" text="Create" visible="false" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="21.0" />
-      <Label layoutX="23.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Create new Set" />
-      <TreeTableView fx:id="TTVProductToChoose" layoutX="42.0" layoutY="348.0" prefHeight="431.0" prefWidth="661.0">
-        <columns>
-          <TreeTableColumn fx:id="prodNameCol" prefWidth="188.0" text="Producttype Name" />
-          <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="399.0" text="Description" />
-            <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="53.0" text="Select" />
-        </columns>
-      </TreeTableView>
-      <JFXTextField fx:id="taDescription" layoutX="42.0" layoutY="137.0" maxWidth="1051.0" minWidth="329.0" prefHeight="48.0" prefWidth="643.0" promptText="Description" />
-      <JFXTextField fx:id="tfEanCode" layoutX="42.0" layoutY="804.0" maxWidth="661.0" minWidth="289.0" onKeyPressed="#eanEntered" prefHeight="48.0" prefWidth="661.0" promptText="Scan your eancode" />
-      <JFXButton fx:id="btAddToBoardTTV" layoutX="571.0" layoutY="301.0" onAction="#addSelectedProductsFromTTV" prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board" />
-      <Line endY="900.0" layoutX="793.0" stroke="#f06060" />
-      <Label fx:id="LyourSet" layoutX="835.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle" text="Your new Set" visible="false" />
-      <TreeTableView fx:id="TTVfinalProductsForSet" layoutX="843.0" layoutY="91.0" prefHeight="431.0" prefWidth="636.0" visible="false">
-         <columns>
-            <TreeTableColumn fx:id="tcFinalProductsForSetProductName" prefWidth="205.0" text="Producttype Name" />
-            <TreeTableColumn fx:id="tcFinalProductsForSetProductDescription" minWidth="9.0" prefWidth="316.0" text="Description" />
-            <TreeTableColumn fx:id="tcFinalProductsForSetProductID" minWidth="9.0" prefWidth="107.0" text="ID" />
-         </columns>
-      </TreeTableView>
-      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1335.0" layoutY="30.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Text fx:id="errorTxt" layoutX="1353.0" layoutY="48.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="34.865234375" AnchorPane.topAnchor="35.05078125" />
-   </children>
+<AnchorPane fx:id="setsManagerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" onMouseMoved="#refreshTTV" prefHeight="900.0" prefWidth="1500.0"
+            styleClass="..\css\setsManagerDARK.css" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SetsManagerController">
+    <children>
+        <JFXTextField fx:id="tfSetName" layoutX="42.0" layoutY="67.0" maxWidth="329.0" minWidth="329.0"
+                      prefHeight="48.0" prefWidth="329.0" promptText="Setname"/>
+        <JFXTextField fx:id="tfSearch" layoutX="42.0" layoutY="292.0" maxWidth="515.0" minWidth="289.0"
+                      onKeyPressed="#serachProduct" prefHeight="48.0" prefWidth="515.0" promptText="Search"/>
+        <JFXButton fx:id="btCreateSet" layoutX="1409.0" layoutY="852.0" onAction="#createNewSet" prefHeight="31.0"
+                   prefWidth="70.0" styleClass="btStyle" text="Create" visible="false" AnchorPane.bottomAnchor="17.0"
+                   AnchorPane.rightAnchor="21.0"/>
+        <Label layoutX="23.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0" styleClass="labelStyle"
+               text="Create new Set"/>
+        <TreeTableView fx:id="TTVProductToChoose" layoutX="42.0" layoutY="348.0" prefHeight="431.0" prefWidth="661.0">
+            <columns>
+                <TreeTableColumn fx:id="prodNameCol" prefWidth="188.0" text="Producttype Name"/>
+                <TreeTableColumn fx:id="descCol" minWidth="9.0" prefWidth="399.0" text="Description"/>
+                <TreeTableColumn fx:id="selectCol" minWidth="9.0" prefWidth="53.0" text="Select"/>
+            </columns>
+        </TreeTableView>
+        <JFXTextField fx:id="taDescription" layoutX="42.0" layoutY="137.0" maxWidth="1051.0" minWidth="329.0"
+                      prefHeight="48.0" prefWidth="643.0" promptText="Description"/>
+        <JFXTextField fx:id="tfEanCode" layoutX="42.0" layoutY="804.0" maxWidth="661.0" minWidth="289.0"
+                      onKeyPressed="#eanEntered" prefHeight="48.0" prefWidth="661.0" promptText="Scan your eancode"/>
+        <JFXButton fx:id="btAddToBoardTTV" layoutX="571.0" layoutY="301.0" onAction="#addSelectedProductsFromTTV"
+                   prefHeight="31.0" prefWidth="114.0" styleClass="btStyle" text="Add to Board"/>
+        <Line endY="900.0" layoutX="793.0" stroke="#f06060"/>
+        <Label fx:id="LyourSet" layoutX="835.0" layoutY="14.0" prefHeight="39.0" prefWidth="295.0"
+               styleClass="labelStyle" text="Your new Set" visible="false"/>
+        <TreeTableView fx:id="TTVfinalProductsForSet" layoutX="843.0" layoutY="91.0" prefHeight="431.0"
+                       prefWidth="636.0" visible="false">
+            <columns>
+                <TreeTableColumn fx:id="tcFinalProductsForSetProductName" prefWidth="205.0" text="Producttype Name"/>
+                <TreeTableColumn fx:id="tcFinalProductsForSetProductDescription" minWidth="9.0" prefWidth="316.0"
+                                 text="Description"/>
+                <TreeTableColumn fx:id="tcFinalProductsForSetProductID" minWidth="9.0" prefWidth="107.0" text="ID"/>
+            </columns>
+        </TreeTableView>
+        <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1335.0"
+                   layoutY="30.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <Text fx:id="errorTxt" layoutX="1353.0" layoutY="48.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="34.865234375"
+              AnchorPane.topAnchor="35.05078125"/>
+    </children>
 </AnchorPane>
