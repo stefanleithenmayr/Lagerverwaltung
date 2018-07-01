@@ -30,7 +30,7 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, returnProductPane, userManagerPane, exportDatasPane, dashboardPane,
-            rentManagerPane, setsManagerPane, showSetsPane,deleteItemPane, deleteSetsPane;
+            rentManagerPane, setsManagerPane, showSetsPane,deleteItemPane, deleteSetsPane, actualShowingPane;
     @FXML
     private Button cancelBT, btProductManager, showItemsBT, rentBT, exportDatasBT, returnProductBT, userManagerBT, btSetsManager, btShowSets,
             btCreateNewSet, btDeleteItem, btAddItem, dashboardBT, btDeleteSets;
@@ -401,46 +401,60 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private synchronized void changeFont() throws IOException {
+        if (actualShowingPane == null) return;
+        actualShowingPane.getStylesheets().clear();
         mainPane.getStylesheets().clear();
-        addItemPane.getStylesheets().clear();
-        returnProductPane.getStylesheets().clear();
-        userManagerPane.getStylesheets().clear();
-        exportDatasPane.getStylesheets().clear();
-        rentsPane.getStylesheets().clear();
-        rentManagerPane.getStylesheets().clear();
-        setsManagerPane.getStylesheets().clear();
-        showSetsPane.getStylesheets().clear();
-        deleteItemPane.getStylesheets().clear();
-        deleteSetsPane.getStylesheets().clear();
-
 
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
-            addItemPane.getStylesheets().add("css/addItemWHITE.css");
-            rentsPane.getStylesheets().add("css/rentsWHITE.css");
-            returnProductPane.getStylesheets().add("css/returnProductWHITE.css");
-            userManagerPane.getStylesheets().add("css/userManagerWHITE.css");
-            exportDatasPane.getStylesheets().add("css/exportDatasWHITE.css");
-            rentManagerPane.getStylesheets().add("css/rentsManagerWHITE.css");
-            setsManagerPane.getStylesheets().add("css/setsManagerWHITE.css");
-            showSetsPane.getStylesheets().add("css/showSetsWHITE.css");
-            deleteItemPane.getStylesheets().add("css/deleteItemWHITE.css");
-            deleteSetsPane.getStylesheets().add("css/deleteSetsWHITE.css");
+            if (actualShowingPane.getId().equals("exportDatasPane")){
+                actualShowingPane.getStylesheets().add("css/exportDatasWHITE.css");
+            }else if (actualShowingPane.getId().equals("addItemPane")){
+                actualShowingPane.getStylesheets().add("css/addItemWHITE.css");
+            }else if (actualShowingPane.getId().equals("rentsPane")){
+                actualShowingPane.getStylesheets().add("css/rentsWHITE.css");
+            }else if (actualShowingPane.getId().equals("returnProductPane")){
+                actualShowingPane.getStylesheets().add("css/returnProductWHITE.css");
+            }else if (actualShowingPane.getId().equals("userManagerPane")){
+                actualShowingPane.getStylesheets().add("css/userManagerWHITE.css");
+            }else if (actualShowingPane.getId().equals("rentManagerPane")){
+                actualShowingPane.getStylesheets().add("css/rentsManagerWHITE.css");
+            }else if (actualShowingPane.getId().equals("setsManagerPane")){
+                actualShowingPane.getStylesheets().add("css/setsManagerWHITE.css");
+            }else if (actualShowingPane.getId().equals("showSetsPane")){
+                actualShowingPane.getStylesheets().add("css/showSetsWHITE.css");
+            }else if (actualShowingPane.getId().equals("deleteItemPane")){
+                actualShowingPane.getStylesheets().add("css/deleteItemWHITE.css");
+            }else if (actualShowingPane.getId().equals("deleteSetsPane")){
+                actualShowingPane.getStylesheets().add("css/deleteSetsWHITE.css");
+            }
             theme = true;
         } else {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
-            addItemPane.getStylesheets().add("css/addItemDARK.css");
-            rentsPane.getStylesheets().add("css/rentsDARK.css");
-            returnProductPane.getStylesheets().add("css/returnProductDARK.css");
-            userManagerPane.getStylesheets().add("css/userManagerDARK.css");
-            exportDatasPane.getStylesheets().add("css/exportDatasDARK.css");
-            rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
-            setsManagerPane.getStylesheets().add("css/setsManagerDARK.css");
-            showSetsPane.getStylesheets().add("css/showSetsDARK.css");
-            deleteItemPane.getStylesheets().add("css/deleteItemDARK.css");
-            deleteSetsPane.getStylesheets().add("css/deleteSetsDARK.css");
+
+            if (actualShowingPane.getId().equals("exportDatasPane")){
+                actualShowingPane.getStylesheets().add("css/exportDatasDARK.css");
+            }else if (actualShowingPane.getId().equals("addItemPane")){
+                actualShowingPane.getStylesheets().add("css/addItemDARK.css");
+            }else if (actualShowingPane.getId().equals("rentsPane")){
+                actualShowingPane.getStylesheets().add("css/rentsDARK.css");
+            }else if (actualShowingPane.getId().equals("returnProductPane")){
+                actualShowingPane.getStylesheets().add("css/returnProductDARK.css");
+            }else if (actualShowingPane.getId().equals("userManagerPane")){
+                actualShowingPane.getStylesheets().add("css/userManagerDARK.css");
+            }else if (actualShowingPane.getId().equals("rentManagerPane")){
+                actualShowingPane.getStylesheets().add("css/rentsManagerDARK.css");
+            }else if (actualShowingPane.getId().equals("setsManagerPane")){
+                actualShowingPane.getStylesheets().add("css/setsManagerDARK.css");
+            }else if (actualShowingPane.getId().equals("showSetsPane")){
+                actualShowingPane.getStylesheets().add("css/showSetsDARK.css");
+            }else if (actualShowingPane.getId().equals("deleteItemPane")){
+                actualShowingPane.getStylesheets().add("css/deleteItemDARK.css");
+            }else if (actualShowingPane.getId().equals("deleteSetsPane")){
+                actualShowingPane.getStylesheets().add("css/deleteSetsDARK.css");
+            }
             theme = false;
         }
     }
@@ -453,6 +467,7 @@ public class MainSceneController implements Initializable {
      */
     @FXML
     private void switchPane(ActionEvent event) throws IOException {
+        changeThemeBT.setVisible(true);
         Button button = (Button) event.getSource();
         String buttonName = button.getId();
 
@@ -478,6 +493,7 @@ public class MainSceneController implements Initializable {
 
             case "btAddItem":
                 addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));
+                actualShowingPane = addItemPane;
                 btAddItem.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(addItemPane);
                 addItemPane.getStylesheets().clear();
@@ -492,6 +508,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "btDeleteItem":
                 deleteItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DeleteItem.fxml")));
+                actualShowingPane = deleteItemPane;
                 btDeleteItem.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(deleteItemPane);
                 deleteItemPane.getStylesheets().clear();
@@ -505,7 +522,10 @@ public class MainSceneController implements Initializable {
                 acutalPane = "deleteItemPane";
                 break;
             case "showItemsBT":
+                System.out.println("rent");
+                changeThemeBT.setVisible(false);
                 rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
+                actualShowingPane = rentManagerPane;
                 showItemsBT.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(rentManagerPane);
                 rentManagerPane.getStylesheets().clear();
@@ -520,6 +540,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "rentBT":
                 rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));
+                actualShowingPane = rentsPane;
                 rentBT.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(rentsPane);
                 rentsPane.setPrefWidth(bounds.getWidth() - 280);
@@ -535,6 +556,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "returnProductBT":
                 returnProductPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ReturnProductScene.fxml")));
+                actualShowingPane = returnProductPane;
                 returnProductBT.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(returnProductPane);
                 returnProductPane.setPrefWidth(bounds.getWidth() - 280);
@@ -550,6 +572,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "userManagerBT":
                 userManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/UserManagerScene.fxml")));
+                actualShowingPane = userManagerPane;
                 userManagerBT.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(userManagerPane);
                 userManagerPane.setPrefWidth(bounds.getWidth() - 280);
@@ -565,6 +588,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "exportDatasBT":
                 exportDatasPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ExportDatas.fxml")));
+                actualShowingPane = exportDatasPane;
                 exportDatasBT.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(exportDatasPane);
                 exportDatasPane.setPrefWidth(bounds.getWidth() - 280);
@@ -580,6 +604,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "btCreateNewSet":
                 setsManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/SetsManager.fxml")));
+                actualShowingPane = setsManagerPane;
                 btCreateNewSet.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(setsManagerPane);
                 setsManagerPane.setPrefWidth(bounds.getWidth() - 280);
@@ -595,6 +620,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "btShowSets":
                 showSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/ShowSets.fxml")));
+                actualShowingPane = showSetsPane;
                 btShowSets.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(showSetsPane);
                 showSetsPane.setPrefWidth(bounds.getWidth() - 280);
@@ -610,6 +636,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "btDeleteSets":
                 deleteSetsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DeleteSets.fxml")));
+                actualShowingPane = deleteSetsPane;
                 btDeleteSets.setStyle("-fx-background-color:#3D4956");
                 subPane.getChildren().add(deleteSetsPane);
                 deleteSetsPane.setPrefWidth(bounds.getWidth() - 280);
@@ -625,6 +652,7 @@ public class MainSceneController implements Initializable {
                 break;
             case "dashboardBT":
                 dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
+                actualShowingPane = dashboardPane;
                 subPane.getChildren().add(dashboardPane);
                 dashboardPane.setPrefWidth(bounds.getWidth() - 280);
                 dashboardPane.setPrefHeight(bounds.getHeight() - 120);

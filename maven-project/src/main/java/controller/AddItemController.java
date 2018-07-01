@@ -47,7 +47,7 @@ public class AddItemController implements Initializable {
     @FXML
     private TableColumn<ProductType, String> tcProducttypeName, tcProducttypeDescription;
     @FXML
-    private CheckBox CBGenerateBarcodes;
+    private CheckBox CBGenerateBarcodes, CBGenerateBarcodes1;
     @FXML
     Rectangle errorRec;
     @FXML
@@ -106,8 +106,9 @@ public class AddItemController implements Initializable {
         }
         tfProductTypeName.clear();
         tfDescription.clear();
-        slQuantity.setValue(0);
-        tfQuantity.clear();
+        slQuantity.setValue(1);
+        tfQuantity.setText("1");
+        amount = 1;
         productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
         tvProductTypes.getItems().clear();
         tvProductTypes.setItems(productTypes);
@@ -130,6 +131,8 @@ public class AddItemController implements Initializable {
         }
         tfQuantity1.setText("1");
         slQuantity1.setValue(1);
+        amount1 =1;
+        CBGenerateBarcodes.setSelected(false);
         tvProductTypes.getSelectionModel().clearSelection();
 
         errorRec.setFill(Color.web("#00802b"));
