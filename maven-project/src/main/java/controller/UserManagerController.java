@@ -8,7 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import loginPackage.DBConnection;
+import model.ErrorMessageUtils;
 import model.User;
 
 import java.net.URL;
@@ -26,6 +30,10 @@ public class UserManagerController implements Initializable {
     private JFXButton cancelBT, saveBT, editBT, removeBT, newUserBT;
 
     private ObservableList<User> obList;
+    @FXML
+    private Rectangle errorRec;
+    @FXML
+    private Text errorTxt;
 
     @FXML
     private void addNewUser() {
@@ -37,11 +45,22 @@ public class UserManagerController implements Initializable {
     @FXML
     private void removeUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
+        if (user == null){
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("No user selected", errorRec, errorTxt);
+            return;
+        }
 
-        if (user != null && !DBConnection.getInstance().getActualUser().equals(user.getUsername().getText())) {
+        if (!DBConnection.getInstance().getActualUser().equals(user.getUsername().getText())) {
             DBConnection.getInstance().removeUser(user.getUsername().getText());
             obList.remove(user);
         }
+
+        errorRec.setFill(Color.web("#00802b"));
+        errorRec.setStroke(Color.web("#00802b"));
+        ErrorMessageUtils.showErrorMessage("Successfully removed", errorRec, errorTxt);
+        userTV.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -74,6 +93,9 @@ public class UserManagerController implements Initializable {
     private void saveUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user.getUserNameField().getText().equals("Replace with Username")) {
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("Username not valid", errorRec, errorTxt);
             obList.remove(user);
             this.handleButton(false);
             return;
@@ -96,6 +118,10 @@ public class UserManagerController implements Initializable {
         handleButton(false);
         user.setIsActivated(true);
         userTV.refresh();
+
+        errorRec.setFill(Color.web("#00802b"));
+        errorRec.setStroke(Color.web("#00802b"));
+        ErrorMessageUtils.showErrorMessage("Successfully saved", errorRec, errorTxt);
     }
 
     @Override
@@ -107,6 +133,7 @@ public class UserManagerController implements Initializable {
             e.printStackTrace();
         }
 
+
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<>("name"));
 
@@ -117,7 +144,7 @@ public class UserManagerController implements Initializable {
                 new PropertyValueFactory<>("password"));
 
         roleCol.setCellValueFactory(
-                new PropertyValueFactory<>("userRole"));
+                new PropertyValueFactory<>("UserRolle"));
 
         classCol.setCellValueFactory(
                 new PropertyValueFactory<>("klasse"));

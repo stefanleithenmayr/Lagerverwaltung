@@ -23,6 +23,7 @@ import loginPackage.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -528,12 +529,14 @@ public class MainSceneController implements Initializable {
                 rentManagerPane.getStylesheets().clear();
                 rentManagerPane.setPrefWidth(bounds.getWidth() - 280);
                 rentManagerPane.setPrefHeight(bounds.getHeight() - 120);
-                if (theme) {
-                    rentManagerPane.getStylesheets().add("css/rentsManagerWHITE.css");
-                } else {
-                    rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
-                }
+
+                rentManagerPane.getStylesheets().add("css/rentsManagerDARK.css");
+                mainPane.getStylesheets().clear();
+                imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
+                mainPane.getStylesheets().add("css/mainPaneDARK.css");
                 acutalPane = "rentsManagerPane";
+                changeThemeBT.setSelected(false);
+                theme = false;
                 break;
             case "rentBT":
                 rentsPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/Rents.fxml")));

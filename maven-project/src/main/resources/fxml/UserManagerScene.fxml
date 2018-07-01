@@ -4,32 +4,27 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="userManagerPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/userManagerDARK.css"
-            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.UserManagerController">
+<AnchorPane fx:id="userManagerPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/userManagerDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserManagerController">
     <children>
-        <TableView fx:id="userTV" layoutX="33.0" layoutY="83.0" prefHeight="495.0" prefWidth="970.0"
-                   AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0"
-                   AnchorPane.topAnchor="80.0">
+        <TableView fx:id="userTV" layoutX="33.0" layoutY="83.0" prefHeight="495.0" prefWidth="970.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="80.0">
             <columns>
-                <TableColumn fx:id="nameCol" prefWidth="220.0" text="Full Name"/>
-                <TableColumn fx:id="userNameCol" prefWidth="220.0" text="Username"/>
-                <TableColumn fx:id="passwordCol" prefWidth="220.0" text="Password"/>
-                <TableColumn fx:id="roleCol" prefWidth="166.0" text="Rolle"/>
-                <TableColumn fx:id="classCol" minWidth="0.0" prefWidth="200.0" text="Klasse"/>
-                <TableColumn fx:id="emailCol" prefWidth="200.0" text="Email"/>
+                <TableColumn fx:id="nameCol" prefWidth="220.0" text="Full Name" />
+                <TableColumn fx:id="userNameCol" prefWidth="220.0" text="Username" />
+                <TableColumn fx:id="passwordCol" prefWidth="220.0" text="Password" />
+                <TableColumn fx:id="roleCol" prefWidth="166.0" text="Rolle" />
+                <TableColumn fx:id="classCol" minWidth="0.0" prefWidth="200.0" text="Klasse" />
+                <TableColumn fx:id="emailCol" prefWidth="200.0" text="Email" />
             </columns>
         </TableView>
-        <JFXButton fx:id="removeBT" layoutX="15.0" layoutY="29.0" onAction="#removeUser" text="Remove User"
-                   AnchorPane.leftAnchor="15.0"/>
-        <JFXButton fx:id="newUserBT" layoutX="129.0" layoutY="29.0" onAction="#addNewUser" text="New User"
-                   AnchorPane.leftAnchor="145.0"/>
-        <JFXButton fx:id="editBT" layoutX="229.0" layoutY="29.0" onAction="#activateEditing" text="Edit User"
-                   AnchorPane.leftAnchor="251.0"/>
-        <JFXButton fx:id="cancelBT" layoutX="357.0" layoutY="29.0" onAction="#cancelEditing" text="Cancel Editing"
-                   visible="false" AnchorPane.leftAnchor="352.0"/>
-        <JFXButton fx:id="saveBT" layoutX="489.0" layoutY="29.0" onMouseClicked="#saveUser" text="Save"
-                   visible="false"/>
+        <JFXButton fx:id="removeBT" layoutX="15.0" layoutY="29.0" onAction="#removeUser" text="Remove User" AnchorPane.leftAnchor="15.0" />
+        <JFXButton fx:id="newUserBT" layoutX="129.0" layoutY="29.0" onAction="#addNewUser" text="New User" AnchorPane.leftAnchor="145.0" />
+        <JFXButton fx:id="editBT" layoutX="229.0" layoutY="29.0" onAction="#activateEditing" text="Edit User" AnchorPane.leftAnchor="251.0" />
+        <JFXButton fx:id="cancelBT" layoutX="357.0" layoutY="29.0" onAction="#cancelEditing" text="Cancel Editing" visible="false" AnchorPane.leftAnchor="352.0" />
+        <JFXButton fx:id="saveBT" layoutX="489.0" layoutY="29.0" onMouseClicked="#saveUser" text="Save" visible="false" />
+      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1314.0" layoutY="24.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Text fx:id="errorTxt" layoutX="1349.0" layoutY="63.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="22.0" />
     </children>
 </AnchorPane>

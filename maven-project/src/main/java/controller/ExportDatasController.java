@@ -37,11 +37,11 @@ public class ExportDatasController implements Initializable {
     @FXML
     private TreeTableColumn<Object, Object> selectCol;
     @FXML
-    Rectangle errorRec;
+    private Rectangle errorRec;
     @FXML
-    Text errorTxt;
+    private Text errorTxt;
     @FXML
-    JFXCheckBox cbSelectAll;
+    private JFXCheckBox cbSelectAll;
 
     List<Product> products;
 
@@ -199,13 +199,17 @@ public class ExportDatasController implements Initializable {
 
     @FXML
     public void selectAll() throws SQLException {
-        tfSearch.clear();
+        if (!tfSearch.getText().equals("")){
+            tfSearch.clear();
+            refreshTTV();
+
+        }
         for (Product product : products) {
             CheckBox cb = new CheckBox();
             cb.setSelected(cbSelectAll.isSelected());
             product.setSelected(cb);
         }
-        refreshTTV();
+        TTVProductToChoose.refresh();
     }
 
     @FXML
