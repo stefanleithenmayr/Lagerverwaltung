@@ -1,5 +1,5 @@
 
-.tree-table-view{
+.tree-table-view {
     -fx-background-color: transparent;
     -fx-table-cell-border-color: white;
     -fx-text-fill: white;
@@ -7,6 +7,7 @@
     -fx-text-alignment: center;
     -fx-alignment: center;
 }
+
 #productTypes .table-cell {
     -fx-alignment: center;
 }
@@ -21,7 +22,7 @@
     -fx-text-fill: white;
     -fx-border-color: white;
     -fx-border-width: 0.5;
-    -fx-table-cell-border-color:transparent;
+    -fx-table-cell-border-color: transparent;
     -fx-padding: 3;
     -fx-cell-size: 40px;
     -fx-content-display: CENTER;
@@ -30,7 +31,7 @@
 }
 
 .tree-table-row-cell:hover .label,
-.tree-table-row-cell:selected .label{
+.tree-table-row-cell:selected .label {
     -fx-text-fill: white;
 }
 
@@ -69,44 +70,52 @@
     -fx-background-color: transparent;
 }
 
-.scroll-bar{
+.scroll-bar {
     -fx-background-color: transparent;
     -fx-background-radius: 2em;
 }
+
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track {
     -fx-background-color: transparent;
-    -fx-border-color:transparent;
+    -fx-border-color: transparent;
     -fx-background-radius: 2em;
 }
+
 .scroll-bar:vertical .track-background,
 .scroll-bar:horizontal .track-background {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 0em;
 }
+
 .scroll-bar:horizontal .thumb {
     -fx-background-color: white;
 }
+
 .scroll-bar:vertical .thumb {
     -fx-background-color: white;
 }
+
 .scroll-bar:horizontal .thumb:hover,
 .scroll-bar:vertical .thumb:hover {
     -fx-background-color: white;
 }
+
 .scroll-bar:horizontal .thumb:pressed,
 .scroll-bar:vertical .thumb:pressed {
     -fx-background-color: white;
 }
+
 .scroll-bar:vertical .increment-button,
 .scroll-bar:vertical .decrement-button {
-    -fx-background-color:transparent;
+    -fx-background-color: transparent;
     -fx-background-radius: 0em;
 }
+
 .scroll-bar:horizontal .increment-button,
 .scroll-bar:horizontal .decrement-button {
-    -fx-background-color:white;
+    -fx-background-color: white;
     -fx-background-radius: 0em;
 }
 
@@ -119,7 +128,7 @@
     -fx-background-color: #33363F;
     -fx-border-color: transparent;
     -fx-border-width: 0;
-    -fx-table-cell-border-color:transparent;
+    -fx-table-cell-border-color: transparent;
 }
 
 .tree-table-row-cell:empty .table-cell {
@@ -134,23 +143,26 @@
     -fx-rotate: 90;
 }
 
-.btStyle{
+.btStyle {
     -fx-border-color: white;
     -fx-text-fill: white;
     -fx-border-width: 0.5;
 }
-.labelStyle{
+
+.labelStyle {
     -fx-font-size: 25;
     -fx-text-fill: white;
     -fx-faint-focus-color: white;
 }
-.text-field{
+
+.text-field {
     -fx-font-size: 19;
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
     -fx-faint-focus-color: white;
 }
-.jfx-text-area{
+
+.jfx-text-area {
     -jfx-unfocus-color: white;
     -fx-text-fill: white;
 }

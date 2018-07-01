@@ -1,16 +1,16 @@
-#rentManagerPane{
+#rentManagerPane {
     -fx-background-color: white;
     -fx-font-size: 20px;
-    -fx-fill:white;
+    -fx-fill: white;
     -fx-text-fill: #33363F;
 }
 
-#textStyle{
+#textStyle {
     -fx-text-fill: #33363F;
     -fx-prompt-text-fill: #33363F;
     -fx-fill: #33363F;
 }
 
 .progress-bar .bar {
-    -fx-background-color:#F06060;
+    -fx-background-color: #F06060;
 }

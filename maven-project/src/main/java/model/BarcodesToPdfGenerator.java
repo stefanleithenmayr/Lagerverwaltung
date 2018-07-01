@@ -19,16 +19,16 @@ public class BarcodesToPdfGenerator {
     public static void generateBarcoeds(List<Product> products) throws FileNotFoundException, DocumentException, SQLException {
         int x = 20, y = 800;
         File selectedDirectory = fileChooser();
-        if ((selectedDirectory == null) || selectedDirectory.equals("")){
+        if ((selectedDirectory == null) || selectedDirectory.equals("")) {
             return;
         }
-        Document doc  = new Document(new Rectangle(PageSize.A4));
+        Document doc = new Document(new Rectangle(PageSize.A4));
         String fileName = "\\barcodes.pdf";
         int counter = 0;
         File f = new File(selectedDirectory + fileName);
-        while(f.exists() && !f.isDirectory()) {
+        while (f.exists() && !f.isDirectory()) {
             counter++;
-            fileName = "\\barcodes"+counter+".pdf";
+            fileName = "\\barcodes" + counter + ".pdf";
             f = new File(selectedDirectory + fileName);
         }
         PdfWriter pdfWriter = PdfWriter.getInstance(doc, new FileOutputStream(selectedDirectory + fileName));

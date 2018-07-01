@@ -13,64 +13,88 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="addItemPane" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/addItemDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemController">
-   <children>
-      <JFXSlider fx:id="slQuantity" layoutX="58.0" layoutY="313.0" min="1.0" onMouseClicked="#upDateQuantity" prefHeight="14.0" prefWidth="296.0" value="1.0" AnchorPane.leftAnchor="58.0" />
-      <JFXTextField fx:id="tfQuantity" alignment="CENTER" layoutX="373.0" layoutY="277.0" maxWidth="54.0" minWidth="38.0" prefHeight="48.0" prefWidth="38.0" AnchorPane.leftAnchor="373.0">
-         <font>
-            <Font size="21.0" />
-         </font></JFXTextField>
-      <JFXTextField fx:id="tfDescription" layoutX="33.0" layoutY="169.0" maxWidth="663.0" minWidth="442.0" onMouseClicked="#upDateQuantity" prefHeight="48.0" prefWidth="539.0" promptText="Description" styleClass="descStyle">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </JFXTextField>
-      <JFXButton fx:id="btnInsert" layoutX="662.0" layoutY="855.0" onAction="#insertProductTypeWithProducts" prefHeight="41.0" prefWidth="80.0" text="Insert">
-         <font>
-            <Font size="19.0" />
-         </font></JFXButton>
-      <Text fx:id="qText" layoutX="46.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity" AnchorPane.leftAnchor="46.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Text>
-      <JFXTextField fx:id="tfProductTypeName" layoutX="33.0" layoutY="109.0" maxWidth="329.0" minWidth="329.0" prefHeight="48.0" prefWidth="329.0" promptText="Producttypename" AnchorPane.leftAnchor="33.0" />
-      <Label layoutX="14.0" layoutY="24.0" styleClass="labelStyle" text="Add new Producttype with Proudcts" textFill="WHITE" />
-      <Line endY="900.0" layoutX="750.0" layoutY="10.0" stroke="#f06060" />
-      <Label layoutX="787.0" layoutY="24.0" styleClass="labelStyle" text="Add new Products to existing Producttype" textFill="WHITE" />
-      <TableView fx:id="tvProductTypes" layoutX="807.0" layoutY="241.0" onMouseClicked="#productTypeSelected" prefHeight="614.0" prefWidth="660.0">
-        <columns>
-          <TableColumn fx:id="tcProducttypeName" prefWidth="238.0" text="Producttypename" />
-          <TableColumn fx:id="tcProducttypeDescription" prefWidth="401.0" text="Description" />
-        </columns>
-      </TableView>
-      <JFXSlider fx:id="slQuantity1" layoutX="819.0" layoutY="162.0" min="1.0" onMouseClicked="#upDateQuantity1" prefHeight="14.0" prefWidth="296.0" value="1.0" />
-      <JFXTextField fx:id="tfQuantity1" alignment="CENTER" layoutX="1134.0" layoutY="126.0" maxWidth="54.0" minWidth="38.0" prefHeight="48.0" prefWidth="38.0">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </JFXTextField>
-      <Text fx:id="qText1" fill="WHITE" layoutX="807.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Text>
-      <JFXButton fx:id="btnInsert1" layoutX="1406.0" layoutY="855.0" onAction="#insertProductsIntoProductType" prefHeight="41.0" prefWidth="80.0" text="Insert" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </JFXButton>
-      <JFXCheckBox fx:id="CBGenerateBarcodes" layoutX="392.0" layoutY="849.0" prefHeight="55.0" prefWidth="240.0" styleClass="cbStyle" text="Create Barcodes In PDF" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </JFXCheckBox>
-      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1315.0" layoutY="10.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Text fx:id="errorTxt" layoutX="1350.0" layoutY="49.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="37.865234375" AnchorPane.topAnchor="36.0" />
-      <JFXCheckBox fx:id="CBGenerateBarcodes1" layoutX="1135.0" layoutY="849.0" prefHeight="55.0" prefWidth="234.0" styleClass="cbStyle" text="Create Barcodes In PDF" textFill="RED">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </JFXCheckBox>
-   </children>
+<AnchorPane fx:id="addItemPane" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/addItemDARK.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.AddItemController">
+    <children>
+        <JFXSlider fx:id="slQuantity" layoutX="58.0" layoutY="313.0" min="1.0" onMouseClicked="#upDateQuantity"
+                   prefHeight="14.0" prefWidth="296.0" value="1.0" AnchorPane.leftAnchor="58.0"/>
+        <JFXTextField fx:id="tfQuantity" alignment="CENTER" layoutX="373.0" layoutY="277.0" maxWidth="54.0"
+                      minWidth="38.0" prefHeight="48.0" prefWidth="38.0" AnchorPane.leftAnchor="373.0">
+            <font>
+                <Font size="21.0"/>
+            </font>
+        </JFXTextField>
+        <JFXTextField fx:id="tfDescription" layoutX="33.0" layoutY="169.0" maxWidth="663.0" minWidth="442.0"
+                      onMouseClicked="#upDateQuantity" prefHeight="48.0" prefWidth="539.0" promptText="Description"
+                      styleClass="descStyle">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </JFXTextField>
+        <JFXButton fx:id="btnInsert" layoutX="662.0" layoutY="855.0" onAction="#insertProductTypeWithProducts"
+                   prefHeight="41.0" prefWidth="80.0" text="Insert">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </JFXButton>
+        <Text fx:id="qText" layoutX="46.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity"
+              AnchorPane.leftAnchor="46.0">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </Text>
+        <JFXTextField fx:id="tfProductTypeName" layoutX="33.0" layoutY="109.0" maxWidth="329.0" minWidth="329.0"
+                      prefHeight="48.0" prefWidth="329.0" promptText="Producttypename" AnchorPane.leftAnchor="33.0"/>
+        <Label layoutX="14.0" layoutY="24.0" styleClass="labelStyle" text="Add new Producttype with Proudcts"
+               textFill="WHITE"/>
+        <Line endY="900.0" layoutX="750.0" layoutY="10.0" stroke="#f06060"/>
+        <Label layoutX="787.0" layoutY="24.0" styleClass="labelStyle" text="Add new Products to existing Producttype"
+               textFill="WHITE"/>
+        <TableView fx:id="tvProductTypes" layoutX="807.0" layoutY="241.0" onMouseClicked="#productTypeSelected"
+                   prefHeight="614.0" prefWidth="660.0">
+            <columns>
+                <TableColumn fx:id="tcProducttypeName" prefWidth="238.0" text="Producttypename"/>
+                <TableColumn fx:id="tcProducttypeDescription" prefWidth="401.0" text="Description"/>
+            </columns>
+        </TableView>
+        <JFXSlider fx:id="slQuantity1" layoutX="819.0" layoutY="162.0" min="1.0" onMouseClicked="#upDateQuantity1"
+                   prefHeight="14.0" prefWidth="296.0" value="1.0"/>
+        <JFXTextField fx:id="tfQuantity1" alignment="CENTER" layoutX="1134.0" layoutY="126.0" maxWidth="54.0"
+                      minWidth="38.0" prefHeight="48.0" prefWidth="38.0">
+            <font>
+                <Font size="21.0"/>
+            </font>
+        </JFXTextField>
+        <Text fx:id="qText1" fill="WHITE" layoutX="807.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Quantity">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </Text>
+        <JFXButton fx:id="btnInsert1" layoutX="1406.0" layoutY="855.0" onAction="#insertProductsIntoProductType"
+                   prefHeight="41.0" prefWidth="80.0" text="Insert" textFill="WHITE">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </JFXButton>
+        <JFXCheckBox fx:id="CBGenerateBarcodes" layoutX="392.0" layoutY="849.0" prefHeight="55.0" prefWidth="240.0"
+                     styleClass="cbStyle" text="Create Barcodes In PDF" textFill="RED">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </JFXCheckBox>
+        <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1315.0"
+                   layoutY="10.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <Text fx:id="errorTxt" layoutX="1350.0" layoutY="49.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="37.865234375"
+              AnchorPane.topAnchor="36.0"/>
+        <JFXCheckBox fx:id="CBGenerateBarcodes1" layoutX="1135.0" layoutY="849.0" prefHeight="55.0" prefWidth="234.0"
+                     styleClass="cbStyle" text="Create Barcodes In PDF" textFill="RED">
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </JFXCheckBox>
+    </children>
 </AnchorPane>

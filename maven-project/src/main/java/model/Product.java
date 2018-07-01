@@ -25,18 +25,23 @@ public class Product {
 
     private Boolean isChild;
 
-    public Product(Integer productID, Integer producttypeID, String picture, String productean, Integer superProductID, Integer statusID){
+    public Product(Integer productID, Integer producttypeID, String picture, String productean, Integer superProductID, Integer statusID) {
         this.productID = productID;
-        this. producttypeID = producttypeID;
+        this.producttypeID = producttypeID;
         this.productEan = productean;
         this.superProductID = superProductID;
         this.statusID = statusID;
         selected = new CheckBox();
         setIsChild(false);
     }
-    public CheckBox getSelected() {return selected; }
 
-    public void setSelected(CheckBox selected) {this.selected = selected;}
+    public CheckBox getSelected() {
+        return selected;
+    }
+
+    public void setSelected(CheckBox selected) {
+        this.selected = selected;
+    }
 
 
     public Integer getProductID() {
@@ -66,13 +71,13 @@ public class Product {
     public Integer getStatusID() {
         return statusID;
     }
+
     public String getProductTypeName() throws SQLException {
         return this.productTypeName;
-        //return DBConnection.getInstance().getProductTypeNameByID(this.producttypeID);
     }
+
     public String getProductTypeDescription() throws SQLException {
         if (isChild) return this.getProductID().toString();
-        //return DBConnection.getInstance().getProductTypeDescriptionByID(this.producttypeID);
         return this.productTypeDescription;
     }
 }

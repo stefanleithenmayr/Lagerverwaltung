@@ -37,7 +37,7 @@ public class ShowItemsController implements Initializable {
         try {
             this.refresh();
         } catch (SQLException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -52,6 +52,7 @@ public class ShowItemsController implements Initializable {
 
     /**
      * Löscht das ausgewählte Produkt
+     *
      * @throws SQLException
      */
     @FXML

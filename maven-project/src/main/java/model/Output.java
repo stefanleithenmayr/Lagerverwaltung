@@ -13,7 +13,7 @@ public class Output {
 
     public String getProductNr() {
         StringBuilder output = new StringBuilder("     ");
-        for (int i = 0; i < level*10; i++) {
+        for (int i = 0; i < level * 10; i++) {
             output.append(" ");
         }
         output.append(this.productNr);
@@ -23,7 +23,7 @@ public class Output {
 
     public String getProductName() {
         StringBuilder output = new StringBuilder(String.format("%15s", ""));
-        for (int i = 0; i < level*10; i++) {
+        for (int i = 0; i < level * 10; i++) {
             output.append(" ");
         }
         output.append(this.productName);

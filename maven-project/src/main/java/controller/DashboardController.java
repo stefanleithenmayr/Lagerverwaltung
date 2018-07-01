@@ -19,21 +19,22 @@ import java.util.*;
 
 public class DashboardController implements Initializable, Observer {
 
+    //FXML variables
     @FXML
     private Text timeOutput;
     @FXML
     private TableView<Rent> tableViewRents;
-
     @FXML
-    private TableColumn<?,?> userNameCol, fromCol, untilCol;
+    private TableColumn<?, ?> userNameCol, fromCol, untilCol;
 
+    //No FXML Methods, but two "Override Methods" instead
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Calendar time = Calendar.getInstance();
         int hour = time.get(Calendar.HOUR_OF_DAY);
         int min = time.get(Calendar.MINUTE);
         int sec = time.get(Calendar.SECOND);
-        timeOutput.setText(String.format("%02d:%02d:%02d\n", hour,min,sec));
+        timeOutput.setText(String.format("%02d:%02d:%02d\n", hour, min, sec));
         Clock.getInstance().addObserver(this);
         Clock.getInstance().triggerObserver();
 
@@ -57,6 +58,6 @@ public class DashboardController implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object time) {
-        Platform.runLater(() -> timeOutput.setText((String)time));
+        Platform.runLater(() -> timeOutput.setText((String) time));
     }
 }

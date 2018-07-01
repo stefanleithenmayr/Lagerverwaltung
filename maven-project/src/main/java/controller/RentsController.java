@@ -20,12 +20,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RentsController implements Initializable{
+public class RentsController implements Initializable {
 
     @FXML
     private TableView<Rent> tableViewRents;
     @FXML
-    private TableColumn<?,?> userNameCol, fromCol, untilCol, productNrCol, productNameCol;
+    private TableColumn<?, ?> userNameCol, fromCol, untilCol, productNrCol, productNameCol;
     @FXML
     private TableView<Product> productList;
     private List<Product> products;
@@ -36,8 +36,8 @@ public class RentsController implements Initializable{
         this.loadAllRents();
 
         tableViewRents.setOnMouseClicked((MouseEvent event) -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)){
-                if (tableViewRents.getSelectionModel().getSelectedItem() != null){
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (tableViewRents.getSelectionModel().getSelectedItem() != null) {
                     try {
                         showProducts(tableViewRents.getSelectionModel().getSelectedItem());
                     } catch (SQLException e) {
