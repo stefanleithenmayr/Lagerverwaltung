@@ -12,10 +12,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import loginPackage.DBConnection;
 import model.BarcodesToPdfGenerator;
+import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
@@ -43,7 +47,11 @@ public class AddItemController implements Initializable {
     @FXML
     private TableColumn<ProductType, String> tcProducttypeName, tcProducttypeDescription;
     @FXML
-    private CheckBox CBGenerateBarcodes;
+    private CheckBox CBGenerateBarcodes, CBGenerateBarcodes1;
+    @FXML
+    Rectangle errorRec;
+    @FXML
+    Text errorTxt;
 
     @FXML
     public void upDateQuantity() {
@@ -76,11 +84,10 @@ public class AddItemController implements Initializable {
     public void insertProductTypeWithProducts() throws SQLException, FileNotFoundException, DocumentException {
         if (amount < 1) return;
         if (tfProductTypeName.getText().equals("")){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Enter a Producttypename!");
-            alert.showAndWait();
+
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("Please enter a Producttypename", errorRec, errorTxt);
             return;
         }
         int productTypeID = DBConnection.getInstance().addNewProductType(tfProductTypeName.getText(), tfDescription.getText());
@@ -99,20 +106,22 @@ public class AddItemController implements Initializable {
         }
         tfProductTypeName.clear();
         tfDescription.clear();
-        slQuantity.setValue(0);
-        tfQuantity.clear();
+        slQuantity.setValue(1);
+        tfQuantity.setText("1");
+        amount = 1;
         productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
         tvProductTypes.getItems().clear();
         tvProductTypes.setItems(productTypes);
+        errorRec.setFill(Color.web("#00802b"));
+        errorRec.setStroke(Color.web("#00802b"));
+        ErrorMessageUtils.showErrorMessage("Successfully inserted", errorRec, errorTxt);
     }
     @FXML
     public void insertProductsIntoProductType() throws SQLException {
         if (selectedProductType == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Select a ProductType!");
-            alert.showAndWait();
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("Please select a producttype", errorRec, errorTxt);
             return;
         }
         int counter = 0;
@@ -120,9 +129,15 @@ public class AddItemController implements Initializable {
             counter++;
             DBConnection.getInstance().addNewProduct(selectedProductType.getProductTypeID());
         }
-        tfQuantity1.setText("");
-        slQuantity1.setValue(0);
+        tfQuantity1.setText("1");
+        slQuantity1.setValue(1);
+        amount1 =1;
+        CBGenerateBarcodes.setSelected(false);
         tvProductTypes.getSelectionModel().clearSelection();
+
+        errorRec.setFill(Color.web("#00802b"));
+        errorRec.setStroke(Color.web("#00802b"));
+        ErrorMessageUtils.showErrorMessage("Successfully inserted", errorRec, errorTxt);
     }
     @FXML
     public void productTypeSelected(){
@@ -133,6 +148,8 @@ public class AddItemController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         tfQuantity.setText("1");
         tfQuantity1.setText("1");
+        amount1 = 1;
+        amount = 1;
         selectedProductType = null;
         tfQuantity.textProperty().addListener((observable, oldValue, newValue) -> {
             for (int i = 0; i < newValue.length(); i++){
@@ -152,7 +169,6 @@ public class AddItemController implements Initializable {
         tfQuantity1.textProperty().addListener((observable, oldValue, newValue) -> {
             for (int i = 0; i < newValue.length(); i++){
                 if (newValue.charAt(i) > '9' || newValue.charAt(i) < '0'){
-
                     tfQuantity1.setText(oldValue);
                     return;
                 }

@@ -5,8 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane fx:id="returnProductPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/returnProductDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReturnProductController">
    <children>
@@ -21,5 +21,7 @@
         </columns>
       </TableView>
       <Text fill="WHITE" layoutX="50.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Return Log" />
+      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1335.0" layoutY="30.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Text fx:id="errorTxt" layoutX="853.0" layoutY="45.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="34.865234375" AnchorPane.topAnchor="32.0" />
    </children>
 </AnchorPane>
