@@ -30,7 +30,7 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private AnchorPane mainPane, addItemPane, subPane, showItemPane, rentsPane, returnProductPane, userManagerPane, exportDatasPane, dashboardPane,
-            rentManagerPane, setsManagerPane, showSetsPane,deleteItemPane, deleteSetsPane, actualShowingPane;
+            rentManagerPane, setsManagerPane, showSetsPane, deleteItemPane, deleteSetsPane, actualShowingPane;
     @FXML
     private Button cancelBT, btProductManager, showItemsBT, rentBT, exportDatasBT, returnProductBT, userManagerBT, btSetsManager, btShowSets,
             btCreateNewSet, btDeleteItem, btAddItem, dashboardBT, btDeleteSets;
@@ -41,15 +41,16 @@ public class MainSceneController implements Initializable {
     @FXML
     private Rectangle recLayout;
     @FXML
-    private Text showRentsTEXT, createRentTEXT,productManagerText, createNewSetTEXT, showSetsTEXT, addItemTEXT,deleteItemTEXT;
+    private Text showRentsTEXT, createRentTEXT, productManagerText, createNewSetTEXT, showSetsTEXT, addItemTEXT, deleteItemTEXT;
 
     private double xOffset;
     private double yOffset;
 
     private boolean theme, isDownRents, isDownSetsManager, isDownProductManager; //false = dark, true = white
     private String acutalPane;
+
     @FXML
-    public void dropDownProductManager(){
+    public void dropDownProductManager() {
         TranslateTransition transation1 = new TranslateTransition();
         transation1.setDuration(Duration.millis(500));
         transation1.setNode(setsManagerIV);
@@ -79,15 +80,14 @@ public class MainSceneController implements Initializable {
         transation7.setNode(btDeleteSets);
 
 
-        if (!isDownProductManager){
-            if (isDownRents){
+        if (!isDownProductManager) {
+            if (isDownRents) {
                 transation1.setToY(250);
                 transation6.setToY(250);
                 transation4.setToY(250);
                 transation5.setToY(250);
                 transation7.setToY(250);
-            }
-            else{
+            } else {
                 transation1.setToY(100);
                 transation6.setToY(100);
                 transation4.setToY(100);
@@ -109,16 +109,14 @@ public class MainSceneController implements Initializable {
             addItemTEXT.setVisible(true);
             deleteItemTEXT.setVisible(true);
             pT.play();
-        }
-        else{
-            if (isDownRents){
+        } else {
+            if (isDownRents) {
                 transation1.setToY(150);
                 transation4.setToY(150);
                 transation5.setToY(150);
                 transation6.setToY(150);
                 transation7.setToY(150);
-            }
-            else{
+            } else {
                 transation1.setToY(0);
                 transation4.setToY(0);
                 transation5.setToY(0);
@@ -139,8 +137,9 @@ public class MainSceneController implements Initializable {
             pT.play();
         }
     }
+
     @FXML
-    private void dropDownRents(){
+    private void dropDownRents() {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setDuration(Duration.millis(500));
         translateTransition.setNode(productManagerIV);
@@ -188,17 +187,16 @@ public class MainSceneController implements Initializable {
         Transition15.setDuration(Duration.millis(500));
         Transition15.setNode(showItemsBT);
 */
-        if (!isDownRents){
+        if (!isDownRents) {
             translateTransition.setToY(150);
             secondTransition.setToY(150);
-            if (isDownProductManager){
+            if (isDownProductManager) {
                 sixthTransition.setToY(250);
                 seventhTranisiton.setToY(250);
                 Transition9.setToY(250);
                 Transition8.setToY(250);
                 Transition16.setToY(250);
-            }
-            else{
+            } else {
                 sixthTransition.setToY(150);
                 seventhTranisiton.setToY(150);
                 Transition8.setToY(150);
@@ -210,7 +208,7 @@ public class MainSceneController implements Initializable {
 
             ParallelTransition pT = new ParallelTransition();
             pT.getChildren().addAll(translateTransition, secondTransition,
-                        sixthTransition, seventhTranisiton, Transition8, Transition9, Transition12, Transition15, Transition16);
+                    sixthTransition, seventhTranisiton, Transition8, Transition9, Transition12, Transition15, Transition16);
             createRentTEXT.setVisible(true);
             showRentsTEXT.setVisible(true);
             showItemsBT.setVisible(true);
@@ -218,15 +216,14 @@ public class MainSceneController implements Initializable {
             returnProductBT.setVisible(true);
             isDownRents = true;
             pT.play();
-        }else{
-            if (isDownProductManager){
+        } else {
+            if (isDownProductManager) {
                 sixthTransition.setToY(100);
                 seventhTranisiton.setToY(100);
                 Transition8.setToY(100);
                 Transition9.setToY(100);
                 Transition16.setToY(100);
-            }
-            else{
+            } else {
                 sixthTransition.setToY(0);
                 seventhTranisiton.setToY(0);
                 Transition8.setToY(0);
@@ -250,7 +247,9 @@ public class MainSceneController implements Initializable {
             isDownRents = false;
         }
     }
-    @FXML public void dropDownSetsManager(){
+
+    @FXML
+    public void dropDownSetsManager() {
         TranslateTransition Transition1 = new TranslateTransition();
         Transition1.setDuration(Duration.millis(500));
         Transition1.setNode(btShowSets);
@@ -264,7 +263,7 @@ public class MainSceneController implements Initializable {
         Transition3.setNode(btDeleteSets);
 
 
-        if (!isDownSetsManager){
+        if (!isDownSetsManager) {
             btShowSets.setVisible(true);
             btDeleteSets.setVisible(true);
             btCreateNewSet.setVisible(true);
@@ -282,8 +281,7 @@ public class MainSceneController implements Initializable {
             ParallelTransition pT = new ParallelTransition();
             pT.getChildren().addAll(Transition1, Transition2, Transition3);
             pT.play();
-        }
-        else {
+        } else {
             btShowSets.setVisible(false);
             btDeleteSets.setVisible(false);
             btCreateNewSet.setVisible(false);
@@ -380,17 +378,17 @@ public class MainSceneController implements Initializable {
             userManagerBT.setStyle("-fx-background-color:transparent");
         } else if (buttonName.equals("exportDatasBT") && !acutalPane.equals("exportDatasPane")) {
             exportDatasBT.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btCreateNewSet") && !acutalPane.equals("setsManagerPane")) {
+        } else if (buttonName.equals("btCreateNewSet") && !acutalPane.equals("setsManagerPane")) {
             btCreateNewSet.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btShowSets")&& !acutalPane.equals("showSetsPane")) {
+        } else if (buttonName.equals("btShowSets") && !acutalPane.equals("showSetsPane")) {
             btShowSets.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btAddItem") && !acutalPane.equals("addItemPane")) {
+        } else if (buttonName.equals("btAddItem") && !acutalPane.equals("addItemPane")) {
             btAddItem.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btDeleteItem") && !acutalPane.equals("deleteItemPane")) {
+        } else if (buttonName.equals("btDeleteItem") && !acutalPane.equals("deleteItemPane")) {
             btDeleteItem.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("returnProductBT") && !acutalPane.equals("returnProductPane")) {
+        } else if (buttonName.equals("returnProductBT") && !acutalPane.equals("returnProductPane")) {
             returnProductBT.setStyle("-fx-background-color:transparent");
-        }else if (buttonName.equals("btDeleteSets") && !acutalPane.equals("deleteSetsPane")) {
+        } else if (buttonName.equals("btDeleteSets") && !acutalPane.equals("deleteSetsPane")) {
             btDeleteSets.setStyle("-fx-background-color:transparent");
         }
     }
@@ -408,25 +406,25 @@ public class MainSceneController implements Initializable {
         if (changeThemeBT.isSelected()) {
             imageVCancelBT.setImage(new Image("icons/cancelmusic1.png"));
             mainPane.getStylesheets().add("css/mainPaneWHITE.css");
-            if (actualShowingPane.getId().equals("exportDatasPane")){
+            if (actualShowingPane.getId().equals("exportDatasPane")) {
                 actualShowingPane.getStylesheets().add("css/exportDatasWHITE.css");
-            }else if (actualShowingPane.getId().equals("addItemPane")){
+            } else if (actualShowingPane.getId().equals("addItemPane")) {
                 actualShowingPane.getStylesheets().add("css/addItemWHITE.css");
-            }else if (actualShowingPane.getId().equals("rentsPane")){
+            } else if (actualShowingPane.getId().equals("rentsPane")) {
                 actualShowingPane.getStylesheets().add("css/rentsWHITE.css");
-            }else if (actualShowingPane.getId().equals("returnProductPane")){
+            } else if (actualShowingPane.getId().equals("returnProductPane")) {
                 actualShowingPane.getStylesheets().add("css/returnProductWHITE.css");
-            }else if (actualShowingPane.getId().equals("userManagerPane")){
+            } else if (actualShowingPane.getId().equals("userManagerPane")) {
                 actualShowingPane.getStylesheets().add("css/userManagerWHITE.css");
-            }else if (actualShowingPane.getId().equals("rentManagerPane")){
+            } else if (actualShowingPane.getId().equals("rentManagerPane")) {
                 actualShowingPane.getStylesheets().add("css/rentsManagerWHITE.css");
-            }else if (actualShowingPane.getId().equals("setsManagerPane")){
+            } else if (actualShowingPane.getId().equals("setsManagerPane")) {
                 actualShowingPane.getStylesheets().add("css/setsManagerWHITE.css");
-            }else if (actualShowingPane.getId().equals("showSetsPane")){
+            } else if (actualShowingPane.getId().equals("showSetsPane")) {
                 actualShowingPane.getStylesheets().add("css/showSetsWHITE.css");
-            }else if (actualShowingPane.getId().equals("deleteItemPane")){
+            } else if (actualShowingPane.getId().equals("deleteItemPane")) {
                 actualShowingPane.getStylesheets().add("css/deleteItemWHITE.css");
-            }else if (actualShowingPane.getId().equals("deleteSetsPane")){
+            } else if (actualShowingPane.getId().equals("deleteSetsPane")) {
                 actualShowingPane.getStylesheets().add("css/deleteSetsWHITE.css");
             }
             theme = true;
@@ -434,25 +432,25 @@ public class MainSceneController implements Initializable {
             imageVCancelBT.setImage(new Image("/icons/cancelmusic.png"));
             mainPane.getStylesheets().add("css/mainPaneDARK.css");
 
-            if (actualShowingPane.getId().equals("exportDatasPane")){
+            if (actualShowingPane.getId().equals("exportDatasPane")) {
                 actualShowingPane.getStylesheets().add("css/exportDatasDARK.css");
-            }else if (actualShowingPane.getId().equals("addItemPane")){
+            } else if (actualShowingPane.getId().equals("addItemPane")) {
                 actualShowingPane.getStylesheets().add("css/addItemDARK.css");
-            }else if (actualShowingPane.getId().equals("rentsPane")){
+            } else if (actualShowingPane.getId().equals("rentsPane")) {
                 actualShowingPane.getStylesheets().add("css/rentsDARK.css");
-            }else if (actualShowingPane.getId().equals("returnProductPane")){
+            } else if (actualShowingPane.getId().equals("returnProductPane")) {
                 actualShowingPane.getStylesheets().add("css/returnProductDARK.css");
-            }else if (actualShowingPane.getId().equals("userManagerPane")){
+            } else if (actualShowingPane.getId().equals("userManagerPane")) {
                 actualShowingPane.getStylesheets().add("css/userManagerDARK.css");
-            }else if (actualShowingPane.getId().equals("rentManagerPane")){
+            } else if (actualShowingPane.getId().equals("rentManagerPane")) {
                 actualShowingPane.getStylesheets().add("css/rentsManagerDARK.css");
-            }else if (actualShowingPane.getId().equals("setsManagerPane")){
+            } else if (actualShowingPane.getId().equals("setsManagerPane")) {
                 actualShowingPane.getStylesheets().add("css/setsManagerDARK.css");
-            }else if (actualShowingPane.getId().equals("showSetsPane")){
+            } else if (actualShowingPane.getId().equals("showSetsPane")) {
                 actualShowingPane.getStylesheets().add("css/showSetsDARK.css");
-            }else if (actualShowingPane.getId().equals("deleteItemPane")){
+            } else if (actualShowingPane.getId().equals("deleteItemPane")) {
                 actualShowingPane.getStylesheets().add("css/deleteItemDARK.css");
-            }else if (actualShowingPane.getId().equals("deleteSetsPane")){
+            } else if (actualShowingPane.getId().equals("deleteSetsPane")) {
                 actualShowingPane.getStylesheets().add("css/deleteSetsDARK.css");
             }
             theme = false;
@@ -726,7 +724,7 @@ public class MainSceneController implements Initializable {
         recLayout.setHeight(bounds.getHeight() - 71);
 
         if (!DBConnection.getInstance().getActualUser().equals("stuetz") && !DBConnection.getInstance().getActualUser().equals("renedeicker")
-                &&!DBConnection.getInstance().getActualUser().equals("stefanleithenmayr") && !DBConnection.getInstance().getActualUser().equals("maxhofer")) {
+                && !DBConnection.getInstance().getActualUser().equals("stefanleithenmayr") && !DBConnection.getInstance().getActualUser().equals("maxhofer")) {
             exportDatasBT.setVisible(false);
             returnProductBT.setVisible(false);
             userManagerBT.setVisible(false);

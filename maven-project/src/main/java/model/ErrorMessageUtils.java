@@ -7,15 +7,15 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class ErrorMessageUtils {
-    public static void showErrorMessage(String msg, Rectangle rec, Text txt){
+    public static void showErrorMessage(String msg, Rectangle rec, Text txt) {
         txt.setText(msg);
         FadeTransition fadeTransition =
-                new FadeTransition(Duration.millis(1000), rec );
+                new FadeTransition(Duration.millis(1000), rec);
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(0.7);
 
         FadeTransition fadeTransition2 =
-                new FadeTransition(Duration.millis(1000), txt );
+                new FadeTransition(Duration.millis(1000), txt);
         fadeTransition2.setFromValue(0);
         fadeTransition2.setToValue(1);
 
@@ -26,7 +26,7 @@ public class ErrorMessageUtils {
         );
         firstParallelTransition.play();
 
-        firstParallelTransition.setOnFinished(e->{
+        firstParallelTransition.setOnFinished(e -> {
             fadeTransition.setFromValue(0.7);
             fadeTransition.setToValue(0.7);
             fadeTransition.setDuration(Duration.millis(2000));

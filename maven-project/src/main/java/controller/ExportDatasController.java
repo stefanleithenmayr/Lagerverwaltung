@@ -20,6 +20,7 @@ import model.BarcodesToPdfGenerator;
 import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
+
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,13 +35,14 @@ public class ExportDatasController implements Initializable {
     @FXML
     private TreeTableColumn<Product, String> prodNameCol, descCol;
     @FXML
-    private TreeTableColumn selectCol;
+    private TreeTableColumn<Object, Object> selectCol;
     @FXML
     Rectangle errorRec;
     @FXML
     Text errorTxt;
     @FXML
     JFXCheckBox cbSelectAll;
+
     List<Product> products;
 
     @Override
@@ -61,17 +63,19 @@ public class ExportDatasController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void exportDatas() throws SQLException, FileNotFoundException, DocumentException {
         List<Product> selectedProducts = new ArrayList<>();
-        for (int i = 0; i < products.size(); i++){
-            CheckBox c = products.get(i).getSelected();
-            if (products.get(i).getSelected() != null && products.get(i).getSelected().isSelected()){
-                selectedProducts.add(products.get(i));
+        for (Product product : products) {
+            CheckBox c = product.getSelected();
+            if (product.getSelected() != null && product.getSelected().isSelected()) {
+                selectedProducts.add(product);
 
             }
         }
-        if (selectedProducts.size() == 0){
+
+        if (selectedProducts.size() == 0) {
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("No products selected", errorRec, errorTxt);
@@ -85,25 +89,24 @@ public class ExportDatasController implements Initializable {
     }
 
     @FXML
-    private  void serachProduct(KeyEvent event) throws SQLException {
+    private void searchProduct(KeyEvent event) throws SQLException {
         TTVProductToChoose.setRoot(null);
         KeyCode keycode = event.getCode();
         String search = tfSearch.getText();
-        if(keycode == KeyCode.BACK_SPACE && search.length() > 0){
-            search = search.substring(0,search.length()-1);
-        }
-        else search += event.getText();
+        if (keycode == KeyCode.BACK_SPACE && search.length() > 0) {
+            search = search.substring(0, search.length() - 1);
+        } else search += event.getText();
 
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
-        List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        List<Product> listHeaders = getListHeaders(DBConnection.getInstance().getAllProductTypes());
         if (listHeaders == null) return;
 
         for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
-            for (Product child: childs){
-                if (getSelectedByID(child.getProductID())){
+            for (Product child : childs) {
+                if (getSelectedByID(child.getProductID())) {
                     CheckBox cb = new CheckBox();
                     cb.setSelected(true);
                     child.setSelected(cb);
@@ -113,7 +116,7 @@ public class ExportDatasController implements Initializable {
                 printSetsTree(child, cache);
                 parent.getChildren().add(cache);
             }
-            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())){
+            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())) {
                 root.getChildren().add(parent);
             }
         }
@@ -121,9 +124,9 @@ public class ExportDatasController implements Initializable {
         TTVProductToChoose.setRoot(root);
     }
 
-    private List<Product> GetListHeaders(List<ProductType> productTypes) throws SQLException {
+    private List<Product> getListHeaders(List<ProductType> productTypes) throws SQLException {
         List<Product> listHeaders = new ArrayList<>();
-        for(ProductType productType : productTypes){
+        for (ProductType productType : productTypes) {
             Product p = DBConnection.getInstance().getProductPerProductTypeID(productType.getProductTypeID());
             if (p == null) break;
             p.setIsChild(false);
@@ -131,9 +134,10 @@ public class ExportDatasController implements Initializable {
 
             listHeaders.add(p);
         }
-        return  listHeaders;
+        return listHeaders;
     }
-    public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
+
+    private void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
         for (Product aListOfChildren : listOfChildren) {
             aListOfChildren.setIsChild(true);
@@ -144,17 +148,18 @@ public class ExportDatasController implements Initializable {
             printSetsTree(childProduct, child);
         }
     }
-    private void  refreshTTV() throws SQLException {
+
+    private void refreshTTV() throws SQLException {
         TTVProductToChoose.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
-        List<Product> listHeaders = GetListHeaders(DBConnection.getInstance().getAllProductTypes());
+        List<Product> listHeaders = getListHeaders(DBConnection.getInstance().getAllProductTypes());
         if (listHeaders == null) return;
 
-        for (Product listHeader : listHeaders){
+        for (Product listHeader : listHeaders) {
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
-            for (Product child: childs){
-                if (getSelectedByID(child.getProductID())){
+            for (Product child : childs) {
+                if (getSelectedByID(child.getProductID())) {
                     CheckBox cb = new CheckBox();
                     cb.setSelected(true);
                     child.setSelected(cb);
@@ -168,7 +173,7 @@ public class ExportDatasController implements Initializable {
             }
 
             root.getChildren().add(parent);
-            if (parent.getChildren().size() > 0){
+            if (parent.getChildren().size() > 0) {
             }
         }
         TTVProductToChoose.setShowRoot(false);
@@ -176,8 +181,8 @@ public class ExportDatasController implements Initializable {
     }
 
     private void removeProductByProductID(Integer productID) {
-        for (int i = 0; i < products.size(); i++){
-            if (products.get(i).getProductID().equals(productID)){
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProductID().equals(productID)) {
                 products.remove(i);
             }
         }
@@ -189,11 +194,11 @@ public class ExportDatasController implements Initializable {
                 return true;
             }
         }
-        return  false;
+        return false;
     }
 
     @FXML
-    public void seletcAll() throws SQLException {
+    public void selectAll() throws SQLException {
         tfSearch.clear();
         for (Product product : products) {
             CheckBox cb = new CheckBox();
@@ -202,8 +207,9 @@ public class ExportDatasController implements Initializable {
         }
         refreshTTV();
     }
+
     @FXML
-    public void refresh(){
+    public void refresh() {
         TTVProductToChoose.refresh();
     }
 }

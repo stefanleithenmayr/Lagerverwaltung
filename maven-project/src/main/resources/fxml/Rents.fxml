@@ -6,22 +6,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rentsPane" prefHeight="600.0" prefWidth="1000.0" styleClass="root" stylesheets="@../css/rentsDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentsController">
-   <children>
-      <TableView fx:id="tableViewRents" layoutX="25.0" layoutY="100.0" prefHeight="400.0" prefWidth="434.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="1000.0" AnchorPane.topAnchor="100.0">
-         <columns>
-            <TableColumn fx:id="userNameCol" prefWidth="134.0" text="Username" />
-            <TableColumn fx:id="fromCol" prefWidth="119.0" text="From" />
-            <TableColumn fx:id="untilCol" prefWidth="104.0" text="Until" />
-         </columns>
-      </TableView>
-      <JFXComboBox fx:id="chooseRents" layoutX="144.0" layoutY="56.0" prefHeight="31.0" prefWidth="149.0" visible="false" />
-      <Text fill="WHITE" layoutX="19.0" layoutY="62.0" strokeMiterLimit="15.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="All Rents" />
-      <TableView fx:id="productList" layoutX="124.0" layoutY="176.0" prefHeight="334.0" prefWidth="850.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0">
-         <columns>
-            <TableColumn fx:id="productNrCol" prefWidth="350.0" text="ProductNr" />
-            <TableColumn fx:id="productNameCol" prefWidth="350.0" text="ProductName" />
-         </columns>
-      </TableView>
-   </children>
+<AnchorPane fx:id="rentsPane" prefHeight="600.0" prefWidth="1000.0" styleClass="root"
+            stylesheets="@../css/rentsDARK.css" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentsController">
+    <children>
+        <TableView fx:id="tableViewRents" layoutX="25.0" layoutY="100.0" prefHeight="400.0" prefWidth="434.0"
+                   AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="1000.0"
+                   AnchorPane.topAnchor="100.0">
+            <columns>
+                <TableColumn fx:id="userNameCol" prefWidth="134.0" text="Username"/>
+                <TableColumn fx:id="fromCol" prefWidth="119.0" text="From"/>
+                <TableColumn fx:id="untilCol" prefWidth="104.0" text="Until"/>
+            </columns>
+        </TableView>
+        <JFXComboBox fx:id="chooseRents" layoutX="144.0" layoutY="56.0" prefHeight="31.0" prefWidth="149.0"
+                     visible="false"/>
+        <Text fill="WHITE" layoutX="19.0" layoutY="62.0" strokeMiterLimit="15.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-size: 25;" text="All Rents"/>
+        <TableView fx:id="productList" layoutX="124.0" layoutY="176.0" prefHeight="334.0" prefWidth="850.0"
+                   AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0">
+            <columns>
+                <TableColumn fx:id="productNrCol" prefWidth="350.0" text="ProductNr"/>
+                <TableColumn fx:id="productNameCol" prefWidth="350.0" text="ProductName"/>
+            </columns>
+        </TableView>
+    </children>
 </AnchorPane>

@@ -26,7 +26,7 @@ public class ReturnProductController implements Initializable {
     @FXML
     private TableView logTV;
     @FXML
-    private TableColumn<?,?> productNrCol, productNameCol, sucessfullCol, userNameCol;
+    private TableColumn<?, ?> productNrCol, productNameCol, sucessfullCol, userNameCol;
     @FXML
     private JFXTextField eanCodeTF;
     @FXML
@@ -36,19 +36,19 @@ public class ReturnProductController implements Initializable {
 
     @FXML
     private void addToBoard() throws SQLException {
-        if (eanCodeTF.getText().equals("")){
+        if (eanCodeTF.getText().length() != 11) return;
+        if (eanCodeTF.getText().equals("")) {
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("No eancode scanned", errorRec, errorTxt);
         }
         String eanCode = eanCodeTF.getText();
-        if (eanCode != null && !eanCode.isEmpty()){
+        if (eanCode != null && !eanCode.isEmpty()) {
             Product p = DBConnection.getInstance().getProductPerEan(eanCode);
-            if (DBConnection.getInstance().IsProductRented(p)){
+            if (DBConnection.getInstance().IsProductRented(p)) {
                 List<Output> outputs = FXCollections.observableArrayList(DBConnection.getInstance().unrentAllProducts(p));
                 logTV.setItems((ObservableList) outputs);
-            }
-            else{
+            } else {
                 errorRec.setFill(Color.web("#f06060"));
                 errorRec.setStroke(Color.web("#f06060"));
                 ErrorMessageUtils.showErrorMessage("Scanned product isn´t rented", errorRec, errorTxt);

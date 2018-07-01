@@ -24,7 +24,7 @@ public class UserSelectionController implements Initializable {
     private TableView<User> tvUser;
     private ObservableList<User> users;
     @FXML
-    private TableColumn<User,String> tcUser;
+    private TableColumn<User, String> tcUser;
     @FXML
     JFXTextField tfSearchName;
     @FXML
@@ -33,7 +33,7 @@ public class UserSelectionController implements Initializable {
     JFXDatePicker endDateField;
 
     @FXML
-    private void searchUser(KeyEvent event){
+    private void searchUser(KeyEvent event) {
         List<User> cache = new ArrayList<>(users);
         tvUser.getItems().clear();
         try {
@@ -44,13 +44,12 @@ public class UserSelectionController implements Initializable {
 
         KeyCode keycode = event.getCode();
         String search = tfSearchName.getText();
-        if(keycode == KeyCode.BACK_SPACE && search.length() > 0){
-            search = search.substring(0,search.length()-1);
-        }
-        else search += event.getText();
-        for (int i = 0; i < users.size(); i++){
+        if (keycode == KeyCode.BACK_SPACE && search.length() > 0) {
+            search = search.substring(0, search.length() - 1);
+        } else search += event.getText();
+        for (int i = 0; i < users.size(); i++) {
             users.get(i).setSelected(cache.get(i).getSelected());
-            if (users.get(i).getRealName().toLowerCase().contains(search.toLowerCase())){
+            if (users.get(i).getRealName().toLowerCase().contains(search.toLowerCase())) {
                 tvUser.getItems().add(users.get(i));
             }
         }
@@ -68,7 +67,7 @@ public class UserSelectionController implements Initializable {
     }
 
     public DataPackage getData() {
-        if (tvUser.getSelectionModel().getSelectedItem() == null || startDateField.getValue() == null || endDateField.getValue() == null){
+        if (tvUser.getSelectionModel().getSelectedItem() == null || startDateField.getValue() == null || endDateField.getValue() == null) {
             return null;
         }
         return new DataPackage(tvUser.getSelectionModel().getSelectedItem(), startDateField.getValue(), endDateField.getValue());

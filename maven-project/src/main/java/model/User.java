@@ -30,6 +30,7 @@ public class User {
     public void setSelected(CheckBox selected) {
         this.selected = selected;
     }
+
     public TextField getUsername() {
         this.userNameField.setText(this.username);
         this.userNameField.setDisable(this.isActivated);
@@ -48,26 +49,28 @@ public class User {
         return this.nameField;
     }
 
-    public TextField getEmail(){
+    public TextField getEmail() {
         this.emailField.setDisable(this.isActivated);
         this.emailField.setText(this.email);
         return this.emailField;
     }
 
-    public TextField getKlasse(){
+    public TextField getKlasse() {
         this.klasseField.setDisable(this.isActivated);
         this.klasseField.setText(this.klasse);
         return this.klasseField;
     }
 
-    public TextField getUserRole(){
+    public TextField getUserRole() {
         this.userroleField.setDisable(this.isActivated);
         this.userroleField.setText(Integer.toString(this.userrole));
         return this.userroleField;
     }
+
     public String getRealName() {
         return realName.get();
     }
+
     public TextField getNameField() {
         return nameField;
     }

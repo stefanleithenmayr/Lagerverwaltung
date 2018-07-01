@@ -12,11 +12,6 @@ import java.util.stream.Collectors;
 
 public class DBConnection {
     private static DBConnection INSTANCE;
-    //https://stackoverflow.com/questions/14878788/javafx-background-thread-for-sql-query
-    //private final String DRIVER_STRING = "org.apache.derby.jdbc.ClientDriver";
-    //private final String DRIVER_STRING = "org.apache.derby.jdbc.ClientDriver";
-    //private final String CONNECTION_STRING = "jdbc:derby://localhost:1527/db;create=true";
-    // private  final String DRIVER_STRING = "org.apache.derby.jdbc.ClientDriver";
     private final String CONNECTION_STRING = "jdbc:mariadb://vm81.htl-leonding.ac.at:8114/LeoLager";
     private String userName;
     private String password;
@@ -190,13 +185,13 @@ public class DBConnection {
     }
 
     public void InsertTestDatas() throws SQLException {
-        String SQLCommand = "insert into producttype values (1001, 'Monitor', 'LG - Monitor 400Hz')";
+        String SQLCommand = "INSERT INTO producttype VALUES (1001, 'Monitor', 'LG - Monitor 400Hz')";
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into producttype values (1002, 'Rechner', 'Lenovo Rechner')";
+        SQLCommand = "INSERT INTO producttype VALUES (1002, 'Rechner', 'Lenovo Rechner')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into producttype values (1003, 'HDMI-Kabel', 'Kabel zum Bildlichen übertragen')";
+        SQLCommand = "INSERT INTO producttype VALUES (1003, 'HDMI-Kabel', 'Kabel zum Bildlichen übertragen')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
@@ -208,27 +203,27 @@ public class DBConnection {
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         String ean = this.getEanByID(1);
-        SQLCommand = "insert into product values(1001, 1001, NULL, '"+ean+"', NULL, 2)";
+        SQLCommand = "insert into product values(1001, 1001, NULL, '" + ean + "', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         ean = this.getEanByID(2);
-        SQLCommand = "insert into product values(1002, 1001, NULL, '"+ean+"', NULL, 2)";
+        SQLCommand = "insert into product values(1002, 1001, NULL, '" + ean + "', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         ean = this.getEanByID(4);
-        SQLCommand = "insert into product values(1004, 1003, NULL, '"+ean+"', NULL, 2)";
+        SQLCommand = "insert into product values(1004, 1003, NULL, '" + ean + "', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         ean = this.getEanByID(5);
-        SQLCommand = "insert into product values(1005, 1003, NULL, '"+ean+"', NULL, 2)";
+        SQLCommand = "insert into product values(1005, 1003, NULL, '" + ean + "', NULL, 2)";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
 
         //Insert a TestSet
-        SQLCommand = "insert into producttype values (1004, 'HDMI Adapter', 'Stecker für ein HDMI-Kabel')";
+        SQLCommand = "INSERT INTO producttype VALUES (1004, 'HDMI Adapter', 'Stecker für ein HDMI-Kabel')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        SQLCommand = "insert into producttype values (1005, 'HDMI-Kabel-Adapter Set', 'HDMI Kabel mit Adapter')";
+        SQLCommand = "INSERT INTO producttype VALUES (1005, 'HDMI-Kabel-Adapter Set', 'HDMI Kabel mit Adapter')";
         ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         ean = this.getEanByID(3);
@@ -563,7 +558,7 @@ public class DBConnection {
             products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"), rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
 
-        for (Product p:
+        for (Product p :
                 products) {
             p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
             p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
@@ -634,9 +629,9 @@ public class DBConnection {
     }
 
     public int createNewSetHeaderProduct(int productTypeID) throws SQLException {
-        int productID = this.getLastProductID()+1;
+        int productID = this.getLastProductID() + 1;
         String ean = this.getEanByID(productID);
-        String SQLCommand = "INSERT INTO product VALUES ("+productID + ", " + productTypeID + ", NULL,'"+ean +"', Null, "+ 2+")" ;
+        String SQLCommand = "INSERT INTO product VALUES (" + productID + ", " + productTypeID + ", NULL,'" + ean + "', Null, " + 2 + ")";
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return productID;
@@ -685,7 +680,7 @@ public class DBConnection {
             products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
-        for (Product p:
+        for (Product p :
                 products) {
             p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
             p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
@@ -705,7 +700,7 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
 
-        for (Product p:
+        for (Product p :
                 juniors) {
             p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
             p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
@@ -752,11 +747,10 @@ public class DBConnection {
         ps.executeUpdate();
         return id;
     }
-
     public Product  addNewProduct(int productTypeID) throws SQLException {
         int id = this.getLastProductID()+1;
         String ean = this.getEanByID(id);
-        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'"+ean+"', null, " + 2 + ")" ;
+        String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'" + ean + "', null, " + 2 + ")";
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
         return new Product(id, productTypeID, null, ean, null, 2);
@@ -823,8 +817,8 @@ public class DBConnection {
             p = new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), null, rs.getString("PRODUCTEAN"),
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS"));
 
-                p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
-                p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
+            p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
+            p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
 
         }
         return p;
@@ -935,7 +929,7 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
 
-        for (Product p:
+        for (Product p :
                 products) {
             p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
             p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
@@ -976,8 +970,8 @@ public class DBConnection {
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
 
-        for (Product p:
-             products) {
+        for (Product p :
+                products) {
             p.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(p.getProducttypeID()));
             p.setProductTypeDescription(DBConnection.getInstance().getProductTypeDescriptionByID(p.getProducttypeID()));
         }
@@ -986,14 +980,14 @@ public class DBConnection {
 
     public List<Product> getAllChildsOfProduct(Integer productID) throws SQLException {
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT  * from product where  superproductnr= "+productID);
+        ResultSet rs = stmt.executeQuery("SELECT  * from product where  superproductnr= " + productID);
 
         List<Product> products = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             products.add(new Product(rs.getInt("PRODUCTNR"), rs.getInt("PRODUCTTYPENR"), "", rs.getString("PRODUCTEAN"),
                     rs.getInt("SUPERPRODUCTNR"), rs.getInt("STATUS")));
         }
-        return  products;
+        return products;
     }
 
     public List<Product> getAllSetHaders() throws SQLException {
@@ -1011,12 +1005,12 @@ public class DBConnection {
         for (Product header : headers) {
             if (header.getProductID().equals(productID)) return true;
         }
-        return  false;
+        return false;
     }
 
     public void setSuperProductNrNullBySuperProductNR(Integer superproductID) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.executeUpdate("UPDATE product set superproductnr = " + null +" where superproductnr = "+ superproductID);
+        stmt.executeUpdate("UPDATE product set superproductnr = " + null + " where superproductnr = " + superproductID);
     }
 
     public void deleteProductTypeByID(Integer producttypeID) throws SQLException {
@@ -1030,9 +1024,9 @@ public class DBConnection {
         ResultSet rsProductTypes = stmt.executeQuery("SELECT * FROM producttype");
         List<ProductType> productTypes = new ArrayList<>();
 
-        while (rsProductTypes.next()){
+        while (rsProductTypes.next()) {
             ProductType p = new ProductType(rsProductTypes.getInt("PRODUCTTYPENR"), rsProductTypes.getString("TYPENAME"), rsProductTypes.getString("TYPEDESCRIPTION"), null);
-            if (IsNotASetProductType(p)){
+            if (IsNotASetProductType(p)) {
                 productTypes.add(p);
             }
         }
@@ -1056,12 +1050,12 @@ public class DBConnection {
     public boolean IsProductRented(Product product) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM item");
-        while(rs.next()){
-            if (rs.getInt("productnr") == product.getProductID()){
+        while (rs.next()) {
+            if (rs.getInt("productnr") == product.getProductID()) {
                 return true;
             }
         }
-        return  false;
+        return false;
     }
 
     public List<ProductType> getAllSetProductTypes() throws SQLException {

@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -33,28 +32,19 @@ public class RentManagerController implements Initializable {
 
     @FXML
     private AnchorPane subPane, cachePane, userSelectionPane, itemSelectionPane;
-
     @FXML
-    private Button backBT, forwardBT;
-
+    private Button backBT;
     @FXML
-    private ImageView backIV, forwardIV;
-
+    private ImageView backIV;
     @FXML
-    private Text backText, forwardText;
-
+    private Text backText, forwardText, errorTxt;
     @FXML
     private ProgressBar progressBar;
-
     @FXML
     private Rectangle errorRec;
 
-    @FXML
-    private Text errorTxt;
-
     private int actualPane;
     private FXMLLoader firstLoader, secondLoader;
-
     private DataPackage actualDataPackage;
 
     @FXML
@@ -69,18 +59,22 @@ public class RentManagerController implements Initializable {
         secondTransition.setDuration(Duration.millis(1000));
 
         Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(progressBar.progressProperty(), ((double)1));
+        KeyValue keyValue = new KeyValue(progressBar.progressProperty(), ((double) 1));
         KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);
         timeline.getKeyFrames().add(keyFrame);
 
-        if (actualPane == 0){
-            actualDataPackage  = ((UserSelectionController) firstLoader.getController()).getData();
-            if (actualDataPackage == null){
-                ErrorMessageUtils.showErrorMessage("Please select a user, startdate and enddate!", errorRec, errorTxt);
+        if (actualPane == 0) {
+            actualDataPackage = ((UserSelectionController) firstLoader.getController()).getData();
+            if (actualDataPackage == null) {
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("Please select a User, StartDate and EndDate!", errorRec, errorTxt);
                 return;
             }
-            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 1) {
-                ErrorMessageUtils.showErrorMessage("Enddate is before startdate", errorRec, errorTxt);
+            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 0) {
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("EndDate is before StartDate", errorRec, errorTxt);
                 return;
             }
             backBT.setVisible(true);
@@ -90,46 +84,47 @@ public class RentManagerController implements Initializable {
             secondTransition.setNode(itemSelectionPane);
             cachePane.getChildren().add(itemSelectionPane);
             actualPane++;
-            ((ItemSelectionController)secondLoader.getController()).refresh();
+
+            ((ItemSelectionController) secondLoader.getController()).refresh();
             translateTransition.setOnFinished(event -> {
                 subPane.getChildren().clear();
                 subPane.getChildren().add(itemSelectionPane);
             });
+
             secondTransition.setOnFinished(event -> cachePane.getChildren().clear());
             forwardText.setText("Finish");
             ParallelTransition parallelTransition = new ParallelTransition();
             parallelTransition.getChildren().addAll(translateTransition, secondTransition, timeline);
             parallelTransition.play();
-        }
-        else if(actualPane == 1){
+        } else if (actualPane == 1) {
             List<Product> products = ((ItemSelectionController) secondLoader.getController()).getSelectedItems();
-            if (products == null || products.isEmpty()){
-
+            if (products == null || products.isEmpty()) {
                 errorRec.setFill(Color.web("#f06060"));
                 errorRec.setStroke(Color.web("#f06060"));
                 ErrorMessageUtils.showErrorMessage("No Products selected!", errorRec, errorTxt);
                 return;
             }
 
-            for (Product p : products){
-                if (p.getStatusID() == 1){
+            for (Product p : products) {
+                if (p.getStatusID() == 1) {
                     products.remove(p);
                 }
             }
+
             DBConnection.getInstance().createRent(products, actualDataPackage);
             errorRec.setFill(Color.web("#00802b"));
             errorRec.setStroke(Color.web("#00802b"));
-            ErrorMessageUtils.showErrorMessage("Successfully created", errorRec, errorTxt);
+            ErrorMessageUtils.showErrorMessage("Successfully Inserted", errorRec, errorTxt);
             this.reset();
         }
     }
 
     private void reset() {
-        this.initialize(null,null);
+        this.initialize(null, null);
     }
 
     @FXML
-    private void showPreviousPane(){
+    private void showPreviousPane() {
         forwardText.setText("Previous");
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setFromX(0);
@@ -146,7 +141,7 @@ public class RentManagerController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);
         timeline.getKeyFrames().add(keyFrame);
 
-        if (actualPane == 1){
+        if (actualPane == 1) {
             forwardText.setText("Previous");
             backBT.setVisible(false);
             backIV.setVisible(false);
@@ -206,8 +201,6 @@ public class RentManagerController implements Initializable {
 
         userSelectionPane.setPrefWidth(bounds.getWidth() - 280);
         userSelectionPane.setPrefHeight(bounds.getHeight() - 300);
-
-
         subPane.getChildren().add(userSelectionPane);
     }
 }

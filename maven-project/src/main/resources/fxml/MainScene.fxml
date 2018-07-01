@@ -9,159 +9,220 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
-   <children>
-      <AnchorPane fx:id="subPane" layoutX="263.0" layoutY="100.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0" />
-      <Rectangle fx:id="recLayout" arcHeight="5.0" arcWidth="5.0" fill="#2d3139" height="650.0" layoutY="71.0" stroke="BLACK" strokeType="INSIDE" width="248.0" />
-      <Rectangle fx:id="dashBoard" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="71.0" layoutY="1.0" stroke="#585d6e" strokeType="INSIDE" styleClass="recStyle" width="248.0" AnchorPane.bottomAnchor="644.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1032.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="rentBT" layoutY="172.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="185.0">
-         <graphic>
-            <Text fx:id="showRentsTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Show Rents" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic></Button>
-      <Button fx:id="returnProductBT" layoutY="245.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="245.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Return Products">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button fx:id="btProductManager" layoutY="155.0" mnemonicParsing="false" onAction="#dropDownProductManager" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fx:id="productManagerText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Manager">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic></Button>
-      <Button fx:id="exportDatasBT" layoutY="585.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Export Barcodes">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button fx:id="userManagerBT" layoutY="645.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="User Manager">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button layoutY="85.0" mnemonicParsing="false" onAction="#dropDownRents" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" />
-      <Text layoutX="42.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dashBoardStyle" text="DASHBOARD">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Text>
-      <ImageView fx:id="imageVCancelBT" fitHeight="32.0" fitWidth="32.0" layoutX="1227.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0">
-         <image>
-            <Image url="@../icons/cancelmusic.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="cancelBT" layoutX="1227.0" layoutY="21.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="20.0" />
-      <JFXToggleButton fx:id="changeThemeBT" layoutX="1158.0" layoutY="9.0" onAction="#changeFont" AnchorPane.rightAnchor="65.0" />
-      <ImageView fx:id="productManagerIV" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
-         <image>
-            <Image url="@../icons/icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="expIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="599.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="15.0">
-         <image>
-            <Image url="@../icons/export-file.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="userIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="659.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="15.0">
-         <image>
-            <Image url="@../icons/user.png" />
-         </image>
-      </ImageView>
-      <Text fill="WHITE" layoutX="70.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rents">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <ImageView fx:id="rentIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../icons/rent-sign.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="showItemsBT" layoutY="112.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="130.0">
-         <graphic>
-            <Text fx:id="createRentTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Create new Rent" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic></Button>
-      <Button fx:id="btSetsManager" layoutY="215.0" mnemonicParsing="false" onAction="#dropDownSetsManager" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sets Manager">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <ImageView fx:id="setsManagerIV" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
-         <image>
-            <Image url="@../icons/setManager.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="btShowSets" layoutY="261.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false">
-         <graphic>
-            <Text fx:id="showSetsTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- ShowSets" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button fx:id="btCreateNewSet" layoutY="317.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false">
-         <graphic>
-            <Text fx:id="createNewSetTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Create new Set" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button fx:id="btAddItem" layoutY="201.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false">
-         <graphic>
-            <Text fx:id="addItemTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Add Item" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button fx:id="btDeleteItem" layoutY="247.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false">
-         <graphic>
-            <Text fx:id="deleteItemTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Delete Item" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-      <Button fx:id="dashboardBT" layoutY="8.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="60.0" prefWidth="248.0" style="-fx-background-color: transparent;" />
-      <Button fx:id="btDeleteSets" layoutY="372.0" mnemonicParsing="false" onAction="#switchPane" onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0" style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="372.0">
-         <graphic>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Delete Sets">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </graphic>
-      </Button>
-   </children>
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            onMouseClicked="#mouseIsPressedEvent" onMouseDragged="#mouseIsDraggedEvent" prefHeight="720.0"
+            prefWidth="1280.0" stylesheets="@../css/mainPaneDARK.css" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
+    <children>
+        <AnchorPane fx:id="subPane" layoutX="263.0" layoutY="100.0" prefHeight="600.0" prefWidth="1000.0"
+                    AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="50.0"
+                    AnchorPane.topAnchor="100.0"/>
+        <Rectangle fx:id="recLayout" arcHeight="5.0" arcWidth="5.0" fill="#2d3139" height="650.0" layoutY="71.0"
+                   stroke="BLACK" strokeType="INSIDE" width="248.0"/>
+        <Rectangle fx:id="dashBoard" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="71.0" layoutY="1.0"
+                   stroke="#585d6e" strokeType="INSIDE" styleClass="recStyle" width="248.0"
+                   AnchorPane.bottomAnchor="644.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1032.0"
+                   AnchorPane.topAnchor="0.0"/>
+        <Button fx:id="rentBT" layoutY="172.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="185.0">
+            <graphic>
+                <Text fx:id="showRentsTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Show Rents"
+                      visible="false">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="returnProductBT" layoutY="245.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0"
+                AnchorPane.topAnchor="245.0">
+            <graphic>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Return Products">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="btProductManager" layoutY="155.0" mnemonicParsing="false" onAction="#dropDownProductManager"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
+            <graphic>
+                <Text fx:id="productManagerText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Products Manager">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="exportDatasBT" layoutY="585.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0">
+            <graphic>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Export Barcodes">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="userManagerBT" layoutY="645.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
+            <graphic>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Users Manager">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button layoutY="85.0" mnemonicParsing="false" onAction="#dropDownRents" prefHeight="56.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;">
+            <graphic>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Rents Manager">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Text layoutX="42.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dashBoardStyle"
+              text="DASHBOARD">
+            <font>
+                <Font size="28.0"/>
+            </font>
+        </Text>
+        <ImageView fx:id="imageVCancelBT" fitHeight="32.0" fitWidth="32.0" layoutX="1227.0" layoutY="21.0"
+                   pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0">
+            <image>
+                <Image url="@../icons/cancelmusic.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="cancelBT" layoutX="1227.0" layoutY="21.0" mnemonicParsing="false" onAction="#closeWindow"
+                prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;"
+                AnchorPane.rightAnchor="20.0"/>
+        <JFXToggleButton fx:id="changeThemeBT" layoutX="1158.0" layoutY="9.0" onAction="#changeFont"
+                         AnchorPane.rightAnchor="65.0"/>
+        <ImageView fx:id="productManagerIV" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="169.0"
+                   pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
+            <image>
+                <Image url="@../icons/icon.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="expIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="599.0" pickOnBounds="true"
+                   preserveRatio="true" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="15.0">
+            <image>
+                <Image url="@../icons/export-file.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="userIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="659.0" pickOnBounds="true"
+                   preserveRatio="true" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="15.0">
+            <image>
+                <Image url="@../icons/user.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="rentIV" fitHeight="32.0" fitWidth="32.0" layoutX="15.0" layoutY="96.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../icons/rent-sign.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="showItemsBT" layoutY="112.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0"
+                AnchorPane.topAnchor="130.0">
+            <graphic>
+                <Text fx:id="createRentTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="- Create new Rent" visible="false">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="btSetsManager" layoutY="215.0" mnemonicParsing="false" onAction="#dropDownSetsManager"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="60.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
+            <graphic>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sets Manager">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <ImageView fx:id="setsManagerIV" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="229.0"
+                   pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
+            <image>
+                <Image url="@../icons/setManager.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="btShowSets" layoutY="261.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false">
+            <graphic>
+                <Text fx:id="showSetsTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- ShowSets"
+                      visible="false">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="btCreateNewSet" layoutY="317.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false">
+            <graphic>
+                <Text fx:id="createNewSetTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="- Create new Set" visible="false">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="btAddItem" layoutY="201.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false">
+            <graphic>
+                <Text fx:id="addItemTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Add Item"
+                      visible="false">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="btDeleteItem" layoutY="247.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false">
+            <graphic>
+                <Text fx:id="deleteItemTEXT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Delete Item"
+                      visible="false">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+        <Button fx:id="dashboardBT" layoutY="8.0" mnemonicParsing="false" onAction="#switchPane" prefHeight="60.0"
+                prefWidth="248.0" style="-fx-background-color: transparent;"/>
+        <Button fx:id="btDeleteSets" layoutY="372.0" mnemonicParsing="false" onAction="#switchPane"
+                onMouseEntered="#mouseHovered" onMouseExited="#mouseNotHovered" prefHeight="56.0" prefWidth="248.0"
+                style="-fx-background-color: transparent;" visible="false" AnchorPane.leftAnchor="0.0"
+                AnchorPane.topAnchor="372.0">
+            <graphic>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="- Delete Sets">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
+    </children>
 </AnchorPane>

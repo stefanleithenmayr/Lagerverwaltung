@@ -1,4 +1,4 @@
-#addItemPane{
+#addItemPane {
     -fx-background-color: white;
 }
 .labelStyle{
@@ -26,7 +26,6 @@
     -fx-text-fill: #33363F;
     -fx-border-width: 0.5;
 }
-
 .table-view{
     -fx-background-color: transparent;
     -fx-table-cell-border-color: #33363F;

@@ -16,20 +16,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserManagerController implements Initializable{
+public class UserManagerController implements Initializable {
 
     @FXML
     private TableView<User> userTV;
     @FXML
-    private TableColumn<?,?> nameCol, userNameCol, passwordCol, classCol, roleCol, emailCol;
+    private TableColumn<?, ?> nameCol, userNameCol, passwordCol, classCol, roleCol, emailCol;
     @FXML
     private JFXButton cancelBT, saveBT, editBT, removeBT, newUserBT;
 
     private ObservableList<User> obList;
 
     @FXML
-    private void addNewUser(){
-        obList.add(0, new User("Replace with Username",  "Replace with Password", "Replace with Name", "", "", 2));
+    private void addNewUser() {
+        obList.add(0, new User("Replace with Username", "Replace with Password", "Replace with Name", "", "", 2));
         userTV.getSelectionModel().select(0);
         this.activateEditing();
     }
@@ -38,7 +38,7 @@ public class UserManagerController implements Initializable{
     private void removeUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
 
-        if (user != null && !DBConnection.getInstance().getActualUser().equals(user.getUsername().getText())){
+        if (user != null && !DBConnection.getInstance().getActualUser().equals(user.getUsername().getText())) {
             DBConnection.getInstance().removeUser(user.getUsername().getText());
             obList.remove(user);
         }
@@ -55,14 +55,14 @@ public class UserManagerController implements Initializable{
     }
 
     @FXML
-    private void cancelEditing(){
+    private void cancelEditing() {
         User user = userTV.getSelectionModel().getSelectedItem();
         if (user != null) {
             user.setIsActivated(true);
         }
 
         assert user != null;
-        if (user.getUserNameField().getText().equals("Replace with Username")){
+        if (user.getUserNameField().getText().equals("Replace with Username")) {
             obList.remove(user);
         }
 
@@ -73,7 +73,7 @@ public class UserManagerController implements Initializable{
     @FXML
     private void saveUser() throws SQLException {
         User user = userTV.getSelectionModel().getSelectedItem();
-        if (user.getUserNameField().getText().equals("Replace with Username")){
+        if (user.getUserNameField().getText().equals("Replace with Username")) {
             obList.remove(user);
             this.handleButton(false);
             return;
@@ -85,14 +85,13 @@ public class UserManagerController implements Initializable{
         String klasse = user.getKlasseField().getText();
         int userrolenr = Integer.parseInt(user.getUserroleField().getText());
         if (!(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
-                &&user.getPassword().getText().equals("Replace with Password"))){
+                && user.getPassword().getText().equals("Replace with Password"))) {
             DBConnection.getInstance().upDateUser(user, name, userName, password, email, klasse, userrolenr);
-        }
-        else if(user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
-                &&user.getPassword().getText().equals("Replace with Password")){
+        } else if (user.getUsername().getText().equals("Replace with Username") && user.getName().getText().equals("Replace with Name")
+                && user.getPassword().getText().equals("Replace with Password")) {
             DBConnection.getInstance().saveNewUser(name, userName, password, email, klasse, userrolenr);
         }
-        obList.add(new User(userName, password,name,email, klasse, userrolenr));
+        obList.add(new User(userName, password, name, email, klasse, userrolenr));
         obList.remove(user);
         handleButton(false);
         user.setIsActivated(true);
@@ -131,7 +130,7 @@ public class UserManagerController implements Initializable{
 
         obList = FXCollections.observableArrayList(users);
 
-        if(users != null){
+        if (users != null) {
             userTV.setItems(obList);
         }
     }

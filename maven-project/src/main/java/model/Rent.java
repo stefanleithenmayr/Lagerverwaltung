@@ -12,7 +12,6 @@ public class Rent {
         this.from = from;
         this.until = until;
         this.rentID = rentID;
-
     }
 
     public String getUserName() {

@@ -16,12 +16,13 @@ import javafx.scene.text.Text;
 import loginPackage.DBConnection;
 import model.ErrorMessageUtils;
 import model.Product;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DeleteSetsController implements Initializable{
+public class DeleteSetsController implements Initializable {
     @FXML
     JFXButton btDelete;
     @FXML
@@ -29,34 +30,39 @@ public class DeleteSetsController implements Initializable{
     @FXML
     TreeTableView<Product> TTVSets;
     @FXML
-    TreeTableColumn tcSelect,tcName, tcDescription;
+    TreeTableColumn<Object, Object> tcSelect;
+    @FXML
+    TreeTableColumn<Object, Object> tcName;
+    @FXML
+    TreeTableColumn<Object, Object> tcDescription;
     @FXML
     Rectangle errorRec;
     @FXML
     Text errorTxt;
     @FXML
     JFXTextField tfSearch;
-    List<Product> setHeaders;
+
+    private List<Product> setHeaders;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.prepare();
     }
 
     @FXML
-    private  void serachProduct(KeyEvent event) throws SQLException {
+    private void searchProduct(KeyEvent event) throws SQLException {
         TTVSets.setRoot(null);
         KeyCode keycode = event.getCode();
         String search = tfSearch.getText();
-        if(keycode == KeyCode.BACK_SPACE && search.length() > 0){
-            search = search.substring(0,search.length()-1);
-        }
-        else search += event.getText();
+        if (keycode == KeyCode.BACK_SPACE && search.length() > 0) {
+            search = search.substring(0, search.length() - 1);
+        } else search += event.getText();
 
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
-        for (Product listHeader : setHeaders){
+        for (Product listHeader : setHeaders) {
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllChildsOfProduct(listHeader.getProductID());
-            for(Product child : childs){
+            for (Product child : childs) {
                 child.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(child.getProductID())));
                 child.setSelected(null);
                 child.setIsChild(true);
@@ -64,42 +70,42 @@ public class DeleteSetsController implements Initializable{
                 printSetsTree(child, cache);
                 parent.getChildren().add(cache);
             }
-            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())){
+            if (parent.getChildren().size() > 0 && listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())) {
                 root.getChildren().add(parent);
             }
         }
         TTVSets.setShowRoot(false);
         TTVSets.setRoot(root);
     }
+
     @FXML
     public void deleteSelectedSets() throws SQLException {
         boolean deleted = false;
-        if (!cbdDeleteSubsets.isSelected()){
-            for (int i = 0; i < setHeaders.size(); i++){
-                if (setHeaders.get(i).getSelected().isSelected()){
-                    DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(setHeaders.get(i).getProductID());
-                    DBConnection.getInstance().deleteProduct(setHeaders.get(i).getProductID());
-                    if (DBConnection.getInstance().getAllProductsByProductTypeID(setHeaders.get(i).getProducttypeID()).size() == 0){
-                        DBConnection.getInstance().deleteProductTypeByID(setHeaders.get(i).getProducttypeID());
+        if (!cbdDeleteSubsets.isSelected()) {
+            for (Product setHeader : setHeaders) {
+                if (setHeader.getSelected().isSelected()) {
+                    DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(setHeader.getProductID());
+                    DBConnection.getInstance().deleteProduct(setHeader.getProductID());
+                    if (DBConnection.getInstance().getAllProductsByProductTypeID(setHeader.getProducttypeID()).size() == 0) {
+                        DBConnection.getInstance().deleteProductTypeByID(setHeader.getProducttypeID());
                     }
                     deleted = true;
                 }
             }
-        }
-        else{
-            for (int i = 0; i < setHeaders.size(); i++){
-                if (setHeaders.get(i).getSelected().isSelected()){
-                    DeleteSetsWithUnderSets(setHeaders.get(i));
+        } else {
+            for (Product setHeader : setHeaders) {
+                if (setHeader.getSelected().isSelected()) {
+                    deleteSetsWithUnderSets(setHeader);
                     deleted = true;
                 }
             }
         }
-        if (deleted){
+
+        if (deleted) {
             errorRec.setFill(Color.web("#00802b"));
             errorRec.setStroke(Color.web("#00802b"));
             ErrorMessageUtils.showErrorMessage("Successfully deleted", errorRec, errorTxt);
-        }
-        else{
+        } else {
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("No sets selected", errorRec, errorTxt);
@@ -110,10 +116,10 @@ public class DeleteSetsController implements Initializable{
     private void prepare() {
         try {
             setHeaders = DBConnection.getInstance().getHighestSetHeaders();
-            for (int i = 0; i < setHeaders.size(); i++){
+            for (Product setHeader : setHeaders) {
                 CheckBox cb = new CheckBox();
                 cb.setSelected(false);
-                setHeaders.get(i).setSelected(cb);
+                setHeader.setSelected(cb);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,6 +128,7 @@ public class DeleteSetsController implements Initializable{
         tcName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
         tcDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
         tcSelect.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
+
         try {
             refreshTTV(0);
         } catch (SQLException e) {
@@ -129,27 +136,26 @@ public class DeleteSetsController implements Initializable{
         }
     }
 
-    private void DeleteSetsWithUnderSets(Product head) throws SQLException {
+    private void deleteSetsWithUnderSets(Product head) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        if (listOfChildren.size() != 0){
+        if (listOfChildren.size() != 0) {
             DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(head.getProductID());
             DBConnection.getInstance().deleteProduct(head.getProductID());
-            if (DBConnection.getInstance().getAllProductsByProductTypeID(head.getProducttypeID()).size() == 0){
+            if (DBConnection.getInstance().getAllProductsByProductTypeID(head.getProducttypeID()).size() == 0) {
                 DBConnection.getInstance().deleteProductTypeByID(head.getProducttypeID());
             }
         }
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            Product childProduct = listOfChildren.get(i);
-            DeleteSetsWithUnderSets(childProduct);
+        for (Product childProduct : listOfChildren) {
+            deleteSetsWithUnderSets(childProduct);
         }
     }
 
-    private void  refreshTTV(Integer i) throws SQLException {
+    private void refreshTTV(Integer i) throws SQLException {
         TTVSets.setRoot(null);
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
 
         if (setHeaders == null) return;
-        for (Product setHeader : setHeaders){
+        for (Product setHeader : setHeaders) {
             TreeItem<Product> parent = new TreeItem<>(setHeader);
             List<Product> childs = DBConnection.getInstance().getAllChildsOfProduct(setHeader.getProductID());
 
@@ -162,7 +168,7 @@ public class DeleteSetsController implements Initializable{
                 printSetsTree(child, cache);
                 parent.getChildren().add(cache);
             }
-            if (parent.getChildren().size() > 0){
+            if (parent.getChildren().size() > 0) {
                 root.getChildren().add(parent);
             }
         }
@@ -170,14 +176,14 @@ public class DeleteSetsController implements Initializable{
         TTVSets.setRoot(root);
     }
     public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
+
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
-        for(int i = 0; i < listOfChildren.size(); i++) {
-            listOfChildren.get(i).setIsChild(true);
-            listOfChildren.get(i).setSelected(null);
-            TreeItem<Product> child = new TreeItem<>(listOfChildren.get(i));
+        for (Product aListOfChildren : listOfChildren) {
+            aListOfChildren.setIsChild(true);
+            aListOfChildren.setSelected(null);
+            TreeItem<Product> child = new TreeItem<>(aListOfChildren);
             father.getChildren().add(child);
-            Product childProduct = listOfChildren.get(i);
-            printSetsTree(childProduct,child);
+            printSetsTree(aListOfChildren, child);
         }
     }
     public void refresh(){

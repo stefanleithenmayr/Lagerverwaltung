@@ -11,18 +11,20 @@ public class ProductType {
     private String description;
     private CheckBox selected;
 
-    public ProductType(Integer productTypeID, String typeName, String description){
+    public ProductType(Integer productTypeID, String typeName, String description) {
         this.productTypeID = productTypeID;
         this.typeName = typeName;
         this.description = description;
         selected = new CheckBox();
     }
-    public ProductType(Integer productTypeID, String typeName, String description, CheckBox checkBox){
+
+    public ProductType(Integer productTypeID, String typeName, String description, CheckBox checkBox) {
         this.productTypeID = productTypeID;
         this.typeName = typeName;
         this.description = description;
         this.selected = checkBox;
     }
+
     public Integer getProductTypeID() {
         return productTypeID;
     }
@@ -31,24 +33,28 @@ public class ProductType {
         return typeName;
     }
 
-    public CheckBox getSelected() {return selected; }
+    public CheckBox getSelected() {
+        return selected;
+    }
 
-    public void setSelected(CheckBox selected) {this.selected = selected;}
+    public void setSelected(CheckBox selected) {
+        this.selected = selected;
+    }
 
     public String getDescription() {
         return description;
     }
+
     public int getAvailAbleProducts() throws SQLException {
         return DBConnection.getInstance().getAvailAbleProductsByProductType(this.productTypeID);
     }
+
     public String getTotalProducts() throws SQLException {
-        try{
+        try {
             Integer.parseInt(getDescription());
             return "";
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return Integer.toString(DBConnection.getInstance().getTotalProductsByProductTypeID(this.productTypeID));
         }
-
     }
 }
