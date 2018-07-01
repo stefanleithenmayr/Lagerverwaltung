@@ -6,28 +6,29 @@ import com.itextpdf.text.pdf.BarcodeDatamatrix;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.*;
-import com.itextpdf.text.DocumentException;
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import loginPackage.DBConnection;
 import model.BarcodesToPdfGenerator;
 import model.ErrorMessageUtils;
 import model.Product;
 import model.ProductType;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 
-import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,59 +36,55 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddItemController implements Initializable {
-
-    //FXML variables
     @FXML
     private JFXTextField tfQuantity, tfDescription, tfProductTypeName, tfQuantity1;
     @FXML
     private JFXSlider slQuantity, slQuantity1;
+    private int amount, amount1;
     @FXML
     private TableView<ProductType> tvProductTypes;
+    ObservableList<ProductType> productTypes;
+    ProductType selectedProductType;
     @FXML
     private TableColumn<ProductType, String> tcProducttypeName, tcProducttypeDescription;
     @FXML
-    private CheckBox CBGenerateBarcodes;
+    private CheckBox CBGenerateBarcodes, CBGenerateBarcodes1;
     @FXML
     Rectangle errorRec;
     @FXML
     Text errorTxt;
 
-    //Class intern variables
-    private int amount, amount1;
-    ProductType selectedProductType;
-    ObservableList<ProductType> productTypes;
-
-    //Bound FXML Methods
     @FXML
     public void upDateQuantity() {
         double quantity = slQuantity.getValue();
-        if (quantity - (int) quantity >= 0.5) {
-            amount = (int) (quantity + (1 - (quantity - (int) quantity)));
-        } else {
-            amount = (int) (quantity - (quantity - (int) quantity));
+        if (quantity-(int)quantity >= 0.5){
+            amount = (int) (quantity+ (1-(quantity-(int)quantity)));
+        }
+        else{
+            amount = (int)(quantity-(quantity-(int)quantity));
         }
         slQuantity.setValue(amount);
         tfQuantity.setText(Integer.toString(amount));
     }
 
-    @FXML
-    void upDateQuantity1() {
+
+    @FXML void upDateQuantity1(){
         Platform.runLater(() -> {
             double quantity = slQuantity1.getValue();
-            if (quantity - (int) quantity >= 0.5) {
-                amount1 = (int) (quantity + (1 - (quantity - (int) quantity)));
-            } else {
-                amount1 = (int) (quantity - (quantity - (int) quantity));
+            if (quantity-(int)quantity >= 0.5){
+                amount1 = (int) (quantity+ (1-(quantity-(int)quantity)));
+            }
+            else{
+                amount1 = (int)(quantity-(quantity-(int)quantity));
             }
             slQuantity1.setValue(amount1);
             tfQuantity1.setText(Integer.toString(amount1));
         });
     }
-
     @FXML
     public void insertProductTypeWithProducts() throws SQLException, FileNotFoundException, DocumentException {
         if (amount < 1) return;
-        if (tfProductTypeName.getText().equals("")) {
+        if (tfProductTypeName.getText().equals("")){
 
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
@@ -105,10 +102,9 @@ public class AddItemController implements Initializable {
             }
             counter++;
         }
-        if (CBGenerateBarcodes.isSelected()) {
+        if(CBGenerateBarcodes.isSelected()){
             BarcodesToPdfGenerator.generateBarcoeds(insertedProducts);
         }
-
         tfProductTypeName.clear();
         tfDescription.clear();
         slQuantity.setValue(1);
@@ -119,7 +115,6 @@ public class AddItemController implements Initializable {
         errorRec.setStroke(Color.web("#00802b"));
         ErrorMessageUtils.showErrorMessage("Successfully inserted", errorRec, errorTxt);
     }
-
     @FXML
     public void insertProductsIntoProductType() throws SQLException, FileNotFoundException, DocumentException {
         if (selectedProductType == null){
@@ -128,7 +123,6 @@ public class AddItemController implements Initializable {
             ErrorMessageUtils.showErrorMessage("Please select a producttype", errorRec, errorTxt);
             return;
         }
-
         int counter = 0;
         List<Product> addedProducts = new ArrayList<>();
         while (amount1 != counter){
@@ -143,7 +137,7 @@ public class AddItemController implements Initializable {
         }
         tfQuantity1.setText("1");
         slQuantity1.setValue(1);
-        amount1 = 1;
+        amount1 =1;
         CBGenerateBarcodes.setSelected(false);
         tvProductTypes.getSelectionModel().clearSelection();
 
@@ -151,12 +145,11 @@ public class AddItemController implements Initializable {
         errorRec.setStroke(Color.web("#00802b"));
         ErrorMessageUtils.showErrorMessage("Successfully inserted", errorRec, errorTxt);
     }
-
     @FXML
-    public void productTypeSelected() {
+    public void productTypeSelected(){
         selectedProductType = tvProductTypes.getSelectionModel().getSelectedItem();
-    }
 
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources){
         Prepare(0);
@@ -209,7 +202,6 @@ public class AddItemController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         tvProductTypes.setItems(productTypes);
     }
 }
