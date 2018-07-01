@@ -237,7 +237,7 @@ public class SetsManagerController implements Initializable {
     private boolean IsProductInSelectedList(Integer productID) {
         for (Product product : finalSelectedProducts){
             if (product.getProductID().equals(productID) ){
-                return  true;
+                return true;
             }
         }
         return  false;

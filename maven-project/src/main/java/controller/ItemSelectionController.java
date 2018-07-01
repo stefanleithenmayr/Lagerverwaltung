@@ -239,26 +239,23 @@ public class ItemSelectionController implements Initializable {
     }
 
     @FXML
-    public void markProductAsSelected() throws SQLException {
-        if (eanCodeTF.getText().length() != 11) return;
-        Product searchedProduct = DBConnection.getInstance().getProductPerEan(eanCodeTF.getText());
-        eanCodeTF.clear();
-        if (DBConnection.getInstance().isProductRented(searchedProduct)){
-            errorRec.setFill(Color.web("#f06060"));
-            errorRec.setStroke(Color.web("#f06060"));
-            ErrorMessageUtils.showErrorMessage("Product is already rented!", errorRec, errorTxt);
-            return;
-        }
-        List<Product> selectedProducts = new ArrayList<>();
-        for (Product p : products){
-            if (p.getSelected() != null && p.getSelected().isSelected()){
-                selectedProducts.add(p);
+    private void markProductAsSelected() throws SQLException {
+        if (eanCodeTF.getText().length() == 11 ){
+            Product searchedProduct = DBConnection.getInstance().getProductPerEan(eanCodeTF.getText());
+            List<Product> selectedProducts = new ArrayList<>();
+            for (Product p : products){
+                if (p.getSelected().isSelected()){
+                    selectedProducts.add(p);
+                }
             }
-        }
 
-        selectedProducts.add(searchedProduct);
-        selectedProducts = selectedProducts.stream().distinct().collect(Collectors.toList());
-        eanCodeTF.clear();
-        refreshTTV(0, selectedProducts);
+            selectedProducts.add(searchedProduct);
+            selectedProducts = selectedProducts.stream().distinct().collect(Collectors.toList());
+            for (Product p : products){
+                System.out.println(p.getProductID());
+            }
+            refreshTTV(0, selectedProducts);
+            eanCodeTF.clear();
+        }
     }
 }

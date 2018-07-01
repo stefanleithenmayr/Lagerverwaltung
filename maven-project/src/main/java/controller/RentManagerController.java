@@ -22,6 +22,7 @@ import model.DataPackage;
 import model.ErrorMessageUtils;
 import model.Product;
 
+import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -76,11 +77,15 @@ public class RentManagerController implements Initializable {
         if (actualPane == 0){
             actualDataPackage  = ((UserSelectionController) firstLoader.getController()).getData();
             if (actualDataPackage == null){
-                ErrorMessageUtils.showErrorMessage("Please select a user, startdate and enddate!", errorRec, errorTxt);
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("Please select a User, StartDate and EndDate!", errorRec, errorTxt);
                 return;
             }
-            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 1) {
-                ErrorMessageUtils.showErrorMessage("Enddate is before startdate", errorRec, errorTxt);
+            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 0) {
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("EndDate is before StartDate", errorRec, errorTxt);
                 return;
             }
             backBT.setVisible(true);
@@ -119,7 +124,7 @@ public class RentManagerController implements Initializable {
             DBConnection.getInstance().createRent(products, actualDataPackage);
             errorRec.setFill(Color.web("#00802b"));
             errorRec.setStroke(Color.web("#00802b"));
-            ErrorMessageUtils.showErrorMessage("Successfully created", errorRec, errorTxt);
+            ErrorMessageUtils.showErrorMessage("Successfully Inserted", errorRec, errorTxt);
             this.reset();
         }
     }
