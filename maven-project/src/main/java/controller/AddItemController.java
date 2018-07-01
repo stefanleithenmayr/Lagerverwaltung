@@ -1,5 +1,11 @@
 package controller;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.Barcode128;
+import com.itextpdf.text.pdf.BarcodeDatamatrix;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.jfoenix.controls.*;
 import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
@@ -92,10 +98,10 @@ public class AddItemController implements Initializable {
         int counter = 0;
 
         List<Product> insertedProducts = new ArrayList<>();
-        while (counter != amount) {
-            int productID = DBConnection.getInstance().addNewProduct(productTypeID);
-            if (CBGenerateBarcodes.isSelected()) {
-                insertedProducts.add(DBConnection.getInstance().getProductByProductID(productID));
+        while (counter != amount){
+            Product p = DBConnection.getInstance().addNewProduct(productTypeID);
+            if (CBGenerateBarcodes.isSelected()){
+                insertedProducts.add(p);
             }
             counter++;
         }
@@ -108,17 +114,15 @@ public class AddItemController implements Initializable {
         slQuantity.setValue(1);
         tfQuantity.setText("1");
         amount = 1;
-        productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllProductTypes());
-        tvProductTypes.getItems().clear();
-        tvProductTypes.setItems(productTypes);
+        Prepare(1);
         errorRec.setFill(Color.web("#00802b"));
         errorRec.setStroke(Color.web("#00802b"));
         ErrorMessageUtils.showErrorMessage("Successfully inserted", errorRec, errorTxt);
     }
 
     @FXML
-    public void insertProductsIntoProductType() throws SQLException {
-        if (selectedProductType == null) {
+    public void insertProductsIntoProductType() throws SQLException, FileNotFoundException, DocumentException {
+        if (selectedProductType == null){
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("Please select a producttype", errorRec, errorTxt);
@@ -126,9 +130,16 @@ public class AddItemController implements Initializable {
         }
 
         int counter = 0;
-        while (amount1 != counter) {
+        List<Product> addedProducts = new ArrayList<>();
+        while (amount1 != counter){
             counter++;
-            DBConnection.getInstance().addNewProduct(selectedProductType.getProductTypeID());
+            Product p = DBConnection.getInstance().addNewProduct(selectedProductType.getProductTypeID());
+            if (CBGenerateBarcodes1.isSelected()){
+                addedProducts.add(p);
+            }
+        }
+        if (CBGenerateBarcodes1.isSelected()){
+            BarcodesToPdfGenerator.generateBarcoeds(addedProducts);
         }
         tfQuantity1.setText("1");
         slQuantity1.setValue(1);
@@ -147,45 +158,52 @@ public class AddItemController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
+        Prepare(0);
+
+    }
+
+    private void Prepare(int a) {
         tfQuantity.setText("1");
         tfQuantity1.setText("1");
         amount1 = 1;
         amount = 1;
         selectedProductType = null;
+        if (a == 0){
 
-        tfQuantity.textProperty().addListener((observable, oldValue, newValue) -> {
-            for (int i = 0; i < newValue.length(); i++) {
-                if (newValue.charAt(i) > '9' || newValue.charAt(i) < '0') {
-                    tfQuantity.setText(oldValue);
+            tfQuantity.textProperty().addListener((observable, oldValue, newValue) -> {
+                for (int i = 0; i < newValue.length(); i++){
+                    if (newValue.charAt(i) > '9' || newValue.charAt(i) < '0'){
+                        tfQuantity.setText(oldValue);
+                        return;
+                    }
+                }
+                if (newValue.equals("")){
+                    tfQuantity.setText("");
+                    slQuantity.setValue(0);
                     return;
                 }
-            }
-            if (newValue.equals("")) {
-                tfQuantity.setText("");
-                slQuantity.setValue(0);
-                return;
-            }
-            amount = Integer.parseInt(newValue);
-            slQuantity.setValue(amount);
-        });
-
-        tfQuantity1.textProperty().addListener((observable, oldValue, newValue) -> {
-            for (int i = 0; i < newValue.length(); i++) {
-                if (newValue.charAt(i) > '9' || newValue.charAt(i) < '0') {
-                    tfQuantity1.setText(oldValue);
+                amount = Integer.parseInt(newValue);
+                slQuantity.setValue(amount);
+            });
+            tfQuantity1.textProperty().addListener((observable, oldValue, newValue) -> {
+                for (int i = 0; i < newValue.length(); i++){
+                    if (newValue.charAt(i) > '9' || newValue.charAt(i) < '0'){
+                        tfQuantity1.setText(oldValue);
+                        return;
+                    }
+                }
+                if (newValue.equals("")){
+                    tfQuantity1.setText("");
+                    slQuantity1.setValue(0);
                     return;
                 }
-            }
-            if (newValue.equals("")) {
-                tfQuantity1.setText("");
-                slQuantity1.setValue(0);
-                return;
-            }
-            amount1 = Integer.parseInt(newValue);
-            slQuantity1.setValue(amount1);
-        });
-
+                amount1 = Integer.parseInt(newValue);
+                slQuantity1.setValue(amount1);
+            });
+            tcProducttypeName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
+            tcProducttypeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        }
         try {
             productTypes = FXCollections.observableArrayList(DBConnection.getInstance().getAllNotSetProductTypes());
         } catch (SQLException e) {
@@ -193,7 +211,5 @@ public class AddItemController implements Initializable {
         }
 
         tvProductTypes.setItems(productTypes);
-        tcProducttypeName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
-        tcProducttypeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
     }
 }

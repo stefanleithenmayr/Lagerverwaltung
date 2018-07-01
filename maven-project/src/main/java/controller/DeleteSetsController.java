@@ -160,8 +160,7 @@ public class DeleteSetsController implements Initializable {
             List<Product> childs = DBConnection.getInstance().getAllChildsOfProduct(setHeader.getProductID());
 
             if (childs == null) break;
-            for (Product child : childs) {
-                //System.out.println(DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(child.getProductID()))+"  "+child.getProductID());
+            for (Product child: childs){
                 child.setProductTypeName(DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeIdByProductID(child.getProductID())));
                 child.setSelected(null);
                 child.setIsChild(true);
@@ -176,25 +175,8 @@ public class DeleteSetsController implements Initializable {
         TTVSets.setShowRoot(false);
         TTVSets.setRoot(root);
     }
+    public void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
 
-    private void removeProductByProductID(Integer productID) {
-        for (int i = 0; i < setHeaders.size(); i++) {
-            if (setHeaders.get(i).getProductID().equals(productID)) {
-                setHeaders.remove(i);
-            }
-        }
-    }
-
-    private boolean getSelectedByID(Integer productID) {
-        for (int i = 0; i < setHeaders.size(); i++) {
-            if (setHeaders.get(i).getProductID().equals(productID) && setHeaders.get(i).getSelected() != null && setHeaders.get(i).getSelected().isSelected()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void printSetsTree(Product head, TreeItem<Product> father) throws SQLException {
         List<Product> listOfChildren = DBConnection.getInstance().getProductsChildrenByProductID(head);
         for (Product aListOfChildren : listOfChildren) {
             aListOfChildren.setIsChild(true);
@@ -203,5 +185,8 @@ public class DeleteSetsController implements Initializable {
             father.getChildren().add(child);
             printSetsTree(aListOfChildren, child);
         }
+    }
+    public void refresh(){
+        TTVSets.refresh();
     }
 }

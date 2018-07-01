@@ -10,45 +10,32 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="deleteSetsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/deleteItemDARK.css"
-            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.DeleteSetsController">
-    <children>
-        <JFXTextField fx:id="tfSearch" layoutX="30.0" layoutY="44.0" maxWidth="445.0" minWidth="445.0"
-                      onKeyPressed="#searchProduct" prefHeight="59.0" prefWidth="445.0" promptText="Search"
-                      AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="44.0">
-            <font>
-                <Font size="18.0"/>
-            </font>
-        </JFXTextField>
-        <JFXButton fx:id="btDelete" layoutX="1346.0" layoutY="827.0" onAction="#deleteSelectedSets" prefHeight="59.0"
-                   prefWidth="124.0" styleClass="btStyle" text="Delete" AnchorPane.bottomAnchor="14.0"
-                   AnchorPane.rightAnchor="30.0">
-            <font>
-                <Font size="18.0"/>
-            </font>
-        </JFXButton>
-        <JFXCheckBox fx:id="cbdDeleteSubsets" layoutX="1126.0" layoutY="827.0" prefHeight="59.0" prefWidth="220.0"
-                     styleClass="cbStyle" text="Delete subsets" AnchorPane.bottomAnchor="14.0"
-                     AnchorPane.rightAnchor="154.0">
-            <font>
-                <Font size="18.0"/>
-            </font>
-        </JFXCheckBox>
-        <TreeTableView fx:id="TTVSets" layoutX="31.0" layoutY="112.0" prefHeight="703.0" prefWidth="1440.0"
-                       AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
-            <columns>
-                <TreeTableColumn fx:id="tcName" prefWidth="324.0" text="Name"/>
-                <TreeTableColumn fx:id="tcDescription" prefWidth="1009.9999694824219" text="Description"/>
-                <TreeTableColumn fx:id="tcSelect" minWidth="0.0" prefWidth="95.0" text="Select"/>
-            </columns>
-        </TreeTableView>
-        <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1325.0"
-                   layoutY="20.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0"
-                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-        <Text fx:id="errorTxt" layoutX="1360.0" layoutY="59.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="27.865234375"
-              AnchorPane.topAnchor="35.0"/>
-    </children>
+
+<AnchorPane fx:id="deleteSetsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#refresh" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/deleteItemDARK.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteSetsController">
+   <children>
+      <JFXTextField fx:id="tfSearch" layoutX="30.0" layoutY="44.0" maxWidth="445.0" minWidth="445.0" onKeyPressed="#serachProduct" prefHeight="59.0" prefWidth="445.0" promptText="Search" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="44.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btDelete" layoutX="1346.0" layoutY="827.0" onAction="#deleteSelectedSets" prefHeight="59.0" prefWidth="124.0" styleClass="btStyle" text="Delete" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="30.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXCheckBox fx:id="cbdDeleteSubsets" layoutX="1126.0" layoutY="827.0" prefHeight="59.0" prefWidth="220.0" styleClass="cbStyle" text="Delete subsets" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="154.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXCheckBox>
+      <TreeTableView fx:id="TTVSets" layoutX="31.0" layoutY="112.0" prefHeight="703.0" prefWidth="1440.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+         <columns>
+            <TreeTableColumn fx:id="tcName" prefWidth="324.0" text="Name" />
+            <TreeTableColumn fx:id="tcDescription" prefWidth="1009.9999694824219" text="Description" />
+            <TreeTableColumn fx:id="tcSelect" minWidth="0.0" prefWidth="95.0" text="Select" />
+         </columns>
+      </TreeTableView>
+      <Rectangle fx:id="errorRec" arcHeight="5.0" arcWidth="5.0" fill="#f06060" height="87.0" layoutX="1325.0" layoutY="20.0" opacity="0.0" stroke="#f06060" strokeType="INSIDE" width="182.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Text fx:id="errorTxt" layoutX="1360.0" layoutY="59.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hier steht ein Text" wrappingWidth="112.134765625" AnchorPane.rightAnchor="27.865234375" AnchorPane.topAnchor="35.0" />
+   </children>
 </AnchorPane>

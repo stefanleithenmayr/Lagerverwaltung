@@ -102,8 +102,7 @@ public class ExportDatasController implements Initializable {
         List<Product> listHeaders = getListHeaders(DBConnection.getInstance().getAllProductTypes());
         if (listHeaders == null) return;
 
-        for (Product listHeader : listHeaders) {
-            if (!listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())) break;
+        for (Product listHeader : listHeaders){
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllProductsByProductTypeID(listHeader.getProducttypeID());
             for (Product child : childs) {
