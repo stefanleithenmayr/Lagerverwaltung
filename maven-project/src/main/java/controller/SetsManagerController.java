@@ -63,10 +63,13 @@ public class SetsManagerController implements Initializable {
         for (Product finalSelectedProduct : finalSelectedProducts) {
             DBConnection.getInstance().addProductToSetHeader(finalSelectedProduct.getProductID(), productHeaderId);
         }
-        this.Prepare();
+        this.Prepare(1);
         errorRec.setFill(Color.web("#00802b"));
         errorRec.setStroke(Color.web("#00802b"));
         ErrorMessageUtils.showErrorMessage("Successfully created", errorRec, errorTxt);
+        tfSetName.clear();
+        taDescription.clear();
+        btCreateSet.setVisible(false);
     }
     @FXML
     private  void addSelectedProductsFromTTV() throws SQLException {
@@ -129,30 +132,34 @@ public class SetsManagerController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Prepare();
+        Prepare(0);
     }
 
-    private void Prepare() {
+    private void Prepare(int i) {/*
+        try {
+            DBConnection.getInstance().InsertTestDatas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
         LyourSet.setVisible(false);
         TTVfinalProductsForSet.setVisible(false);
         TTVfinalProductsForSet.setRoot(null);
-        finalSelectedProducts = new ArrayList<>();
-        products = new ArrayList<>();
+        if (i == 0){
+            finalSelectedProducts = new ArrayList<>();
+            products = new ArrayList<>();
 
-        prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
-        descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
-        selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
-
-
+            prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
+            descCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
+            selectCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("selected"));
+            tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
+            tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
+            tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
+        }
         try {
-            refreshTTV(0);
+            refreshTTV(i);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
-        tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
-        tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
     }
 
     private void  refreshTTV(Integer i) throws SQLException {
@@ -198,11 +205,12 @@ public class SetsManagerController implements Initializable {
         List<Product> listHeaders = new ArrayList<>();
         for(ProductType productType : productTypes){
             Product p = DBConnection.getInstance().getProductPerProductTypeID(productType.getProductTypeID());
-            if (p == null) break;
-            p.setIsChild(false);
-            p.setSelected(null);
-            if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
-                listHeaders.add(p);
+            if (p != null) {
+                p.setIsChild(false);
+                p.setSelected(null);
+                if (DBConnection.getInstance().getProductsByProductTypeIdWhichAraNotInaSet(productType.getProductTypeID()).size()>0){
+                    listHeaders.add(p);
+                }
             }
         }
         return  listHeaders;

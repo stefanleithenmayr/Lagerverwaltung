@@ -39,6 +39,7 @@ public class DeleteSetsController implements Initializable{
     List<Product> setHeaders;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         this.prepare();
     }
 
@@ -54,7 +55,6 @@ public class DeleteSetsController implements Initializable{
 
         TreeItem<Product> root = new TreeItem<>(new Product(-1, null, null, null, null, null)); //empty root element
         for (Product listHeader : setHeaders){
-            if (!listHeader.getProductTypeName().toLowerCase().contains(search.toLowerCase())) break;
             TreeItem<Product> parent = new TreeItem<>(listHeader);
             List<Product> childs = DBConnection.getInstance().getAllChildsOfProduct(listHeader.getProductID());
             for(Product child : childs){
@@ -80,7 +80,7 @@ public class DeleteSetsController implements Initializable{
                 if (setHeaders.get(i).getSelected().isSelected()){
                     DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(setHeaders.get(i).getProductID());
                     DBConnection.getInstance().deleteProduct(setHeaders.get(i).getProductID());
-                    if (DBConnection.getInstance().getAllProductsByProductTypeID(setHeaders.get(i).getProductID()).size() == 0){
+                    if (DBConnection.getInstance().getAllProductsByProductTypeID(setHeaders.get(i).getProducttypeID()).size() == 0){
                         DBConnection.getInstance().deleteProductTypeByID(setHeaders.get(i).getProducttypeID());
                     }
                     deleted = true;
@@ -110,7 +110,7 @@ public class DeleteSetsController implements Initializable{
 
     private void prepare() {
         try {
-            setHeaders = DBConnection.getInstance().getAllSetHaders();
+            setHeaders = DBConnection.getInstance().getHighestSetHeaders();
             for (int i = 0; i < setHeaders.size(); i++){
                 CheckBox cb = new CheckBox();
                 cb.setSelected(false);
@@ -135,7 +135,7 @@ public class DeleteSetsController implements Initializable{
         if (listOfChildren.size() != 0){
             DBConnection.getInstance().setSuperProductNrNullBySuperProductNR(head.getProductID());
             DBConnection.getInstance().deleteProduct(head.getProductID());
-            if (DBConnection.getInstance().getAllProductsByProductTypeID(head.getProductID()).size() == 0){
+            if (DBConnection.getInstance().getAllProductsByProductTypeID(head.getProducttypeID()).size() == 0){
                 DBConnection.getInstance().deleteProductTypeByID(head.getProducttypeID());
             }
         }

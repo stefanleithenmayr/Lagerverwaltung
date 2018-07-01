@@ -6,7 +6,7 @@
 #addItemPane{
     -fx-background-color: #33363F;
 }
-#CBGenerateBarcodes{
+.cbStyle{
     -fx-font-size: 19;
     -fx-text-fill: white;
 }

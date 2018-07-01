@@ -3,10 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -22,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DeleteItemController implements Initializable{
@@ -147,17 +145,61 @@ public class DeleteItemController implements Initializable{
     }
     @FXML
     public void deleteSelectedProducts() throws SQLException {
-        boolean deleted = false;
+        List<Product> deletedProducts = new ArrayList<>();
+        Boolean deleted = false;
+        Boolean cancled = false;
         for (int i = 0; i < products.size(); i++){
             if (products.get(i).getSelected().isSelected()){
-                DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
-                if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProducttypeID()).size() == 0){
-                    DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
+                if (products.get(i).getSuperProductID() != null && products.get(i).getSuperProductID() != 0){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Attention");
+                    alert.setHeaderText("Product "+products.get(i).getProductTypeName()+" is part of the set: '"+ DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductByProductID(products.get(i).getSuperProductID()).getProducttypeID())+"'");
+                    //DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductTypeNameByID(DBConnection.getInstance().getProductByProductID(products.get(i).getSuperProductID()).getProducttypeID())))
+                    alert.setContentText("Do you want do Cancel or to Delete");
+
+                    ButtonType buttonTypeOne = new ButtonType("Delete");
+                    ButtonType buttonTypeTwo = new ButtonType("Cancel");
+
+                    alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == buttonTypeOne){
+                        DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
+                        if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProducttypeID()).size() == 0){
+                            DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
+                        }
+                        deleted = true;
+                        deletedProducts.add(products.get(i));
+                    } else{
+                        cancled = true;
+                    }
                 }
-                deleted = true;
+                else{
+                    DBConnection.getInstance().deleteProduct(products.get(i).getProductID());
+                    if (DBConnection.getInstance().getAllProductsByProductTypeID(products.get(i).getProducttypeID()).size() == 0){
+                        DBConnection.getInstance().deleteProductTypeByID(products.get(i).getProducttypeID());
+                    }
+                    deleted = true;
+                    deletedProducts.add(products.get(i));
+                }
             }
         }
-        if (deleted){
+        for (Product p : deletedProducts){
+            products.remove(p);
+        }
+        if (cancled && !deleted){
+            errorRec.setFill(Color.web("#f06060"));
+            errorRec.setStroke(Color.web("#f06060"));
+            ErrorMessageUtils.showErrorMessage("No products deleted - canceled", errorRec, errorTxt);
+            return;
+        }
+        else if (deleted && cancled){
+            errorRec.setFill(Color.web("#00802b"));
+            errorRec.setStroke(Color.web("#00802b"));
+            ErrorMessageUtils.showErrorMessage("Some Products deleted", errorRec, errorTxt);
+            refreshTTV(1);
+        }
+        else if (deleted && !cancled){
             errorRec.setFill(Color.web("#00802b"));
             errorRec.setStroke(Color.web("#00802b"));
             ErrorMessageUtils.showErrorMessage("Successfully deleted", errorRec, errorTxt);
@@ -168,6 +210,7 @@ public class DeleteItemController implements Initializable{
             errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("No products selected", errorRec, errorTxt);
         }
+        refreshTTV(1);
     }
     @FXML
     public void refresh(){TTVShowProducts.refresh();}
