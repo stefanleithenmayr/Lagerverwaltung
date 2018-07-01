@@ -36,6 +36,7 @@ public class ReturnProductController implements Initializable {
 
     @FXML
     private void addToBoard() throws SQLException {
+        if (eanCodeTF.getText().length() != 11) return;
         if (eanCodeTF.getText().equals("")) {
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
