@@ -222,19 +222,22 @@ public class ItemSelectionController implements Initializable {
 
     @FXML
     private void markProductAsSelected() throws SQLException {
-        Product searchedProduct = DBConnection.getInstance().getProductPerEan(eanCodeTF.getText());
-        List<Product> selectedProducts = new ArrayList<>();
-        for (Product p : products){
-            if (p.getSelected().isSelected()){
-                selectedProducts.add(p);
+        if (eanCodeTF.getText().length() == 11 ){
+            Product searchedProduct = DBConnection.getInstance().getProductPerEan(eanCodeTF.getText());
+            List<Product> selectedProducts = new ArrayList<>();
+            for (Product p : products){
+                if (p.getSelected().isSelected()){
+                    selectedProducts.add(p);
+                }
             }
-        }
 
-        selectedProducts.add(searchedProduct);
-        selectedProducts = selectedProducts.stream().distinct().collect(Collectors.toList());
-        for (Product p : products){
-            System.out.println(p.getProductID());
+            selectedProducts.add(searchedProduct);
+            selectedProducts = selectedProducts.stream().distinct().collect(Collectors.toList());
+            for (Product p : products){
+                System.out.println(p.getProductID());
+            }
+            refreshTTV(0, selectedProducts);
+            eanCodeTF.clear();
         }
-        refreshTTV(0, selectedProducts);
     }
 }

@@ -20,6 +20,7 @@ import model.DataPackage;
 import model.ErrorMessageUtils;
 import model.Product;
 
+import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -74,10 +75,12 @@ public class RentManagerController implements Initializable {
         if (actualPane == 0){
             actualDataPackage  = ((UserSelectionController) firstLoader.getController()).getData();
             if (actualDataPackage == null){
+                errorRec.setFill(Color.web("#f06060"));
                 ErrorMessageUtils.showErrorMessage("Please select a User, StartDate and EndDate!", errorRec, errorTxt);
                 return;
             }
-            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 1) {
+            if (actualDataPackage.getStartDate().compareTo(actualDataPackage.getEndDate()) > 0) {
+                errorRec.setFill(Color.web("#f06060"));
                 ErrorMessageUtils.showErrorMessage("EndDate is before StartDate", errorRec, errorTxt);
                 return;
             }
@@ -112,6 +115,7 @@ public class RentManagerController implements Initializable {
                 }
             }
             DBConnection.getInstance().createRent(products, actualDataPackage);
+            errorRec.setFill(Color.LIGHTGREEN);
             ErrorMessageUtils.showErrorMessage("Successfully Inserted", errorRec, errorTxt);
             this.reset();
         }
