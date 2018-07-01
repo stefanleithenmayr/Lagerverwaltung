@@ -1070,4 +1070,13 @@ public class DBConnection {
         }
         return  allProductTypes;
     }
+
+    public String getUserRolleStringByID(int userrole) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM userrolle where userrollenr = " +userrole);
+        if (rs.next()){
+            return rs.getString("userrollename");
+        }
+        return  null;
+    }
 }

@@ -3,6 +3,9 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import loginPackage.DBConnection;
+
+import java.sql.SQLException;
 
 public class User {
 
@@ -12,6 +15,17 @@ public class User {
     private final SimpleStringProperty realName;
     private CheckBox selected;
     private boolean isActivated;
+
+    public String getUserRolle() {
+        return userRolle;
+    }
+
+    public void setUserRolle(String userRolle) {
+        this.userRolle = userRolle;
+    }
+
+    private String userRolle;
+
 
     public boolean isSelected() {
         return isSelected;
@@ -115,5 +129,10 @@ public class User {
         this.isActivated = true;
         this.realName = new SimpleStringProperty(name);
         selected = new CheckBox();
+        try {
+            this.setUserRolle(DBConnection.getInstance().getUserRolleStringByID(userrole));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

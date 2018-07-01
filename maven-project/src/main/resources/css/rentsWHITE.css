@@ -1,9 +1,13 @@
+.labelStyle {
+    -fx-font-size: 25;
+    -fx-text-fill: #33363F;
+    -fx-faint-focus-color: #33363F;
+}
 #rentsPane {
     -fx-background-color: white;
     -fx-font-size: 15px;
     -fx-text-fill: #33363F;
 }
-
 .table-view {
     -fx-background-color: transparent;
     -fx-table-cell-border-color: #33363F;
