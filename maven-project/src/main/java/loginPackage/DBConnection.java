@@ -753,13 +753,13 @@ public class DBConnection {
         return id;
     }
 
-    public int  addNewProduct(int productTypeID) throws SQLException {
+    public Product  addNewProduct(int productTypeID) throws SQLException {
         int id = this.getLastProductID()+1;
         String ean = this.getEanByID(id);
         String SQLCommand = "INSERT INTO product VALUES (" + id + "," + productTypeID + ", NULL,'"+ean+"', null, " + 2 + ")" ;
         PreparedStatement ps = conn.prepareStatement(SQLCommand);
         ps.executeUpdate();
-        return id;
+        return new Product(id, productTypeID, null, ean, null, 2);
     }
 
     public void createRent(List<Product> products, DataPackage actualDataPackage) throws SQLException, ParseException {
@@ -1062,5 +1062,18 @@ public class DBConnection {
             }
         }
         return  false;
+    }
+
+    public List<ProductType> getAllSetProductTypes() throws SQLException {
+        List<ProductType> allProductTypes = DBConnection.getInstance().getAllProductTypes();
+        List<ProductType> notSetProductTypes = DBConnection.getInstance().getAllNotSetProductTypes();
+        for (int i = 0; i < notSetProductTypes.size(); i++){
+            for (int k = 0; k < allProductTypes.size(); k++){
+                if (allProductTypes.get(k).getProductTypeID().equals(notSetProductTypes.get(i).getProductTypeID())){
+                    allProductTypes.remove(k);
+                }
+            }
+        }
+        return  allProductTypes;
     }
 }

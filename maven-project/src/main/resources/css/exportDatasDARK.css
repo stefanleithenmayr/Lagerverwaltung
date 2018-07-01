@@ -13,18 +13,11 @@
     -fx-text-fill: white;
 }
 
-.textFieldStyle{
+.text-field{
+    -fx-font-size: 19;
+    -fx-text-fill: white;
     -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
     -fx-faint-focus-color: white;
-}
-.jfx-text-field{
-    -fx-pref-height:3;
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-text-fill: white;
 }
 
 .tree-table-view{

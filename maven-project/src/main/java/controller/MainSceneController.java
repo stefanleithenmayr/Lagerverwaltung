@@ -522,7 +522,6 @@ public class MainSceneController implements Initializable {
                 acutalPane = "deleteItemPane";
                 break;
             case "showItemsBT":
-                System.out.println("rent");
                 changeThemeBT.setVisible(false);
                 rentManagerPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/RentManagerScene.fxml")));
                 actualShowingPane = rentManagerPane;
@@ -651,6 +650,7 @@ public class MainSceneController implements Initializable {
                 acutalPane = "deleteSetsPane";
                 break;
             case "dashboardBT":
+                changeThemeBT.setVisible(false);
                 dashboardPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/DashboardScene.fxml")));
                 actualShowingPane = dashboardPane;
                 subPane.getChildren().add(dashboardPane);
@@ -663,6 +663,7 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        changeThemeBT.setVisible(false);
         theme = false;
         try {
             //addItemPane = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/AddItem.fxml")));

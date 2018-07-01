@@ -10,57 +10,22 @@
     -fx-font-size: 19;
     -fx-text-fill: white;
 }
-#tfItemName{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-#tfQuantity{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
-#qText{
-    -fx-fill: white;
-}
-
-#tfDescription{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
-#btnInsert{
-    -fx-prompt-text-fill: white;
-    -fx-unfocus-color: white;
-    -fx-focus-color: white;
-    -fx-text-fill: white;
-    -fx-faint-focus-color: white;
-}
-
 .jfx-text-field{
     -fx-pref-height:3;
     -jfx-unfocus-color: white;
     -jfx-focus-color: red;
     -fx-text-fill: white;
 }
-
-.jfx-combo-box {
-    -fx-pref-height:3;
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-font-size: 19;
+.btStyle{
+    -fx-border-color: white;
     -fx-text-fill: white;
-    -fx-prompt-text-fill: white;
-    -fx-faint-focus-color: white;
+    -fx-border-width: 0.5;
 }
+.quantityStyle{
+     -fx-font-size: 19;
+     -fx-text-fill: white;
+     -fx-faint-focus-color: white;
+ }
 
 .text-field{
     -fx-font-size: 19;
@@ -68,18 +33,17 @@
     -fx-prompt-text-fill: white;
     -fx-faint-focus-color: white;
 }
-.jfx-text-area{
-    -jfx-unfocus-color: white;
-    -jfx-focus-color: red;
-    -fx-text-fill: white;
-}
-
-
 .table-view{
     -fx-background-color: transparent;
     -fx-table-cell-border-color: white;
     -fx-text-fill: white;
     -fx-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.table-column {
+    -fx-alignment: center;
 }
 .table-row-cell .text {
     -fx-fill: white;
@@ -123,7 +87,6 @@
     -fx-background-color: -design;
     -fx-fill: #2a2d35;
     -fx-text-fill: #2a2d35;
-    -fx-text-alignment: center;
 }
 
 .table-view > .column-header-background > .nested-column-header > .column-header.table-column {
@@ -204,4 +167,17 @@
 
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
+}
+
+.btStyle{
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-border-width: 0.5;
+}
+#productTypes .table-column {
+    -fx-alignment: center;
+}
+
+#productTypes .table-cell {
+    -fx-alignment: center;
 }

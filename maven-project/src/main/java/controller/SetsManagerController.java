@@ -2,11 +2,14 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,9 +30,9 @@ import java.util.*;
 
 public class SetsManagerController implements Initializable {
     @FXML
-    JFXTextField tfSearch, tfSetName, taDescription, tfEanCode;
+    private JFXTextField tfSearch, tfSetName, taDescription, tfEanCode;
     @FXML
-    JFXButton btCreateSet, btAddToBoardTTV, btAddToBoardEancode;
+    private JFXButton btCreateSet, btAddToBoardTTV, btAddToBoardEancode;
     @FXML
     private TreeTableView<Product> TTVProductToChoose;
     @FXML
@@ -41,24 +44,44 @@ public class SetsManagerController implements Initializable {
     @FXML
     private TreeTableColumn<Product, Integer> tcFinalProductsForSetProductID;
     @FXML
+    private TableView<ProductType> tvProductTypes;
+    private ProductType selectedProductType;
+    @FXML
+    private TableColumn<ProductType, String> tcProducttypeName, tcProducttypeDescription;
+    @FXML
     private TreeTableColumn selectCol;
     @FXML
-    Rectangle errorRec;
+    private JFXToggleButton toggleButton;
     @FXML
-    Text errorTxt;
+    private Rectangle errorRec;
     @FXML
-    Label LyourSet;
+    private Text errorTxt;
+    @FXML
+    private Label LyourSet;
 
 
     @FXML
     private void createNewSet() throws SQLException {
-        if (tfSetName.getText().equals("")){
+        int productTypeID;
+        if (tfSetName.getText().equals("") && !toggleButton.isSelected()){
             errorRec.setFill(Color.web("#f06060"));
             errorRec.setStroke(Color.web("#f06060"));
             ErrorMessageUtils.showErrorMessage("Please enter a setname", errorRec, errorTxt);
             return;
         }
-        int productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
+        else if (toggleButton.isSelected()){
+            if (selectedProductType == null){
+                errorRec.setFill(Color.web("#f06060"));
+                errorRec.setStroke(Color.web("#f06060"));
+                ErrorMessageUtils.showErrorMessage("Please select a producttype", errorRec, errorTxt);
+                return;
+            }
+            productTypeID = selectedProductType.getProductTypeID();
+        }
+        else {
+            productTypeID = DBConnection.getInstance().createNewSetHeaderProductType(tfSetName.getText(), taDescription.getText()); //remove comment
+        }
+
         int productHeaderId = DBConnection.getInstance().createNewSetHeaderProduct(productTypeID);
         for (Product finalSelectedProduct : finalSelectedProducts) {
             DBConnection.getInstance().addProductToSetHeader(finalSelectedProduct.getProductID(), productHeaderId);
@@ -132,15 +155,15 @@ public class SetsManagerController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Prepare(0);
-    }
-
-    private void Prepare(int i) {/*
         try {
-            DBConnection.getInstance().InsertTestDatas();
+            Prepare(0);
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
+    }
+
+    private void Prepare(int i) throws SQLException {
+        selectedProductType = null;
         LyourSet.setVisible(false);
         TTVfinalProductsForSet.setVisible(false);
         TTVfinalProductsForSet.setRoot(null);
@@ -154,12 +177,16 @@ public class SetsManagerController implements Initializable {
             tcFinalProductsForSetProductName.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));
             tcFinalProductsForSetProductDescription.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeDescription"));
             tcFinalProductsForSetProductID.setCellValueFactory(new TreeItemPropertyValueFactory<>("productID"));
+
+            tcProducttypeName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
+            tcProducttypeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         }
         try {
             refreshTTV(i);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        tvProductTypes.setItems(FXCollections.observableArrayList(DBConnection.getInstance().getAllSetProductTypes()));
     }
 
     private void  refreshTTV(Integer i) throws SQLException {
@@ -277,5 +304,25 @@ public class SetsManagerController implements Initializable {
         }
         this.addSelectedProductsFromTTV();
         tfEanCode.clear();
+    }
+    @FXML
+    public void tbOnAction(){
+        if (toggleButton.isSelected()){
+            toggleButton.setText("Insert into existing producttype");
+            tfSetName.setVisible(false);
+            taDescription.setVisible(false);
+            tvProductTypes.setVisible(true);
+
+        }
+        else{
+            toggleButton.setText("Insert new producttype");
+            tfSetName.setVisible(true);
+            taDescription.setVisible(true);
+            tvProductTypes.setVisible(false);
+        }
+    }
+    @FXML
+    public void productTypeSelected(){
+        selectedProductType = tvProductTypes.getSelectionModel().getSelectedItem();
     }
 }
