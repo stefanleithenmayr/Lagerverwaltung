@@ -168,8 +168,8 @@ public class SetsManagerController implements Initializable {
         LyourSet.setVisible(false);
         TTVfinalProductsForSet.setVisible(false);
         TTVfinalProductsForSet.setRoot(null);
+        finalSelectedProducts = new ArrayList<>();
         if (i == 0) {
-            finalSelectedProducts = new ArrayList<>();
             products = new ArrayList<>();
 
             prodNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("productTypeName"));

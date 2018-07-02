@@ -144,7 +144,7 @@ public class UserManagerController implements Initializable {
                 new PropertyValueFactory<>("password"));
 
         roleCol.setCellValueFactory(
-                new PropertyValueFactory<>("UserRolle"));
+                new PropertyValueFactory<>("UserRole"));
 
         classCol.setCellValueFactory(
                 new PropertyValueFactory<>("klasse"));
